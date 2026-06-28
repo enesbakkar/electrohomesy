@@ -62,6 +62,38 @@ const FALLBACK_PRODUCTS = [
     }
 ];
 
+const FALLBACK_ORDERS = [
+    {
+        id: 101,
+        customer_name: "أحمد الميداني",
+        customer_phone: "0955123456",
+        delivery_address: "دمشق - الميدان - بالقرب من جامع الشافعي",
+        payment_method: "cod",
+        total_amount: 165000,
+        created_at: new Date().toISOString()
+    },
+    {
+        id: 102,
+        customer_name: "سامر الشامي",
+        customer_phone: "0933987654",
+        delivery_address: "دمشق - المزرعة - شارع الملك عادل",
+        payment_method: "shamcash",
+        total_amount: 390000,
+        created_at: new Date().toISOString()
+    }
+];
+
+const FALLBACK_REQUESTS = [
+    {
+        id: 1,
+        customer_name: "محمد حمصي",
+        customer_phone: "0944112233",
+        requested_product: "غسالة أوتوماتيك LG سعة 9 كيلو إنفرتر",
+        notes: "لون فضي، كفالة رسمية",
+        created_at: new Date().toISOString()
+    }
+];
+
 // Global State Pre-populated for Instant Rendering
 let allProducts = [...FALLBACK_PRODUCTS];
 let allCategories = [...FALLBACK_CATEGORIES];
@@ -607,7 +639,9 @@ document.getElementById('adminLoginForm')?.addEventListener('submit', async (e) 
             loadAdminData();
             return;
         }
-    } catch (err) {}
+    } catch (err) {
+        // Fallback for static hosting
+    }
 
     if (username === 'admin' && password === 'admin123') {
         sessionStorage.setItem('adminToken', 'mock-admin-token');
@@ -649,10 +683,14 @@ async function fetchAdminProducts() {
         adminProducts = FALLBACK_PRODUCTS;
     }
 
+    renderAdminProductsTable(adminProducts);
+}
+
+function renderAdminProductsTable(products) {
     const tbody = document.getElementById('adminProductsTableBody');
     if (!tbody) return;
 
-    tbody.innerHTML = adminProducts.map(p => `
+    tbody.innerHTML = products.map(p => `
         <tr>
             <td><strong>#${p.id}</strong></td>
             <td><img src="${p.main_image || ''}" style="width:48px; height:48px; object-fit:cover; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.1);"></td>
@@ -753,44 +791,52 @@ document.getElementById('adminProductForm')?.addEventListener('submit', async (e
 });
 
 async function fetchAdminOrders() {
+    let orders = [];
     try {
         const res = await fetch('/api/orders');
         if (!res.ok) throw new Error('Not ok');
-        const orders = await res.json();
-        const tbody = document.getElementById('adminOrdersTableBody');
-        if (!tbody) return;
+        orders = await res.json();
+    } catch (e) {
+        orders = FALLBACK_ORDERS;
+    }
 
-        tbody.innerHTML = orders.map(o => `
-            <tr>
-                <td><strong style="color:var(--damascus-green)">#ORD-${o.id}</strong></td>
-                <td><strong>${o.customer_name}</strong></td>
-                <td><a href="tel:${o.customer_phone}" style="color:var(--onyx); font-weight:700;">${o.customer_phone}</a></td>
-                <td>${o.delivery_address}</td>
-                <td><span class="badge-status" style="background:#fef3c7; color:#d97706;">${o.payment_method === 'cod' ? 'الدفع عند الاستلام (COD)' : 'شام كاش (ShamCash)'}</span></td>
-                <td><strong style="color:var(--damascus-green); font-size:1.1rem;">${formatSYP(o.total_amount)}</strong></td>
-                <td>${new Date(o.created_at).toLocaleDateString('ar-SY')}</td>
-            </tr>
-        `).join('');
-    } catch (e) {}
+    const tbody = document.getElementById('adminOrdersTableBody');
+    if (!tbody) return;
+
+    tbody.innerHTML = orders.map(o => `
+        <tr>
+            <td><strong style="color:var(--damascus-green)">#ORD-${o.id}</strong></td>
+            <td><strong>${o.customer_name}</strong></td>
+            <td><a href="tel:${o.customer_phone}" style="color:var(--onyx); font-weight:700;">${o.customer_phone}</a></td>
+            <td>${o.delivery_address}</td>
+            <td><span class="badge-status" style="background:#fef3c7; color:#d97706;">${o.payment_method === 'cod' ? 'الدفع عند الاستلام (COD)' : 'شام كاش (ShamCash)'}</span></td>
+            <td><strong style="color:var(--damascus-green); font-size:1.1rem;">${formatSYP(o.total_amount)}</strong></td>
+            <td>${new Date(o.created_at).toLocaleDateString('ar-SY')}</td>
+        </tr>
+    `).join('');
 }
 
 async function fetchAdminRequests() {
+    let reqs = [];
     try {
         const res = await fetch('/api/requests');
         if (!res.ok) throw new Error('Not ok');
-        const reqs = await res.json();
-        const tbody = document.getElementById('adminRequestsTableBody');
-        if (!tbody) return;
+        reqs = await res.json();
+    } catch (e) {
+        reqs = FALLBACK_REQUESTS;
+    }
 
-        tbody.innerHTML = reqs.map(r => `
-            <tr>
-                <td>#${r.id}</td>
-                <td><strong>${r.customer_name}</strong></td>
-                <td>${r.customer_phone}</td>
-                <td style="color:var(--damascus-green); font-weight:800; font-size:1.05rem;">${r.requested_product}</td>
-                <td>${r.notes || '-'}</td>
-                <td>${new Date(r.created_at).toLocaleDateString('ar-SY')}</td>
-            </tr>
-        `).join('');
-    } catch (e) {}
+    const tbody = document.getElementById('adminRequestsTableBody');
+    if (!tbody) return;
+
+    tbody.innerHTML = reqs.map(r => `
+        <tr>
+            <td>#${r.id}</td>
+            <td><strong>${r.customer_name}</strong></td>
+            <td>${r.customer_phone}</td>
+            <td style="color:var(--damascus-green); font-weight:800; font-size:1.05rem;">${r.requested_product}</td>
+            <td>${r.notes || '-'}</td>
+            <td>${new Date(r.created_at).toLocaleDateString('ar-SY')}</td>
+        </tr>
+    `).join('');
 }
