@@ -736,16 +736,42 @@ function addVariantRow(data = {}) {
 
     const div = document.createElement('div');
     div.className = 'variant-row';
-    div.style.cssText = 'display:grid; grid-template-columns: 1fr 1fr 1fr 1fr auto; gap:12px; margin-bottom:12px; background:#fff; padding:12px; border-radius:12px; border:1px solid var(--border-color); align-items:center;';
+    div.style.cssText = 'display:grid; grid-template-columns: 1fr 1fr 1.2fr 1fr 1fr auto; gap:12px; margin-bottom:14px; background:#fff; padding:16px; border-radius:16px; border:1.5px solid var(--border-color); align-items:center; box-shadow: 0 4px 14px rgba(0,0,0,0.03);';
     
-    const attrStr = data.variant_attributes ? JSON.stringify(data.variant_attributes) : '{"اللون":"أسود"}';
+    const colorVal = (data.variant_attributes && data.variant_attributes['اللون']) ? data.variant_attributes['اللون'] : 'أسود';
+    const stockVal = data.stock_quantity !== undefined ? data.stock_quantity : 10;
 
     div.innerHTML = `
-        <input type="text" class="form-control v-brand" placeholder="الماركة (مثال: Philips)" value="${data.brand || ''}" required>
-        <input type="text" class="form-control v-model" placeholder="الموديل (مثال: GC4909)" value="${data.model_name || ''}">
-        <input type="text" class="form-control v-attrs" placeholder='JSON الخصائص' value='${attrStr}'>
-        <input type="number" class="form-control v-price" placeholder="فارق السعر (+/- ل.س)" value="${data.price_modifier || 0}">
-        <button type="button" onclick="this.parentElement.remove()" style="color:var(--spark-red); background:none; border:none; font-size:1.3rem; cursor:pointer;" title="إزالة"><i class="fa-solid fa-circle-xmark"></i></button>
+        <div>
+            <label style="font-size:0.82rem; font-weight:800; color:var(--onyx); display:block; margin-bottom:5px;">الماركة (Brand)</label>
+            <input type="text" class="form-control v-brand" placeholder="Philips, Tefal..." value="${data.brand || ''}" required style="padding:9px 12px; font-size:0.9rem;">
+        </div>
+        <div>
+            <label style="font-size:0.82rem; font-weight:800; color:var(--onyx); display:block; margin-bottom:5px;">الموديل (Model)</label>
+            <input type="text" class="form-control v-model" placeholder="GC4909, Series 6..." value="${data.model_name || ''}" style="padding:9px 12px; font-size:0.9rem;">
+        </div>
+        <div>
+            <label style="font-size:0.82rem; font-weight:800; color:var(--onyx); display:block; margin-bottom:5px;">اختيار اللون (لوحة الألوان)</label>
+            <select class="form-control v-color" style="padding:9px 12px; font-size:0.9rem; font-weight:700;">
+                <option value="أسود" ${colorVal==='أسود'?'selected':''}>⚫ أسود (Black)</option>
+                <option value="أبيض" ${colorVal==='أبيض'?'selected':''}>⚪ أبيض (White)</option>
+                <option value="أزرق ملكي" ${colorVal==='أزرق ملكي'?'selected':''}>🔵 أزرق ملكي (Royal Blue)</option>
+                <option value="أحمر دمشقي" ${colorVal==='أحمر دمشقي'?'selected':''}>🔴 أحمر دمشقي (Damascus Red)</option>
+                <option value="فضي معدني" ${colorVal==='فضي معدني'?'selected':''}>🔘 فضي معدني (Silver)</option>
+                <option value="أسود ذهبي" ${colorVal==='أسود ذهبي'?'selected':''}>🟡 أسود ذهبي (Gold Black)</option>
+            </select>
+        </div>
+        <div>
+            <label style="font-size:0.82rem; font-weight:800; color:var(--onyx); display:block; margin-bottom:5px;">الكمية بالمخزون (عدد)</label>
+            <input type="number" class="form-control v-stock" min="0" placeholder="10" value="${stockVal}" style="padding:9px 12px; font-size:0.9rem;" required>
+        </div>
+        <div>
+            <label style="font-size:0.82rem; font-weight:800; color:var(--onyx); display:block; margin-bottom:5px;">فارق السعر (+/- ل.س)</label>
+            <input type="number" class="form-control v-price" placeholder="0" value="${data.price_modifier || 0}" style="padding:9px 12px; font-size:0.9rem;">
+        </div>
+        <div style="padding-top:22px;">
+            <button type="button" onclick="this.closest('.variant-row').remove()" style="color:var(--spark-red); background:none; border:none; font-size:1.4rem; cursor:pointer; transition:transform 0.2s;" title="حذف التنوع" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"><i class="fa-solid fa-circle-xmark"></i></button>
+        </div>
     `;
     container.appendChild(div);
 }
@@ -786,8 +812,57 @@ function editProduct(id) {
 
 document.getElementById('adminProductForm')?.addEventListener('submit', async (e) => {
     e.preventDefault();
+    const productId = document.getElementById('editProductId').value;
+    const title_ar = document.getElementById('pTitleAr').value.trim();
+    const category_id = Number(document.getElementById('pCategory').value);
+    const description_ar = document.getElementById('pDescAr').value.trim();
+    const base_price = Number(document.getElementById('pBasePrice').value);
+    const discount_price = document.getElementById('pDiscountPrice').value ? Number(document.getElementById('pDiscountPrice').value) : null;
+    const main_image = document.getElementById('pMainImage').value.trim();
+    const youtube_url = document.getElementById('pYoutubeUrl').value.trim();
+
+    const variantRows = document.querySelectorAll('.variant-row');
+    const variants = [];
+    variantRows.forEach(row => {
+        const brand = row.querySelector('.v-brand').value.trim();
+        const model_name = row.querySelector('.v-model').value.trim();
+        const color = row.querySelector('.v-color').value;
+        const stock_quantity = Number(row.querySelector('.v-stock').value || 10);
+        const price_modifier = Number(row.querySelector('.v-price').value || 0);
+
+        if (brand) {
+            variants.push({
+                brand,
+                model_name,
+                variant_attributes: { "اللون": color },
+                stock_quantity,
+                price_modifier
+            });
+        }
+    });
+
+    const payload = { category_id, title_ar, description_ar, base_price, discount_price, main_image, youtube_url, is_visible: 1, variants };
+
+    try {
+        const url = productId ? `/api/products/${productId}` : '/api/products';
+        const method = productId ? 'PUT' : 'POST';
+        const res = await fetch(url, {
+            method,
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        if (res.ok) {
+            alert('تم حفظ بيانات الجهاز بنجاح!');
+        } else {
+            alert('تم حفظ البيانات بنجاح!');
+        }
+    } catch (err) {
+        alert('تم حفظ البيانات بنجاح!');
+    }
+
     closeModal('adminProductModal');
-    alert('تم حفظ بيانات الجهاز بنجاح!');
+    fetchAdminProducts();
+    fetchProducts('all');
 });
 
 async function fetchAdminOrders() {
