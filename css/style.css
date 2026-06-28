@@ -665,6 +665,21 @@ input:checked + .slider:before { transform: translateX(22px); }
     
     .payment-methods-grid { grid-template-columns: 1fr; }
     .modal-card { padding: 30px 20px; }
+
+    /* Clean & Neat Mobile Footer */
+    footer { padding: 35px 0 35px 0; margin-top: 40px; }
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 22px;
+        text-align: center;
+    }
+    .footer-grid p { max-width: 100%; margin: 0 auto 15px auto; font-size: 0.9rem; line-height: 1.6; }
+    .footer-col { font-size: 1.1rem; margin-bottom: 12px; }
+    .footer-links li { margin-bottom: 8px; font-size: 0.9rem; }
+    .footer-links a { font-size: 0.9rem; }
+    .brand-logo { justify-content: center; }
+    .footer-logo-img { height: 60px !important; margin: 0 auto 12px auto; display: block; filter: none !important; }
+    .copyright-bar { padding-top: 18px; padding-bottom: 30px; font-size: 0.82rem; line-height: 1.6; }
 }
 
 @media (max-width: 480px) {
