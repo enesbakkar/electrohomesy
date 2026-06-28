@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إلكتروهومسي - لوحة التحكم والإدارة</title>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="admin-body">
+
+    <!-- LOGIN OVERLAY -->
+    <div id="adminLoginOverlay">
+        <div class="login-card">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <img src="/Logo/ElectroHomeSY-logo.png" alt="ElectroHomeSY" style="height: 60px; margin-bottom: 15px;">
+                <h2 style="font-weight: 900; color: var(--onyx); font-size: 1.8rem;">لوحة إدارة إلكتروهومسي</h2>
+                <p style="color: var(--steel-grey); font-size: 0.95rem; margin-top: 5px;">يرجى ادخال بيانات الدخول الخاصة بالإدارة</p>
+            </div>
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <label>اسم المستخدم</label>
+                    <input type="text" id="adminUser" class="form-control" value="admin" required placeholder="أدخل اسم المستخدم">
+                </div>
+                <div class="form-group">
+                    <label>كلمة المرور</label>
+                    <input type="password" id="adminPass" class="form-control" value="admin123" required placeholder="أدخل كلمة المرور">
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 15px; background: var(--damascus-green); font-size: 1.1rem;">دخول اللوحة الإدارية</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MAIN ADMIN INTERFACE -->
+    <div class="admin-sidebar">
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 45px;">
+            <img src="/Logo/ElectroHomeSY-logo-black.png" alt="ElectroHomeSY" style="height: 50px; filter: brightness(0) invert(1);">
+        </div>
+        
+        <div class="admin-nav-item active" onclick="switchAdminTab('productsTab', this)">
+            <i class="fa-solid fa-boxes-stacked"></i> إدارة المنتجات والمخزون
+        </div>
+        <div class="admin-nav-item" onclick="switchAdminTab('ordersTab', this)">
+            <i class="fa-solid fa-receipt"></i> طلبات العملاء (دمشق)
+        </div>
+        <div class="admin-nav-item" onclick="switchAdminTab('requestsTab', this)">
+            <i class="fa-solid fa-clipboard-question"></i> اقتراحات المنتجات
+        </div>
+
+        <div style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
+            <a href="/" target="_blank" class="admin-nav-item" style="color: var(--volt-mint);">
+                <i class="fa-solid fa-globe"></i> معاينة المتجر الرئيسي
+            </a>
+            <div class="admin-nav-item" onclick="logoutAdmin()" style="color: var(--spark-red);">
+                <i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج
+            </div>
+        </div>
+    </div>
+
+    <div class="admin-main">
+        <!-- TAB 1: PRODUCTS INVENTORY -->
+        <div id="productsTab">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 15px;">
+                <div>
+                    <h2 style="font-weight: 900; color: var(--onyx); font-size: 2rem;">إدارة المنتجات والمخزون</h2>
+                    <p style="color: var(--steel-grey); font-size: 1.05rem; margin-top: 4px;">إضافة وتعديل الأجهزة، التنوعات الديناميكية، الأسعار وفيديوهات المعاينة.</p>
+                </div>
+                <button class="btn-primary" onclick="openAddProductModal()" style="padding: 14px 28px;"><i class="fa-solid fa-plus"></i> إضافة جهاز جديد</button>
+            </div>
+
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>المعرّف</th>
+                        <th>الصورة</th>
+                        <th>اسم الجهاز</th>
+                        <th>التصنيف</th>
+                        <th>السعر الأساسي</th>
+                        <th>التنوعات</th>
+                        <th>حالة الظهور</th>
+                        <th>الإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody id="adminProductsTableBody">
+                    <!-- Dynamic products rows -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- TAB 2: CUSTOMER ORDERS -->
+        <div id="ordersTab" style="display: none;">
+            <h2 style="font-weight: 900; color: var(--onyx); font-size: 2rem; margin-bottom: 8px;">طلبات العملاء (دمشق وريدها)</h2>
+            <p style="color: var(--steel-grey); font-size: 1.05rem; margin-bottom: 30px;">قائمة كافة الطلبات المقدمة عبر الدفع عند الاستلام أو شام كاش.</p>
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>رقم الطلب</th>
+                        <th>اسم العميل</th>
+                        <th>رقم الهاتف</th>
+                        <th>عنوان التوصيل بالتفصيل</th>
+                        <th>طريقة الدفع</th>
+                        <th>إجمالي المبلغ</th>
+                        <th>تاريخ الطلب</th>
+                    </tr>
+                </thead>
+                <tbody id="adminOrdersTableBody">
+                    <!-- Dynamic orders rows -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- TAB 3: PRODUCT REQUESTS -->
+        <div id="requestsTab" style="display: none;">
+            <h2 style="font-weight: 900; color: var(--onyx); font-size: 2rem; margin-bottom: 8px;">اقتراحات المنتجات الخاصة</h2>
+            <p style="color: var(--steel-grey); font-size: 1.05rem; margin-bottom: 30px;">الطلبات المقدمة من قبل الزبائن لأجهزة وموديلات غير متوفرة بالمخزون حالياً.</p>
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>المعرّف</th>
+                        <th>اسم العميل</th>
+                        <th>رقم الهاتف</th>
+                        <th>الجهاز / الموديل المطلوب</th>
+                        <th>الملاحظات والمواصفات</th>
+                        <th>تاريخ الطلب</th>
+                    </tr>
+                </thead>
+                <tbody id="adminRequestsTableBody">
+                    <!-- Dynamic requests rows -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- MODAL: ADD / EDIT PRODUCT -->
+    <div class="modal-overlay" id="adminProductModal">
+        <div class="modal-card" style="max-width: 850px;">
+            <button class="close-modal-btn" onclick="closeModal('adminProductModal')"><i class="fa-solid fa-xmark"></i></button>
+            <h3 id="adminProductModalTitle" style="font-weight: 900; font-size: 1.6rem; margin-bottom: 25px; color: var(--damascus-green);">إضافة جهاز جديد للمتجر</h3>
+            
+            <form id="adminProductForm">
+                <input type="hidden" id="editProductId">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="form-group">
+                        <label>اسم الجهاز <span style="color:var(--spark-red)">*</span></label>
+                        <input type="text" id="pTitleAr" class="form-control" placeholder="مثال: مكواة بخار ذكية تيفال" required>
+                    </div>
+                    <div class="form-group">
+                        <label>التصنيف الرئيسي <span style="color:var(--spark-red)">*</span></label>
+                        <select id="pCategory" class="form-control" required>
+                            <option value="1">المكاوي وأجهزة البخار (irons)</option>
+                            <option value="2">المكاس والتنظيف (vacuums)</option>
+                            <option value="3">أجهزة المطبخ والخلاطات (kitchen)</option>
+                            <option value="4">الأجهزة المنزلية الكبيرة (large-appliances)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>الوصف المفصل والمواصفات (بالعربية)</label>
+                    <textarea id="pDescAr" class="form-control" rows="3" placeholder="اكتب وصفاً جذاباً للجهاز ومميزاته الفنية..."></textarea>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="form-group">
+                        <label>السعر الأساسي (بالليرة السورية ل.س) <span style="color:var(--spark-red)">*</span></label>
+                        <input type="number" id="pBasePrice" class="form-control" placeholder="185000" required>
+                    </div>
+                    <div class="form-group">
+                        <label>سعر التخفيض (اختياري ل.س)</label>
+                        <input type="number" id="pDiscountPrice" class="form-control" placeholder="165000">
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="form-group">
+                        <label>رابط صورة الجهاز الرئيسي</label>
+                        <input type="url" id="pMainImage" class="form-control" placeholder="https://images.unsplash.com/...">
+                    </div>
+                    <div class="form-group">
+                        <label>رابط فيديو المعاينة من يوتيوب (YouTube URL)</label>
+                        <input type="url" id="pYoutubeUrl" class="form-control" placeholder="https://www.youtube.com/watch?v=...">
+                    </div>
+                </div>
+
+                <!-- DYNAMIC VARIANTS SECTION -->
+                <div style="background: #f8fafc; border: 2px dashed var(--border-color); padding: 25px; border-radius: 20px; margin-bottom: 25px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;">
+                        <h4 style="font-weight: 800; color: var(--onyx); font-size: 1.1rem;">تنوعات الجهاز (الماركة، الموديل، الألوان، القوة)</h4>
+                        <button type="button" class="btn-secondary" onclick="addVariantRow()" style="padding: 8px 20px; font-size: 0.9rem; background: var(--damascus-green); color: #fff; border: none;">+ إضافة تنوع جديد</button>
+                    </div>
+                    <div id="variantsContainer">
+                        <!-- Dynamic variant rows -->
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 16px; font-size: 1.1rem; background: var(--damascus-green);">حفظ الجهاز وتحديث المخزون</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/js/app.js"></script>
+    <script>
+        // Check Admin Auth on load
+        if (sessionStorage.getItem('adminToken')) {
+            document.getElementById('adminLoginOverlay').style.display = 'none';
+            loadAdminData();
+        }
+    </script>
+</body>
+</html>
