@@ -625,17 +625,26 @@ input:checked + .slider:before { transform: translateX(22px); }
 }
 
 @media (max-width: 768px) {
+    .announcement-bar { display: none; } /* Hide announcement bar on mobile to save vertical space */
+
     .nav-wrapper {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 12px;
-        padding: 12px 0;
+        display: grid;
+        grid-template-columns: auto 1fr;
+        align-items: center;
+        gap: 8px 12px;
+        padding: 8px 0;
+        min-height: auto;
     }
-    .brand-logo { justify-content: center; }
-    .main-logo-img { height: 85px; max-height: 90px; }
-    .header-search { max-width: 100%; }
-    .nav-actions { justify-content: center; width: 100%; flex-wrap: wrap; }
-    .nav-btn { flex: 1; justify-content: center; font-size: 0.88rem; padding: 9px 12px; }
+    .brand-logo { justify-content: flex-start; }
+    .main-logo-img { height: 48px; max-height: 52px; }
+    
+    .header-search { grid-column: 1 / -1; width: 100%; max-width: 100%; margin-top: 2px; }
+    .header-search input { padding: 10px 40px 10px 15px; font-size: 0.9rem; border-radius: 20px; }
+
+    .nav-actions { display: flex; gap: 8px; justify-content: flex-end; align-items: center; }
+    .nav-btn { padding: 8px 12px; font-size: 0.82rem; border-radius: 20px; }
+    .nav-btn span { display: none; } /* Show compact icon buttons on mobile top header! */
+    .nav-btn i { margin: 0; font-size: 1.1rem; }
 
     .mobile-bottom-nav { display: flex; }
     .whatsapp-floating-btn { bottom: 80px; right: 18px; width: 52px; height: 52px; font-size: 1.8rem; }
