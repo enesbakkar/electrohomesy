@@ -374,7 +374,7 @@ const server = http.createServer((req, res) => {
         }
     }
 
-    // STATIC FILE SERVING
+    // STATIC FILE SERVING WITH NO-CACHE HEADERS FOR LOCAL DEVELOPMENT
     let filePath = path.join(PUBLIC_DIR, pathname === '/' ? 'index.html' : (pathname === '/admin' ? 'admin.html' : pathname));
     let extname = String(path.extname(filePath)).toLowerCase();
 
@@ -382,7 +382,12 @@ const server = http.createServer((req, res) => {
         if (err) {
             if (err.code === 'ENOENT') {
                 fs.readFile(path.join(PUBLIC_DIR, 'index.html'), (error, defaultContent) => {
-                    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+                    res.writeHead(200, {
+                        'Content-Type': 'text/html; charset=utf-8',
+                        'Cache-Control': 'no-cache, no-store, must-revalidate',
+                        'Pragma': 'no-cache',
+                        'Expires': '0'
+                    });
                     res.end(defaultContent, 'utf-8');
                 });
             } else {
@@ -391,7 +396,12 @@ const server = http.createServer((req, res) => {
             }
         } else {
             const contentType = MIME_TYPES[extname] || 'application/octet-stream';
-            res.writeHead(200, { 'Content-Type': contentType });
+            res.writeHead(200, {
+                'Content-Type': contentType,
+                'Cache-Control': 'no-cache, no-store, must-revalidate',
+                'Pragma': 'no-cache',
+                'Expires': '0'
+            });
             res.end(content, 'utf-8');
         }
     });
