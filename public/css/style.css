@@ -98,10 +98,10 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    min-height: 100px;
-    padding: 12px 0;
-    gap: 15px;
-    flex-wrap: wrap;
+    min-height: 72px;
+    padding: 10px 0;
+    gap: 20px;
+    flex-wrap: nowrap;
 }
 
 .brand-logo {
@@ -110,11 +110,12 @@ header {
     gap: 14px;
     text-decoration: none;
     color: var(--onyx);
+    flex-shrink: 0;
 }
 
 .main-logo-img {
-    height: 110px;
-    max-height: 115px;
+    height: 60px;
+    max-height: 65px;
     width: auto;
     object-fit: contain;
     transition: transform 0.3s ease;
@@ -380,11 +381,11 @@ header {
 }
 
 /* Products Grid */
-.products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; margin-bottom: 60px; }
+.products-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: 60px; }
 .product-card {
     background: var(--white);
-    border-radius: 24px;
-    padding: 20px;
+    border-radius: 20px;
+    padding: 18px;
     border: 1.5px solid var(--border-color);
     box-shadow: var(--card-shadow);
     transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
@@ -395,17 +396,17 @@ header {
 .product-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(19, 39, 48, 0.12); border-color: rgba(7, 48, 102, 0.4); }
 
 .discount-tag {
-    position: absolute; top: 16px; right: 16px; background: var(--spark-red); color: var(--white);
+    position: absolute; top: 14px; right: 14px; background: var(--spark-red); color: var(--white);
     padding: 4px 12px; border-radius: 12px; font-size: 0.82rem; font-weight: 700; z-index: 2;
     box-shadow: 0 4px 10px rgba(206, 17, 38, 0.3);
 }
 .badge-trendyol-bestseller {
-    position: absolute; top: 16px; right: 16px; background: linear-gradient(135deg, #f59e0b, #d97706); color: var(--white);
+    position: absolute; top: 14px; right: 14px; background: linear-gradient(135deg, #f59e0b, #d97706); color: var(--white);
     padding: 4px 12px; border-radius: 12px; font-size: 0.82rem; font-weight: 700; z-index: 2;
     box-shadow: 0 4px 10px rgba(217, 119, 6, 0.3);
 }
 
-.product-thumb { width: 100%; height: 210px; object-fit: cover; border-radius: 16px; margin-bottom: 16px; background: var(--fog-bg); }
+.product-thumb { width: 100%; height: 200px; object-fit: contain; border-radius: 14px; margin-bottom: 14px; background: #f8fafc; padding: 8px; }
 .product-category-name { font-size: 0.82rem; color: var(--steel-grey); font-weight: 600; margin-bottom: 6px; display: block; }
 .product-title { font-size: 1.15rem; font-weight: 700; color: var(--onyx); margin-bottom: 10px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 2.8em; }
 
