@@ -109,6 +109,16 @@ function formatSYP(amount) {
     return Number(amount).toLocaleString('ar-SY') + ' ل.س';
 }
 
+// Utility: Generate unique product code  e.g. EHS-001
+function generateProductCode(id) {
+    return 'EHS-' + String(id).padStart(3, '0');
+}
+
+// Utility: Get product page URL
+function getProductUrl(id) {
+    return `/product.html?id=${id}`;
+}
+
 // Utility: Convert YouTube link to embed format
 function getYouTubeEmbedUrl(url) {
     if (!url) return null;
@@ -308,7 +318,7 @@ function filterCategory(slug, btn) {
     fetchProducts(slug);
 }
 
-// Render Products Grid with Image & Title Clickability (Trendyol E-Commerce UX)
+// Render Products Grid - Cards open product page in new tab
 function renderProducts(products) {
     const grid = document.getElementById('productsGrid');
     if (!grid) return;
@@ -325,6 +335,7 @@ function renderProducts(products) {
         const priceToShow = p.discount_price ? p.discount_price : p.base_price;
         const hasDiscount = p.discount_price && p.discount_price < p.base_price;
         const waLink = getWhatsAppInquiryLink(p.title_ar);
+        const productUrl = getProductUrl(p.id);
         const rating = (4.7 + (idx % 3) * 0.1).toFixed(1);
         const reviewsCount = 85 + idx * 42;
         const isBestseller = idx % 2 === 0;
@@ -335,7 +346,9 @@ function renderProducts(products) {
                     ? `<span class="discount-tag">🔥 عروض خـاصة</span>` 
                     : (isBestseller ? `<span class="badge-trendyol-bestseller">⚡ الأكثر طلباً</span>` : '')}
                 
-                <img src="${p.main_image || 'https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=800&q=80'}" alt="${p.title_ar}" class="product-thumb" style="cursor: pointer;" onclick="openProductDetail(${p.id})">
+                <a href="${productUrl}" target="_blank" rel="noopener">
+                    <img src="${p.main_image || 'https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=800&q=80'}" alt="${p.title_ar}" class="product-thumb" style="cursor: pointer;">
+                </a>
                 
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
                     <span class="product-category-name">${p.category_name || 'أجهزة منزلية'}</span>
@@ -344,7 +357,9 @@ function renderProducts(products) {
                     </span>
                 </div>
 
-                <h4 class="product-title" style="cursor: pointer;" onclick="openProductDetail(${p.id})">${p.title_ar}</h4>
+                <a href="${productUrl}" target="_blank" rel="noopener" style="text-decoration:none; color:inherit;">
+                    <h4 class="product-title" style="cursor: pointer;">${p.title_ar}</h4>
+                </a>
                 
                 <div class="product-price-box">
                     <span class="current-price">${formatSYP(priceToShow)}</span>
@@ -352,9 +367,9 @@ function renderProducts(products) {
                 </div>
 
                 <div class="product-card-actions">
-                    <button class="btn-add-cart" onclick="openProductDetail(${p.id})">
+                    <a href="${productUrl}" target="_blank" rel="noopener" class="btn-add-cart" style="text-decoration:none; text-align:center;">
                         <i class="fa-solid fa-bag-shopping"></i> التفاصيل
-                    </button>
+                    </a>
                     <a href="${waLink}" target="_blank" class="btn-whatsapp-icon-only" title="تواصل سريع عبر الواتساب">
                         <i class="fa-brands fa-whatsapp"></i>
                     </a>
@@ -703,13 +718,27 @@ function renderAdminProductsTable(products) {
     const tbody = document.getElementById('adminProductsTableBody');
     if (!tbody) return;
 
-    tbody.innerHTML = products.map(p => `
+    tbody.innerHTML = products.map(p => {
+        const productCode = generateProductCode(p.id);
+        const productUrl = (window.location.origin || '') + `/product.html?id=${p.id}`;
+        return `
         <tr>
             <td><strong>#${p.id}</strong></td>
             <td><img src="${p.main_image || ''}" style="width:48px; height:48px; object-fit:cover; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.1);"></td>
             <td><strong style="color:var(--onyx); font-size:1.05rem;">${p.title_ar}</strong></td>
             <td><span style="background:#f1f5f9; padding:4px 10px; border-radius:12px; font-weight:700; font-size:0.88rem;">${p.category_name || 'عام'}</span></td>
             <td><strong style="color:var(--damascus-green); font-size:1.1rem;">${formatSYP(p.base_price)}</strong></td>
+            <td>
+                <div style="display:flex; flex-direction:column; gap:5px;">
+                    <span style="background:#e0f2fe; color:#0369a1; padding:3px 10px; border-radius:10px; font-size:0.82rem; font-weight:800; display:inline-block; width:fit-content;">
+                        📦 ${productCode}
+                    </span>
+                    <button onclick="navigator.clipboard.writeText('${productUrl}').then(()=>alert('تم نسخ رابط المنتج!'))"
+                        style="background:none; border:1px solid var(--border-color); border-radius:8px; padding:3px 8px; cursor:pointer; font-family:'Cairo',sans-serif; font-size:0.78rem; color:var(--steel-grey); white-space:nowrap;">
+                        <i class="fa-solid fa-copy"></i> نسخ الرابط
+                    </button>
+                </div>
+            </td>
             <td><span class="badge-status" style="background:#e0f2fe; color:#0369a1;">${p.variants ? p.variants.length : 0} تنوعات</span></td>
             <td>
                 <label class="switch">
@@ -721,8 +750,8 @@ function renderAdminProductsTable(products) {
                 <button class="btn-admin-act btn-admin-edit" title="تعديل" onclick="editProduct(${p.id})"><i class="fa-solid fa-pen"></i></button>
                 <button class="btn-admin-act btn-admin-delete" title="حذف" onclick="deleteProduct(${p.id})"><i class="fa-solid fa-trash-can"></i></button>
             </td>
-        </tr>
-    `).join('');
+        </tr>`;
+    }).join('');
 }
 
 async function toggleVisibility(id, isVisible) {
