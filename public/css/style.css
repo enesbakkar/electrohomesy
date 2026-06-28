@@ -1,5 +1,5 @@
 /* ElectroHomeSY - Official Blue Brand Identity Guidelines Implementation */
-@import url('https://fonts.googleapis.com/css2?family=Almarai:wght@400;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Readex+Pro:wght@400;500;600;700&family=Tajawal:wght@400;500;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Cairo+Play:wght@400;500;600;700;800&display=swap');
 
 :root {
     /* Exact Official Brand Identity Palette derived from ElectroHomeSY-logo-blue (#073066 & #132730) */
@@ -20,7 +20,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'IBM Plex Sans Arabic', 'Almarai', 'Readex Pro', 'Tajawal', sans-serif;
+    font-family: 'Cairo', 'Cairo Play', sans-serif;
     -webkit-tap-highlight-color: transparent;
 }
 
@@ -40,9 +40,9 @@ body {
     body { padding-bottom: 0; }
 }
 
-/* Headings font styling for ultra crisp legibility */
 h1, h2, h3, h4, h5, h6, .slogan, .section-title {
-    font-family: 'Almarai', 'IBM Plex Sans Arabic', sans-serif;
+    font-family: 'Cairo', 'Cairo Play', sans-serif;
+    letter-spacing: -0.01em;
 }
 
 /* Scrollbar styling */
@@ -125,9 +125,15 @@ header {
     transform: scale(1.04);
 }
 
+.header-container {
+    width: 98% !important;
+    max-width: 1650px !important;
+    padding: 0 30px !important;
+}
+
 .header-search {
     flex: 1;
-    max-width: 550px;
+    max-width: 680px;
     min-width: 240px;
     position: relative;
 }
@@ -161,7 +167,7 @@ header {
 .nav-actions {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
 }
 
 .nav-btn {
@@ -191,6 +197,26 @@ header {
 
 .nav-btn:hover i, .nav-btn.active-user i { color: var(--white); }
 .nav-btn i { color: var(--damascus-green); font-size: 1.1rem; }
+
+/* Inverted Standout Cart Button */
+.nav-btn-cart {
+    background: var(--damascus-green) !important;
+    color: var(--white) !important;
+    border-color: var(--damascus-green) !important;
+    padding: 10px 22px !important;
+    box-shadow: 0 4px 16px rgba(7, 48, 102, 0.35) !important;
+}
+
+.nav-btn-cart i {
+    color: var(--white) !important;
+}
+
+.nav-btn-cart:hover {
+    background: var(--onyx) !important;
+    border-color: var(--onyx) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(19, 39, 48, 0.4) !important;
+}
 
 .cart-badge {
     position: absolute;
