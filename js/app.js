@@ -62,9 +62,9 @@ const FALLBACK_PRODUCTS = [
     }
 ];
 
-// Global State
-let allProducts = [];
-let allCategories = [];
+// Global State Pre-populated for Instant Rendering
+let allProducts = [...FALLBACK_PRODUCTS];
+let allCategories = [...FALLBACK_CATEGORIES];
 let cart = JSON.parse(localStorage.getItem('electro_cart') || '[]');
 let currentCustomer = JSON.parse(localStorage.getItem('electro_customer') || 'null');
 let selectedPaymentMethod = 'cod';
@@ -112,6 +112,12 @@ document.addEventListener('DOMContentLoaded', () => {
 function initStorefront() {
     updateCartBadge();
     updateUserAuthUI();
+    
+    // INSTANT RENDER
+    renderCategoryTabs(allCategories);
+    renderProducts(allProducts);
+
+    // Async Network Fetch Attempts
     fetchCategories();
     fetchProducts('all');
 
@@ -215,26 +221,29 @@ function handleGoogleAuthMock() {
     alert(`أهلاً بك يا ${currentCustomer.full_name}! تم ربط حساب Google برقم هاتفك بنجاح.`);
 }
 
+function renderCategoryTabs(categories) {
+    const tabsContainer = document.getElementById('categoryTabs');
+    if (!tabsContainer) return;
+    tabsContainer.innerHTML = `<button class="cat-tab active" data-category="all" onclick="filterCategory('all', this)"><i class="fa-solid fa-border-all"></i> كافة المنتجات</button>`;
+    categories.forEach(cat => {
+        tabsContainer.innerHTML += `
+            <button class="cat-tab" data-category="${cat.slug}" onclick="filterCategory('${cat.slug}', this)">
+                <i class="fa-solid ${cat.icon || 'fa-tag'}"></i> ${cat.name_ar}
+            </button>
+        `;
+    });
+}
+
 // Fetch Categories with Static Fallback
 async function fetchCategories() {
     try {
         const res = await fetch('/api/categories');
         if (!res.ok) throw new Error('Not ok');
         allCategories = await res.json();
+        renderCategoryTabs(allCategories);
     } catch (e) {
         allCategories = FALLBACK_CATEGORIES;
-    }
-
-    const tabsContainer = document.getElementById('categoryTabs');
-    if (tabsContainer) {
-        tabsContainer.innerHTML = `<button class="cat-tab active" data-category="all" onclick="filterCategory('all', this)"><i class="fa-solid fa-border-all"></i> كافة المنتجات</button>`;
-        allCategories.forEach(cat => {
-            tabsContainer.innerHTML += `
-                <button class="cat-tab" data-category="${cat.slug}" onclick="filterCategory('${cat.slug}', this)">
-                    <i class="fa-solid ${cat.icon || 'fa-tag'}"></i> ${cat.name_ar}
-                </button>
-            `;
-        });
+        renderCategoryTabs(allCategories);
     }
 }
 
@@ -266,7 +275,7 @@ function renderProducts(products) {
     const grid = document.getElementById('productsGrid');
     if (!grid) return;
 
-    if (products.length === 0) {
+    if (!products || products.length === 0) {
         grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 60px; color: var(--steel-grey);">
             <i class="fa-solid fa-box-open" style="font-size: 3.5rem; margin-bottom: 15px;"></i>
             <p style="font-size: 1.1rem;">لا توجد منتجات متوفرة حالياً في هذا التصنيف.</p>
