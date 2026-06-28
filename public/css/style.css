@@ -708,17 +708,18 @@ input:checked + .slider:before { transform: translateX(22px); }
     .whatsapp-floating-btn { bottom: 80px; right: 18px; width: 52px; height: 52px; font-size: 1.8rem; }
     
     .payment-methods-grid { grid-template-columns: 1fr; }
-    .modal-overlay { padding: 10px; align-items: center; }
+    .modal-overlay { padding: 15px 10px; align-items: center; justify-content: center; }
     .modal-card {
-        padding: 22px 18px 35px 18px !important;
-        max-height: 88vh !important;
+        padding: 20px 18px 35px 18px !important;
+        max-height: 90vh !important;
         border-radius: 22px !important;
         overflow-y: auto !important;
         -webkit-overflow-scrolling: touch;
+        display: flex;
+        flex-direction: column;
     }
-    .auth-modal-logo { height: 52px !important; margin-bottom: 10px !important; }
-    #userAuthModal h3 { font-size: 1.3rem !important; }
-    #userAuthModal .form-group { margin-bottom: 12px !important; }
+    .auth-modal-logo { height: 45px !important; margin-bottom: 6px !important; }
+    #userAuthModal h3 { font-size: 1.25rem !important; }
 
     /* Trendyol 2-Column Mobile Grid System */
     .products-grid {
