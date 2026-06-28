@@ -102,12 +102,18 @@ function closeModal(id) {
     if (el) el.classList.remove('active');
 }
 
-// Initialize Application on DOM Content Loaded
-document.addEventListener('DOMContentLoaded', () => {
+// Robust Initialization Handling readyState
+function checkAndInit() {
     if (document.getElementById('productsGrid')) {
         initStorefront();
     }
-});
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', checkAndInit);
+} else {
+    checkAndInit();
+}
 
 function initStorefront() {
     updateCartBadge();
