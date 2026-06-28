@@ -488,28 +488,35 @@ header {
 .mobile-nav-item i { font-size: 1.25rem; }
 .mobile-nav-item.active, .mobile-nav-item:hover { color: var(--damascus-green); }
 
-/* Footer */
-footer { background: var(--onyx); color: var(--white); padding: 50px 0 25px 0; margin-top: 70px; }
-.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 35px; margin-bottom: 35px; }
-.footer-col h4 { font-size: 1.25rem; margin-bottom: 20px; color: var(--volt-mint); }
-.footer-links { list-style: none; }
-.footer-links li { margin-bottom: 10px; }
-.footer-links a { color: #94a3b8; text-decoration: none; transition: color 0.3s; }
-.footer-links a:hover { color: var(--white); }
-.copyright-bar { border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 22px; text-align: center; color: #94a3b8; font-size: 0.9rem; }
-
+/* Architectural Footer */
+footer { background: var(--onyx); color: var(--white); padding: 55px 0 25px 0; margin-top: 70px; }
+.footer-grid { display: grid; grid-template-columns: 1.8fr 1fr 1.2fr; gap: 40px; align-items: start; margin-bottom: 40px; }
+.footer-brand-col { display: flex; flex-direction: column; align-items: flex-start; }
+.footer-logo-link { display: inline-block; margin-bottom: 16px; text-decoration: none; }
 .footer-white-logo {
-    height: 110px;
-    max-height: 115px;
+    height: 60px;
+    max-height: 65px;
     width: auto;
     object-fit: contain;
     filter: brightness(0) invert(1);
     transition: transform 0.3s ease;
-    margin-bottom: 20px;
 }
-.footer-white-logo:hover {
-    transform: scale(1.04);
-}
+.footer-white-logo:hover { transform: scale(1.04); }
+.footer-brand-desc { color: #94a3b8; line-height: 1.75; font-size: 0.92rem; margin: 0; max-width: 400px; }
+
+.footer-col-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 18px; color: var(--volt-mint); }
+.footer-links { list-style: none; padding: 0; margin: 0; }
+.footer-links li { margin-bottom: 12px; font-size: 0.95rem; }
+.footer-links a { color: #94a3b8; text-decoration: none; transition: color 0.3s; }
+.footer-links a:hover { color: var(--white); }
+
+.footer-contact-list { list-style: none; padding: 0; margin: 0; line-height: 2.1; font-size: 0.95rem; color: #94a3b8; }
+.footer-contact-list li { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.footer-contact-list i { font-size: 1.1rem; }
+.footer-contact-list i.fa-location-dot, .footer-contact-list i.fa-envelope { color: var(--volt-mint); }
+.footer-contact-list i.fa-whatsapp { color: var(--whatsapp-green); }
+
+.copyright-bar { border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 22px; text-align: center; color: #94a3b8; font-size: 0.88rem; }
 
 /* ==========================================
    ADMIN DASHBOARD RTL DEDICATED STYLING
@@ -796,17 +803,19 @@ input:checked + .slider:before { transform: translateX(22px); }
         font-size: 0.9rem;
     }
 
-    /* Clean & Neat Mobile Footer */
+    /* Clean & Architectural Mobile Footer */
     footer { padding: 35px 0 35px 0; margin-top: 40px; }
     .footer-grid {
         grid-template-columns: 1fr;
-        gap: 22px;
+        gap: 25px;
         text-align: center;
     }
-    .footer-grid p { max-width: 100%; margin: 0 auto 15px auto; font-size: 0.9rem; line-height: 1.6; }
-    .footer-col { font-size: 1.1rem; margin-bottom: 12px; }
+    .footer-brand-col { align-items: center; }
+    .footer-brand-desc { max-width: 100%; margin: 0 auto; font-size: 0.88rem; }
+    .footer-col-title { font-size: 1.1rem; margin-bottom: 12px; }
     .footer-links li { margin-bottom: 8px; font-size: 0.9rem; }
-    .footer-white-logo { height: 85px !important; max-height: 90px !important; margin: 0 auto 18px auto; display: block; }
+    .footer-contact-list { display: inline-block; text-align: right; }
+    .footer-white-logo { height: 50px !important; max-height: 55px !important; margin: 0 auto 12px auto; display: block; }
     .copyright-bar { padding-top: 18px; padding-bottom: 30px; font-size: 0.82rem; line-height: 1.6; }
 }
 
