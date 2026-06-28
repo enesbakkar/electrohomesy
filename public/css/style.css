@@ -625,26 +625,40 @@ input:checked + .slider:before { transform: translateX(22px); }
 }
 
 @media (max-width: 768px) {
-    .announcement-bar { display: none; } /* Hide announcement bar on mobile to save vertical space */
+    .announcement-bar { display: none; }
 
+    header { padding: 8px 0; }
     .nav-wrapper {
-        display: grid;
-        grid-template-columns: auto 1fr;
+        display: flex;
         align-items: center;
-        gap: 8px 12px;
-        padding: 8px 0;
+        gap: 12px;
         min-height: auto;
+        padding: 0;
     }
-    .brand-logo { justify-content: flex-start; }
-    .main-logo-img { height: 48px; max-height: 52px; }
-    
-    .header-search { grid-column: 1 / -1; width: 100%; max-width: 100%; margin-top: 2px; }
-    .header-search input { padding: 10px 40px 10px 15px; font-size: 0.9rem; border-radius: 20px; }
+    .brand-logo { display: flex; align-items: center; }
+    .main-logo-img { height: 42px; max-height: 45px; }
 
-    .nav-actions { display: flex; gap: 8px; justify-content: flex-end; align-items: center; }
-    .nav-btn { padding: 8px 12px; font-size: 0.82rem; border-radius: 20px; }
-    .nav-btn span { display: none; } /* Show compact icon buttons on mobile top header! */
-    .nav-btn i { margin: 0; font-size: 1.1rem; }
+    .header-search { flex: 1; max-width: 100%; min-width: 0; }
+    .header-search input { padding: 9px 38px 9px 14px; font-size: 0.88rem; border-radius: 20px; }
+    .header-search i { right: 14px; font-size: 0.95rem; }
+
+    .nav-actions { display: none; } /* Ultra-clean header! Bottom bar handles navigation cleanly! */
+
+    .hero-section { padding: 12px 0; }
+    .hero-card {
+        grid-template-columns: 1fr;
+        padding: 22px 20px;
+        text-align: center;
+        gap: 16px;
+        border-radius: 20px;
+    }
+    .hero-content h2.slogan { font-size: 1.7rem; margin-bottom: 8px; }
+    .hero-content p.subslogan { font-size: 0.92rem; margin-bottom: 14px; line-height: 1.5; }
+    .hero-badges { display: none; } /* Hide heavy badges on mobile to keep banner sleek */
+    .hero-actions { justify-content: center; gap: 10px; }
+    .btn-primary { padding: 10px 20px; font-size: 0.92rem; border-radius: 25px; }
+    .btn-secondary { display: none; }
+    .hero-image-box img { height: 160px; border-radius: 16px; }
 
     .mobile-bottom-nav { display: flex; }
     .whatsapp-floating-btn { bottom: 80px; right: 18px; width: 52px; height: 52px; font-size: 1.8rem; }
@@ -654,8 +668,8 @@ input:checked + .slider:before { transform: translateX(22px); }
 }
 
 @media (max-width: 480px) {
-    .hero-content h2.slogan { font-size: 2rem; }
-    .hero-content p.subslogan { font-size: 1rem; }
-    .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+    .hero-content h2.slogan { font-size: 1.5rem; }
+    .hero-content p.subslogan { font-size: 0.88rem; }
+    .btn-primary { width: 100%; justify-content: center; }
     .products-grid { grid-template-columns: 1fr; }
 }
