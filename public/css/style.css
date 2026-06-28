@@ -1,16 +1,17 @@
-/* ElectroHomeSY - Brand Identity & Modern Responsive Design System */
+/* ElectroHomeSY - Official Brand Identity Guidelines Implementation */
 @import url('https://fonts.googleapis.com/css2?family=Almarai:wght@400;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Readex+Pro:wght@400;500;600;700&family=Tajawal:wght@400;500;700;800&display=swap');
 
 :root {
-    --damascus-green: #007A3D;
-    --damascus-green-dark: #005A2D;
+    /* Exact Official Brand Identity Palette derived from ElectroHomeSY Brand Guide */
+    --damascus-green: #02753C;
+    --damascus-green-dark: #01552B;
     --spark-red: #CE1126;
     --volt-mint: #2FCB7E;
-    --onyx: #0E1411;
+    --onyx: #0F1813;
     --steel-grey: #64748B;
     --fog-bg: #F4F7F5;
     --white: #FFFFFF;
-    --card-shadow: 0 12px 35px rgba(14, 20, 17, 0.06);
+    --card-shadow: 0 12px 35px rgba(15, 24, 19, 0.06);
     --border-color: rgba(138, 154, 147, 0.22);
     --whatsapp-green: #25D366;
 }
@@ -144,7 +145,7 @@ header {
 
 .header-search input:focus {
     border-color: var(--damascus-green);
-    box-shadow: 0 0 0 4px rgba(0, 122, 61, 0.12);
+    box-shadow: 0 0 0 4px rgba(2, 117, 60, 0.14);
 }
 
 .header-search i {
@@ -184,7 +185,7 @@ header {
     background: var(--damascus-green);
     color: var(--white);
     border-color: var(--damascus-green);
-    box-shadow: 0 4px 15px rgba(0,122,61,0.25);
+    box-shadow: 0 4px 15px rgba(2, 117, 60, 0.28);
 }
 
 .nav-btn:hover i, .nav-btn.active-user i { color: var(--white); }
@@ -212,7 +213,7 @@ header {
 .hero-section { padding: 25px 0; }
 
 .hero-card {
-    background: linear-gradient(135deg, #005A2D 0%, #007A3D 50%, #004D26 100%);
+    background: linear-gradient(135deg, #01552B 0%, #02753C 50%, #014222 100%);
     border-radius: 28px;
     padding: 40px 45px;
     color: var(--white);
@@ -220,7 +221,7 @@ header {
     grid-template-columns: 1.2fr 0.8fr;
     align-items: center;
     gap: 40px;
-    box-shadow: 0 25px 50px rgba(0, 122, 61, 0.22);
+    box-shadow: 0 25px 50px rgba(2, 117, 60, 0.25);
     position: relative;
     overflow: hidden;
 }
@@ -355,7 +356,7 @@ header {
     background: var(--damascus-green);
     color: var(--white);
     border-color: var(--damascus-green);
-    box-shadow: 0 6px 20px rgba(0, 122, 61, 0.28);
+    box-shadow: 0 6px 20px rgba(2, 117, 60, 0.28);
 }
 
 /* Products Grid */
@@ -371,7 +372,7 @@ header {
     flex-direction: column;
     position: relative;
 }
-.product-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(14, 20, 17, 0.12); border-color: rgba(0, 122, 61, 0.4); }
+.product-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(15, 24, 19, 0.12); border-color: rgba(2, 117, 60, 0.4); }
 
 .discount-tag {
     position: absolute; top: 16px; right: 16px; background: var(--spark-red); color: var(--white);
@@ -396,7 +397,7 @@ header {
 /* Modals */
 .modal-overlay {
     position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(14, 20, 17, 0.65); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    background: rgba(15, 24, 19, 0.65); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
     z-index: 2500; display: none; align-items: center; justify-content: center; padding: 15px;
 }
 .modal-overlay.active { display: flex; }
@@ -418,7 +419,7 @@ header {
 .variant-title { font-size: 0.98rem; font-weight: 700; margin-bottom: 10px; color: var(--onyx); }
 .variant-options { display: flex; gap: 10px; flex-wrap: wrap; }
 .variant-opt-btn { background: var(--fog-bg); border: 2px solid var(--border-color); padding: 9px 16px; border-radius: 14px; font-weight: 600; font-size: 0.92rem; cursor: pointer; transition: all 0.3s; }
-.variant-opt-btn.selected { border-color: var(--damascus-green); background: rgba(0, 122, 61, 0.08); color: var(--damascus-green); font-weight: 700; }
+.variant-opt-btn.selected { border-color: var(--damascus-green); background: rgba(2, 117, 60, 0.08); color: var(--damascus-green); font-weight: 700; }
 
 .youtube-embed-box { margin-top: 20px; border-radius: 18px; overflow: hidden; position: relative; padding-bottom: 56.25%; height: 0; background: #000; }
 .youtube-embed-box iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
@@ -430,7 +431,7 @@ header {
 
 .payment-methods-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 22px; }
 .payment-method-card { border: 2px solid var(--border-color); border-radius: 16px; padding: 16px; cursor: pointer; text-align: center; transition: all 0.3s; background: var(--white); }
-.payment-method-card.selected { border-color: var(--damascus-green); background: rgba(0, 122, 61, 0.06); }
+.payment-method-card.selected { border-color: var(--damascus-green); background: rgba(2, 117, 60, 0.06); }
 .payment-method-card i { font-size: 1.8rem; color: var(--damascus-green); margin-bottom: 8px; }
 
 .cart-item-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border-color); }
@@ -506,7 +507,7 @@ body.admin-body {
 .admin-nav-item:hover, .admin-nav-item.active {
     background: var(--damascus-green);
     color: #fff;
-    box-shadow: 0 4px 15px rgba(0,122,61,0.3);
+    box-shadow: 0 4px 15px rgba(2, 117, 60, 0.3);
 }
 .admin-nav-item i { font-size: 1.2rem; }
 
