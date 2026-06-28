@@ -689,6 +689,68 @@ input:checked + .slider:before { transform: translateX(22px); }
     .payment-methods-grid { grid-template-columns: 1fr; }
     .modal-card { padding: 30px 20px; }
 
+    /* Trendyol 2-Column Mobile Grid System */
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 12px !important;
+        margin-bottom: 40px;
+    }
+    .product-card {
+        padding: 12px;
+        border-radius: 18px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+    }
+    .product-thumb {
+        height: 140px;
+        border-radius: 12px;
+        margin-bottom: 10px;
+        object-fit: contain;
+        background: #f8fafc;
+    }
+    .discount-tag {
+        top: 10px;
+        right: 10px;
+        padding: 3px 8px;
+        font-size: 0.75rem;
+        border-radius: 8px;
+    }
+    .product-category-name {
+        font-size: 0.75rem;
+        margin-bottom: 4px;
+    }
+    .product-title {
+        font-size: 0.88rem;
+        font-weight: 700;
+        margin-bottom: 8px;
+        line-height: 1.35;
+        height: 2.7em;
+    }
+    .product-price-box {
+        padding-top: 10px;
+        gap: 6px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .current-price {
+        font-size: 1.05rem;
+        font-weight: 800;
+    }
+    .old-price {
+        font-size: 0.82rem;
+    }
+    .product-card-actions {
+        margin-top: 10px;
+        gap: 6px;
+    }
+    .btn-add-cart {
+        padding: 9px 10px;
+        font-size: 0.82rem;
+        border-radius: 10px;
+    }
+    .btn-add-cart i {
+        font-size: 0.9rem;
+    }
+
     /* Clean & Neat Mobile Footer */
     footer { padding: 35px 0 35px 0; margin-top: 40px; }
     .footer-grid {
@@ -708,5 +770,5 @@ input:checked + .slider:before { transform: translateX(22px); }
     .hero-content h2.slogan { font-size: 1.5rem; }
     .hero-content p.subslogan { font-size: 0.88rem; }
     .btn-primary { width: 100%; justify-content: center; }
-    .products-grid { grid-template-columns: 1fr; }
+    .products-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
 }
