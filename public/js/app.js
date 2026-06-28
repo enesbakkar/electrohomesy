@@ -340,7 +340,7 @@ function renderProducts(products) {
 
                 <div class="product-card-actions">
                     <button class="btn-add-cart" onclick="openProductDetail(${p.id})">
-                        <i class="fa-solid fa-bag-shopping"></i> التفاصيل والشراء
+                        <i class="fa-solid fa-bag-shopping"></i> التفاصيل
                     </button>
                     <a href="${waLink}" target="_blank" class="btn-whatsapp-icon-only" title="تواصل سريع عبر الواتساب">
                         <i class="fa-brands fa-whatsapp"></i>

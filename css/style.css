@@ -763,17 +763,20 @@ input:checked + .slider:before { transform: translateX(22px); }
         margin-top: 10px;
         gap: 6px;
         flex-direction: row !important;
+        align-items: center !important;
     }
     .btn-add-cart {
-        padding: 9px 8px;
-        font-size: 0.8rem;
+        height: 36px;
+        padding: 0 10px;
+        font-size: 0.82rem;
         border-radius: 10px;
+        white-space: nowrap;
     }
     .btn-whatsapp-icon-only {
-        width: 34px;
-        height: 34px;
+        width: 36px;
+        height: 36px;
         border-radius: 10px;
-        font-size: 1.1rem;
+        font-size: 1.15rem;
     }
     .btn-add-cart i {
         font-size: 0.9rem;
