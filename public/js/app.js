@@ -342,8 +342,8 @@ function renderProducts(products) {
                     <button class="btn-add-cart" onclick="openProductDetail(${p.id})">
                         <i class="fa-solid fa-bag-shopping"></i> التفاصيل والشراء
                     </button>
-                    <a href="${waLink}" target="_blank" class="btn-whatsapp-direct" style="justify-content: center; width: 100%;">
-                        <i class="fa-brands fa-whatsapp"></i> استفسار سـريع عبر الواتساب
+                    <a href="${waLink}" target="_blank" class="btn-whatsapp-icon-only" title="تواصل سريع عبر الواتساب">
+                        <i class="fa-brands fa-whatsapp"></i>
                     </a>
                 </div>
             </div>
