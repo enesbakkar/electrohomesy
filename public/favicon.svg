@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Dark navy rounded background -->
+  <rect width="64" height="64" rx="14" ry="14" fill="#073066"/>
+  <!-- House roof -->
+  <polygon points="32,10 10,30 18,30 18,54 46,54 46,30 54,30" fill="none" stroke="white" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+  <!-- Power button circle -->
+  <circle cx="32" cy="40" r="7" fill="none" stroke="white" stroke-width="3.5"/>
+  <!-- Power button top line -->
+  <line x1="32" y1="31" x2="32" y2="35" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+</svg>
