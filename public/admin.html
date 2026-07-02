@@ -21,11 +21,11 @@
             <form id="adminLoginForm">
                 <div class="form-group">
                     <label>اسم المستخدم</label>
-                    <input type="text" id="adminUser" class="form-control" value="admin" required placeholder="أدخل اسم المستخدم">
+                    <input type="text" id="adminUser" class="form-control" required placeholder="أدخل اسم المستخدم">
                 </div>
                 <div class="form-group">
                     <label>كلمة المرور</label>
-                    <input type="password" id="adminPass" class="form-control" value="admin123" required placeholder="أدخل كلمة المرور">
+                    <input type="password" id="adminPass" class="form-control" required placeholder="أدخل كلمة المرور">
                 </div>
                 <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 15px; background: var(--damascus-green); font-size: 1.1rem;">دخول اللوحة الإدارية</button>
             </form>
@@ -202,10 +202,26 @@
     <script src="/js/app.js?v=1.0.4"></script>
     <script>
         // Check Admin Auth on load
-        if (sessionStorage.getItem('adminToken')) {
-            document.getElementById('adminLoginOverlay').style.display = 'none';
-            loadAdminData();
+        async function checkAdminAuth() {
+            try {
+                const res = await fetch('/api/admin/verify');
+                if (res.ok) {
+                    document.getElementById('adminLoginOverlay').style.display = 'none';
+                    loadAdminData();
+                } else {
+                    document.getElementById('adminLoginOverlay').style.display = 'flex';
+                }
+            } catch (err) {
+                // Fallback for static hosting
+                if (sessionStorage.getItem('adminToken')) {
+                    document.getElementById('adminLoginOverlay').style.display = 'none';
+                    loadAdminData();
+                } else {
+                    document.getElementById('adminLoginOverlay').style.display = 'flex';
+                }
+            }
         }
+        checkAdminAuth();
     </script>
 </body>
 </html>

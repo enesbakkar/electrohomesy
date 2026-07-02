@@ -127,9 +127,18 @@ function getYouTubeEmbedUrl(url) {
     return (match && match[2].length === 11) ? `https://www.youtube.com/embed/${match[2]}` : null;
 }
 
+// Utility: Get cookie value
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+    return '';
+}
+
 // Utility: Generate WhatsApp Quick Inquiry Link (+963 959 930 005)
 function getWhatsAppInquiryLink(productTitle) {
-    const phone = '963959930005';
+    const parts = ['963', '959', '930', '005'];
+    const phone = parts.join('');
     const msg = `السلام عليكم\nهل متوفر هذا الصنف؟\n*${productTitle}*`;
     return `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
 }
@@ -155,9 +164,43 @@ if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', checkAndInit);
 } else {
     checkAndInit();
+
+// Mobile announcement bar hide on scroll
+let lastScrollY = 0;
+window.addEventListener('scroll', () => {
+    if (window.innerWidth > 768) return; // Only on mobile widths
+    const announcementBar = document.querySelector('.announcement-bar');
+    if (!announcementBar) return;
+    const currentY = window.scrollY;
+    if (currentY > lastScrollY && currentY > 50) {
+        // Scrolling down
+        announcementBar.classList.add('hidden');
+    } else if (currentY < lastScrollY) {
+        // Scrolling up
+        announcementBar.classList.remove('hidden');
+    }
+    lastScrollY = currentY;
+});
 }
 
 function initStorefront() {
+    // Dynamic obfuscated phone values
+    const p1 = '963';
+    const p2 = '959';
+    const p3 = '930';
+    const p4 = '005';
+    const fullPhone = p1 + p2 + p3 + p4;
+    
+    const waFloating = document.getElementById('wa-floating-link');
+    if (waFloating) {
+        waFloating.href = `https://wa.me/${fullPhone}?text=${encodeURIComponent('السلام عليكم\nهل متوفر هذا الصنف؟')}`;
+    }
+    
+    const waDisplay = document.getElementById('whatsapp-number-display');
+    if (waDisplay) {
+        waDisplay.textContent = `+${p1} ${p2} ${p3} ${p4}`;
+    }
+
     updateCartBadge();
     updateUserAuthUI();
     
@@ -232,7 +275,10 @@ async function handleCustomerAuthSubmit(e) {
     try {
         const res = await fetch('/api/customer/register', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json',
+                'X-CSRF-Token': getCookie('csrf_token')
+            },
             body: JSON.stringify({ full_name, phone_number, auth_provider: 'phone' })
         });
         if (res.ok) {
@@ -596,7 +642,10 @@ async function handleCheckoutSubmit(e) {
     try {
         const res = await fetch('/api/orders', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json',
+                'X-CSRF-Token': getCookie('csrf_token')
+            },
             body: JSON.stringify({
                 customer_id: currentCustomer.id,
                 customer_name,
@@ -633,7 +682,10 @@ async function handleRequestSubmit(e) {
     try {
         await fetch('/api/requests', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json',
+                'X-CSRF-Token': getCookie('csrf_token')
+            },
             body: JSON.stringify({ customer_name, customer_phone, requested_product, notes })
         });
     } catch (e) {}
@@ -657,12 +709,13 @@ document.getElementById('adminLoginForm')?.addEventListener('submit', async (e) 
     try {
         const res = await fetch('/api/admin/login', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json',
+                'X-CSRF-Token': getCookie('csrf_token')
+            },
             body: JSON.stringify({ username, password })
         });
         if (res.ok) {
-            const data = await res.json();
-            sessionStorage.setItem('adminToken', data.token);
             document.getElementById('adminLoginOverlay').style.display = 'none';
             loadAdminData();
             return;
@@ -680,7 +733,13 @@ document.getElementById('adminLoginForm')?.addEventListener('submit', async (e) 
     }
 });
 
-function logoutAdmin() {
+async function logoutAdmin() {
+    try {
+        await fetch('/api/admin/logout', { 
+            method: 'POST',
+            headers: { 'X-CSRF-Token': getCookie('csrf_token') }
+        });
+    } catch (err) {}
     sessionStorage.removeItem('adminToken');
     location.reload();
 }
@@ -758,7 +817,10 @@ async function toggleVisibility(id, isVisible) {
     try {
         await fetch(`/api/products/${id}/visibility`, {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json',
+                'X-CSRF-Token': getCookie('csrf_token')
+            },
             body: JSON.stringify({ is_visible: isVisible })
         });
     } catch (e) {}
@@ -767,7 +829,10 @@ async function toggleVisibility(id, isVisible) {
 async function deleteProduct(id) {
     if (!confirm('هل أنت تأكد من رغبتك بحذف هذا الجهاز نهائياً من المخزون؟')) return;
     try {
-        await fetch(`/api/products/${id}`, { method: 'DELETE' });
+        await fetch(`/api/products/${id}`, { 
+            method: 'DELETE',
+            headers: { 'X-CSRF-Token': getCookie('csrf_token') }
+        });
     } catch (e) {}
     fetchAdminProducts();
 }
@@ -890,7 +955,10 @@ document.getElementById('adminProductForm')?.addEventListener('submit', async (e
         const method = productId ? 'PUT' : 'POST';
         const res = await fetch(url, {
             method,
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json',
+                'X-CSRF-Token': getCookie('csrf_token')
+            },
             body: JSON.stringify(payload)
         });
         if (res.ok) {

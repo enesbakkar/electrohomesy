@@ -3,3 +3,8 @@ node_modules/
 *.psd
 *.pdf
 *.ai
+.env
+electrohomesy_db.json
+electrohomesy.db
+*.db
+*.db-journal

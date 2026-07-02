@@ -1,413 +1,500 @@
-const http = require('http');
-const fs = require('fs');
+const express = require('express');
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
+const rateLimit = require('express-rate-limit');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
 const path = require('path');
+const db = require('./db');
 
+require('dotenv').config();
+
+const app = express();
 const PORT = process.env.PORT || 5000;
-const DB_FILE = path.join(__dirname, 'electrohomesy_db.json');
+const JWT_SECRET = process.env.JWT_SECRET || 'super_secret_jwt_sign_key_123456';
 const PUBLIC_DIR = path.join(__dirname, 'public');
 
-// Simple & Reliable JSON Database Store
-let dbData = {
-    categories: [],
-    products: [],
-    product_variants: [],
-    orders: [],
-    product_requests: [],
-    customers: [],
-    users: []
-};
+// Middlewares
+app.use(cors({
+    origin: true,
+    credentials: true
+}));
+app.use(express.json({ limit: '10mb' }));
+app.use(cookieParser());
 
-function loadDatabase() {
-    if (fs.existsSync(DB_FILE)) {
-        try {
-            const raw = fs.readFileSync(DB_FILE, 'utf8');
-            dbData = JSON.parse(raw);
-            if (!dbData.customers) dbData.customers = [];
-        } catch (e) {
-            seedInitialData();
-        }
-    } else {
-        seedInitialData();
-    }
-}
-
-function saveDatabase() {
-    fs.writeFileSync(DB_FILE, JSON.stringify(dbData, null, 2), 'utf8');
-}
-
-function seedInitialData() {
-    dbData = {
-        categories: [
-            { id: 1, name_ar: 'المكاوي وأجهزة البخار', slug: 'irons', icon: 'fa-iron' },
-            { id: 2, name_ar: 'المكاس والتنظيف', slug: 'vacuums', icon: 'fa-broom' },
-            { id: 3, name_ar: 'أجهزة المطبخ والخلاطات', slug: 'kitchen', icon: 'fa-blender' },
-            { id: 4, name_ar: 'الأجهزة المنزلية الكبيرة', slug: 'large-appliances', icon: 'fa-tv' }
-        ],
-        products: [
-            {
-                id: 1,
-                category_id: 1,
-                title_ar: 'مكواة بخار ذكية عالية الكفاءة',
-                slug: 'smart-steam-iron',
-                description_ar: 'مكواة بخار احترافية بقاعدة سيراميك مانعة للالتصاق، نظام ضغط مضاعف لكيّ الأقمشة الثقيلة والخفيفة بسرعة فائقة مع خاصية التنظيف الذاتي.',
-                base_price: 185000,
-                discount_price: 165000,
-                main_image: 'https://images.unsplash.com/photo-1585837575652-267c041d77d4?auto=format&fit=crop&w=800&q=80',
-                youtube_url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-                is_visible: 1,
-                created_at: new Date().toISOString()
-            },
-            {
-                id: 2,
-                category_id: 2,
-                title_ar: 'مكنسة كهربائية سيلكون صامتة بقوة شفط هائلة',
-                slug: 'silent-vacuum-cleaner',
-                description_ar: 'مكنسة كهربائية فائقة الهدوء مزودة بفلتر HEPA طبي مضاد للحساسية ومحرك توربو لإزالة أصعب الأتربة والغبار من السجاد والأرضيات.',
-                base_price: 420000,
-                discount_price: 390000,
-                main_image: 'https://images.unsplash.com/photo-1558317374-067fb5f30001?auto=format&fit=crop&w=800&q=80',
-                youtube_url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-                is_visible: 1,
-                created_at: new Date().toISOString()
-            },
-            {
-                id: 3,
-                category_id: 3,
-                title_ar: 'خلاط ومحضر طعام متعدد الوظائف 4 في 1',
-                slug: 'multi-blender-4in1',
-                description_ar: 'محضر طعام متعدد الاستخدامات يشمل خلاط عصائر، مطحنة بهارات، مفرمة لحوم وخفاقة. شفرات فولاذية مقاومة للصدأ مع سرعتين ونظام خفق نبضي.',
-                base_price: 275000,
-                discount_price: null,
-                main_image: 'https://images.unsplash.com/photo-1570222094114-d054a817e56b?auto=format&fit=crop&w=800&q=80',
-                youtube_url: '',
-                is_visible: 1,
-                created_at: new Date().toISOString()
-            }
-        ],
-        product_variants: [
-            { id: 1, product_id: 1, brand: 'Philips', model_name: 'PerfectCare 7000', variant_attributes: { "اللون": "أزرق ملكي", "القوة": "2400 واط", "سعة الخزان": "300 مل" }, price_modifier: 0, stock_quantity: 15, sku: 'PHI-IRON-01' },
-            { id: 2, product_id: 1, brand: 'Tefal', model_name: 'Ultimate Pure', variant_attributes: { "اللون": "أسود ذهبي", "القوة": "3000 واط", "سعة الخزان": "350 مل" }, price_modifier: 35000, stock_quantity: 8, sku: 'TEF-IRON-02' },
-            { id: 3, product_id: 2, brand: 'Bosch', model_name: 'ProSilence Series 6', variant_attributes: { "اللون": "أحمر دمشقي", "السعة": "4 لتر", "طول السلك": "9 متر" }, price_modifier: 0, stock_quantity: 10, sku: 'BOS-VAC-01' },
-            { id: 4, product_id: 2, brand: 'Samsung', model_name: 'PowerMotion Eco', variant_attributes: { "اللون": "فضي معدني", "السعة": "4.5 لتر", "طول السلك": "10 متر" }, price_modifier: 45000, stock_quantity: 5, sku: 'SAM-VAC-02' },
-            { id: 5, product_id: 3, brand: 'Moulinex', model_name: 'DoubleForce', variant_attributes: { "الوعاء": "زجاج مقوى 1.75 لتر", "القوة": "1000 واط" }, price_modifier: 0, stock_quantity: 20, sku: 'MOU-BLN-01' },
-            { id: 6, product_id: 3, brand: 'Kenwood', model_name: 'Multipro Express', variant_attributes: { "الوعاء": "بلاستيك غير قابل للكسر 2 لتر", "القوة": "1200 واط" }, price_modifier: 50000, stock_quantity: 12, sku: 'KEN-BLN-02' }
-        ],
-        orders: [],
-        product_requests: [],
-        customers: [],
-        users: [
-            { id: 1, username: 'admin', password: 'admin123' }
-        ]
-    };
-    saveDatabase();
-}
-
-loadDatabase();
-
-const MIME_TYPES = {
-    '.html': 'text/html; charset=utf-8',
-    '.css': 'text/css; charset=utf-8',
-    '.js': 'application/javascript; charset=utf-8',
-    '.json': 'application/json; charset=utf-8',
-    '.png': 'image/png',
-    '.jpg': 'image/jpeg',
-    '.svg': 'image/svg+xml',
-    '.ico': 'image/x-icon'
-};
-
-function sendJson(res, statusCode, data) {
-    res.writeHead(statusCode, { 'Content-Type': 'application/json; charset=utf-8' });
-    res.end(JSON.stringify(data));
-}
-
-function parseBody(req, callback) {
-    let body = '';
-    req.on('data', chunk => { body += chunk.toString(); });
-    req.on('end', () => {
-        try {
-            callback(body ? JSON.parse(body) : {});
-        } catch (e) {
-            callback({});
-        }
-    });
-}
-
-const server = http.createServer((req, res) => {
-    const reqUrl = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
-    const pathname = reqUrl.pathname;
-    const method = req.method;
-
-    // API ROUTES
-    if (pathname.startsWith('/api/')) {
-        // Customer Registration & Login
-        if (pathname === '/api/customer/register' && method === 'POST') {
-            return parseBody(req, (body) => {
-                const { full_name, phone_number, auth_provider } = body;
-                if (!phone_number) return sendJson(res, 400, { error: 'رقم الهاتف السوري إجباري للجميع' });
-
-                // Check Syrian phone number format
-                const cleanPhone = phone_number.replace(/\s+/g, '');
-                const isSyrian = /^(09|\+9639|9639)\d{8}$/.test(cleanPhone);
-                if (!isSyrian) {
-                    return sendJson(res, 400, { error: 'يرجى إدخال رقم هاتف سوري صحيح (مثال: 0912345678 أو 963912345678+)' });
-                }
-
-                let existing = dbData.customers.find(c => c.phone_number === cleanPhone);
-                if (!existing) {
-                    const newId = dbData.customers.length > 0 ? Math.max(...dbData.customers.map(c => c.id)) + 1 : 1;
-                    existing = {
-                        id: newId,
-                        full_name: full_name || 'عميل إلكتروهومسي',
-                        phone_number: cleanPhone,
-                        auth_provider: auth_provider || 'phone',
-                        created_at: new Date().toISOString()
-                    };
-                    dbData.customers.push(existing);
-                    saveDatabase();
-                }
-
-                return sendJson(res, 200, { message: 'تم تسـجيل الدخول بنجاح', customer: existing });
-            });
-        }
-
-        // 1. Get Categories
-        if (pathname === '/api/categories' && method === 'GET') {
-            return sendJson(res, 200, dbData.categories);
-        }
-
-        // 2. Products List
-        if (pathname === '/api/products' && method === 'GET') {
-            const category = reqUrl.searchParams.get('category');
-            const search = reqUrl.searchParams.get('search');
-            const include_hidden = reqUrl.searchParams.get('include_hidden');
-
-            let list = dbData.products;
-
-            if (include_hidden !== 'true') {
-                list = list.filter(p => p.is_visible === 1);
-            }
-
-            if (category && category !== 'all') {
-                const cat = dbData.categories.find(c => c.slug === category);
-                if (cat) list = list.filter(p => p.category_id === cat.id);
-            }
-
-            if (search) {
-                const q = search.toLowerCase();
-                list = list.filter(p => p.title_ar.toLowerCase().includes(q) || (p.description_ar && p.description_ar.toLowerCase().includes(q)));
-            }
-
-            const result = list.map(p => {
-                const cat = dbData.categories.find(c => c.id === p.category_id);
-                const variants = dbData.product_variants.filter(v => v.product_id === p.id);
-                return { ...p, category_name: cat ? cat.name_ar : '', variants };
-            });
-
-            return sendJson(res, 200, result);
-        }
-
-        // 3. Single Product
-        const prodMatch = pathname.match(/^\/api\/products\/(\d+)$/);
-        if (prodMatch && method === 'GET') {
-            const id = Number(prodMatch[1]);
-            const p = dbData.products.find(item => item.id === id);
-            if (!p) return sendJson(res, 404, { error: 'المنتج غير موجود' });
-
-            const cat = dbData.categories.find(c => c.id === p.category_id);
-            const variants = dbData.product_variants.filter(v => v.product_id === p.id);
-            return sendJson(res, 200, { ...p, category_name: cat ? cat.name_ar : '', variants });
-        }
-
-        // 4. Create Product
-        if (pathname === '/api/products' && method === 'POST') {
-            return parseBody(req, (body) => {
-                const { category_id, title_ar, description_ar, base_price, discount_price, main_image, youtube_url, is_visible, variants } = body;
-                if (!title_ar || !base_price) return sendJson(res, 400, { error: 'بيانات ناقصة' });
-
-                const newId = dbData.products.length > 0 ? Math.max(...dbData.products.map(p => p.id)) + 1 : 1;
-                const newProduct = {
-                    id: newId,
-                    category_id: Number(category_id) || 1,
-                    title_ar,
-                    slug: 'prod-' + Date.now(),
-                    description_ar,
-                    base_price: Number(base_price),
-                    discount_price: discount_price ? Number(discount_price) : null,
-                    main_image: main_image || '',
-                    youtube_url: youtube_url || '',
-                    is_visible: is_visible ?? 1,
-                    created_at: new Date().toISOString()
-                };
-
-                dbData.products.unshift(newProduct);
-
-                if (variants && Array.isArray(variants)) {
-                    variants.forEach(v => {
-                        const vId = dbData.product_variants.length > 0 ? Math.max(...dbData.product_variants.map(item => item.id)) + 1 : 1;
-                        dbData.product_variants.push({
-                            id: vId,
-                            product_id: newId,
-                            brand: v.brand || '',
-                            model_name: v.model_name || '',
-                            variant_attributes: v.variant_attributes || {},
-                            price_modifier: Number(v.price_modifier || 0),
-                            stock_quantity: 10,
-                            sku: 'SKU-' + Date.now()
-                        });
-                    });
-                }
-
-                saveDatabase();
-                return sendJson(res, 201, { message: 'تم الإضافة بنجاح', id: newId });
-            });
-        }
-
-        // 5. Update Product
-        if (prodMatch && method === 'PUT') {
-            const id = Number(prodMatch[1]);
-            const index = dbData.products.findIndex(p => p.id === id);
-            if (index === -1) return sendJson(res, 404, { error: 'Product not found' });
-
-            return parseBody(req, (body) => {
-                const { category_id, title_ar, description_ar, base_price, discount_price, main_image, youtube_url, is_visible, variants } = body;
-                
-                dbData.products[index] = {
-                    ...dbData.products[index],
-                    category_id: Number(category_id),
-                    title_ar,
-                    description_ar,
-                    base_price: Number(base_price),
-                    discount_price: discount_price ? Number(discount_price) : null,
-                    main_image,
-                    youtube_url,
-                    is_visible: is_visible ?? 1
-                };
-
-                if (variants && Array.isArray(variants)) {
-                    dbData.product_variants = dbData.product_variants.filter(v => v.product_id !== id);
-                    variants.forEach(v => {
-                        const vId = dbData.product_variants.length > 0 ? Math.max(...dbData.product_variants.map(item => item.id)) + 1 : 1;
-                        dbData.product_variants.push({
-                            id: vId,
-                            product_id: id,
-                            brand: v.brand || '',
-                            model_name: v.model_name || '',
-                            variant_attributes: v.variant_attributes || {},
-                            price_modifier: Number(v.price_modifier || 0),
-                            stock_quantity: 10,
-                            sku: 'SKU-' + Date.now()
-                        });
-                    });
-                }
-
-                saveDatabase();
-                return sendJson(res, 200, { message: 'تم التحديث بنجاح' });
-            });
-        }
-
-        // 6. Toggle Visibility
-        const visMatch = pathname.match(/^\/api\/products\/(\d+)\/visibility$/);
-        if (visMatch && method === 'PUT') {
-            const id = Number(visMatch[1]);
-            return parseBody(req, (body) => {
-                const p = dbData.products.find(item => item.id === id);
-                if (p) {
-                    p.is_visible = body.is_visible ? 1 : 0;
-                    saveDatabase();
-                }
-                return sendJson(res, 200, { message: 'تم التغيير' });
-            });
-        }
-
-        // 7. Delete Product
-        if (prodMatch && method === 'DELETE') {
-            const id = Number(prodMatch[1]);
-            dbData.products = dbData.products.filter(p => p.id !== id);
-            dbData.product_variants = dbData.product_variants.filter(v => v.product_id !== id);
-            saveDatabase();
-            return sendJson(res, 200, { message: 'تم الحذف' });
-        }
-
-        // 8. Submit Order (Checks Customer Authentication)
-        if (pathname === '/api/orders' && method === 'POST') {
-            return parseBody(req, (body) => {
-                const { customer_name, customer_phone, delivery_address, payment_method, total_amount, items, customer_id } = body;
-                if (!customer_name || !customer_phone || !delivery_address) {
-                    return sendJson(res, 400, { error: 'بيانات التوصيل غير مكتملة' });
-                }
-                const orderId = dbData.orders.length > 0 ? Math.max(...dbData.orders.map(o => o.id)) + 1 : 1001;
-                dbData.orders.unshift({ id: orderId, customer_id: customer_id || null, customer_name, customer_phone, delivery_address, payment_method: payment_method || 'cod', total_amount, items, created_at: new Date().toISOString() });
-                saveDatabase();
-                return sendJson(res, 201, { message: 'تم استلام طلبكم بنجاح! سيتواصل معكم فريق التوصيل قريباً.', order_id: orderId });
-            });
-        }
-
-        // 9. Get Orders
-        if (pathname === '/api/orders' && method === 'GET') {
-            return sendJson(res, 200, dbData.orders);
-        }
-
-        // 10. Product Requests
-        if (pathname === '/api/requests' && method === 'POST') {
-            return parseBody(req, (body) => {
-                const { customer_name, customer_phone, requested_product, notes } = body;
-                const reqId = dbData.product_requests.length > 0 ? Math.max(...dbData.product_requests.map(r => r.id)) + 1 : 1;
-                dbData.product_requests.unshift({ id: reqId, customer_name, customer_phone, requested_product, notes: notes || '', created_at: new Date().toISOString() });
-                saveDatabase();
-                return sendJson(res, 201, { message: 'تم إرسال اقتراحك بنجاح. شكراً لتواصلك مع إلكتروهومسي!' });
-            });
-        }
-
-        if (pathname === '/api/requests' && method === 'GET') {
-            return sendJson(res, 200, dbData.product_requests);
-        }
-
-        // 11. Admin Login
-        if (pathname === '/api/admin/login' && method === 'POST') {
-            return parseBody(req, (body) => {
-                const { username, password } = body;
-                if (username === 'admin' && password === 'admin123') {
-                    return sendJson(res, 200, { message: 'Success', token: 'admin-token-12345' });
-                }
-                return sendJson(res, 401, { error: 'اسم المستخدم أو كلمة المرور غير صحيحة' });
-            });
-        }
-    }
-
-    // STATIC FILE SERVING WITH NO-CACHE HEADERS FOR LOCAL DEVELOPMENT
-    let filePath = path.join(PUBLIC_DIR, pathname === '/' ? 'index.html' : (pathname === '/admin' ? 'admin.html' : pathname));
-    let extname = String(path.extname(filePath)).toLowerCase();
-
-    fs.readFile(filePath, (err, content) => {
-        if (err) {
-            if (err.code === 'ENOENT') {
-                fs.readFile(path.join(PUBLIC_DIR, 'index.html'), (error, defaultContent) => {
-                    res.writeHead(200, {
-                        'Content-Type': 'text/html; charset=utf-8',
-                        'Cache-Control': 'no-cache, no-store, must-revalidate',
-                        'Pragma': 'no-cache',
-                        'Expires': '0'
-                    });
-                    res.end(defaultContent, 'utf-8');
-                });
-            } else {
-                res.writeHead(500);
-                res.end(`Server Error: ${err.code}`);
-            }
-        } else {
-            const contentType = MIME_TYPES[extname] || 'application/octet-stream';
-            res.writeHead(200, {
-                'Content-Type': contentType,
-                'Cache-Control': 'no-cache, no-store, must-revalidate',
-                'Pragma': 'no-cache',
-                'Expires': '0'
-            });
-            res.end(content, 'utf-8');
-        }
-    });
+// Rate Limiters
+const loginLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 mins
+    max: 10,
+    message: { error: 'محاولات دخول كثيرة جداً، يرجى المحاولة لاحقاً بعد 15 دقيقة' }
 });
 
-server.listen(PORT, () => {
+const submissionLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 15,
+    message: { error: 'طلب مفرط، يرجى المحاولة لاحقاً بعد 15 دقيقة' }
+});
+
+// Double Submit Cookie CSRF Protection Middleware
+function csrfMiddleware(req, res, next) {
+    let token = req.cookies.csrf_token;
+    if (!token) {
+        token = crypto.randomBytes(24).toString('hex');
+        res.cookie('csrf_token', token, {
+            sameSite: 'strict',
+            secure: process.env.NODE_ENV === 'production'
+        });
+        req.cookies.csrf_token = token;
+    }
+
+    const stateModifyingMethods = ['POST', 'PUT', 'DELETE'];
+    if (stateModifyingMethods.includes(req.method)) {
+        const clientToken = req.headers['x-csrf-token'];
+        if (!clientToken || clientToken !== req.cookies.csrf_token) {
+            return res.status(403).json({ error: 'انتهت صلاحية الجلسة الأمنية (CSRF Verification Failed)' });
+        }
+    }
+    next();
+}
+
+app.use(csrfMiddleware);
+
+// Admin JWT Cookie Auth Middleware
+function requireAdmin(req, res, next) {
+    const token = req.cookies.admin_token;
+    if (!token) {
+        return res.status(401).json({ error: 'غير مصرح للوصول للوحة الإدارة' });
+    }
+    try {
+        const decoded = jwt.verify(token, JWT_SECRET);
+        req.admin = decoded;
+        next();
+    } catch (err) {
+        return res.status(401).json({ error: 'انتهت صلاحية الجلسة، يرجى تسجيل الدخول مجدداً' });
+    }
+}
+
+// Server-side Input Validation Helper
+function validateSyrianPhone(phone) {
+    const clean = (phone || '').replace(/\s+/g, '');
+    return /^(09|\+9639|9639)\d{8}$/.test(clean);
+}
+
+function validateBody(schema) {
+    return (req, res, next) => {
+        for (const [key, rules] of Object.entries(schema)) {
+            const value = req.body[key];
+            if (rules.required && (value === undefined || value === null || value === '')) {
+                return res.status(400).json({ error: `الحقل ${key} إجباري` });
+            }
+            if (rules.type === 'number' && value !== undefined && value !== null) {
+                const num = Number(value);
+                if (isNaN(num)) {
+                    return res.status(400).json({ error: `الحقل ${key} يجب أن يكون رقماً` });
+                }
+                if (rules.positive && num <= 0) {
+                    return res.status(400).json({ error: `الحقل ${key} يجب أن يكون قيمة موجبة` });
+                }
+            }
+            if (rules.phone && value) {
+                if (!validateSyrianPhone(value)) {
+                    return res.status(400).json({ error: 'يرجى إدخال رقم هاتف سوري صحيح (مثال: 0912345678 أو 963912345678+)' });
+                }
+            }
+        }
+        next();
+    };
+}
+
+// Validation Schemas
+const customerSchema = {
+    phone_number: { required: true, phone: true }
+};
+
+const orderSchema = {
+    customer_name: { required: true },
+    customer_phone: { required: true, phone: true },
+    delivery_address: { required: true },
+    total_amount: { required: true, type: 'number', positive: true }
+};
+
+const requestSchema = {
+    customer_name: { required: true },
+    customer_phone: { required: true },
+    requested_product: { required: true }
+};
+
+const productSchema = {
+    title_ar: { required: true },
+    base_price: { required: true, type: 'number', positive: true }
+};
+
+// API ROUTES
+
+// 1. Customer Registration
+app.post('/api/customer/register', submissionLimiter, validateBody(customerSchema), async (req, res) => {
+    const { full_name, phone_number, auth_provider } = req.body;
+    const cleanPhone = phone_number.replace(/\s+/g, '');
+
+    try {
+        const existing = await db.query('SELECT * FROM customers WHERE phone_number = $1', [cleanPhone]);
+        let customer;
+        if (existing.rows.length > 0) {
+            customer = existing.rows[0];
+        } else {
+            const insertRes = await db.query(
+                'INSERT INTO customers (full_name, phone_number, auth_provider, created_at) VALUES ($1, $2, $3, $4) RETURNING id',
+                [full_name || 'عميل إلكتروهومسي', cleanPhone, auth_provider || 'phone', new Date().toISOString()]
+            );
+            const newId = insertRes.rows[0].id;
+            customer = {
+                id: newId,
+                full_name: full_name || 'عميل إلكتروهومسي',
+                phone_number: cleanPhone,
+                auth_provider: auth_provider || 'phone'
+            };
+        }
+        res.json({ message: 'تم تسـجيل الدخول بنجاح', customer });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'خطأ داخلي في الخادم' });
+    }
+});
+
+// 2. Get Categories
+app.get('/api/categories', async (req, res) => {
+    try {
+        const result = await db.query('SELECT * FROM categories ORDER BY id ASC');
+        res.json(result.rows);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'خطأ داخلي في الخادم' });
+    }
+});
+
+// 3. Products List (Dynamic search and visibility)
+app.get('/api/products', async (req, res) => {
+    const { category, search, include_hidden } = req.query;
+
+    try {
+        let sql = 'SELECT p.*, c.name_ar as category_name FROM products p JOIN categories c ON p.category_id = c.id WHERE 1=1';
+        const params = [];
+
+        if (include_hidden !== 'true') {
+            sql += ' AND p.is_visible = 1';
+        }
+
+        if (category && category !== 'all') {
+            params.push(category);
+            sql += ` AND c.slug = $${params.length}`;
+        }
+
+        if (search) {
+            params.push(`%${search.toLowerCase()}%`);
+            sql += ` AND (LOWER(p.title_ar) LIKE $${params.length} OR LOWER(p.description_ar) LIKE $${params.length})`;
+        }
+
+        sql += ' ORDER BY p.id DESC';
+
+        const result = await db.query(sql, params);
+        const products = result.rows;
+
+        for (const p of products) {
+            const vResult = await db.query('SELECT * FROM product_variants WHERE product_id = $1', [p.id]);
+            p.variants = vResult.rows.map(v => {
+                try {
+                    v.variant_attributes = typeof v.variant_attributes === 'string' ? JSON.parse(v.variant_attributes) : v.variant_attributes;
+                } catch (e) {
+                    v.variant_attributes = {};
+                }
+                return v;
+            });
+        }
+        res.json(products);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'خطأ داخلي في الخادم' });
+    }
+});
+
+// 4. Single Product Details
+app.get('/api/products/:id', async (req, res) => {
+    const id = Number(req.params.id);
+    if (isNaN(id)) return res.status(400).json({ error: 'معرف المنتج غير صحيح' });
+
+    try {
+        const result = await db.query(
+            'SELECT p.*, c.name_ar as category_name FROM products p JOIN categories c ON p.category_id = c.id WHERE p.id = $1',
+            [id]
+        );
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'المنتج غير موجود' });
+        }
+        const product = result.rows[0];
+        const vResult = await db.query('SELECT * FROM product_variants WHERE product_id = $1', [id]);
+        product.variants = vResult.rows.map(v => {
+            try {
+                v.variant_attributes = typeof v.variant_attributes === 'string' ? JSON.parse(v.variant_attributes) : v.variant_attributes;
+            } catch (e) {
+                v.variant_attributes = {};
+            }
+            return v;
+        });
+        res.json(product);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'خطأ داخلي في الخادم' });
+    }
+});
+
+// 5. Create Product (Admin Only)
+app.post('/api/products', requireAdmin, validateBody(productSchema), async (req, res) => {
+    const { category_id, title_ar, description_ar, base_price, discount_price, main_image, youtube_url, is_visible, variants } = req.body;
+
+    try {
+        const insertRes = await db.query(
+            'INSERT INTO products (category_id, title_ar, slug, description_ar, base_price, discount_price, main_image, youtube_url, is_visible, created_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING id',
+            [
+                Number(category_id) || 1,
+                title_ar,
+                'prod-' + Date.now(),
+                description_ar || '',
+                Number(base_price),
+                discount_price ? Number(discount_price) : null,
+                main_image || '',
+                youtube_url || '',
+                is_visible !== undefined ? Number(is_visible) : 1,
+                new Date().toISOString()
+            ]
+        );
+        const newProductId = insertRes.rows[0].id;
+
+        if (variants && Array.isArray(variants)) {
+            for (const v of variants) {
+                await db.query(
+                    'INSERT INTO product_variants (product_id, brand, model_name, variant_attributes, price_modifier, stock_quantity, sku) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+                    [
+                        newProductId,
+                        v.brand || '',
+                        v.model_name || '',
+                        JSON.stringify(v.variant_attributes || {}),
+                        Number(v.price_modifier || 0),
+                        v.stock_quantity !== undefined ? Number(v.stock_quantity) : 10,
+                        v.sku || 'SKU-' + Date.now()
+                    ]
+                );
+            }
+        }
+        res.status(201).json({ message: 'تم الإضافة بنجاح', id: newProductId });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'خطأ داخلي في الخادم' });
+    }
+});
+
+// 6. Update Product (Admin Only)
+app.put('/api/products/:id', requireAdmin, validateBody(productSchema), async (req, res) => {
+    const id = Number(req.params.id);
+    if (isNaN(id)) return res.status(400).json({ error: 'معرف المنتج غير صحيح' });
+
+    const { category_id, title_ar, description_ar, base_price, discount_price, main_image, youtube_url, is_visible, variants } = req.body;
+
+    try {
+        const check = await db.query('SELECT id FROM products WHERE id = $1', [id]);
+        if (check.rows.length === 0) return res.status(404).json({ error: 'المنتج غير موجود' });
+
+        await db.query(
+            'UPDATE products SET category_id = $1, title_ar = $2, description_ar = $3, base_price = $4, discount_price = $5, main_image = $6, youtube_url = $7, is_visible = $8 WHERE id = $9',
+            [
+                Number(category_id),
+                title_ar,
+                description_ar,
+                Number(base_price),
+                discount_price ? Number(discount_price) : null,
+                main_image,
+                youtube_url,
+                is_visible !== undefined ? Number(is_visible) : 1,
+                id
+            ]
+        );
+
+        if (variants && Array.isArray(variants)) {
+            await db.query('DELETE FROM product_variants WHERE product_id = $1', [id]);
+            for (const v of variants) {
+                await db.query(
+                    'INSERT INTO product_variants (product_id, brand, model_name, variant_attributes, price_modifier, stock_quantity, sku) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+                    [
+                        id,
+                        v.brand || '',
+                        v.model_name || '',
+                        JSON.stringify(v.variant_attributes || {}),
+                        Number(v.price_modifier || 0),
+                        v.stock_quantity !== undefined ? Number(v.stock_quantity) : 10,
+                        v.sku || 'SKU-' + Date.now()
+                    ]
+                );
+            }
+        }
+        res.json({ message: 'تم التحديث بنجاح' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'خطأ داخلي في الخادم' });
+    }
+});
+
+// 7. Toggle Product Visibility (Admin Only)
+app.put('/api/products/:id/visibility', requireAdmin, async (req, res) => {
+    const id = Number(req.params.id);
+    if (isNaN(id)) return res.status(400).json({ error: 'معرف المنتج غير صحيح' });
+    const { is_visible } = req.body;
+
+    try {
+        await db.query('UPDATE products SET is_visible = $1 WHERE id = $2', [is_visible ? 1 : 0, id]);
+        res.json({ message: 'تم تغيير حالة الظهور' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'خطأ داخلي في الخادم' });
+    }
+});
+
+// 8. Delete Product (Admin Only)
+app.delete('/api/products/:id', requireAdmin, async (req, res) => {
+    const id = Number(req.params.id);
+    if (isNaN(id)) return res.status(400).json({ error: 'معرف المنتج غير صحيح' });
+
+    try {
+        await db.query('DELETE FROM products WHERE id = $1', [id]);
+        await db.query('DELETE FROM product_variants WHERE product_id = $1', [id]);
+        res.json({ message: 'تم الحذف بنجاح' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'خطأ داخلي في الخادم' });
+    }
+});
+
+// 9. Submit Order
+app.post('/api/orders', submissionLimiter, validateBody(orderSchema), async (req, res) => {
+    const { customer_name, customer_phone, delivery_address, payment_method, total_amount, items, customer_id } = req.body;
+
+    try {
+        const insertRes = await db.query(
+            'INSERT INTO orders (customer_id, customer_name, customer_phone, delivery_address, payment_method, total_amount, items, created_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id',
+            [
+                customer_id || null,
+                customer_name,
+                customer_phone,
+                delivery_address,
+                payment_method || 'cod',
+                total_amount,
+                JSON.stringify(items || []),
+                new Date().toISOString()
+            ]
+        );
+        res.status(201).json({ message: 'تم استلام طلبكم بنجاح! سيتواصل معكم فريق التوصيل قريباً.', order_id: insertRes.rows[0].id });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'خطأ داخلي في الخادم' });
+    }
+});
+
+// 10. Get Orders (Admin Only)
+app.get('/api/orders', requireAdmin, async (req, res) => {
+    try {
+        const result = await db.query('SELECT * FROM orders ORDER BY id DESC');
+        const orders = result.rows.map(o => {
+            try {
+                o.items = typeof o.items === 'string' ? JSON.parse(o.items) : o.items;
+            } catch (e) {
+                o.items = [];
+            }
+            return o;
+        });
+        res.json(orders);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'خطأ داخلي في الخادم' });
+    }
+});
+
+// 11. Submit Product Suggestion Request
+app.post('/api/requests', submissionLimiter, validateBody(requestSchema), async (req, res) => {
+    const { customer_name, customer_phone, requested_product, notes } = req.body;
+
+    try {
+        await db.query(
+            'INSERT INTO product_requests (customer_name, customer_phone, requested_product, notes, created_at) VALUES ($1, $2, $3, $4, $5)',
+            [customer_name, customer_phone, requested_product, notes || '', new Date().toISOString()]
+        );
+        res.status(201).json({ message: 'تم إرسال اقتراحك بنجاح. شكراً لتواصلك مع إلكتروهومسي!' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'خطأ داخلي في الخادم' });
+    }
+});
+
+// 12. Get Suggestions List (Admin Only)
+app.get('/api/requests', requireAdmin, async (req, res) => {
+    try {
+        const result = await db.query('SELECT * FROM product_requests ORDER BY id DESC');
+        res.json(result.rows);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'خطأ داخلي في الخادم' });
+    }
+});
+
+// 13. Admin Login (Secure environment auth with JWT cookies)
+app.post('/api/admin/login', loginLimiter, async (req, res) => {
+    const { username, password } = req.body;
+    const expectedUsername = process.env.ADMIN_USERNAME || 'admin';
+    const expectedHash = process.env.ADMIN_PASSWORD_HASH;
+
+    if (username === expectedUsername && expectedHash && bcrypt.compareSync(password, expectedHash)) {
+        const token = jwt.sign({ role: 'admin' }, JWT_SECRET, { expiresIn: '8h' });
+
+        res.cookie('admin_token', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            maxAge: 8 * 60 * 60 * 1000 // 8 hours
+        });
+
+        return res.json({ message: 'Success' });
+    }
+    return res.status(401).json({ error: 'اسم المستخدم أو كلمة المرور غير صحيحة' });
+});
+
+// 14. Admin Verify Auth Status
+app.get('/api/admin/verify', requireAdmin, (req, res) => {
+    res.json({ authenticated: true });
+});
+
+// 15. Admin Logout (Clear HttpOnly cookie)
+app.post('/api/admin/logout', (req, res) => {
+    res.clearCookie('admin_token');
+    res.json({ message: 'Logged out successfully' });
+});
+
+
+// Serve Static Assets & SPA Routing
+app.use(express.static(PUBLIC_DIR));
+
+// Page routes mapping
+app.get('/admin', (req, res) => {
+    res.sendFile(path.join(PUBLIC_DIR, 'admin.html'));
+});
+
+app.get('/product.html', (req, res) => {
+    res.sendFile(path.join(PUBLIC_DIR, 'product.html'));
+});
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(PUBLIC_DIR, 'index.html'));
+});
+
+// Start Server
+app.listen(PORT, () => {
     console.log(`===================================================`);
     console.log(`🚀 ElectroHomeSY Server running locally at: http://localhost:${PORT}`);
     console.log(`🔑 Admin Dashboard available at: http://localhost:${PORT}/admin`);

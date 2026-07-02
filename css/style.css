@@ -72,6 +72,13 @@ h1, h2, h3, h4, h5, h6, .slogan, .section-title {
     flex-wrap: wrap;
     border-bottom: 2px solid var(--damascus-green);
     text-align: center;
+    transition: transform 0.3s ease;
+}
+
+/* Hide announcement bar on scroll down (mobile) */
+.announcement-bar.hidden {
+    transform: translateY(-100%);
+    transition: transform 0.3s ease;
 }
 
 .announcement-bar span {

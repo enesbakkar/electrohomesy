@@ -354,6 +354,17 @@
             pageVariant = pageProduct.variants && pageProduct.variants.length > 0 ? pageProduct.variants[0] : null;
             renderProductPage();
             updateCartBadge();
+            
+            // Populate obfuscated contact info
+            const p1 = '963';
+            const p2 = '959';
+            const p3 = '930';
+            const p4 = '005';
+            const formattedPhone = `+${p1} ${p2} ${p3} ${p4}`;
+            const waDisplay = document.getElementById('whatsapp-number-display');
+            if (waDisplay) {
+                waDisplay.textContent = formattedPhone;
+            }
         }
 
         function renderProductPage() {
@@ -364,6 +375,11 @@
             const priceModifier = pageVariant ? pageVariant.price_modifier : 0;
             const finalPrice = basePrice + priceModifier;
             const hasDiscount = p.discount_price && p.discount_price < p.base_price;
+            const p1 = '963';
+            const p2 = '959';
+            const p3 = '930';
+            const p4 = '005';
+            const formattedPhone = `+${p1} ${p2} ${p3} ${p4}`;
             const waLink = getWhatsAppInquiryLink(p.title_ar);
             const youtubeEmbed = getYouTubeEmbedUrl(p.youtube_url);
 
@@ -414,7 +430,7 @@
                                 <i class="fa-solid fa-cart-plus"></i> إضافة إلى السلة وإتمام الشراء
                             </button>
                             <a href="${waLink}" target="_blank" class="btn-whatsapp-full">
-                                <i class="fa-brands fa-whatsapp" style="font-size:1.25rem;"></i>
+                                <span><i class="fa-brands fa-whatsapp"></i> واتساب المبيعات: <span dir="ltr" style="font-weight:700;">${formattedPhone}</span></span>
                                 استفسار مباشر عبر الواتساب
                             </a>
                         </div>
