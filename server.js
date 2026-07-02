@@ -12,12 +12,27 @@ require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+if (process.env.NODE_ENV === 'production' && !process.env.JWT_SECRET) {
+    console.error('FATAL: JWT_SECRET environment variable is not defined in production!');
+    process.exit(1);
+}
 const JWT_SECRET = process.env.JWT_SECRET || 'super_secret_jwt_sign_key_123456';
 const PUBLIC_DIR = path.join(__dirname, 'public');
 
 // Middlewares
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+    ? process.env.ALLOWED_ORIGINS.split(',')
+    : ['https://electrohomesy.com', 'http://localhost:5000', 'http://localhost:5050'];
+
 app.use(cors({
-    origin: true,
+    origin: (origin, callback) => {
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.includes(origin) || allowedOrigins.includes('*')) {
+            return callback(null, true);
+        }
+        return callback(new Error('Not allowed by CORS'));
+    },
     credentials: true
 }));
 app.use(express.json({ limit: '10mb' }));
@@ -200,16 +215,29 @@ app.get('/api/products', async (req, res) => {
         const result = await db.query(sql, params);
         const products = result.rows;
 
-        for (const p of products) {
-            const vResult = await db.query('SELECT * FROM product_variants WHERE product_id = $1', [p.id]);
-            p.variants = vResult.rows.map(v => {
+        if (products.length > 0) {
+            const productIds = products.map(p => p.id);
+            const placeholders = productIds.map((_, index) => `$${index + 1}`).join(', ');
+            const variantsSql = `SELECT * FROM product_variants WHERE product_id IN (${placeholders})`;
+            const variantsResult = await db.query(variantsSql, productIds);
+            const variants = variantsResult.rows;
+
+            const variantsMap = {};
+            for (const v of variants) {
                 try {
                     v.variant_attributes = typeof v.variant_attributes === 'string' ? JSON.parse(v.variant_attributes) : v.variant_attributes;
                 } catch (e) {
                     v.variant_attributes = {};
                 }
-                return v;
-            });
+                if (!variantsMap[v.product_id]) {
+                    variantsMap[v.product_id] = [];
+                }
+                variantsMap[v.product_id].push(v);
+            }
+
+            for (const p of products) {
+                p.variants = variantsMap[p.id] || [];
+            }
         }
         res.json(products);
     } catch (err) {
