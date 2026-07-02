@@ -744,6 +744,21 @@ input:checked + .slider:before { transform: translateX(22px); }
     .mobile-bottom-nav { display: flex; }
     .whatsapp-floating-btn { bottom: 80px; right: 18px; width: 52px; height: 52px; font-size: 1.8rem; }
     
+    .category-tabs {
+        flex-wrap: wrap;
+        overflow-x: visible;
+        padding-bottom: 0;
+        gap: 10px;
+    }
+    .cat-tab {
+        flex: 1 1 calc(50% - 5px);
+        justify-content: center;
+        text-align: center;
+        white-space: normal;
+        font-size: 0.88rem;
+        padding: 10px 8px;
+    }
+    
     .payment-methods-grid { grid-template-columns: 1fr; }
     .modal-overlay { padding: 15px 10px; align-items: center; justify-content: center; }
     .modal-card {
