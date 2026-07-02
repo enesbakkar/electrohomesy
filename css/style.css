@@ -732,7 +732,7 @@ input:checked + .slider:before { transform: translateX(22px); }
 
     .nav-actions { display: none; } /* Ultra-clean header! Bottom bar handles navigation cleanly! */
 
-    .hero-section { padding: 12px 0; }
+    .hero-section { display: none; }
     .hero-card {
         grid-template-columns: 1fr;
         padding: 22px 20px;
