@@ -189,11 +189,11 @@ function initStorefront() {
     
     // INSTANT RENDER
     renderCategoryTabs(allCategories);
-    renderProductsPlaceholder();
+    renderProducts(allProducts);
 
     // Async Network Fetch Attempts
     fetchCategories();
-    fetchProductsInBackground();
+    fetchProducts('all');
 
     // Search listener
     const searchInput = document.getElementById('searchInput');
@@ -301,7 +301,7 @@ function handleGoogleAuthMock() {
 function renderCategoryTabs(categories) {
     const tabsContainer = document.getElementById('categoryTabs');
     if (!tabsContainer) return;
-    tabsContainer.innerHTML = '';
+    tabsContainer.innerHTML = `<button class="cat-tab active" data-category="all" onclick="filterCategory('all', this)"><i class="fa-solid fa-border-all"></i> كافة المنتجات</button>`;
     categories.forEach(cat => {
         tabsContainer.innerHTML += `
             <button class="cat-tab" data-category="${cat.slug}" onclick="filterCategory('${cat.slug}', this)">
