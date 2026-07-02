@@ -380,7 +380,7 @@
             const p3 = '930';
             const p4 = '005';
             const formattedPhone = `+${p1} ${p2} ${p3} ${p4}`;
-            const waLink = getWhatsAppInquiryLink(p.title_ar);
+            const waLink = getWhatsAppInquiryLink(p.title_ar, p.id);
             const youtubeEmbed = getYouTubeEmbedUrl(p.youtube_url);
 
             document.getElementById('productPageContent').innerHTML = `

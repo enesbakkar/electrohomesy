@@ -136,10 +136,14 @@ function getCookie(name) {
 }
 
 // Utility: Generate WhatsApp Quick Inquiry Link (+963 959 930 005)
-function getWhatsAppInquiryLink(productTitle) {
+function getWhatsAppInquiryLink(productTitle, productId) {
     const parts = ['963', '959', '930', '005'];
     const phone = parts.join('');
-    const msg = `السلام عليكم\nهل متوفر هذا الصنف؟\n*${productTitle}*`;
+    let msg = `السلام عليكم\nهل متوفر هذا الصنف؟\n*${productTitle}*`;
+    if (productId) {
+        const productUrl = window.location.origin + `/product.html?id=${productId}`;
+        msg += `\nالرابط: ${productUrl}`;
+    }
     return `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
 }
 
@@ -386,7 +390,7 @@ function renderProducts(products) {
     grid.innerHTML = products.map((p, idx) => {
         const priceToShow = p.discount_price ? p.discount_price : p.base_price;
         const hasDiscount = p.discount_price && p.discount_price < p.base_price;
-        const waLink = getWhatsAppInquiryLink(p.title_ar);
+        const waLink = getWhatsAppInquiryLink(p.title_ar, p.id);
         const productUrl = getProductUrl(p.id);
         const rating = (4.7 + (idx % 3) * 0.1).toFixed(1);
         const reviewsCount = 85 + idx * 42;
@@ -457,7 +461,7 @@ function renderModalContent() {
     const priceModifier = currentSelectedVariant ? currentSelectedVariant.price_modifier : 0;
     const finalPrice = basePrice + priceModifier;
     const youtubeEmbed = getYouTubeEmbedUrl(product.youtube_url);
-    const waLink = getWhatsAppInquiryLink(product.title_ar);
+    const waLink = getWhatsAppInquiryLink(product.title_ar, product.id);
 
     body.innerHTML = `
         <div>
