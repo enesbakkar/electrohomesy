@@ -189,11 +189,11 @@ function initStorefront() {
     
     // INSTANT RENDER
     renderCategoryTabs(allCategories);
-    renderProducts(allProducts);
+    renderProductsPlaceholder();
 
     // Async Network Fetch Attempts
     fetchCategories();
-    fetchProducts('all');
+    fetchProductsInBackground();
 
     // Search listener
     const searchInput = document.getElementById('searchInput');
@@ -301,7 +301,7 @@ function handleGoogleAuthMock() {
 function renderCategoryTabs(categories) {
     const tabsContainer = document.getElementById('categoryTabs');
     if (!tabsContainer) return;
-    tabsContainer.innerHTML = `<button class="cat-tab active" data-category="all" onclick="filterCategory('all', this)"><i class="fa-solid fa-border-all"></i> كافة المنتجات</button>`;
+    tabsContainer.innerHTML = '';
     categories.forEach(cat => {
         tabsContainer.innerHTML += `
             <button class="cat-tab" data-category="${cat.slug}" onclick="filterCategory('${cat.slug}', this)">
@@ -345,6 +345,29 @@ function filterCategory(slug, btn) {
     document.querySelectorAll('.cat-tab').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     fetchProducts(slug);
+}
+
+function renderProductsPlaceholder() {
+    const grid = document.getElementById('productsGrid');
+    if (!grid) return;
+    grid.innerHTML = `
+        <div style="grid-column: 1/-1; text-align: center; padding: 50px 20px; background: var(--white); border-radius: 24px; border: 2px dashed var(--border-color); color: var(--steel-grey); box-shadow: var(--card-shadow); max-width: 600px; margin: 0 auto;">
+            <i class="fa-solid fa-hand-pointer" style="font-size: 3rem; color: var(--damascus-green); margin-bottom: 15px; display: block;"></i>
+            <h4 style="font-size: 1.2rem; font-weight: 700; color: var(--onyx); margin-bottom: 8px;">اختر أحد أصناف المنتجات في الأعلى</h4>
+            <p style="font-size: 0.95rem; color: var(--steel-grey);">لتصفح الأجهزة والمنتجات المتوفرة لدينا في دمشق</p>
+        </div>
+    `;
+}
+
+async function fetchProductsInBackground() {
+    try {
+        const res = await fetch('/api/products?category=all');
+        if (res.ok) {
+            allProducts = await res.json();
+        }
+    } catch (e) {
+        allProducts = FALLBACK_PRODUCTS.filter(p => p.is_visible);
+    }
 }
 
 // Render Products Grid - Cards open product page in new tab
