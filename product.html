@@ -414,14 +414,10 @@
 
             document.getElementById('productPageContent').innerHTML = `
                 <div class="product-detail-grid">
-                    <!-- LEFT: Image + Video -->
+                    <!-- LEFT: Image -->
                     <div>
                         <img src="${p.main_image || 'https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=800&q=80'}"
                              alt="${p.title_ar}" class="product-main-img">
-                        ${youtubeEmbed ? `
-                            <div class="youtube-embed-box" style="margin-top:20px;">
-                                <iframe src="${youtubeEmbed}" title="معاينة الجهاز" allowfullscreen></iframe>
-                            </div>` : ''}
                     </div>
 
                     <!-- RIGHT: Info -->
@@ -479,6 +475,17 @@
                                 <i class="fa-solid fa-copy"></i> نسخ
                             </button>
                         </div>
+
+                        ${youtubeEmbed ? `
+                            <div class="youtube-section" style="margin-top: 30px; border-top: 1.5px solid var(--border-color); padding-top: 20px;">
+                                <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--onyx); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                                    <i class="fa-solid fa-circle-play" style="color: #ef4444;"></i>
+                                    <span>فيديو معاينة المنتج:</span>
+                                </h3>
+                                <div class="youtube-embed-box" style="margin-top: 10px;">
+                                    <iframe src="${youtubeEmbed}" title="معاينة الجهاز" allowfullscreen></iframe>
+                                </div>
+                            </div>` : ''}
                     </div>
                 </div>`;
         }

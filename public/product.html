@@ -587,12 +587,6 @@
                             <img src="${p.main_image || 'https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=800&q=80'}" alt="${p.title_ar}">
                         </div>
 
-                        ${youtubeEmbed ? `
-                            <div style="border-radius:18px; overflow:hidden; box-shadow:0 6px 20px rgba(0,0,0,0.08); margin-top:5px;">
-                                <iframe src="${youtubeEmbed}" title="فيديو معاينة الجهاز" style="width:100%; height:230px; border:none; display:block;" allowfullscreen></iframe>
-                            </div>
-                        ` : ''}
-
                         <div class="trust-badges-box">
                             <div class="trust-badge-item">
                                 <i class="fa-solid fa-truck-fast"></i>
@@ -677,6 +671,18 @@
                                 <i class="fa-solid fa-copy"></i> نسخ الرابط
                             </button>
                         </div>
+
+                        ${youtubeEmbed ? `
+                            <div class="youtube-section" style="margin-top: 30px; border-top: 1.5px solid var(--border-color); padding-top: 20px;">
+                                <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--onyx); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                                    <i class="fa-solid fa-circle-play" style="color: #ef4444;"></i>
+                                    <span>فيديو معاينة المنتج:</span>
+                                </h3>
+                                <div style="border-radius:18px; overflow:hidden; box-shadow:0 6px 20px rgba(0,0,0,0.08); margin-top:10px; aspect-ratio: 16/9; width:100%;">
+                                    <iframe src="${youtubeEmbed}" title="فيديو معاينة الجهاز" style="width:100%; height:100%; border:none; display:block;" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        ` : ''}
                     </div>
                 </div>
             `;
