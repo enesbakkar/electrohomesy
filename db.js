@@ -329,7 +329,27 @@ function parsePrice(val) {
     return clean ? parseInt(clean, 10) : null;
 }
 
-function getCategoryId(name) {
+function getCategoryIdFromSheet(categoryName, productName) {
+    if (!categoryName) {
+        return getCategoryIdFromName(productName);
+    }
+    const clean = categoryName.trim().toLowerCase();
+    if (clean.includes('مكواة') || clean.includes('بخار') || clean.includes('iron') || clean.includes('ملابس')) {
+        return 1; // irons
+    }
+    if (clean.includes('مكنسة') || clean.includes('تنظيف') || clean.includes('vacuum') || clean.includes('مكاس') || clean.includes('مكنس')) {
+        return 2; // vacuums
+    }
+    if (clean.includes('مطبخ') || clean.includes('خلاط') || clean.includes('غلاية') || clean.includes('blender') || clean.includes('kettle') || clean.includes('microwave') || clean.includes('طعام') || clean.includes('شعر')) {
+        return 3; // kitchen
+    }
+    if (clean.includes('كبير') || clean.includes('ثلاجة') || clean.includes('غسالة') || clean.includes('تلفزيون') || clean.includes('مكيف')) {
+        return 4; // large-appliances
+    }
+    return getCategoryIdFromName(productName);
+}
+
+function getCategoryIdFromName(name) {
     const lowerName = name.toLowerCase();
     if (lowerName.includes('مكواة') || lowerName.includes('بخار') || lowerName.includes('iron')) {
         return 1; // irons
@@ -398,10 +418,11 @@ async function syncGoogleSheets() {
             const cost = parsePrice(row[4]);
             const sellingPrice = parsePrice(row[5]);
             const discountPrice = parsePrice(row[6]);
-            const imageLink = row[8] || '';
-            const videoLink = row[9] || '';
+            const categoryName = row[8] || '';
+            const imageLink = row[9] || '';
+            const videoLink = row[10] || '';
 
-            const categoryId = getCategoryId(name);
+            const categoryId = getCategoryIdFromSheet(categoryName, name);
             const title = `${name} (${code})`;
             const finalImage = getProductImage(imageLink, categoryId);
 

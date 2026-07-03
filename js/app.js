@@ -439,7 +439,27 @@ function parsePriceClient(val) {
     return clean ? parseInt(clean, 10) : null;
 }
 
-function getCategoryIdClient(name) {
+function getCategoryIdFromSheetClient(categoryName, productName) {
+    if (!categoryName) {
+        return getCategoryIdFromNameClient(productName);
+    }
+    const clean = categoryName.trim().toLowerCase();
+    if (clean.includes('مكواة') || clean.includes('بخار') || clean.includes('iron') || clean.includes('ملابس')) {
+        return 1; // irons
+    }
+    if (clean.includes('مكنسة') || clean.includes('تنظيف') || clean.includes('vacuum') || clean.includes('مكاس') || clean.includes('مكنس')) {
+        return 2; // vacuums
+    }
+    if (clean.includes('مطبخ') || clean.includes('خلاط') || clean.includes('غلاية') || clean.includes('blender') || clean.includes('kettle') || clean.includes('microwave') || clean.includes('طعام') || clean.includes('شعر')) {
+        return 3; // kitchen
+    }
+    if (clean.includes('كبير') || clean.includes('ثلاجة') || clean.includes('غسالة') || clean.includes('تلفزيون') || clean.includes('مكيف')) {
+        return 4; // large-appliances
+    }
+    return getCategoryIdFromNameClient(productName);
+}
+
+function getCategoryIdFromNameClient(name) {
     const lowerName = name.toLowerCase();
     if (lowerName.includes('مكواة') || lowerName.includes('بخار') || lowerName.includes('iron')) {
         return 1; // irons
@@ -495,10 +515,11 @@ async function fetchProductsFromGoogleSheetsClient(categorySlug) {
         const cost = parsePriceClient(row[4]);
         const sellingPrice = parsePriceClient(row[5]);
         const discountPrice = parsePriceClient(row[6]);
-        const imageLink = row[8] || '';
-        const videoLink = row[9] || '';
+        const categoryName = row[8] || '';
+        const imageLink = row[9] || '';
+        const videoLink = row[10] || '';
 
-        const categoryId = getCategoryIdClient(name);
+        const categoryId = getCategoryIdFromSheetClient(categoryName, name);
         const title = `${name} (${code})`;
         const finalImage = getProductImageClient(imageLink, categoryId);
 
