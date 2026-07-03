@@ -96,6 +96,7 @@ const FALLBACK_REQUESTS = [
 
 // Global State Pre-populated for Instant Rendering
 let allProducts = [...FALLBACK_PRODUCTS];
+let isGoogleSheetsDataLoaded = false;
 let allCategories = [...FALLBACK_CATEGORIES];
 let cart = JSON.parse(localStorage.getItem('electro_cart') || '[]');
 let currentCustomer = JSON.parse(localStorage.getItem('electro_customer') || 'null');
@@ -524,6 +525,7 @@ async function fetchProductsFromGoogleSheetsClient(categorySlug) {
     }
 
     allProducts = products;
+    isGoogleSheetsDataLoaded = true;
 
     if (categorySlug === 'all') {
         return products;
@@ -535,7 +537,7 @@ async function fetchProductsFromGoogleSheetsClient(categorySlug) {
 }
 
 async function fetchProductDetailsFromGoogleSheetsClient(productId) {
-    if (!allProducts || allProducts.length === 0) {
+    if (!isGoogleSheetsDataLoaded) {
         await fetchProductsFromGoogleSheetsClient('all');
     }
     return allProducts.find(p => p.id === productId) || null;
