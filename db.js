@@ -2,6 +2,7 @@ const { Pool } = require('pg');
 const sqlite3 = require('sqlite3').verbose();
 const fs = require('fs');
 const path = require('path');
+const https = require('https');
 require('dotenv').config();
 
 const isPg = !!process.env.DATABASE_URL;
@@ -281,7 +282,181 @@ async function init() {
 
 init();
 
+function fetchCSV(url) {
+    return new Promise((resolve, reject) => {
+        https.get(url, (res) => {
+            if (res.statusCode !== 200) {
+                return reject(new Error(`Failed to fetch sheet: ${res.statusCode}`));
+            }
+            let data = '';
+            res.on('data', (chunk) => { data += chunk; });
+            res.on('end', () => resolve(data));
+        }).on('error', (err) => reject(err));
+    });
+}
+
+function parseCSV(text) {
+    const lines = text.split(/\r?\n/);
+    const rows = [];
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (!line) continue;
+        
+        const row = [];
+        let inQuotes = false;
+        let currentCell = '';
+        
+        for (let j = 0; j < line.length; j++) {
+            const char = line[j];
+            if (char === '"') {
+                inQuotes = !inQuotes;
+            } else if (char === ',' && !inQuotes) {
+                row.push(currentCell.trim());
+                currentCell = '';
+            } else {
+                currentCell += char;
+            }
+        }
+        row.push(currentCell.trim());
+        rows.push(row);
+    }
+    return rows;
+}
+
+function parsePrice(val) {
+    if (!val || val === '-') return null;
+    const clean = val.replace(/[^\d]/g, '');
+    return clean ? parseInt(clean, 10) : null;
+}
+
+function getCategoryId(name) {
+    const lowerName = name.toLowerCase();
+    if (lowerName.includes('مكواة') || lowerName.includes('بخار') || lowerName.includes('iron')) {
+        return 1; // irons
+    }
+    if (lowerName.includes('مكنسة') || lowerName.includes('تنظيف') || lowerName.includes('vacuum') || lowerName.includes('broom')) {
+        return 2; // vacuums
+    }
+    if (lowerName.includes('ميكروويف') || lowerName.includes('خلاط') || lowerName.includes('غلاية') || lowerName.includes('blender') || lowerName.includes('kettle') || lowerName.includes('microwave') || lowerName.includes('شعر')) {
+        return 3; // kitchen
+    }
+    return 4; // large-appliances
+}
+
+function getFallbackImage(categoryId) {
+    const placeholders = {
+        1: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80', // irons
+        2: 'https://images.unsplash.com/photo-1558317374-067fb5f30001?auto=format&fit=crop&w=800&q=80', // vacuums
+        3: 'https://images.unsplash.com/photo-1570222094114-d054a817e56b?auto=format&fit=crop&w=800&q=80', // kitchen
+        4: 'https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=800&q=80'  // large-appliances
+    };
+    return placeholders[categoryId] || placeholders[4];
+}
+
+function getProductImage(imageLink, categoryId) {
+    if (!imageLink) {
+        return getFallbackImage(categoryId);
+    }
+    if (imageLink.startsWith('http://') || imageLink.startsWith('https://') || imageLink.startsWith('/')) {
+        return imageLink;
+    }
+    try {
+        const localPath1 = path.join(__dirname, 'public', imageLink);
+        const localPath2 = path.join(__dirname, 'public', 'asset', imageLink);
+        if (fs.existsSync(localPath1)) {
+            return '/' + imageLink;
+        }
+        if (fs.existsSync(localPath2)) {
+            return '/asset/' + imageLink;
+        }
+    } catch (e) {}
+    return getFallbackImage(categoryId);
+}
+
+async function syncGoogleSheets() {
+    const sheetUrl = 'https://docs.google.com/spreadsheets/d/1hioi7V5yDDsOmm5_StTI3b8poxnCsgMQXP30lC75PRI/gviz/tq?tqx=out:csv';
+    console.log('Database: Starting Google Sheets product sync...');
+    
+    try {
+        const csvData = await fetchCSV(sheetUrl);
+        const rows = parseCSV(csvData);
+        if (rows.length < 2) {
+            throw new Error('Google Sheets returned empty or invalid CSV data');
+        }
+
+        const products = [];
+        for (let i = 1; i < rows.length; i++) {
+            const row = rows[i];
+            if (row.length < 3) continue;
+
+            const name = row[1];
+            const code = row[2];
+            if (!name || !code) continue;
+
+            const id = parseInt(row[0], 10) || i;
+            const quantity = parseFloat(row[3]) || 0;
+            const cost = parsePrice(row[4]);
+            const sellingPrice = parsePrice(row[5]);
+            const discountPrice = parsePrice(row[6]);
+            const imageLink = row[8] || '';
+            const videoLink = row[9] || '';
+
+            const categoryId = getCategoryId(name);
+            const title = `${name} (${code})`;
+            const finalImage = getProductImage(imageLink, categoryId);
+
+            products.push({
+                id,
+                category_id: categoryId,
+                title_ar: title,
+                slug: `prod-${code.toLowerCase().replace(/[^a-z0-9]/g, '-')}-${id}`,
+                description_ar: `جهاز كهربائي ذكي عالي الكفاءة. الموديل: ${code}. متوفر حالياً بالمخزون بكمية ${Math.round(quantity)} قطعة.`,
+                base_price: sellingPrice || cost || 0,
+                discount_price: discountPrice,
+                main_image: finalImage,
+                youtube_url: videoLink,
+                is_visible: 1,
+                stock_quantity: Math.round(quantity),
+                sku: code
+            });
+        }
+
+        if (products.length === 0) {
+            throw new Error('No valid products parsed from Google Sheets');
+        }
+
+        // Run DB operations inside transaction
+        await query('BEGIN');
+        try {
+            await query('DELETE FROM product_variants');
+            await query('DELETE FROM products');
+
+            for (const p of products) {
+                await query(
+                    'INSERT INTO products (id, category_id, title_ar, slug, description_ar, base_price, discount_price, main_image, youtube_url, is_visible, created_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)',
+                    [p.id, p.category_id, p.title_ar, p.slug, p.description_ar, p.base_price, p.discount_price, p.main_image, p.youtube_url, p.is_visible, new Date().toISOString()]
+                );
+
+                await query(
+                    'INSERT INTO product_variants (product_id, brand, model_name, variant_attributes, price_modifier, stock_quantity, sku) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+                    [p.id, 'ElectroHome', p.sku, '{}', 0, p.stock_quantity, p.sku]
+                );
+            }
+            await query('COMMIT');
+            console.log(`Database: Successfully synchronized ${products.length} products and variants from Google Sheets.`);
+            return products.length;
+        } catch (dbErr) {
+            await query('ROLLBACK');
+            throw dbErr;
+        }
+    } catch (err) {
+        console.error('Database: Google Sheets sync failed:', err.message);
+        throw err;
+    }
+}
+
 module.exports = {
     query,
-    isPg
+    isPg,
+    syncGoogleSheets
 };

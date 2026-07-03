@@ -189,8 +189,20 @@ app.get('/api/categories', async (req, res) => {
 });
 
 // 3. Products List (Dynamic search and visibility)
+let lastSyncTime = 0;
+const SYNC_COOLDOWN = 5 * 60 * 1000; // 5 minutes
+
 app.get('/api/products', async (req, res) => {
     const { category, search, include_hidden } = req.query;
+
+    // Trigger background Google Sheets sync if cooldown has passed
+    const now = Date.now();
+    if (now - lastSyncTime > SYNC_COOLDOWN) {
+        lastSyncTime = now;
+        db.syncGoogleSheets()
+            .then(count => console.log(`Background sync success: Synced ${count} products.`))
+            .catch(err => console.error('Background Google Sheets sync failed:', err.message));
+    }
 
     try {
         let sql = 'SELECT p.*, c.name_ar as category_name FROM products p JOIN categories c ON p.category_id = c.id WHERE 1=1';
@@ -522,9 +534,16 @@ app.get('*', (req, res) => {
 });
 
 // Start Server
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
     console.log(`===================================================`);
     console.log(`🚀 ElectroHomeSY Server running locally at: http://localhost:${PORT}`);
     console.log(`🔑 Admin Dashboard available at: http://localhost:${PORT}/admin`);
     console.log(`===================================================`);
+
+    // Initial Google Sheets product synchronization
+    try {
+        await db.syncGoogleSheets();
+    } catch (e) {
+        console.error('Initial Google Sheets product synchronization failed on start:', e.message);
+    }
 });
