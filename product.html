@@ -90,25 +90,35 @@
             padding: 4px 14px;
             border-radius: 20px;
             font-size: 0.85rem;
+        }
         .product-price-main {
-            font-size: 2.2rem;
-            font-weight: 900;
+            font-size: 2.4rem;
+            font-weight: 800;
             color: var(--damascus-green);
         }
         .product-price-old {
-            font-size: 1.1rem;
+            font-size: 1.3rem;
             color: var(--steel-grey);
             text-decoration: line-through;
+            font-weight: 500;
         }
-        .price-display-wrapper {
-            margin: 20px 0 25px;
-            padding: 15px 20px;
-            background: rgba(0, 122, 61, 0.04);
-            border-radius: 18px;
-            border-right: 4px solid var(--damascus-green);
+        .product-price-container {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            gap: 12px;
+            margin: 15px 0 22px 0;
+            flex-wrap: wrap;
+        }
+        .discount-tag-badge {
+            background: rgba(239, 68, 68, 0.08);
+            color: #ef4444;
+            font-size: 0.88rem;
+            font-weight: 700;
+            padding: 6px 12px;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
         }
         .product-desc {
             color: var(--steel-grey);
@@ -428,18 +438,12 @@
                             : ''}
                         <h1 class="product-title-main" style="margin-top: 5px;">${p.title_ar}</h1>
 
-                        <div class="price-display-wrapper">
-                            <div>
-                                <span style="font-size: 0.85rem; color: var(--steel-grey); display: block; font-weight: 700; margin-bottom: 4px;">السعر الحالي:</span>
-                                <div style="display: flex; align-items: baseline; gap: 8px;">
-                                    <span class="product-price-main" id="pageFinalPrice">${formatSYP(finalPrice)}</span>
-                                    ${hasDiscount ? `<span class="product-price-old" style="margin-right: 10px;">${formatSYP(p.base_price)}</span>` : ''}
-                                </div>
-                            </div>
+                        <div class="product-price-container">
+                            <span class="product-price-main" id="pageFinalPrice">${formatSYP(finalPrice)}</span>
                             ${hasDiscount ? `
-                            <div style="background: var(--spark-red); color: white; padding: 6px 12px; border-radius: 12px; font-size: 0.85rem; font-weight: 800;">
-                                وفرت ${formatSYP(p.base_price - p.discount_price)}
-                            </div>` : ''}
+                                <span class="product-price-old" style="margin-right: 10px;">${formatSYP(p.base_price)}</span>
+                                <span class="discount-tag-badge">🔥 وفر ${formatSYP(p.base_price - p.discount_price)}</span>
+                            ` : ''}
                         </div>
 
                         <p class="product-desc">${p.description_ar || ''}</p>

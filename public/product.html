@@ -163,40 +163,34 @@
             margin-bottom: 18px;
         }
 
-        .price-hero-card {
-            background: rgba(0, 122, 61, 0.04);
-            border-radius: 18px;
-            padding: 20px 24px;
-            border: none;
-            border-right: 4px solid var(--damascus-green);
-            margin-bottom: 24px;
+        .product-price-container {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-        }
-        .price-amount-group {
-            display: flex;
-            align-items: baseline;
             gap: 12px;
+            margin: 15px 0 22px 0;
+            flex-wrap: wrap;
         }
         .price-hero-current {
             font-size: 2.5rem;
-            font-weight: 900;
+            font-weight: 800;
             color: var(--damascus-green);
         }
         .price-hero-old {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             color: #94a3b8;
             text-decoration: line-through;
-            font-weight: 600;
+            font-weight: 500;
         }
-        .discount-badge-hero {
-            background: var(--spark-red);
-            color: white;
-            padding: 6px 14px;
-            border-radius: 12px;
-            font-size: 0.9rem;
-            font-weight: 800;
+        .discount-tag-badge {
+            background: rgba(239, 68, 68, 0.08);
+            color: #ef4444;
+            font-size: 0.88rem;
+            font-weight: 700;
+            padding: 6px 12px;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
         }
 
         .product-description-text {
@@ -629,15 +623,12 @@
                             : ''}
                         <h1 class="product-main-title" style="margin-top: 5px;">${p.title_ar}</h1>
 
-                        <div class="price-hero-card">
-                            <div>
-                                <span style="font-size:0.85rem; color:var(--steel-grey); display:block; font-weight:700; margin-bottom:2px;">السعر الرسمي المعتمد:</span>
-                                <div class="price-amount-group">
-                                    <span class="price-hero-current" id="detailFinalPrice">${formatSYP(finalPrice)}</span>
-                                    ${hasDiscount ? `<span class="price-hero-old">${formatSYP(p.base_price)}</span>` : ''}
-                                </div>
-                            </div>
-                            ${hasDiscount ? `<span class="discount-badge-hero">🔥 وفر أكثر اليوم</span>` : ''}
+                        <div class="product-price-container">
+                            <span class="price-hero-current" id="detailFinalPrice">${formatSYP(finalPrice)}</span>
+                            ${hasDiscount ? `
+                                <span class="price-hero-old" style="margin-right: 10px;">${formatSYP(p.base_price)}</span>
+                                <span class="discount-tag-badge">🔥 وفر ${formatSYP(p.base_price - p.discount_price)}</span>
+                            ` : ''}
                         </div>
 
                         <p class="product-description-text">${p.description_ar || ''}</p>
