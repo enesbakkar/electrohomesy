@@ -495,62 +495,80 @@ function getProductImageClient(imageLink, categoryId) {
 }
 
 async function fetchProductsFromGoogleSheetsClient(categorySlug) {
-    const sheetUrl = 'https://docs.google.com/spreadsheets/d/1hioi7V5yDDsOmm5_StTI3b8poxnCsgMQXP30lC75PRI/gviz/tq?tqx=out:csv';
-    const res = await fetch(sheetUrl);
-    if (!res.ok) throw new Error('Failed to fetch from Google Sheets directly');
-    const text = await res.text();
-    const rows = parseCSVClient(text);
-    if (rows.length < 2) throw new Error('Empty CSV');
+    try {
+        const jsonRes = await fetch('./js/products.json');
+        if (!jsonRes.ok) throw new Error('Static products.json not found');
+        const products = await jsonRes.json();
+        allProducts = products;
+        isGoogleSheetsDataLoaded = true;
 
-    const products = [];
-    for (let i = 1; i < rows.length; i++) {
-        const row = rows[i];
-        if (row.length < 4) continue;
+        if (categorySlug === 'all') {
+            return products;
+        } else {
+            const catMap = { 'irons': 1, 'vacuums': 2, 'kitchen': 3, 'large-appliances': 4 };
+            const catId = catMap[categorySlug];
+            return products.filter(p => p.category_id === catId);
+        }
+    } catch (jsonErr) {
+        console.warn('Failed to fetch pre-compiled products.json, falling back to direct CSV:', jsonErr);
+        
+        const sheetUrl = 'https://docs.google.com/spreadsheets/d/1hioi7V5yDDsOmm5_StTI3b8poxnCsgMQXP30lC75PRI/gviz/tq?tqx=out:csv';
+        const res = await fetch(sheetUrl);
+        if (!res.ok) throw new Error('Failed to fetch from Google Sheets directly');
+        const text = await res.text();
+        const rows = parseCSVClient(text);
+        if (rows.length < 2) throw new Error('Empty CSV');
 
-        const name = row[1];
-        const brand = row[2] ? row[2].trim() : '';
-        const code = row[3];
-        if (!name || !code) continue;
+        const products = [];
+        for (let i = 1; i < rows.length; i++) {
+            const row = rows[i];
+            if (row.length < 4) continue;
 
-        const id = parseInt(row[0], 10) || i;
-        const quantity = parseFloat(row[4]) || 0;
-        const cost = parsePriceClient(row[5]);
-        const sellingPrice = parsePriceClient(row[6]);
-        const discountPrice = parsePriceClient(row[7]);
-        const categoryName = row[9] || '';
-        const imageLink = row[10] || '';
-        const videoLink = row[11] || '';
+            const name = row[1];
+            const brand = row[2] ? row[2].trim() : '';
+            const code = row[3];
+            if (!name || !code) continue;
 
-        const categoryId = getCategoryIdFromSheetClient(categoryName, name);
-        const title = name; // Clean name without barcode
-        const finalImage = getProductImageClient(imageLink, categoryId);
+            const id = parseInt(row[0], 10) || i;
+            const quantity = parseFloat(row[4]) || 0;
+            const cost = parsePriceClient(row[5]);
+            const sellingPrice = parsePriceClient(row[6]);
+            const discountPrice = parsePriceClient(row[7]);
+            const categoryName = row[9] || '';
+            const imageLink = row[10] || '';
+            const videoLink = row[11] || '';
 
-        products.push({
-            id,
-            category_id: categoryId,
-            title_ar: title,
-            slug: `prod-${code.toLowerCase().replace(/[^a-z0-9]/g, '-')}-${id}`,
-            description_ar: `جهاز كهربائي ذكي عالي الكفاءة. الموديل: ${code}. متوفر حالياً بالمخزون بكمية ${Math.round(quantity)} قطعة.`,
-            base_price: sellingPrice || cost || 0,
-            discount_price: discountPrice,
-            main_image: finalImage,
-            youtube_url: videoLink,
-            is_visible: 1,
-            variants: [
-                { id: id * 100, product_id: id, brand: brand || 'ElectroHome', model_name: code, variant_attributes: {}, price_modifier: 0, stock_quantity: Math.round(quantity), sku: code }
-            ]
-        });
-    }
+            const categoryId = getCategoryIdFromSheetClient(categoryName, name);
+            const title = name; // Clean name without barcode
+            const finalImage = getProductImageClient(imageLink, categoryId);
 
-    allProducts = products;
-    isGoogleSheetsDataLoaded = true;
+            products.push({
+                id,
+                category_id: categoryId,
+                title_ar: title,
+                slug: `prod-${code.toLowerCase().replace(/[^a-z0-9]/g, '-')}-${id}`,
+                description_ar: `جهاز كهربائي ذكي عالي الكفاءة. الموديل: ${code}. متوفر حالياً بالمخزون بكمية ${Math.round(quantity)} قطعة.`,
+                base_price: sellingPrice || cost || 0,
+                discount_price: discountPrice,
+                main_image: finalImage,
+                youtube_url: videoLink,
+                is_visible: 1,
+                variants: [
+                    { id: id * 100, product_id: id, brand: brand || 'ElectroHome', model_name: code, variant_attributes: {}, price_modifier: 0, stock_quantity: Math.round(quantity), sku: code }
+                ]
+            });
+        }
 
-    if (categorySlug === 'all') {
-        return products;
-    } else {
-        const catMap = { 'irons': 1, 'vacuums': 2, 'kitchen': 3, 'large-appliances': 4 };
-        const catId = catMap[categorySlug];
-        return products.filter(p => p.category_id === catId);
+        allProducts = products;
+        isGoogleSheetsDataLoaded = true;
+
+        if (categorySlug === 'all') {
+            return products;
+        } else {
+            const catMap = { 'irons': 1, 'vacuums': 2, 'kitchen': 3, 'large-appliances': 4 };
+            const catId = catMap[categorySlug];
+            return products.filter(p => p.category_id === catId);
+        }
     }
 }
 
