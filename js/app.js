@@ -351,15 +351,22 @@ async function fetchProducts(categorySlug) {
         const res = await fetch(`/api/products?category=${categorySlug}`);
         if (!res.ok) throw new Error('Not ok');
         allProducts = await res.json();
+        renderProducts(allProducts);
     } catch (e) {
-        if (categorySlug === 'all') {
-            allProducts = FALLBACK_PRODUCTS.filter(p => p.is_visible);
-        } else {
-            const cat = FALLBACK_CATEGORIES.find(c => c.slug === categorySlug);
-            allProducts = cat ? FALLBACK_PRODUCTS.filter(p => p.category_id === cat.id && p.is_visible) : [];
+        try {
+            const products = await fetchProductsFromGoogleSheetsClient(categorySlug);
+            renderProducts(products);
+        } catch (sheetErr) {
+            console.error('Client Google Sheets fallback failed:', sheetErr);
+            if (categorySlug === 'all') {
+                allProducts = FALLBACK_PRODUCTS.filter(p => p.is_visible);
+            } else {
+                const cat = FALLBACK_CATEGORIES.find(c => c.slug === categorySlug);
+                allProducts = cat ? FALLBACK_PRODUCTS.filter(p => p.category_id === cat.id && p.is_visible) : [];
+            }
+            renderProducts(allProducts);
         }
     }
-    renderProducts(allProducts);
 }
 
 function filterCategory(slug, btn) {
@@ -385,9 +392,141 @@ async function fetchProductsInBackground() {
         const res = await fetch('/api/products?category=all');
         if (res.ok) {
             allProducts = await res.json();
+        } else {
+            throw new Error('Not ok');
         }
     } catch (e) {
-        allProducts = FALLBACK_PRODUCTS.filter(p => p.is_visible);
+        try {
+            await fetchProductsFromGoogleSheetsClient('all');
+        } catch (sheetErr) {
+            allProducts = FALLBACK_PRODUCTS.filter(p => p.is_visible);
+        }
+    }
+}
+
+// Client-side Google Sheets CSV parser fallback for static hosting
+function parseCSVClient(text) {
+    const lines = text.split(/\r?\n/);
+    const rows = [];
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (!line) continue;
+        
+        const row = [];
+        let inQuotes = false;
+        let currentCell = '';
+        
+        for (let j = 0; j < line.length; j++) {
+            const char = line[j];
+            if (char === '"') {
+                inQuotes = !inQuotes;
+            } else if (char === ',' && !inQuotes) {
+                row.push(currentCell.trim());
+                currentCell = '';
+            } else {
+                currentCell += char;
+            }
+        }
+        row.push(currentCell.trim());
+        rows.push(row);
+    }
+    return rows;
+}
+
+function parsePriceClient(val) {
+    if (!val || val === '-') return null;
+    const clean = val.replace(/[^\d]/g, '');
+    return clean ? parseInt(clean, 10) : null;
+}
+
+function getCategoryIdClient(name) {
+    const lowerName = name.toLowerCase();
+    if (lowerName.includes('مكواة') || lowerName.includes('بخار') || lowerName.includes('iron')) {
+        return 1; // irons
+    }
+    if (lowerName.includes('مكنسة') || lowerName.includes('تنظيف') || lowerName.includes('vacuum') || lowerName.includes('broom')) {
+        return 2; // vacuums
+    }
+    if (lowerName.includes('ميكروويف') || lowerName.includes('خلاط') || lowerName.includes('غلاية') || lowerName.includes('blender') || lowerName.includes('kettle') || lowerName.includes('microwave') || lowerName.includes('شعر')) {
+        return 3; // kitchen
+    }
+    return 4; // large-appliances
+}
+
+function getFallbackImageClient(categoryId) {
+    const placeholders = {
+        1: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80', // irons
+        2: 'https://images.unsplash.com/photo-1558317374-067fb5f30001?auto=format&fit=crop&w=800&q=80', // vacuums
+        3: 'https://images.unsplash.com/photo-1570222094114-d054a817e56b?auto=format&fit=crop&w=800&q=80', // kitchen
+        4: 'https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=800&q=80'  // large-appliances
+    };
+    return placeholders[categoryId] || placeholders[4];
+}
+
+function getProductImageClient(imageLink, categoryId) {
+    if (!imageLink) {
+        return getFallbackImageClient(categoryId);
+    }
+    if (imageLink.startsWith('http://') || imageLink.startsWith('https://') || imageLink.startsWith('/')) {
+        return imageLink;
+    }
+    return getFallbackImageClient(categoryId);
+}
+
+async function fetchProductsFromGoogleSheetsClient(categorySlug) {
+    const sheetUrl = 'https://docs.google.com/spreadsheets/d/1hioi7V5yDDsOmm5_StTI3b8poxnCsgMQXP30lC75PRI/gviz/tq?tqx=out:csv';
+    const res = await fetch(sheetUrl);
+    if (!res.ok) throw new Error('Failed to fetch from Google Sheets directly');
+    const text = await res.text();
+    const rows = parseCSVClient(text);
+    if (rows.length < 2) throw new Error('Empty CSV');
+
+    const products = [];
+    for (let i = 1; i < rows.length; i++) {
+        const row = rows[i];
+        if (row.length < 3) continue;
+
+        const name = row[1];
+        const code = row[2];
+        if (!name || !code) continue;
+
+        const id = parseInt(row[0], 10) || i;
+        const quantity = parseFloat(row[3]) || 0;
+        const cost = parsePriceClient(row[4]);
+        const sellingPrice = parsePriceClient(row[5]);
+        const discountPrice = parsePriceClient(row[6]);
+        const imageLink = row[8] || '';
+        const videoLink = row[9] || '';
+
+        const categoryId = getCategoryIdClient(name);
+        const title = `${name} (${code})`;
+        const finalImage = getProductImageClient(imageLink, categoryId);
+
+        products.push({
+            id,
+            category_id: categoryId,
+            title_ar: title,
+            slug: `prod-${code.toLowerCase().replace(/[^a-z0-9]/g, '-')}-${id}`,
+            description_ar: `جهاز كهربائي ذكي عالي الكفاءة. الموديل: ${code}. متوفر حالياً بالمخزون بكمية ${Math.round(quantity)} قطعة.`,
+            base_price: sellingPrice || cost || 0,
+            discount_price: discountPrice,
+            main_image: finalImage,
+            youtube_url: videoLink,
+            is_visible: 1,
+            variants: [
+                { id: id * 100, product_id: id, brand: 'ElectroHome', model_name: code, variant_attributes: {}, price_modifier: 0, stock_quantity: Math.round(quantity), sku: code }
+            ]
+        });
+    }
+
+    allProducts = products;
+
+    if (categorySlug === 'all') {
+        return products;
+    } else {
+        const catMap = { 'irons': 1, 'vacuums': 2, 'kitchen': 3, 'large-appliances': 4 };
+        const catId = catMap[categorySlug];
+        return products.filter(p => p.category_id === catId);
     }
 }
 
