@@ -407,23 +407,24 @@ async function syncGoogleSheets() {
         const products = [];
         for (let i = 1; i < rows.length; i++) {
             const row = rows[i];
-            if (row.length < 3) continue;
+            if (row.length < 4) continue;
 
             const name = row[1];
-            const code = row[2];
+            const brand = row[2] ? row[2].trim() : '';
+            const code = row[3];
             if (!name || !code) continue;
 
             const id = parseInt(row[0], 10) || i;
-            const quantity = parseFloat(row[3]) || 0;
-            const cost = parsePrice(row[4]);
-            const sellingPrice = parsePrice(row[5]);
-            const discountPrice = parsePrice(row[6]);
-            const categoryName = row[8] || '';
-            const imageLink = row[9] || '';
-            const videoLink = row[10] || '';
+            const quantity = parseFloat(row[4]) || 0;
+            const cost = parsePrice(row[5]);
+            const sellingPrice = parsePrice(row[6]);
+            const discountPrice = parsePrice(row[7]);
+            const categoryName = row[9] || '';
+            const imageLink = row[10] || '';
+            const videoLink = row[11] || '';
 
             const categoryId = getCategoryIdFromSheet(categoryName, name);
-            const title = `${name} (${code})`;
+            const title = name; // Clean name without barcode
             const finalImage = getProductImage(imageLink, categoryId);
 
             products.push({
@@ -438,7 +439,8 @@ async function syncGoogleSheets() {
                 youtube_url: videoLink,
                 is_visible: 1,
                 stock_quantity: Math.round(quantity),
-                sku: code
+                sku: code,
+                brand: brand || 'ElectroHome'
             });
         }
 
@@ -460,7 +462,7 @@ async function syncGoogleSheets() {
 
                 await query(
                     'INSERT INTO product_variants (product_id, brand, model_name, variant_attributes, price_modifier, stock_quantity, sku) VALUES ($1, $2, $3, $4, $5, $6, $7)',
-                    [p.id, 'ElectroHome', p.sku, '{}', 0, p.stock_quantity, p.sku]
+                    [p.id, p.brand, p.sku, '{}', 0, p.stock_quantity, p.sku]
                 );
             }
             await query('COMMIT');

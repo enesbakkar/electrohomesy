@@ -488,23 +488,24 @@ async function fetchProductsFromGoogleSheetsClient(categorySlug) {
     const products = [];
     for (let i = 1; i < rows.length; i++) {
         const row = rows[i];
-        if (row.length < 3) continue;
+        if (row.length < 4) continue;
 
         const name = row[1];
-        const code = row[2];
+        const brand = row[2] ? row[2].trim() : '';
+        const code = row[3];
         if (!name || !code) continue;
 
         const id = parseInt(row[0], 10) || i;
-        const quantity = parseFloat(row[3]) || 0;
-        const cost = parsePriceClient(row[4]);
-        const sellingPrice = parsePriceClient(row[5]);
-        const discountPrice = parsePriceClient(row[6]);
-        const categoryName = row[8] || '';
-        const imageLink = row[9] || '';
-        const videoLink = row[10] || '';
+        const quantity = parseFloat(row[4]) || 0;
+        const cost = parsePriceClient(row[5]);
+        const sellingPrice = parsePriceClient(row[6]);
+        const discountPrice = parsePriceClient(row[7]);
+        const categoryName = row[9] || '';
+        const imageLink = row[10] || '';
+        const videoLink = row[11] || '';
 
         const categoryId = getCategoryIdFromSheetClient(categoryName, name);
-        const title = `${name} (${code})`;
+        const title = name; // Clean name without barcode
         const finalImage = getProductImageClient(imageLink, categoryId);
 
         products.push({
@@ -519,7 +520,7 @@ async function fetchProductsFromGoogleSheetsClient(categorySlug) {
             youtube_url: videoLink,
             is_visible: 1,
             variants: [
-                { id: id * 100, product_id: id, brand: 'ElectroHome', model_name: code, variant_attributes: {}, price_modifier: 0, stock_quantity: Math.round(quantity), sku: code }
+                { id: id * 100, product_id: id, brand: brand || 'ElectroHome', model_name: code, variant_attributes: {}, price_modifier: 0, stock_quantity: Math.round(quantity), sku: code }
             ]
         });
     }
@@ -583,6 +584,9 @@ function renderProducts(products) {
                 </div>
 
                 <a href="${productUrl}" target="_blank" rel="noopener" style="text-decoration:none; color:inherit;">
+                    ${p.variants && p.variants.length > 0 && p.variants[0].brand && p.variants[0].brand !== 'ElectroHome' 
+                        ? `<span class="product-card-brand">${p.variants[0].brand}</span>` 
+                        : ''}
                     <h4 class="product-title" style="cursor: pointer;">${p.title_ar}</h4>
                 </a>
                 
@@ -644,7 +648,10 @@ function renderModalContent() {
         </div>
         <div>
             <span style="background:rgba(0,122,61,0.12); color:var(--damascus-green); padding:5px 14px; border-radius:20px; font-size:0.88rem; font-weight:800;">${product.category_name || 'منتج مضمون'}</span>
-            <h2 style="font-size:1.8rem; font-weight:900; margin:15px 0 10px 0;">${product.title_ar}</h2>
+            ${product.variants && product.variants.length > 0 && product.variants[0].brand && product.variants[0].brand !== 'ElectroHome' 
+                ? `<div style="font-size: 0.95rem; color: var(--steel-grey); text-transform: uppercase; font-weight: 700; margin-top: 15px; letter-spacing: 0.5px;">${product.variants[0].brand}</div>` 
+                : ''}
+            <h2 style="font-size:1.8rem; font-weight:900; margin:${product.variants && product.variants.length > 0 && product.variants[0].brand && product.variants[0].brand !== 'ElectroHome' ? '5px' : '15px'} 0 10px 0;">${product.title_ar}</h2>
             
             <div style="font-size:2rem; font-weight:900; color:var(--damascus-green); margin-bottom:15px;" id="modalPrice">
                 ${formatSYP(finalPrice)}

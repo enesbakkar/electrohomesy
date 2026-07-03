@@ -441,6 +441,8 @@ header {
 
 .product-thumb { width: 100%; height: 200px; object-fit: contain; border-radius: 14px; margin-bottom: 14px; background: #f8fafc; padding: 8px; }
 .product-category-name { font-size: 0.82rem; color: var(--steel-grey); font-weight: 600; margin-bottom: 6px; display: block; }
+.product-card-brand { font-size: 0.8rem; color: var(--steel-grey); text-transform: uppercase; font-weight: 700; margin-bottom: 4px; display: block; letter-spacing: 0.5px; }
+.product-detail-brand { font-size: 1.1rem; color: var(--steel-grey); text-transform: uppercase; font-weight: 700; margin-top: 10px; margin-bottom: 5px; letter-spacing: 0.5px; }
 .product-title { font-size: 1.15rem; font-weight: 700; color: var(--onyx); margin-bottom: 10px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 2.8em; }
 
 .product-price-box { margin-top: auto; padding-top: 16px; display: flex; align-items: baseline; gap: 10px; border-top: 1px dashed var(--border-color); }

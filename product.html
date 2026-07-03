@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <!-- Brand Stylesheet -->
-    <link rel="stylesheet" href="/css/style.css?v=1.3.0">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.0">
 
     <style>
         .product-page-wrapper {
@@ -302,7 +302,7 @@
     </div>
 
     <!-- App JS -->
-    <script src="/js/app.js?v=1.4.1"></script>
+    <script src="/js/app.js?v=1.5.0"></script>
     <script>
         // ===========================
         // Product Page Logic
@@ -374,7 +374,7 @@
 
         function renderProductPage() {
             const p = pageProduct;
-            const productCode = generateProductCode(p.id);
+            const productCode = p.variants && p.variants.length > 0 && p.variants[0].sku ? p.variants[0].sku : generateProductCode(p.id);
             const pageUrl = window.location.href;
             const basePrice = p.discount_price ? p.discount_price : p.base_price;
             const priceModifier = pageVariant ? pageVariant.price_modifier : 0;
@@ -409,7 +409,10 @@
                         </div>
 
                         <span class="product-category-pill">${p.category_name || 'أجهزة منزلية'}</span>
-                        <h1 class="product-title-main">${p.title_ar}</h1>
+                        ${p.variants && p.variants.length > 0 && p.variants[0].brand && p.variants[0].brand !== 'ElectroHome' 
+                            ? `<div class="product-detail-brand" style="font-size: 1.1rem; color: var(--steel-grey); text-transform: uppercase; font-weight: 700; margin-top: 10px; margin-bottom: 5px;">${p.variants[0].brand}</div>` 
+                            : ''}
+                        <h1 class="product-title-main" style="margin-top: 5px;">${p.title_ar}</h1>
 
                         <div class="product-price-main" id="pageFinalPrice">${formatSYP(finalPrice)}</div>
                         ${hasDiscount ? `<div class="product-price-old">${formatSYP(p.base_price)}</div>` : ''}
