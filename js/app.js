@@ -594,16 +594,18 @@ function renderProducts(products) {
                 </a>
                 
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                    <span class="product-category-name">${p.category_name || 'أجهزة منزلية'}</span>
+                    <span class="product-category-name">
+                        ${p.category_name || 'أجهزة منزلية'} 
+                        ${p.variants && p.variants.length > 0 && p.variants[0].brand && p.variants[0].brand !== 'ElectroHome' 
+                            ? `· ${p.variants[0].brand}` 
+                            : ''}
+                    </span>
                     <span style="font-size:0.75rem; color:#f59e0b; font-weight:800; display:inline-flex; align-items:center; gap:3px;">
                         <i class="fa-solid fa-star"></i> ${rating} <span style="color:#94a3b8; font-weight:400;">(${reviewsCount})</span>
                     </span>
                 </div>
 
                 <a href="${productUrl}" target="_blank" rel="noopener" style="text-decoration:none; color:inherit;">
-                    ${p.variants && p.variants.length > 0 && p.variants[0].brand && p.variants[0].brand !== 'ElectroHome' 
-                        ? `<span class="product-card-brand">${p.variants[0].brand}</span>` 
-                        : ''}
                     <h4 class="product-title" style="cursor: pointer;">${p.title_ar}</h4>
                 </a>
                 

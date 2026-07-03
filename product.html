@@ -90,20 +90,25 @@
             padding: 4px 14px;
             border-radius: 20px;
             font-size: 0.85rem;
-            font-weight: 700;
-            margin-bottom: 16px;
-        }
         .product-price-main {
             font-size: 2.2rem;
             font-weight: 900;
             color: var(--damascus-green);
-            margin-bottom: 6px;
         }
         .product-price-old {
             font-size: 1.1rem;
             color: var(--steel-grey);
             text-decoration: line-through;
-            margin-bottom: 18px;
+        }
+        .price-display-wrapper {
+            margin: 20px 0 25px;
+            padding: 15px 20px;
+            background: rgba(0, 122, 61, 0.04);
+            border-radius: 18px;
+            border-right: 4px solid var(--damascus-green);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
         .product-desc {
             color: var(--steel-grey);
@@ -146,12 +151,12 @@
         .variant-opt-btn.selected,
         .variant-opt-btn:hover {
             border-color: var(--damascus-green);
-            background: rgba(7,48,102,0.06);
+            background: rgba(0,122,61,0.02);
             color: var(--damascus-green);
         }
         .product-actions {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             gap: 12px;
             margin-top: 24px;
         }
@@ -164,18 +169,20 @@
             color: white;
             border: none;
             padding: 16px 24px;
-            border-radius: 30px;
+            border-radius: 16px;
             font-family: 'Cairo', sans-serif;
             font-size: 1.08rem;
             font-weight: 800;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 6px 20px rgba(7,48,102,0.3);
+            box-shadow: 0 6px 20px rgba(0,122,61,0.2);
             text-decoration: none;
+            flex: 2;
         }
         .btn-add-cart-full:hover {
             background: var(--damascus-green-dark);
             transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 122, 61, 0.35);
         }
         .btn-whatsapp-full {
             display: flex;
@@ -185,17 +192,22 @@
             background: #25D366;
             color: white;
             border: none;
-            padding: 14px 24px;
-            border-radius: 30px;
+            padding: 16px 24px;
+            border-radius: 16px;
             font-family: 'Cairo', sans-serif;
             font-size: 1rem;
             font-weight: 700;
             cursor: pointer;
             text-decoration: none;
             transition: all 0.3s;
-            box-shadow: 0 4px 16px rgba(37,211,102,0.3);
+            box-shadow: 0 6px 20px rgba(37,211,102,0.2);
+            flex: 1;
         }
-        .btn-whatsapp-full:hover { background: #1ebe59; transform: translateY(-2px); }
+        .btn-whatsapp-full:hover {
+            background: #1ebe59;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.35);
+        }
         .share-link-box {
             background: #f8fafc;
             border: 1.5px dashed var(--border-color);
@@ -239,6 +251,8 @@
             .product-detail-grid { grid-template-columns: 1fr; }
             .product-title-main { font-size: 1.5rem; }
             .product-price-main { font-size: 1.8rem; }
+            .product-actions { flex-direction: column; }
+            .btn-add-cart-full, .btn-whatsapp-full { flex: none; width: 100%; }
         }
     </style>
 </head>
@@ -414,8 +428,19 @@
                             : ''}
                         <h1 class="product-title-main" style="margin-top: 5px;">${p.title_ar}</h1>
 
-                        <div class="product-price-main" id="pageFinalPrice">${formatSYP(finalPrice)}</div>
-                        ${hasDiscount ? `<div class="product-price-old">${formatSYP(p.base_price)}</div>` : ''}
+                        <div class="price-display-wrapper">
+                            <div>
+                                <span style="font-size: 0.85rem; color: var(--steel-grey); display: block; font-weight: 700; margin-bottom: 4px;">السعر الحالي:</span>
+                                <div style="display: flex; align-items: baseline; gap: 8px;">
+                                    <span class="product-price-main" id="pageFinalPrice">${formatSYP(finalPrice)}</span>
+                                    ${hasDiscount ? `<span class="product-price-old" style="margin-right: 10px;">${formatSYP(p.base_price)}</span>` : ''}
+                                </div>
+                            </div>
+                            ${hasDiscount ? `
+                            <div style="background: var(--spark-red); color: white; padding: 6px 12px; border-radius: 12px; font-size: 0.85rem; font-weight: 800;">
+                                وفرت ${formatSYP(p.base_price - p.discount_price)}
+                            </div>` : ''}
+                        </div>
 
                         <p class="product-desc">${p.description_ar || ''}</p>
 
@@ -438,8 +463,7 @@
                                 <i class="fa-solid fa-cart-plus"></i> إضافة إلى السلة وإتمام الشراء
                             </button>
                             <a href="${waLink}" target="_blank" class="btn-whatsapp-full">
-                                <span><i class="fa-brands fa-whatsapp"></i> واتساب المبيعات: <span dir="ltr" style="font-weight:700;">${formattedPhone}</span></span>
-                                استفسار مباشر عبر الواتساب
+                                <i class="fa-brands fa-whatsapp"></i> استفسار عبر الواتساب
                             </a>
                         </div>
 
