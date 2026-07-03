@@ -534,6 +534,13 @@ async function fetchProductsFromGoogleSheetsClient(categorySlug) {
     }
 }
 
+async function fetchProductDetailsFromGoogleSheetsClient(productId) {
+    if (!allProducts || allProducts.length === 0) {
+        await fetchProductsFromGoogleSheetsClient('all');
+    }
+    return allProducts.find(p => p.id === productId) || null;
+}
+
 // Render Products Grid - Cards open product page in new tab
 function renderProducts(products) {
     const grid = document.getElementById('productsGrid');

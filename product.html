@@ -302,7 +302,7 @@
     </div>
 
     <!-- App JS -->
-    <script src="/js/app.js?v=1.3.0"></script>
+    <script src="/js/app.js?v=1.4.0"></script>
     <script>
         // ===========================
         // Product Page Logic
@@ -336,7 +336,12 @@
                 if (!res.ok) throw new Error();
                 pageProduct = await res.json();
             } catch (e) {
-                pageProduct = FALLBACK_PRODUCTS.find(p => p.id === productId) || null;
+                try {
+                    pageProduct = await fetchProductDetailsFromGoogleSheetsClient(productId);
+                } catch (sheetErr) {
+                    console.error('Client Google Sheets details fallback failed:', sheetErr);
+                    pageProduct = FALLBACK_PRODUCTS.find(p => p.id === productId) || null;
+                }
             }
 
             if (!pageProduct) {
