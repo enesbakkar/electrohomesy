@@ -254,6 +254,39 @@ header {
     overflow: hidden;
 }
 
+.hero-card::before {
+    content: '';
+    position: absolute;
+    top: -30%;
+    left: -20%;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0, 180, 216, 0.25) 0%, rgba(0,0,0,0) 70%);
+    filter: blur(40px);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.hero-card::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    right: -10%;
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(206, 17, 38, 0.18) 0%, rgba(0,0,0,0) 70%);
+    filter: blur(50px);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.hero-content, .hero-image-box {
+    position: relative;
+    z-index: 2;
+}
+
 .hero-content h2.slogan {
     font-size: 3.2rem;
     font-weight: 800;
@@ -286,6 +319,11 @@ header {
 
 .hero-actions { display: flex; gap: 15px; flex-wrap: wrap; }
 
+@keyframes sheenSwipe {
+    0% { left: -100%; }
+    100% { left: 200%; }
+}
+
 .btn-primary {
     background: linear-gradient(135deg, var(--spark-red), #b00e1f);
     color: var(--white);
@@ -301,6 +339,21 @@ header {
     display: inline-flex;
     align-items: center;
     gap: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0) 100%);
+    transform: skewX(-25deg);
+    left: -100%;
+    animation: sheenSwipe 4s infinite linear;
+    pointer-events: none;
 }
 
 .btn-primary:hover {
@@ -412,6 +465,18 @@ header {
 
 /* Products Grid */
 .products-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: 60px; }
+@keyframes tagPulse {
+    0% { box-shadow: 0 4px 10px rgba(206, 17, 38, 0.2); }
+    50% { box-shadow: 0 4px 18px rgba(206, 17, 38, 0.45); }
+    100% { box-shadow: 0 4px 10px rgba(206, 17, 38, 0.2); }
+}
+
+@keyframes tagPulseBestseller {
+    0% { box-shadow: 0 4px 10px rgba(217, 119, 6, 0.2); }
+    50% { box-shadow: 0 4px 18px rgba(217, 119, 6, 0.45); }
+    100% { box-shadow: 0 4px 10px rgba(217, 119, 6, 0.2); }
+}
+
 .product-card {
     background: var(--white);
     border-radius: 16px;
@@ -422,7 +487,23 @@ header {
     display: flex;
     flex-direction: column;
     position: relative;
+    overflow: hidden;
 }
+.product-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--damascus-green), var(--volt-mint));
+    border-radius: 16px 16px 0 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 3;
+}
+.product-card:hover::before {
+    opacity: 1;
+}
+
 .product-card:hover { 
     transform: translateY(-4px); 
     box-shadow: 0 15px 35px -10px rgba(7, 48, 102, 0.12), 0 2px 4px -2px rgba(0,0,0,0.01); 
@@ -433,11 +514,13 @@ header {
     position: absolute; top: 14px; right: 14px; background: var(--spark-red); color: var(--white);
     padding: 4px 12px; border-radius: 8px; font-size: 0.8rem; font-weight: 700; z-index: 2;
     box-shadow: 0 4px 10px rgba(206, 17, 38, 0.2);
+    animation: tagPulse 2s infinite ease-in-out;
 }
 .badge-trendyol-bestseller {
     position: absolute; top: 14px; right: 14px; background: linear-gradient(135deg, #f59e0b, #d97706); color: var(--white);
     padding: 4px 12px; border-radius: 8px; font-size: 0.8rem; font-weight: 700; z-index: 2;
     box-shadow: 0 4px 10px rgba(217, 119, 6, 0.2);
+    animation: tagPulseBestseller 2s infinite ease-in-out;
 }
 
 .product-thumb { 
@@ -568,6 +651,78 @@ footer { background: var(--onyx); color: var(--white); padding: 45px 0 25px 0; m
 .footer-contact-list i.fa-whatsapp { color: var(--whatsapp-green); }
 
 .copyright-bar { border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 22px; text-align: center; color: #94a3b8; font-size: 0.88rem; }
+
+/* Store Benefits Modern Grid styling */
+.benefits-section {
+    width: 100%;
+}
+.benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+.benefit-card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--card-shadow);
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    text-align: right;
+}
+.benefit-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px -8px rgba(7, 48, 102, 0.08);
+    border-color: rgba(7, 48, 102, 0.15);
+}
+.benefit-icon-wrapper {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: rgba(7, 48, 102, 0.05);
+    color: var(--damascus-green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+    transition: all 0.25s ease;
+}
+.benefit-card:hover .benefit-icon-wrapper {
+    background: var(--damascus-green);
+    color: var(--white);
+}
+.benefit-info h4 {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--onyx);
+    margin-bottom: 3px;
+}
+.benefit-info p {
+    font-size: 0.78rem;
+    color: var(--steel-grey);
+    margin: 0;
+    line-height: 1.4;
+}
+
+@media (max-width: 992px) {
+    .benefits-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+}
+@media (max-width: 576px) {
+    .benefits-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    .benefit-card {
+        padding: 16px;
+    }
+}
 
 /* ==========================================
    ADMIN DASHBOARD RTL DEDICATED STYLING
