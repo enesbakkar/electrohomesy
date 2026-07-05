@@ -518,7 +518,7 @@ function getProductImageClient(imageLink, categoryId) {
 async function fetchProductsFromGoogleSheetsClient(categorySlug) {
     try {
         // Try fetching Google Sheets directly as the primary choice
-        const sheetUrl = 'https://docs.google.com/spreadsheets/d/1hioi7V5yDDsOmm5_StTI3b8poxnCsgMQXP30lC75PRI/gviz/tq?tqx=out:csv';
+        const sheetUrl = 'https://docs.google.com/spreadsheets/d/1hioi7V5yDDsOmm5_StTI3b8poxnCsgMQXP30lC75PRI/gviz/tq?tqx=out:csv&t=' + Date.now();
         const res = await fetch(sheetUrl);
         if (!res.ok) throw new Error('Failed to fetch from Google Sheets directly');
         const text = await res.text();
