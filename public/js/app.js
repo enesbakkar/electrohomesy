@@ -1015,23 +1015,27 @@ async function loadAdminData() {
 }
 
 async function fetchAdminProducts() {
-    // On static GitHub Pages there is no /api server.
-    // Load from Google Sheets CSV first, fall back to products.json, then FALLBACK_PRODUCTS.
+    // Auto-sync: load from Google Sheets CSV first, then /js/products.json, then hardcoded fallback
+    const badge = document.getElementById('syncStatusBadge');
     try {
         await fetchProductsFromGoogleSheetsClient('all');
         adminProducts = allProducts;
+        if (badge) badge.innerHTML = `<i class="fa-solid fa-circle-check" style="color:var(--damascus-green);"></i> تم التزامن تلقائياً — ${adminProducts.length} منتج من جدول إكسل`;
     } catch (sheetErr) {
         try {
-            const jsonRes = await fetch('./js/products.json?t=' + Date.now());
+            const jsonRes = await fetch('/js/products.json?t=' + Date.now());
             if (!jsonRes.ok) throw new Error('products.json not found');
             adminProducts = await jsonRes.json();
             allProducts = adminProducts;
+            if (badge) badge.innerHTML = `<i class="fa-solid fa-circle-check" style="color:#f59e0b;"></i> ${adminProducts.length} منتج (من النسخة المحفوظة)`;
         } catch (jsonErr) {
             adminProducts = FALLBACK_PRODUCTS;
+            if (badge) badge.innerHTML = `<i class="fa-solid fa-triangle-exclamation" style="color:var(--spark-red);"></i> لم يتم الاتصال بجدول إكسل`;
         }
     }
     renderAdminProductsTable(adminProducts);
 }
+
 
 function renderAdminProductsTable(products) {
     const tbody = document.getElementById('adminProductsTableBody');

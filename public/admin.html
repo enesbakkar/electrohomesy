@@ -65,11 +65,11 @@
                 <div>
                     <h2 style="font-weight: 900; color: var(--onyx); font-size: 2rem;">إدارة المنتجات والمخزون</h2>
                     <p style="color: var(--steel-grey); font-size: 1.05rem; margin-top: 4px;">إضافة وتعديل الأجهزة، التنوعات الديناميكية، الأسعار وفيديوهات المعاينة.</p>
+                    <span id="syncStatusBadge" style="display:inline-flex; align-items:center; gap:6px; margin-top:8px; font-size:0.85rem; color:var(--steel-grey); font-weight:600;">
+                        <i class="fa-solid fa-spinner fa-spin" style="color:var(--damascus-green);"></i> جاري تحميل المنتجات من جدول إكسل...
+                    </span>
                 </div>
                 <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-                    <button class="btn-primary" id="syncExcelBtn" onclick="syncFromExcel()" style="padding: 14px 28px; background: var(--Damascus-green) !important; color: var(--white); display: inline-flex; align-items: center; gap: 8px; border-radius: 12px; font-weight: 700; border: none; cursor: pointer;">
-                        <i class="fa-solid fa-arrows-rotate" id="syncExcelIcon"></i> مزامنة جدول إكسل canlı
-                    </button>
                     <button class="btn-primary" onclick="openAddProductModal()" style="padding: 14px 28px;"><i class="fa-solid fa-plus"></i> إضافة جهاز جديد</button>
                 </div>
             </div>
@@ -204,7 +204,7 @@
         </div>
     </div>
 
-    <script src="/js/app.js?v=1.7.0"></script>
+    <script src="/js/app.js?v=1.8.0"></script>
     <script>
         // Check Admin Auth on load
         async function checkAdminAuth() {
