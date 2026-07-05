@@ -113,6 +113,7 @@ async function generateProductsJson() {
         const categoryName = row[9] || '';
         let imageLink = row[10] || '';
         const videoLink = row[11] || '';
+        const isFeatured = row[12] && row[12].trim().toUpperCase() === 'TRUE' ? 1 : 0;
 
         imageLink = getGoogleDriveDirectLink(imageLink);
         const categoryId = getCategoryId(categoryName, name);
@@ -134,7 +135,8 @@ async function generateProductsJson() {
             is_visible: 1,
             stock_quantity: Math.round(quantity),
             sku: code,
-            brand: brand || 'ElectroHome'
+            brand: brand || 'ElectroHome',
+            is_featured: isFeatured
         });
     }
 

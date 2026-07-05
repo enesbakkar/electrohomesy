@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <!-- Custom Brand Stylesheet (Cache Busted v=1.4.0 Clean Transparent SVG Favicon) -->
-    <link rel="stylesheet" href="/css/style.css?v=3.1.0">
+    <link rel="stylesheet" href="/css/style.css?v=3.2.0">
 </head>
 
 <body>
@@ -69,29 +69,28 @@
 
     <!-- Main Container - Expanded Full Width -->
     <main class="container">
-        <!-- Hero Section -->
+        <!-- Hero Section (Automated Featured Products Carousel Slider) -->
         <section class="hero-section">
-            <div class="hero-card">
-                <div class="hero-content">
-                    <h2 class="slogan">طاقةٌ لكلِّ بيت</h2>
-                    <p class="subslogan">أجهزة منزلية وإلكترونية موثوقة وعصرية بأسعار في المتناول. نصلكم أينما كنتم في
-                        دمشق بكل سهولة وأمان.</p>
-                    <div class="hero-badges">
-                        <div class="hero-badge-item"><i class="fa-solid fa-circle-check"></i> جودة مضمونة</div>
-                        <div class="hero-badge-item"><i class="fa-solid fa-money-bill-wave"></i> الدفع عند الاستلام
-                        </div>
-                        <div class="hero-badge-item"><i class="fa-solid fa-wallet"></i> متوفر شام كاش</div>
-                    </div>
-                    <div class="hero-actions">
-                        <a href="#products-section" class="btn-primary"><i class="fa-solid fa-cart-shopping"></i> تصفح
-                            المنتجات الآن</a>
-                        <button class="btn-secondary" id="btnHeroContact"><i class="fa-solid fa-headset"></i> تواصل
-                            معنا</button>
+            <div class="featured-carousel-wrapper">
+                <div class="carousel-header">
+                    <h3 class="carousel-title">
+                        <i class="fa-solid fa-star" style="color: var(--spark-red); margin-left: 8px; animation: tagPulse 1.5s infinite ease-in-out;"></i> 
+                        الأجهزة الأكثر تميزاً وطلباً
+                    </h3>
+                    <div class="carousel-nav-arrows">
+                        <button class="carousel-arrow" onclick="moveFeaturedCarousel(-1)" aria-label="السابق"><i class="fa-solid fa-chevron-right"></i></button>
+                        <button class="carousel-arrow" onclick="moveFeaturedCarousel(1)" aria-label="التالي"><i class="fa-solid fa-chevron-left"></i></button>
                     </div>
                 </div>
-                <div class="hero-image-box">
-                    <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80"
-                        alt="أجهزة منزلية فاخرة إلكتروهومسي دمشق">
+                
+                <div class="carousel-track-container" id="featuredCarouselContainer">
+                    <div class="carousel-track" id="featuredCarouselTrack">
+                        <!-- Dynamically generated slides from app.js will render here -->
+                    </div>
+                </div>
+
+                <div class="carousel-indicators" id="featuredCarouselIndicators">
+                    <!-- Dots indicators will render here -->
                 </div>
             </div>
         </section>
@@ -353,7 +352,7 @@
     </footer>
 
     <!-- Frontend Application Logic Script (Cache Busted v=1.5.0 SVG Favicon Navy+White) -->
-    <script src="/js/app.js?v=3.1.0"></script>
+    <script src="/js/app.js?v=3.2.0"></script>
 </body>
 
 </html>

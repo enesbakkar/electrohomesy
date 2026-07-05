@@ -1,5 +1,9 @@
 /* ElectroHomeSY - Main Application & Admin Logic */
 
+let featuredCarouselIndex = 0;
+let featuredCarouselTimer = null;
+let featuredCarouselProducts = [];
+
 // Static Fallbacks for GitHub Pages static hosting
 const FALLBACK_CATEGORIES = [
     { id: 1, name_ar: "المكاوي وأجهزة البخار", slug: "irons", icon: "fa-shirt" },
@@ -456,6 +460,7 @@ async function fetchProducts(categorySlug) {
     try {
         const products = await fetchProductsFromGoogleSheetsClient(categorySlug);
         renderProducts(products);
+        renderFeaturedCarousel();
     } catch (sheetErr) {
         console.warn('Google Sheets fetch failed, using cached products.json:', sheetErr);
         try {
@@ -471,6 +476,7 @@ async function fetchProducts(categorySlug) {
                 const catId = catMap[categorySlug];
                 renderProducts(cached.filter(p => p.category_id === catId));
             }
+            renderFeaturedCarousel();
         } catch (jsonErr) {
             console.error('All data sources failed, using hardcoded fallback:', jsonErr);
             if (categorySlug === 'all') {
@@ -480,6 +486,7 @@ async function fetchProducts(categorySlug) {
                 allProducts = cat ? FALLBACK_PRODUCTS.filter(p => p.category_id === cat.id && p.is_visible) : [];
             }
             renderProducts(allProducts);
+            renderFeaturedCarousel();
         }
     }
 }
@@ -836,6 +843,7 @@ async function fetchProductsFromGoogleSheetsClient(categorySlug) {
             const categoryName = row[9] || '';
             const imageLink = row[10] || '';
             const videoLink = row[11] || '';
+            const isFeatured = row[12] && row[12].trim().toUpperCase() === 'TRUE' ? 1 : 0;
 
             const categoryId = getCategoryIdFromSheetClient(categoryName, name);
             const title = name; // Clean name without barcode
@@ -852,6 +860,7 @@ async function fetchProductsFromGoogleSheetsClient(categorySlug) {
                 main_image: finalImage,
                 youtube_url: videoLink,
                 is_visible: 1,
+                is_featured: isFeatured,
                 variants: [
                     { id: id * 100, product_id: id, brand: brand || 'ElectroHome', model_name: code, variant_attributes: {}, price_modifier: 0, stock_quantity: Math.round(quantity), sku: code }
                 ]
@@ -1293,6 +1302,136 @@ async function handleRequestSubmit(e) {
     alert('تم إرسال طلبكم بنجاح وسنقوم بتوفير الجهاز التواصل معكم بأسرع وقت!');
     document.getElementById('productRequestForm').reset();
     closeModal('requestModal');
+}
+
+// Featured Carousel Functions
+function renderFeaturedCarousel() {
+    const track = document.getElementById('featuredCarouselTrack');
+    const indicators = document.getElementById('featuredCarouselIndicators');
+    const container = document.getElementById('featuredCarouselContainer');
+    if (!track || !indicators || !container) return;
+
+    // Filter featured products
+    featuredCarouselProducts = allProducts.filter(p => p.is_featured === 1);
+    
+    // If no featured products, display fallback top products or hide carousel
+    if (featuredCarouselProducts.length === 0) {
+        featuredCarouselProducts = allProducts.slice(0, 5);
+    }
+
+    if (featuredCarouselProducts.length === 0) {
+        const hs = document.querySelector('.hero-section');
+        if (hs) hs.style.display = 'none';
+        return;
+    } else {
+        const hs = document.querySelector('.hero-section');
+        if (hs) hs.style.display = 'block';
+    }
+
+    // Render slides
+    track.innerHTML = featuredCarouselProducts.map(p => {
+        const finalPrice = p.discount_price ? p.discount_price : p.base_price;
+        const discountTag = p.discount_price && p.discount_price < p.base_price 
+            ? `<div class="discount-tag">خصم ${Math.round((1 - p.discount_price/p.base_price)*100)}%</div>` 
+            : '';
+        return `
+            <div class="carousel-slide">
+                <div class="featured-product-card">
+                    ${discountTag}
+                    <div class="product-thumb-wrapper" onclick="window.location.href='product.html?id=${p.id}'" style="cursor:pointer; text-align:center;">
+                        <img class="product-thumb" src="${p.main_image || 'https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=800&q=80'}" alt="${p.title_ar}">
+                    </div>
+                    <a href="product.html?id=${p.id}" class="product-title">${p.title_ar}</a>
+                    <div class="product-price-box">
+                        <span class="current-price">${formatSYP(finalPrice)}</span>
+                        ${p.discount_price && p.discount_price < p.base_price ? `<span class="old-price">${formatSYP(p.base_price)}</span>` : ''}
+                    </div>
+                    <button class="btn-add-cart" onclick="addCart(${p.id})">
+                        <i class="fa-solid fa-basket-shopping"></i> إضافة للسلة
+                    </button>
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    let cols = 3;
+    if (window.innerWidth <= 576) cols = 1;
+    else if (window.innerWidth <= 992) cols = 2;
+
+    const maxIndex = Math.max(0, featuredCarouselProducts.length - cols);
+    
+    // Render indicator dots
+    const dotsCount = maxIndex + 1;
+    indicators.innerHTML = '';
+    if (dotsCount > 1) {
+        for (let i = 0; i < dotsCount; i++) {
+            indicators.innerHTML += `<div class="carousel-dot ${i === 0 ? 'active' : ''}" onclick="goToFeaturedSlide(${i})"></div>`;
+        }
+    }
+
+    featuredCarouselIndex = 0;
+    track.style.transform = 'translateX(0px)';
+
+    // Start auto slide
+    startFeaturedAutoSlide(dotsCount);
+
+    // Pause on hover
+    container.addEventListener('mouseenter', () => stopFeaturedAutoSlide());
+    container.addEventListener('mouseleave', () => startFeaturedAutoSlide(dotsCount));
+}
+
+function startFeaturedAutoSlide(dotsCount) {
+    stopFeaturedAutoSlide();
+    if (dotsCount <= 1) return;
+    featuredCarouselTimer = setInterval(() => {
+        moveFeaturedCarousel(1);
+    }, 3500);
+}
+
+function stopFeaturedAutoSlide() {
+    if (featuredCarouselTimer) {
+        clearInterval(featuredCarouselTimer);
+        featuredCarouselTimer = null;
+    }
+}
+
+function moveFeaturedCarousel(dir) {
+    const track = document.getElementById('featuredCarouselTrack');
+    if (!track || featuredCarouselProducts.length === 0) return;
+
+    let cols = 3;
+    if (window.innerWidth <= 576) cols = 1;
+    else if (window.innerWidth <= 992) cols = 2;
+
+    const maxIndex = Math.max(0, featuredCarouselProducts.length - cols);
+    if (maxIndex === 0) return;
+
+    featuredCarouselIndex += dir;
+    if (featuredCarouselIndex > maxIndex) {
+        featuredCarouselIndex = 0;
+    } else if (featuredCarouselIndex < 0) {
+        featuredCarouselIndex = maxIndex;
+    }
+
+    goToFeaturedSlide(featuredCarouselIndex);
+}
+
+function goToFeaturedSlide(index) {
+    const track = document.getElementById('featuredCarouselTrack');
+    const dots = document.querySelectorAll('.carousel-dot');
+    if (!track) return;
+
+    featuredCarouselIndex = index;
+
+    const cardWidth = track.firstElementChild ? track.firstElementChild.getBoundingClientRect().width : 0;
+    const translateVal = featuredCarouselIndex * (cardWidth + 20);
+
+    track.style.transform = `translateX(${translateVal}px)`;
+
+    dots.forEach((dot, i) => {
+        if (i === index) dot.classList.add('active');
+        else dot.classList.remove('active');
+    });
 }
 
 
