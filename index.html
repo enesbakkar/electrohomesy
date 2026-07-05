@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <!-- Custom Brand Stylesheet (Cache Busted v=1.4.0 Clean Transparent SVG Favicon) -->
-    <link rel="stylesheet" href="/css/style.css?v=2.6.0">
+    <link rel="stylesheet" href="/css/style.css?v=2.7.0">
 </head>
 
 <body>
@@ -49,10 +49,10 @@
                 </div>
 
                 <div class="nav-actions">
-                    <button class="nav-btn" id="btnUserAuth" onclick="openUserAuthModal()">
+                    <a href="#account-section" class="nav-btn" id="btnUserAuth" style="text-decoration:none;">
                         <i class="fa-solid fa-user"></i>
                         <span id="userAuthBtnText">تسجيل الدخول</span>
-                    </button>
+                    </a>
                     <button class="nav-btn" id="btnOpenRequestModal">
                         <i class="fa-solid fa-pen-to-square"></i>
                         <span>طلب خاص</span>
@@ -199,6 +199,15 @@
                 </div>
             </div>
         </section>
+
+        <!-- MODAL-FREE ACCOUNT SECTION -->
+        <section id="account-section" style="display: none; padding-top: 20px; margin-bottom: 50px;">
+            <div class="cart-view-container" style="max-width: 600px; margin: 0 auto;">
+                <div class="cart-card" id="accountSectionContent">
+                    <!-- Dynamic form or profile card will load here -->
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- Floating WhatsApp Direct Button -->
@@ -220,48 +229,11 @@
             <i class="fa-solid fa-basket-shopping"></i>
             <span>السلة</span>
         </a>
-        <button class="mobile-nav-item" onclick="openUserAuthModal()">
+        <a href="#account-section" class="mobile-nav-item">
             <i class="fa-solid fa-user"></i>
             <span>حسابي</span>
-        </button>
+        </a>
     </nav>
-
-    <!-- MODAL 1: Customer Account Registration / Login -->
-    <div class="modal-overlay" id="userAuthModal">
-        <div class="modal-card" style="max-width: 440px;">
-            <button class="close-modal-btn" onclick="closeModal('userAuthModal')"><i class="fa-solid fa-xmark"></i></button>
-            <div style="text-align: center; margin-bottom: 12px;">
-                <img src="/Logo/ElectroHomeSY-logo-blue.png" alt="ElectroHomeSY" class="auth-modal-logo" style="height: 45px; margin-bottom: 6px; object-fit: contain;">
-                <h3 style="font-size: 1.3rem; font-weight: 900; color: var(--onyx);">تسجيل الدخول / إنشاء حساب</h3>
-                <p style="color: var(--steel-grey); font-size: 0.82rem; margin-top: 2px;" id="authModalSubtext">أدخل بياناتك لإتمام طلبك في دمشق بنجاح.</p>
-            </div>
-
-            <!-- Auth Options -->
-            <form id="customerAuthForm">
-                <div class="form-group" style="margin-bottom: 10px;">
-                    <label style="font-size: 0.85rem; font-weight: 700; margin-bottom: 4px; display: block;">الاسم الكامل <span style="color:var(--spark-red)">*</span></label>
-                    <input type="text" id="authCustName" class="form-control" placeholder="أدخل اسمك الكريم" required style="padding: 9px 12px; font-size: 0.9rem;">
-                </div>
-                <div class="form-group" style="margin-bottom: 12px;">
-                    <label style="font-size: 0.85rem; font-weight: 700; margin-bottom: 4px; display: block;">رقم الهاتف السوري <span style="color:var(--spark-red)">*</span></label>
-                    <input type="tel" id="authCustPhone" class="form-control" placeholder="مثال: 0912345678" required style="padding: 9px 12px; font-size: 0.9rem;">
-                </div>
-
-                <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 11px; font-size: 0.95rem; margin-bottom: 10px; border-radius: 20px;">
-                    <i class="fa-solid fa-right-to-bracket"></i> تسجيل الدخول برقم الهاتف
-                </button>
-            </form>
-
-            <div style="text-align: center; margin: 10px 0; position: relative;">
-                <span style="background: var(--white); padding: 0 10px; color: var(--steel-grey); font-size: 0.8rem; position: relative; z-index: 1;">أو الدخول بواسطة</span>
-                <div style="position: absolute; top: 50%; left:0; right:0; height:1px; background:var(--border-color); z-index:0;"></div>
-            </div>
-
-            <button type="button" onclick="handleGoogleAuthMock()" class="btn-secondary" style="width: 100%; justify-content: center; padding: 11px; font-size: 0.92rem; color: var(--onyx); border: 1.5px solid var(--border-color); background: #fff; border-radius: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
-                <i class="fa-brands fa-google" style="color: #ea4335; font-size: 1.1rem; margin-left: 6px;"></i> الدخول باستخدام Google
-            </button>
-        </div>
-    </div>
 
     <!-- MODAL 2: Product Quick View & Detail -->
     <div class="modal-overlay" id="productModal">
@@ -347,7 +319,7 @@
     </footer>
 
     <!-- Frontend Application Logic Script (Cache Busted v=1.5.0 SVG Favicon Navy+White) -->
-    <script src="/js/app.js?v=2.6.0"></script>
+    <script src="/js/app.js?v=2.7.0"></script>
 </body>
 
 </html>

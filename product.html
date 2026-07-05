@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <!-- Custom Brand Stylesheet -->
-    <link rel="stylesheet" href="/css/style.css?v=2.6.0">
+    <link rel="stylesheet" href="/css/style.css?v=2.7.0">
 
     <style>
         .product-page-container {
@@ -436,65 +436,12 @@
         </div>
     </footer>
 
-    <!-- Customer Auth Modal -->
-    <div class="modal-overlay" id="userAuthModal">
-        <div class="modal-card" style="max-width: 440px;">
-            <button class="close-modal-btn" onclick="closeModal('userAuthModal')"><i class="fa-solid fa-xmark"></i></button>
-            <div style="text-align: center; margin-bottom: 16px;">
-                <img src="/Logo/ElectroHomeSY-logo-blue.png" alt="ElectroHomeSY" class="auth-modal-logo" style="height: 55px; margin-bottom: 8px; object-fit: contain;">
-                <h3 style="font-size: 1.4rem; font-weight: 900; color: var(--onyx);">حساب الزبون</h3>
-                <p style="color: var(--steel-grey); font-size: 0.88rem; margin-top: 2px;">سجل دخولك ليصلك شحن الطلبات فوراً</p>
-            </div>
-            <form id="customerAuthForm">
-                <div class="form-group" style="margin-bottom: 12px;">
-                    <label style="font-size: 0.88rem; font-weight: 700; margin-bottom: 4px; display: block;">الاسم الكامل</label>
-                    <input type="text" id="authCustName" class="form-control" style="padding: 10px 14px; font-size: 0.95rem;" placeholder="أدخل اسمك الكريم" required>
-                </div>
-                <div class="form-group" style="margin-bottom: 16px;">
-                    <label style="font-size: 0.88rem; font-weight: 700; margin-bottom: 4px; display: block;">رقم الهاتف السوري</label>
-                    <input type="tel" id="authCustPhone" class="form-control" style="padding: 10px 14px; font-size: 0.95rem;" placeholder="09xxxxxxxx" required>
-                </div>
-                <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 12px; font-size: 1rem; border-radius: 12px;">
-                    <i class="fa-solid fa-right-to-bracket"></i> دخول / إنشاء حساب
-                </button>
-            </form>
-        </div>
-    </div>
 
-    <!-- Cart Modal -->
-    <div class="modal-overlay" id="cartModal">
-        <div class="modal-card" style="max-width: 560px;">
-            <button class="close-modal-btn" onclick="closeModal('cartModal')"><i class="fa-solid fa-xmark"></i></button>
-            <h3 style="font-size: 1.5rem; font-weight: 900; margin-bottom: 20px; text-align: center; color: var(--onyx);">
-                <i class="fa-solid fa-basket-shopping" style="color: var(--damascus-green); margin-left: 8px;"></i> سلة التسوق
-            </h3>
-            <div id="cartItemsList"></div>
-            <div style="border-top: 1px solid var(--border-color); padding-top: 16px; margin-top: 16px; display: flex; justify-content: space-between; align-items: center;">
-                <span style="font-weight: 800; font-size: 1.1rem;">الإجمالي:</span>
-                <span id="cartTotalPrice" style="font-size: 1.5rem; font-weight: 900; color: var(--damascus-green);"></span>
-            </div>
-            <form id="checkoutForm" style="margin-top: 20px;">
-                <div class="form-group">
-                    <label>الاسم الكامل للزبون</label>
-                    <input type="text" id="custName" class="form-control" placeholder="أدخل الاسم الثلاثي" required>
-                </div>
-                <div class="form-group">
-                    <label>رقم للتواصل (واتساب / اتصال)</label>
-                    <input type="tel" id="custPhone" class="form-control" placeholder="09xxxxxxxx" required>
-                </div>
-                <div class="form-group">
-                    <label>عنوان التوصيل في دمشق أو ريفها</label>
-                    <textarea id="custAddress" class="form-control" rows="2" placeholder="المنطقة، الشارع، أقرب علامة فارقة" required></textarea>
-                </div>
-                <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 14px; margin-top: 10px; font-size: 1.05rem;">
-                    <i class="fa-solid fa-check-circle"></i> تثبيت الطلب والشحن المباشر
-                </button>
-            </form>
-        </div>
-    </div>
+
+
 
     <!-- App JS -->
-    <script src="/js/app.js?v=2.6.0"></script>
+    <script src="/js/app.js?v=2.7.0"></script>
     <script>
         let detailProduct = null;
         let detailVariant = null;

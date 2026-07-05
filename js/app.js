@@ -230,6 +230,9 @@ function initStorefront() {
         if (hash === '#cart-section') {
             showView('cart');
             renderCartPage();
+        } else if (hash === '#account-section') {
+            showView('account');
+            renderAccountPage();
         } else {
             showView('home');
         }
@@ -271,15 +274,91 @@ function updateUserAuthUI() {
     }
 }
 
+let cameFromCheckout = false;
+
 function openUserAuthModal() {
-    if (currentCustomer) {
-        if (confirm(`أهلاً بك يا ${currentCustomer.full_name}!\nهل ترغب بتسجيل الخروج من حسابك؟`)) {
-            currentCustomer = null;
-            localStorage.removeItem('electro_customer');
-            updateUserAuthUI();
-        }
+    if (window.location.pathname.includes('product.html')) {
+        window.location.href = 'index.html#account-section';
     } else {
-        openModal('userAuthModal');
+        window.location.hash = '#account-section';
+    }
+}
+
+// Inline Account Page Rendering
+function renderAccountPage() {
+    const container = document.getElementById('accountSectionContent');
+    if (!container) return;
+
+    if (!currentCustomer) {
+        // Show login / registration form inline
+        container.innerHTML = `
+            <div style="text-align: center; margin-bottom: 20px;">
+                <img src="/Logo/ElectroHomeSY-logo-blue.png" alt="ElectroHomeSY" style="height: 55px; margin-bottom: 8px; object-fit: contain;">
+                <h3 style="font-size: 1.5rem; font-weight: 900; color: var(--onyx); margin-bottom: 5px;">تسجيل الدخول / إنشاء حساب</h3>
+                <p style="color: var(--steel-grey); font-size: 0.9rem; margin-top: 2px;">أدخل بياناتك لإتمام طلبك في دمشق بنجاح.</p>
+            </div>
+
+            <form id="customerAuthFormInline">
+                <div class="form-group" style="margin-bottom: 12px;">
+                    <label style="font-size: 0.85rem; font-weight: 700; margin-bottom: 4px; display: block; color: var(--onyx); text-align: right;">الاسم الكامل <span style="color:var(--spark-red)">*</span></label>
+                    <input type="text" id="authCustName" class="form-control" placeholder="أدخل اسمك الكريم" required style="padding: 11px; font-size: 0.95rem; border-radius: 12px;">
+                </div>
+                <div class="form-group" style="margin-bottom: 18px;">
+                    <label style="font-size: 0.85rem; font-weight: 700; margin-bottom: 4px; display: block; color: var(--onyx); text-align: right;">رقم الهاتف السوري <span style="color:var(--spark-red)">*</span></label>
+                    <input type="tel" id="authCustPhone" class="form-control" placeholder="مثال: 0912345678" required style="padding: 11px; font-size: 0.95rem; border-radius: 12px;">
+                </div>
+
+                <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 13px; font-size: 1rem; margin-bottom: 15px; border-radius: 14px; background: var(--spark-red); box-shadow: 0 4px 15px rgba(239, 68, 68, 0.25);">
+                    <i class="fa-solid fa-right-to-bracket"></i> تسجيل الدخول برقم الهاتف
+                </button>
+            </form>
+
+            <div style="text-align: center; margin: 15px 0; position: relative;">
+                <span style="background: var(--white); padding: 0 10px; color: var(--steel-grey); font-size: 0.8rem; position: relative; z-index: 1;">أو الدخول بواسطة</span>
+                <div style="position: absolute; top: 50%; left:0; right:0; height:1px; background:var(--border-color); z-index:0;"></div>
+            </div>
+
+            <button type="button" onclick="handleGoogleAuthMock()" class="btn-secondary" style="width: 100%; justify-content: center; padding: 12px; font-size: 0.92rem; color: var(--onyx); border: 1.5px solid var(--border-color); background: #fff; border-radius: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); cursor: pointer;">
+                <i class="fa-brands fa-google" style="color: #ea4335; font-size: 1.1rem; margin-left: 6px;"></i> الدخول باستخدام Google
+            </button>
+        `;
+
+        // Wire inline form submit listener
+        document.getElementById('customerAuthFormInline')?.addEventListener('submit', handleCustomerAuthSubmit);
+    } else {
+        // Show profile details card
+        container.innerHTML = `
+            <div style="text-align: center; margin-bottom: 25px;">
+                <div style="width: 80px; height: 80px; background: var(--fog-bg); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px;">
+                    <i class="fa-solid fa-circle-user" style="font-size: 4.5rem; color: var(--damascus-green);"></i>
+                </div>
+                <h3 style="font-size: 1.5rem; font-weight: 800; color: var(--onyx); margin-bottom: 4px;">${currentCustomer.full_name}</h3>
+                <p style="font-size: 1rem; color: var(--steel-grey); font-family: monospace;">${currentCustomer.phone_number}</p>
+            </div>
+            
+            <div style="border-top: 1px solid var(--border-color); padding-top: 20px; display: flex; flex-direction: column; gap: 14px;">
+                <div style="background: rgba(0,122,61,0.06); border: 1px solid rgba(0,122,61,0.12); padding: 16px; border-radius: 14px; display: flex; align-items: center; gap: 12px; text-align: right;">
+                    <i class="fa-solid fa-shield-halved" style="font-size: 1.4rem; color: var(--damascus-green);"></i>
+                    <div>
+                        <strong style="display: block; font-size: 0.95rem; color: var(--onyx); margin-bottom: 2px;">حساب موثق وآمن</strong>
+                        <span style="font-size: 0.82rem; color: var(--steel-grey);">بياناتك مشفرة ومحفوظة لتسهيل الطلب في دمشق</span>
+                    </div>
+                </div>
+                
+                <button type="button" onclick="handleLogout()" class="btn-secondary" style="width: 100%; justify-content: center; padding: 13px; font-size: 1.02rem; color: var(--spark-red); border: 1.5px solid var(--spark-red); background: #fff; border-radius: 14px; margin-top: 15px; cursor: pointer; transition: all 0.2s;">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i> تسجيل الخروج من الحساب
+                </button>
+            </div>
+        `;
+    }
+}
+
+function handleLogout() {
+    if (confirm('هل أنت متأكد من رغبتك في تسجيل الخروج؟')) {
+        currentCustomer = null;
+        localStorage.removeItem('electro_customer');
+        updateUserAuthUI();
+        renderAccountPage();
     }
 }
 
@@ -310,7 +389,13 @@ async function handleCustomerAuthSubmit(e) {
     
     localStorage.setItem('electro_customer', JSON.stringify(currentCustomer));
     updateUserAuthUI();
-    closeModal('userAuthModal');
+    
+    if (cameFromCheckout) {
+        cameFromCheckout = false;
+        window.location.hash = '#cart-section';
+    } else {
+        renderAccountPage();
+    }
     alert(`أهلاً بك يا ${currentCustomer.full_name}! تم تسجيل حسابك بنجاح.`);
 }
 
@@ -328,7 +413,13 @@ function handleGoogleAuthMock() {
     currentCustomer = { id: Date.now(), full_name: name, phone_number: phone };
     localStorage.setItem('electro_customer', JSON.stringify(currentCustomer));
     updateUserAuthUI();
-    closeModal('userAuthModal');
+    
+    if (cameFromCheckout) {
+        cameFromCheckout = false;
+        window.location.hash = '#cart-section';
+    } else {
+        renderAccountPage();
+    }
     alert(`أهلاً بك يا ${currentCustomer.full_name}! تم ربط حساب Google برقم هاتفك بنجاح.`);
 }
 
@@ -1011,12 +1102,21 @@ function showView(viewName) {
     const products = document.getElementById('products-section');
     const customRequest = document.getElementById('custom-request-section');
     const cartSec = document.getElementById('cart-section');
+    const accountSec = document.getElementById('account-section');
 
     if (viewName === 'cart') {
         if (hero) hero.style.display = 'none';
         if (products) products.style.display = 'none';
         if (customRequest) customRequest.style.display = 'none';
         if (cartSec) cartSec.style.display = 'block';
+        if (accountSec) accountSec.style.display = 'none';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (viewName === 'account') {
+        if (hero) hero.style.display = 'none';
+        if (products) products.style.display = 'none';
+        if (customRequest) customRequest.style.display = 'none';
+        if (cartSec) cartSec.style.display = 'none';
+        if (accountSec) accountSec.style.display = 'block';
         window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
         if (hero) {
@@ -1029,6 +1129,7 @@ function showView(viewName) {
         if (products) products.style.display = 'block';
         if (customRequest) customRequest.style.display = 'block';
         if (cartSec) cartSec.style.display = 'none';
+        if (accountSec) accountSec.style.display = 'none';
     }
 }
 
@@ -1128,7 +1229,8 @@ async function handleCheckoutSubmit(e) {
 
     if (!currentCustomer) {
         alert('⚠️ يرجى تسجيل الدخول أو إنشاء حساب جديد أولاً لإتمام طلبكم بنجاح!');
-        openModal('userAuthModal');
+        cameFromCheckout = true;
+        openUserAuthModal();
         return;
     }
 
