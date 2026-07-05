@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <!-- Custom Brand Stylesheet (Cache Busted v=1.4.0 Clean Transparent SVG Favicon) -->
-    <link rel="stylesheet" href="/css/style.css?v=2.3.0">
+    <link rel="stylesheet" href="/css/style.css?v=2.4.0">
 </head>
 
 <body>
@@ -57,11 +57,11 @@
                         <i class="fa-solid fa-pen-to-square"></i>
                         <span>طلب خاص</span>
                     </button>
-                    <button class="nav-btn nav-btn-cart" id="btnOpenCart">
+                    <a href="#cart-section" class="nav-btn nav-btn-cart" id="btnOpenCart" style="text-decoration:none;">
                         <i class="fa-solid fa-basket-shopping"></i>
                         <span>السلة</span>
                         <span class="cart-badge" id="cartCount">0</span>
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -155,10 +155,10 @@
             <i class="fa-solid fa-layer-group"></i>
             <span>الأصناف</span>
         </a>
-        <button class="mobile-nav-item" onclick="renderCartModal()">
+        <a href="#cart-section" class="mobile-nav-item">
             <i class="fa-solid fa-basket-shopping"></i>
             <span>السلة</span>
-        </button>
+        </a>
         <button class="mobile-nav-item" onclick="openUserAuthModal()">
             <i class="fa-solid fa-user"></i>
             <span>حسابي</span>
@@ -213,66 +213,7 @@
         </div>
     </div>
 
-    <!-- MODAL 3: Cart & Checkout -->
-    <div class="modal-overlay" id="cartModal">
-        <div class="modal-card">
-            <button class="close-modal-btn" onclick="closeModal('cartModal')"><i class="fa-solid fa-xmark"></i></button>
-            <h3
-                style="font-size: 1.6rem; font-weight: 900; margin-bottom: 20px; border-bottom: 2px solid var(--fog-bg); padding-bottom: 12px;">
-                سلة التسوق وإتمام الطلب</h3>
 
-            <div id="cartItemsList" style="margin-bottom: 20px; max-height: 250px; overflow-y: auto;">
-                <!-- Cart items list dynamically injected -->
-            </div>
-
-            <div
-                style="background: var(--fog-bg); padding: 18px; border-radius: 16px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center;">
-                <span style="font-size: 1.15rem; font-weight: 800;">إجمالي المبلغ المستحق:</span>
-                <span style="font-size: 1.5rem; font-weight: 900; color: var(--damascus-green);" id="cartTotalPrice">0
-                    ل.س</span>
-            </div>
-
-            <!-- Checkout Form -->
-            <form id="checkoutForm">
-                <h4 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 15px;">معلومات التوصيل (دمشق، سوريا)
-                </h4>
-                <div class="form-group">
-                    <label>الاسم الكامل <span style="color:var(--spark-red)">*</span></label>
-                    <input type="text" id="custName" class="form-control" placeholder="أدخل اسمك الكريم" required>
-                </div>
-                <div class="form-group">
-                    <label>رقم الهاتف / الواتساب السوري <span style="color:var(--spark-red)">*</span></label>
-                    <input type="tel" id="custPhone" class="form-control" placeholder="مثال: 0912345678" required>
-                </div>
-                <div class="form-group">
-                    <label>عنوان التوصيل بالتفصيل في دمشق <span style="color:var(--spark-red)">*</span></label>
-                    <input type="text" id="custAddress" class="form-control"
-                        placeholder="المنطقة، الشارع، البناء، رقم الشقة" required>
-                </div>
-
-                <h4 style="font-size: 1.15rem; font-weight: 800; margin-top: 20px; margin-bottom: 15px;">طريقة الدفع
-                    المتاحة</h4>
-                <div class="payment-methods-grid">
-                    <div class="payment-method-card selected" data-method="cod" onclick="selectPaymentMethod('cod')">
-                        <i class="fa-solid fa-hand-holding-dollar"></i>
-                        <h4>الدفع عند الاستلام (COD)</h4>
-                        <p style="font-size: 0.82rem; color: var(--steel-grey); margin-top: 4px;">تسليم المبلغ للمندوب
-                            فور وصول الجهاز</p>
-                    </div>
-                    <div class="payment-method-card" data-method="shamcash" onclick="selectPaymentMethod('shamcash')">
-                        <i class="fa-solid fa-mobile-screen-button"></i>
-                        <h4>شام كاش (ShamCash)</h4>
-                        <p style="font-size: 0.82rem; color: var(--steel-grey); margin-top: 4px;">الدفع السريع
-                            الإلكتروني عبر محفظة شام كاش</p>
-                    </div>
-                </div>
-
-                <button type="submit" class="btn-primary"
-                    style="width: 100%; justify-content: center; padding: 16px; font-size: 1.1rem;"><i
-                        class="fa-solid fa-check-double"></i> تأكيد وإرسال الطلب الآن</button>
-            </form>
-        </div>
-    </div>
 
     <!-- MODAL 4: Product Request / Suggestion -->
     <div class="modal-overlay" id="requestModal">
@@ -345,7 +286,7 @@
     </footer>
 
     <!-- Frontend Application Logic Script (Cache Busted v=1.5.0 SVG Favicon Navy+White) -->
-    <script src="/js/app.js?v=2.3.0"></script>
+    <script src="/js/app.js?v=2.4.0"></script>
 </body>
 
 </html>

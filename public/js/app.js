@@ -981,8 +981,7 @@ function addToCartCurrentProduct() {
 
     saveCart();
     closeModal('productModal');
-    renderCartModal();
-    openModal('cartModal');
+    window.location.hash = '#cart-section';
 }
 
 function saveCart() {
@@ -998,15 +997,40 @@ function updateCartBadge() {
     }
 }
 
-function renderCartModal() {
+function showView(viewName) {
+    const hero = document.querySelector('.hero-section');
+    const products = document.getElementById('products-section');
+    const customRequest = document.getElementById('custom-request-section');
+    const cartSec = document.getElementById('cart-section');
+
+    if (viewName === 'cart') {
+        if (hero) hero.style.display = 'none';
+        if (products) products.style.display = 'none';
+        if (customRequest) customRequest.style.display = 'none';
+        if (cartSec) cartSec.style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+        if (hero) {
+            if (window.innerWidth <= 768) {
+                hero.style.display = 'none';
+            } else {
+                hero.style.display = 'block';
+            }
+        }
+        if (products) products.style.display = 'block';
+        if (customRequest) customRequest.style.display = 'block';
+        if (cartSec) cartSec.style.display = 'none';
+    }
+}
+
+function renderCartPage() {
     const list = document.getElementById('cartItemsList');
     const totalPriceEl = document.getElementById('cartTotalPrice');
     if (!list || !totalPriceEl) return;
 
     if (cart.length === 0) {
-        list.innerHTML = `<p style="text-align:center; padding:35px; color:var(--steel-grey); font-size:1.05rem;">السلة فارغة حالياً. أضف بعض المنتجات للتسوق!</p>`;
+        list.innerHTML = `<p style="text-align:center; padding:35px; color:var(--steel-grey); font-size:1.05rem; font-family:'Cairo',sans-serif;">السلة فارغة حالياً. أضف بعض المنتجات للتسوق!</p>`;
         totalPriceEl.innerText = formatSYP(0);
-        openModal('cartModal');
         return;
     }
 
@@ -1015,26 +1039,48 @@ function renderCartModal() {
         const itemTotal = item.unit_price * item.quantity;
         total += itemTotal;
         return `
-            <div class="cart-item-row">
-                <div>
-                    <strong style="display:block; color:var(--onyx); font-size:1.05rem;">${item.product_name}</strong>
-                    <span style="font-size:0.88rem; color:var(--steel-grey);">${item.variant_details}</span>
-                    <div style="font-size:1rem; color:var(--damascus-green); font-weight:800; margin-top:4px;">${formatSYP(item.unit_price)} × ${item.quantity} = ${formatSYP(itemTotal)}</div>
+            <div class="cart-product-item">
+                <svg fill="none" viewBox="0 0 60 60" height="60" width="60" xmlns="http://www.w3.org/2000/svg" style="background:#fff6ee; border-radius:10px; padding:6px; border:1px solid #ffe5d0; flex-shrink:0;">
+                    <rect fill="#FFF6EE" rx="8.25" height="60" width="60"></rect>
+                    <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2.25" stroke="#FF8413" fill="#FFB672" d="M34.2812 18H25.7189C21.9755 18 18.7931 20.5252 17.6294 24.0434C17.2463 25.2017 17.0547 25.7808 17.536 26.3904C18.0172 27 18.8007 27 20.3675 27H39.6325C41.1993 27 41.9827 27 42.4639 26.3904C42.9453 25.7808 42.7538 25.2017 42.3707 24.0434C41.207 20.5252 38.0246 18 34.2812 18Z"></path>
+                    <path fill="#FFB672" d="M18 36H17.25C16.0074 36 15 34.9926 15 33.75C15 32.5074 16.0074 31.5 17.25 31.5H29.0916C29.6839 31.5 30.263 31.6754 30.7557 32.0039L33.668 33.9453C34.1718 34.2812 34.8282 34.2812 35.332 33.9453L38.2443 32.0039C38.7371 31.6754 39.3161 31.5 39.9084 31.5H42.75C43.9926 31.5 45 32.5074 45 33.75C45 34.9926 43.9926 36 42.75 36H42M18 36L18.6479 38.5914C19.1487 40.5947 20.9486 42 23.0135 42H36.9865C39.0514 42 40.8513 40.5947 41.3521 38.5914L42 36M18 36H28.5ZM42 36H39.75Z"></path>
+                    <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2.25" stroke="#FF8413" d="M18 36H17.25C16.0074 36 15 34.9926 15 33.75C15 32.5074 16.0074 31.5 17.25 31.5H29.0916C29.6839 31.5 30.263 31.6754 30.7557 32.0039L33.668 33.9453C34.1718 34.2812 34.8282 34.2812 35.332 33.9453L38.2443 32.0039C38.7371 31.6754 39.3161 31.5 39.9084 31.5H42.75C43.9926 31.5 45 32.5074 45 33.75C45 34.9926 43.9926 36 42.75 36H42M18 36L18.6479 38.5914C19.1487 40.5947 20.9486 42 23.0135 42H36.9865C39.0514 42 40.8513 40.5947 41.3521 38.5914L42 36M18 36H28.5M42 36H39.75"></path>
+                    <path stroke-linejoin="round" stroke-linecap="round" stroke-width="3" stroke="#FF8413" d="M34.512 22.5H34.4982"></path>
+                    <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2.25" stroke="#FF8413" d="M27.75 21.75L26.25 23.25"></path>
+                </svg>
+                <div class="cart-product-details">
+                    <span class="cart-product-title">${item.product_name}</span>
+                    <span class="cart-product-subtitle">${item.variant_details}</span>
                 </div>
-                <div style="display:flex; align-items:center; gap:10px;">
-                    <button type="button" onclick="changeQty(${index}, -1)" style="width:30px; height:30px; border-radius:50%; border:1px solid var(--border-color); background:#fff; cursor:pointer; font-weight:bold;">-</button>
-                    <span style="font-weight:bold; font-size:1.1rem;">${item.quantity}</span>
-                    <button type="button" onclick="changeQty(${index}, 1)" style="width:30px; height:30px; border-radius:50%; border:1px solid var(--border-color); background:#fff; cursor:pointer; font-weight:bold;">+</button>
-                    <button type="button" onclick="removeFromCart(${index})" style="color:var(--spark-red); background:none; border:none; cursor:pointer; margin-right:12px; font-size:1.1rem;"><i class="fa-solid fa-trash-can"></i></button>
+                <div class="cart-qty-selector">
+                    <button type="button" class="cart-qty-btn" onclick="changeQty(${index}, -1)">
+                        <svg fill="none" viewBox="0 0 24 24" height="14" width="14" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" stroke="#47484b" d="M20 12L4 12"></path>
+                        </svg>
+                    </button>
+                    <label class="cart-qty-label">${item.quantity}</label>
+                    <button type="button" class="cart-qty-btn" onclick="changeQty(${index}, 1)">
+                        <svg fill="none" viewBox="0 0 24 24" height="14" width="14" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" stroke="#47484b" d="M12 4V20M20 12H4"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <label class="cart-product-price">${formatSYP(itemTotal)}</label>
+                    <button type="button" onclick="removeFromCart(${index})" style="color:var(--spark-red); background:none; border:none; cursor:pointer; font-size:1.15rem; display:flex; align-items:center; justify-content:center;">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
                 </div>
             </div>
         `;
     }).join('');
 
     totalPriceEl.innerText = formatSYP(total);
-
     updateUserAuthUI();
-    openModal('cartModal');
+}
+
+function renderCartModal() {
+    window.location.hash = '#cart-section';
 }
 
 function changeQty(index, delta) {
@@ -1044,14 +1090,14 @@ function changeQty(index, delta) {
             cart.splice(index, 1);
         }
         saveCart();
-        renderCartModal();
+        renderCartPage();
     }
 }
 
 function removeFromCart(index) {
     cart.splice(index, 1);
     saveCart();
-    renderCartModal();
+    renderCartPage();
 }
 
 function selectPaymentMethod(method) {
@@ -1072,7 +1118,6 @@ async function handleCheckoutSubmit(e) {
 
     if (!currentCustomer) {
         alert('⚠️ يرجى تسجيل الدخول أو إنشاء حساب جديد أولاً لإتمام طلبكم بنجاح!');
-        closeModal('cartModal');
         openModal('userAuthModal');
         return;
     }
@@ -1111,7 +1156,7 @@ async function handleCheckoutSubmit(e) {
 
     cart = [];
     saveCart();
-    closeModal('cartModal');
+    window.location.hash = '';
 }
 
 // Product Request Submit
