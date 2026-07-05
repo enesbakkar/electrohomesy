@@ -330,18 +330,29 @@ async function fetchCategories() {
 }
 
 // Fetch Products with Static Fallback
+// On GitHub Pages there is no /api server, so we skip straight to
+// Google Sheets CSV (live data) → products.json (cached) → FALLBACK_PRODUCTS.
 async function fetchProducts(categorySlug) {
     try {
-        const res = await fetch(`/api/products?category=${categorySlug}`);
-        if (!res.ok) throw new Error('Not ok');
-        allProducts = await res.json();
-        renderProducts(allProducts);
-    } catch (e) {
+        const products = await fetchProductsFromGoogleSheetsClient(categorySlug);
+        renderProducts(products);
+    } catch (sheetErr) {
+        console.warn('Google Sheets fetch failed, using cached products.json:', sheetErr);
         try {
-            const products = await fetchProductsFromGoogleSheetsClient(categorySlug);
-            renderProducts(products);
-        } catch (sheetErr) {
-            console.error('Client Google Sheets fallback failed:', sheetErr);
+            const jsonRes = await fetch('./js/products.json?t=' + Date.now());
+            if (!jsonRes.ok) throw new Error('products.json not found');
+            const cached = await jsonRes.json();
+            allProducts = cached;
+            isGoogleSheetsDataLoaded = true;
+            if (categorySlug === 'all') {
+                renderProducts(cached);
+            } else {
+                const catMap = { 'irons': 1, 'vacuums': 2, 'kitchen': 3, 'large-appliances': 4 };
+                const catId = catMap[categorySlug];
+                renderProducts(cached.filter(p => p.category_id === catId));
+            }
+        } catch (jsonErr) {
+            console.error('All data sources failed, using hardcoded fallback:', jsonErr);
             if (categorySlug === 'all') {
                 allProducts = FALLBACK_PRODUCTS.filter(p => p.is_visible);
             } else {
@@ -373,16 +384,16 @@ function renderProductsPlaceholder() {
 
 async function fetchProductsInBackground() {
     try {
-        const res = await fetch('/api/products?category=all');
-        if (res.ok) {
-            allProducts = await res.json();
-        } else {
-            throw new Error('Not ok');
-        }
-    } catch (e) {
+        await fetchProductsFromGoogleSheetsClient('all');
+    } catch (sheetErr) {
         try {
-            await fetchProductsFromGoogleSheetsClient('all');
-        } catch (sheetErr) {
+            const jsonRes = await fetch('./js/products.json?t=' + Date.now());
+            if (jsonRes.ok) {
+                const cached = await jsonRes.json();
+                allProducts = cached;
+                isGoogleSheetsDataLoaded = true;
+            }
+        } catch (jsonErr) {
             allProducts = FALLBACK_PRODUCTS.filter(p => p.is_visible);
         }
     }

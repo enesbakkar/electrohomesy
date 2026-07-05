@@ -53,10 +53,38 @@ function unzipXlsx(xlsxPath, destDir) {
     }
     
     const { execSync } = require('child_process');
-    execSync(`powershell -Command "Expand-Archive -Path '${zipPath}' -DestinationPath '${destDir}' -Force"`);
-    
-    if (fs.existsSync(zipPath)) {
-        fs.unlinkSync(zipPath);
+    let error = null;
+
+    try {
+        // Attempt 1: tar (cross-platform, works on modern Windows and Linux)
+        try {
+            execSync(`tar -xf "${zipPath}" -C "${destDir}"`, { stdio: 'ignore' });
+            return;
+        } catch (e) {
+            error = e;
+        }
+
+        // Attempt 2: unzip (standard on Linux/macOS)
+        try {
+            execSync(`unzip -o "${zipPath}" -d "${destDir}"`, { stdio: 'ignore' });
+            return;
+        } catch (e) {
+            error = e;
+        }
+
+        // Attempt 3: powershell (fallback for older Windows environments)
+        try {
+            execSync(`powershell -Command "Expand-Archive -Path '${zipPath}' -DestinationPath '${destDir}' -Force"`, { stdio: 'ignore' });
+            return;
+        } catch (e) {
+            error = e;
+        }
+
+        throw new Error(`Failed to extract XLSX file using tar, unzip, or powershell. Original error: ${error.message}`);
+    } finally {
+        if (fs.existsSync(zipPath)) {
+            fs.unlinkSync(zipPath);
+        }
     }
 }
 
@@ -359,14 +387,28 @@ init();
 
 function fetchCSV(url) {
     return new Promise((resolve, reject) => {
-        https.get(url, (res) => {
-            if (res.statusCode !== 200) {
-                return reject(new Error(`Failed to fetch sheet: ${res.statusCode}`));
-            }
-            let data = '';
-            res.on('data', (chunk) => { data += chunk; });
-            res.on('end', () => resolve(data));
-        }).on('error', (err) => reject(err));
+        function get(targetUrl) {
+            https.get(targetUrl, (res) => {
+                if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+                    let redirectUrl = res.headers.location;
+                    if (redirectUrl.startsWith('//')) {
+                        redirectUrl = 'https:' + redirectUrl;
+                    } else if (redirectUrl.startsWith('/')) {
+                        const urlObj = new URL(targetUrl);
+                        redirectUrl = urlObj.origin + redirectUrl;
+                    }
+                    get(redirectUrl);
+                    return;
+                }
+                if (res.statusCode !== 200) {
+                    return reject(new Error(`Failed to fetch sheet: ${res.statusCode}`));
+                }
+                let data = '';
+                res.on('data', (chunk) => { data += chunk; });
+                res.on('end', () => resolve(data));
+            }).on('error', (err) => reject(err));
+        }
+        get(url);
     });
 }
 
