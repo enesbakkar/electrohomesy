@@ -478,6 +478,16 @@ function getFallbackImageClient(categoryId) {
     return placeholders[categoryId] || placeholders[4];
 }
 
+function getCategoryNameById(categoryId) {
+    const names = {
+        1: 'المكاوي وأجهزة البخار',
+        2: 'المكاس والتنظيف',
+        3: 'أجهزة المطبخ والخلاطات',
+        4: 'الأجهزة المنزلية الكبيرة'
+    };
+    return names[categoryId] || 'عام';
+}
+
 function getGoogleDriveDirectLinkClient(link) {
     if (!link) return '';
     if (link.includes('drive.google.com')) {
@@ -1005,14 +1015,21 @@ async function loadAdminData() {
 }
 
 async function fetchAdminProducts() {
+    // On static GitHub Pages there is no /api server.
+    // Load from Google Sheets CSV first, fall back to products.json, then FALLBACK_PRODUCTS.
     try {
-        const res = await fetch('/api/products?include_hidden=true');
-        if (!res.ok) throw new Error('Not ok');
-        adminProducts = await res.json();
-    } catch (e) {
-        adminProducts = FALLBACK_PRODUCTS;
+        await fetchProductsFromGoogleSheetsClient('all');
+        adminProducts = allProducts;
+    } catch (sheetErr) {
+        try {
+            const jsonRes = await fetch('./js/products.json?t=' + Date.now());
+            if (!jsonRes.ok) throw new Error('products.json not found');
+            adminProducts = await jsonRes.json();
+            allProducts = adminProducts;
+        } catch (jsonErr) {
+            adminProducts = FALLBACK_PRODUCTS;
+        }
     }
-
     renderAdminProductsTable(adminProducts);
 }
 
@@ -1028,7 +1045,7 @@ function renderAdminProductsTable(products) {
             <td><strong>#${p.id}</strong></td>
             <td><img src="${p.main_image || ''}" style="width:48px; height:48px; object-fit:cover; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.1);"></td>
             <td><strong style="color:var(--onyx); font-size:1.05rem;">${p.title_ar}</strong></td>
-            <td><span style="background:#f1f5f9; padding:4px 10px; border-radius:12px; font-weight:700; font-size:0.88rem;">${p.category_name || 'عام'}</span></td>
+            <td><span style="background:#f1f5f9; padding:4px 10px; border-radius:12px; font-weight:700; font-size:0.88rem;">${p.category_name || getCategoryNameById(p.category_id) || 'عام'}</span></td>
             <td><strong style="color:var(--damascus-green); font-size:1.1rem;">${formatSYP(p.base_price)}</strong></td>
             <td>
                 <div style="display:flex; flex-direction:column; gap:5px;">
@@ -1279,24 +1296,32 @@ async function syncFromExcel() {
     btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> جاري المزامنة...`;
 
     try {
-        const res = await fetch('/api/admin/sync', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-Token': getCookie('csrf_token')
-            }
-        });
-        
-        const data = await res.json();
-        if (res.ok && data.success) {
-            alert(`تمت المزامنة بنجاح! تم تحديث ${data.count} منتج من جدول إكسل.`);
-            fetchAdminProducts();
-        } else {
-            alert(`فشلت المزامنة: ${data.error || 'خطأ غير معروف'}`);
-        }
+        // On static hosting: fetch directly from Google Sheets and refresh the table
+        await fetchProductsFromGoogleSheetsClient('all');
+        adminProducts = allProducts;
+        renderAdminProductsTable(adminProducts);
+        alert(`تمت المزامنة بنجاح! تم تحميل ${adminProducts.length} منتج من جدول إكسل.`);
     } catch (err) {
-        console.error('Manual Excel sync client error:', err);
-        alert(`فشلت المزامنة: ${err.message}`);
+        // Fallback: try the server API (when running with Node backend)
+        try {
+            const res = await fetch('/api/admin/sync', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-Token': getCookie('csrf_token')
+                }
+            });
+            const data = await res.json();
+            if (res.ok && data.success) {
+                alert(`تمت المزامنة بنجاح! تم تحديث ${data.count} منتج من جدول إكسل.`);
+                fetchAdminProducts();
+            } else {
+                alert(`فشلت المزامنة: ${data.error || 'خطأ غير معروف'}`);
+            }
+        } catch (apiErr) {
+            console.error('Manual Excel sync failed:', apiErr);
+            alert(`فشلت المزامنة: ${apiErr.message}`);
+        }
     } finally {
         btn.disabled = false;
         btn.style.opacity = '1';
