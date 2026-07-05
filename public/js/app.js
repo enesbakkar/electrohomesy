@@ -467,34 +467,40 @@ function getFallbackImageClient(categoryId) {
     return placeholders[categoryId] || placeholders[4];
 }
 
+function getGoogleDriveDirectLinkClient(link) {
+    if (!link) return '';
+    if (link.includes('drive.google.com')) {
+        let fileId = '';
+        const idMatch = link.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+        if (idMatch) {
+            fileId = idMatch[1];
+        } else {
+            const fileMatch = link.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+            if (fileMatch) {
+                fileId = fileMatch[1];
+            }
+        }
+        if (fileId) {
+            return `https://lh3.googleusercontent.com/d/${fileId}`;
+        }
+    }
+    return link;
+}
+
 function getProductImageClient(imageLink, categoryId) {
     if (!imageLink) {
         return getFallbackImageClient(categoryId);
     }
-    if (imageLink.startsWith('http://') || imageLink.startsWith('https://') || imageLink.startsWith('/')) {
-        return imageLink;
+    const resolvedLink = getGoogleDriveDirectLinkClient(imageLink);
+    if (resolvedLink.startsWith('http://') || resolvedLink.startsWith('https://') || resolvedLink.startsWith('/')) {
+        return resolvedLink;
     }
     return getFallbackImageClient(categoryId);
 }
 
 async function fetchProductsFromGoogleSheetsClient(categorySlug) {
     try {
-        const jsonRes = await fetch('./js/products.json');
-        if (!jsonRes.ok) throw new Error('Static products.json not found');
-        const products = await jsonRes.json();
-        allProducts = products;
-        isGoogleSheetsDataLoaded = true;
-
-        if (categorySlug === 'all') {
-            return products;
-        } else {
-            const catMap = { 'irons': 1, 'vacuums': 2, 'kitchen': 3, 'large-appliances': 4 };
-            const catId = catMap[categorySlug];
-            return products.filter(p => p.category_id === catId);
-        }
-    } catch (jsonErr) {
-        console.warn('Failed to fetch pre-compiled products.json, falling back to direct CSV:', jsonErr);
-        
+        // Try fetching Google Sheets directly as the primary choice
         const sheetUrl = 'https://docs.google.com/spreadsheets/d/1hioi7V5yDDsOmm5_StTI3b8poxnCsgMQXP30lC75PRI/gviz/tq?tqx=out:csv';
         const res = await fetch(sheetUrl);
         if (!res.ok) throw new Error('Failed to fetch from Google Sheets directly');
@@ -551,6 +557,26 @@ async function fetchProductsFromGoogleSheetsClient(categorySlug) {
             const catMap = { 'irons': 1, 'vacuums': 2, 'kitchen': 3, 'large-appliances': 4 };
             const catId = catMap[categorySlug];
             return products.filter(p => p.category_id === catId);
+        }
+    } catch (sheetErr) {
+        console.warn('Failed to fetch direct CSV, falling back to pre-compiled products.json:', sheetErr);
+        try {
+            const jsonRes = await fetch('./js/products.json');
+            if (!jsonRes.ok) throw new Error('Static products.json not found');
+            const products = await jsonRes.json();
+            allProducts = products;
+            isGoogleSheetsDataLoaded = true;
+
+            if (categorySlug === 'all') {
+                return products;
+            } else {
+                const catMap = { 'irons': 1, 'vacuums': 2, 'kitchen': 3, 'large-appliances': 4 };
+                const catId = catMap[categorySlug];
+                return products.filter(p => p.category_id === catId);
+            }
+        } catch (jsonErr) {
+            console.error('Static products.json fallback also failed:', jsonErr);
+            throw jsonErr;
         }
     }
 }
@@ -984,7 +1010,7 @@ function renderAdminProductsTable(products) {
     if (!tbody) return;
 
     tbody.innerHTML = products.map(p => {
-        const productCode = generateProductCode(p.id);
+        const productCode = p.variants && p.variants.length > 0 && p.variants[0].sku ? p.variants[0].sku : (p.sku || generateProductCode(p.id));
         const productUrl = (window.location.origin || '') + `/product.html?id=${p.id}`;
         return `
         <tr>
@@ -1230,4 +1256,39 @@ async function fetchAdminRequests() {
             <td>${new Date(r.created_at).toLocaleDateString('ar-SY')}</td>
         </tr>
     `).join('');
+}
+
+async function syncFromExcel() {
+    const btn = document.getElementById('syncExcelBtn');
+    if (!btn) return;
+
+    const originalHtml = btn.innerHTML;
+    btn.disabled = true;
+    btn.style.opacity = '0.7';
+    btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> جاري المزامنة...`;
+
+    try {
+        const res = await fetch('/api/admin/sync', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-Token': getCookie('csrf_token')
+            }
+        });
+        
+        const data = await res.json();
+        if (res.ok && data.success) {
+            alert(`تمت المزامنة بنجاح! تم تحديث ${data.count} منتج من جدول إكسل.`);
+            fetchAdminProducts();
+        } else {
+            alert(`فشلت المزامنة: ${data.error || 'خطأ غير معروف'}`);
+        }
+    } catch (err) {
+        console.error('Manual Excel sync client error:', err);
+        alert(`فشلت المزامنة: ${err.message}`);
+    } finally {
+        btn.disabled = false;
+        btn.style.opacity = '1';
+        btn.innerHTML = originalHtml;
+    }
 }

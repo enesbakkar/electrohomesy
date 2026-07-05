@@ -189,20 +189,8 @@ app.get('/api/categories', async (req, res) => {
 });
 
 // 3. Products List (Dynamic search and visibility)
-let lastSyncTime = 0;
-const SYNC_COOLDOWN = 5 * 60 * 1000; // 5 minutes
-
 app.get('/api/products', async (req, res) => {
     const { category, search, include_hidden } = req.query;
-
-    // Trigger background Google Sheets sync if cooldown has passed
-    const now = Date.now();
-    if (now - lastSyncTime > SYNC_COOLDOWN) {
-        lastSyncTime = now;
-        db.syncGoogleSheets()
-            .then(count => console.log(`Background sync success: Synced ${count} products.`))
-            .catch(err => console.error('Background Google Sheets sync failed:', err.message));
-    }
 
     try {
         let sql = 'SELECT p.*, c.name_ar as category_name FROM products p JOIN categories c ON p.category_id = c.id WHERE 1=1';
@@ -516,6 +504,18 @@ app.post('/api/admin/logout', (req, res) => {
     res.json({ message: 'Logged out successfully' });
 });
 
+// 16. Admin Force Excel Sync
+app.post('/api/admin/sync', requireAdmin, async (req, res) => {
+    try {
+        console.log('Admin triggered manual Excel sync...');
+        const count = await db.syncGoogleSheets();
+        res.json({ success: true, count });
+    } catch (err) {
+        console.error('Manual Excel sync failed:', err.message);
+        res.status(500).json({ error: 'فشلت عملية مزامنة البيانات: ' + err.message });
+    }
+});
+
 
 // Serve Static Assets & SPA Routing
 app.use(express.static(PUBLIC_DIR));
@@ -546,4 +546,14 @@ app.listen(PORT, async () => {
     } catch (e) {
         console.error('Initial Google Sheets product synchronization failed on start:', e.message);
     }
+
+    // Background Google Sheets product synchronization every 60 seconds
+    setInterval(async () => {
+        try {
+            console.log('Running scheduled background Google Sheets sync...');
+            await db.syncGoogleSheets();
+        } catch (e) {
+            console.error('Scheduled background Google Sheets sync failed:', e.message);
+        }
+    }, 60 * 1000);
 });

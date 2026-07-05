@@ -468,136 +468,197 @@ function getProductImage(imageLink, categoryId) {
     return getFallbackImage(categoryId);
 }
 
+let isSyncInProgress = false;
+
 async function syncGoogleSheets() {
-    const sheetUrl = 'https://docs.google.com/spreadsheets/d/1hioi7V5yDDsOmm5_StTI3b8poxnCsgMQXP30lC75PRI/gviz/tq?tqx=out:csv';
-    console.log('Database: Starting Google Sheets product sync...');
-    
-    let useXlsx = false;
-    let products = [];
-
-    try {
-        const scratchDir = path.join(__dirname, 'scratch');
-        const tempXlsx = path.join(scratchDir, 'sheet.xlsx');
-        const tempUnzipped = path.join(scratchDir, 'unzipped');
-        
-        if (!fs.existsSync(scratchDir)) {
-            fs.mkdirSync(scratchDir, { recursive: true });
-        }
-        
-        await downloadXlsxFile('https://docs.google.com/spreadsheets/d/1hioi7V5yDDsOmm5_StTI3b8poxnCsgMQXP30lC75PRI/export?format=xlsx', tempXlsx);
-        unzipXlsx(tempXlsx, tempUnzipped);
-        useXlsx = true;
-        console.log('Database: Downloaded and unzipped XLSX sheet.');
-    } catch (e) {
-        console.warn('Database: XLSX extraction failed, falling back to CSV sync:', e.message);
-        useXlsx = false;
+    if (isSyncInProgress) {
+        console.log('Database: Excel sync is already in progress, skipping.');
+        return 0;
     }
-
+    isSyncInProgress = true;
     try {
-        if (useXlsx) {
-            try {
-                const tempUnzipped = path.join(__dirname, 'scratch', 'unzipped');
-                const sheetXml = fs.readFileSync(path.join(tempUnzipped, 'xl', 'worksheets', 'sheet1.xml'), 'utf8');
-                const relsXml = fs.readFileSync(path.join(tempUnzipped, 'xl', 'worksheets', '_rels', 'sheet1.xml.rels'), 'utf8');
-                const sharedStringsXml = fs.readFileSync(path.join(tempUnzipped, 'xl', 'sharedStrings.xml'), 'utf8');
+        const sheetUrl = 'https://docs.google.com/spreadsheets/d/1hioi7V5yDDsOmm5_StTI3b8poxnCsgMQXP30lC75PRI/gviz/tq?tqx=out:csv';
+        console.log('Database: Starting Google Sheets product sync...');
+        
+        let useXlsx = false;
+        let products = [];
 
-                // 1. Parse Shared Strings
-                const sharedStrings = [];
-                const siRegex = /<si>[\s\S]*?<\/si>/g;
-                let siMatch;
-                while ((siMatch = siRegex.exec(sharedStringsXml)) !== null) {
-                    const tMatch = siMatch[0].match(/<t[^>]*>([\s\S]*?)<\/t>/);
-                    sharedStrings.push(tMatch ? tMatch[1] : '');
-                }
+        try {
+            const scratchDir = path.join(__dirname, 'scratch');
+            const tempXlsx = path.join(scratchDir, 'sheet.xlsx');
+            const tempUnzipped = path.join(scratchDir, 'unzipped');
+            
+            if (!fs.existsSync(scratchDir)) {
+                fs.mkdirSync(scratchDir, { recursive: true });
+            }
+            
+            await downloadXlsxFile('https://docs.google.com/spreadsheets/d/1hioi7V5yDDsOmm5_StTI3b8poxnCsgMQXP30lC75PRI/export?format=xlsx', tempXlsx);
+            unzipXlsx(tempXlsx, tempUnzipped);
+            useXlsx = true;
+            console.log('Database: Downloaded and unzipped XLSX sheet.');
+        } catch (e) {
+            console.warn('Database: XLSX extraction failed, falling back to CSV sync:', e.message);
+            useXlsx = false;
+        }
 
-                // 2. Parse Relationships (hyperlinks)
-                const rels = {};
-                const relRegex = /<Relationship\s+Id="([^"]+)"\s+Type="[^"]+hyperlink"\s+Target="([^"]+)"/g;
-                let relMatch;
-                while ((relMatch = relRegex.exec(relsXml)) !== null) {
-                    rels[relMatch[1]] = relMatch[2];
-                }
+        try {
+            if (useXlsx) {
+                try {
+                    const tempUnzipped = path.join(__dirname, 'scratch', 'unzipped');
+                    const sheetXml = fs.readFileSync(path.join(tempUnzipped, 'xl', 'worksheets', 'sheet1.xml'), 'utf8');
+                    const relsXml = fs.readFileSync(path.join(tempUnzipped, 'xl', 'worksheets', '_rels', 'sheet1.xml.rels'), 'utf8');
+                    const sharedStringsXml = fs.readFileSync(path.join(tempUnzipped, 'xl', 'sharedStrings.xml'), 'utf8');
 
-                // 3. Parse Sheet Hyperlink Map
-                const cellHyperlinks = {};
-                const hyperlinkRegex = /<hyperlink\s+([^>]*?)\/>/g;
-                let hyperlinkMatch;
-                while ((hyperlinkMatch = hyperlinkRegex.exec(sheetXml)) !== null) {
-                    const attrs = hyperlinkMatch[1];
-                    const refMatch = attrs.match(/ref="([^"]+)"/);
-                    const idMatch = attrs.match(/r:id="([^"]+)"/);
-                    if (refMatch && idMatch) {
-                        const cellRef = refMatch[1];
-                        const rId = idMatch[1];
-                        if (rels[rId]) {
-                            cellHyperlinks[cellRef] = rels[rId];
+                    // 1. Parse Shared Strings
+                    const sharedStrings = [];
+                    const siRegex = /<si>[\s\S]*?<\/si>/g;
+                    let siMatch;
+                    while ((siMatch = siRegex.exec(sharedStringsXml)) !== null) {
+                        const tMatch = siMatch[0].match(/<t[^>]*>([\s\S]*?)<\/t>/);
+                        sharedStrings.push(tMatch ? tMatch[1] : '');
+                    }
+
+                    // 2. Parse Relationships (hyperlinks)
+                    const rels = {};
+                    const relRegex = /<Relationship\s+Id="([^"]+)"\s+Type="[^"]+hyperlink"\s+Target="([^"]+)"/g;
+                    let relMatch;
+                    while ((relMatch = relRegex.exec(relsXml)) !== null) {
+                        rels[relMatch[1]] = relMatch[2];
+                    }
+
+                    // 3. Parse Sheet Hyperlink Map
+                    const cellHyperlinks = {};
+                    const hyperlinkRegex = /<hyperlink\s+([^>]*?)\/>/g;
+                    let hyperlinkMatch;
+                    while ((hyperlinkMatch = hyperlinkRegex.exec(sheetXml)) !== null) {
+                        const attrs = hyperlinkMatch[1];
+                        const refMatch = attrs.match(/ref="([^"]+)"/);
+                        const idMatch = attrs.match(/r:id="([^"]+)"/);
+                        if (refMatch && idMatch) {
+                            const cellRef = refMatch[1];
+                            const rId = idMatch[1];
+                            if (rels[rId]) {
+                                cellHyperlinks[cellRef] = rels[rId];
+                            }
                         }
                     }
-                }
 
-                // 4. Parse Rows and Cells
-                const rows = [];
-                const rowRegex = /<row[^>]*>([\s\S]*?)<\/row>/g;
-                let rowMatch;
-                while ((rowMatch = rowRegex.exec(sheetXml)) !== null) {
-                    const rowContent = rowMatch[0];
-                    const rowNumMatch = rowContent.match(/r="(\d+)"/);
-                    const rowNum = rowNumMatch ? parseInt(rowNumMatch[1], 10) : (rows.length + 1);
+                    // 4. Parse Rows and Cells
+                    const rows = [];
+                    const rowRegex = /<row[^>]*>([\s\S]*?)<\/row>/g;
+                    let rowMatch;
+                    while ((rowMatch = rowRegex.exec(sheetXml)) !== null) {
+                        const rowContent = rowMatch[0];
+                        const rowNumMatch = rowContent.match(/r="(\d+)"/);
+                        const rowNum = rowNumMatch ? parseInt(rowNumMatch[1], 10) : (rows.length + 1);
 
-                    const cellRegex = /<c\s+r="([A-Z]+)(\d+)"\s*(?:s="[^"]*")?\s*(?:t="([^"]*)")?>([\s\S]*?)<\/c>/g;
-                    let cellMatch;
-                    const rowCells = {};
-                    while ((cellMatch = cellRegex.exec(rowContent)) !== null) {
-                        const colLetter = cellMatch[1];
-                        const cellType = cellMatch[3] || '';
-                        const vMatch = cellMatch[4].match(/<v>([\s\S]*?)<\/v>/);
-                        const rawVal = vMatch ? vMatch[1] : '';
+                        const cellRegex = /<c\s+r="([A-Z]+)(\d+)"\s*(?:s="[^"]*")?\s*(?:t="([^"]*)")?>([\s\S]*?)<\/c>/g;
+                        let cellMatch;
+                        const rowCells = {};
+                        while ((cellMatch = cellRegex.exec(rowContent)) !== null) {
+                            const colLetter = cellMatch[1];
+                            const cellType = cellMatch[3] || '';
+                            const vMatch = cellMatch[4].match(/<v>([\s\S]*?)<\/v>/);
+                            const rawVal = vMatch ? vMatch[1] : '';
 
-                        let finalVal = '';
-                        if (cellType === 's') {
-                            const idx = parseInt(rawVal, 10);
-                            finalVal = sharedStrings[idx] || '';
-                        } else {
-                            finalVal = rawVal;
+                            let finalVal = '';
+                            if (cellType === 's') {
+                                const idx = parseInt(rawVal, 10);
+                                finalVal = sharedStrings[idx] || '';
+                            } else {
+                                finalVal = rawVal;
+                            }
+                            rowCells[colLetter] = finalVal;
                         }
-                        rowCells[colLetter] = finalVal;
+                        rows.push({ rowNum, cells: rowCells });
                     }
-                    rows.push({ rowNum, cells: rowCells });
+
+                    // Compile products from rows
+                    for (const r of rows) {
+                        if (r.rowNum < 3) continue;
+                        const cells = r.cells;
+                        
+                        const name = cells.B || '';
+                        const brand = cells.C ? cells.C.trim() : '';
+                        const code = cells.D || '';
+                        if (!name || !code) continue;
+
+                        const id = parseInt(cells.A, 10) || r.rowNum;
+                        const quantity = parseFloat(cells.E) || 0;
+                        const cost = parsePrice(cells.F);
+                        const sellingPrice = parsePrice(cells.G);
+                        const discountPrice = parsePrice(cells.H);
+                        const categoryName = cells.J || '';
+                        
+                        // Column K holds image - check hyperlink first, otherwise raw text
+                        const cellRefK = `K${r.rowNum}`;
+                        let imageLink = cellHyperlinks[cellRefK] || cells.K || '';
+                        imageLink = getGoogleDriveDirectLink(imageLink);
+
+                        // Column L holds video - check hyperlink first, otherwise raw text
+                        const cellRefL = `L${r.rowNum}`;
+                        const videoLink = cellHyperlinks[cellRefL] || cells.L || '';
+
+                        const categoryId = getCategoryIdFromSheet(categoryName, name);
+                        const finalImage = getProductImage(imageLink, categoryId);
+
+                        products.push({
+                            id,
+                            category_id: categoryId,
+                            title_ar: name,
+                            slug: `prod-${code.toLowerCase().replace(/[^a-z0-9]/g, '-')}-${id}`,
+                            description_ar: `جهاز كهربائي ذكي عالي الكفاءة. الموديل: ${code}. متوفر حالياً بالمخزون بكمية ${Math.round(quantity)} قطعة.`,
+                            base_price: sellingPrice || cost || 0,
+                            discount_price: discountPrice,
+                            main_image: finalImage,
+                            youtube_url: videoLink,
+                            is_visible: 1,
+                            stock_quantity: Math.round(quantity),
+                            sku: code,
+                            brand: brand || 'ElectroHome'
+                        });
+                    }
+                    console.log(`Database: Parsed ${products.length} products from XLSX successfully.`);
+                } catch (xlsxParseErr) {
+                    console.error('Database: Error parsing XLSX, falling back to CSV:', xlsxParseErr.message);
+                    useXlsx = false;
+                    products = [];
+                }
+            }
+
+            if (!useXlsx) {
+                const csvData = await fetchCSV(sheetUrl);
+                const csvRows = parseCSV(csvData);
+                if (csvRows.length < 2) {
+                    throw new Error('Google Sheets returned empty or invalid CSV data');
                 }
 
-                // Compile products from rows
-                for (const r of rows) {
-                    if (r.rowNum < 3) continue;
-                    const cells = r.cells;
-                    
-                    const name = cells.B || '';
-                    const brand = cells.C ? cells.C.trim() : '';
-                    const code = cells.D || '';
+                for (let i = 1; i < csvRows.length; i++) {
+                    const row = csvRows[i];
+                    if (row.length < 4) continue;
+
+                    const name = row[1];
+                    const brand = row[2] ? row[2].trim() : '';
+                    const code = row[3];
                     if (!name || !code) continue;
 
-                    const id = parseInt(cells.A, 10) || r.rowNum;
-                    const quantity = parseFloat(cells.E) || 0;
-                    const cost = parsePrice(cells.F);
-                    const sellingPrice = parsePrice(cells.G);
-                    const discountPrice = parsePrice(cells.H);
-                    const categoryName = cells.J || '';
-                    
-                    // Column K holds image - check hyperlink first, otherwise raw text
-                    const cellRefK = `K${r.rowNum}`;
-                    let imageLink = cellHyperlinks[cellRefK] || cells.K || '';
-                    imageLink = getGoogleDriveDirectLink(imageLink);
-
-                    // Column L holds video - check hyperlink first, otherwise raw text
-                    const cellRefL = `L${r.rowNum}`;
-                    const videoLink = cellHyperlinks[cellRefL] || cells.L || '';
+                    const id = parseInt(row[0], 10) || i;
+                    const quantity = parseFloat(row[4]) || 0;
+                    const cost = parsePrice(row[5]);
+                    const sellingPrice = parsePrice(row[6]);
+                    const discountPrice = parsePrice(row[7]);
+                    const categoryName = row[9] || '';
+                    const imageLink = row[10] || '';
+                    const videoLink = row[11] || '';
 
                     const categoryId = getCategoryIdFromSheet(categoryName, name);
+                    const title = name;
                     const finalImage = getProductImage(imageLink, categoryId);
 
                     products.push({
                         id,
                         category_id: categoryId,
-                        title_ar: name,
+                        title_ar: title,
                         slug: `prod-${code.toLowerCase().replace(/[^a-z0-9]/g, '-')}-${id}`,
                         description_ar: `جهاز كهربائي ذكي عالي الكفاءة. الموديل: ${code}. متوفر حالياً بالمخزون بكمية ${Math.round(quantity)} قطعة.`,
                         base_price: sellingPrice || cost || 0,
@@ -610,112 +671,62 @@ async function syncGoogleSheets() {
                         brand: brand || 'ElectroHome'
                     });
                 }
-                console.log(`Database: Parsed ${products.length} products from XLSX successfully.`);
-            } catch (xlsxParseErr) {
-                console.error('Database: Error parsing XLSX, falling back to CSV:', xlsxParseErr.message);
-                useXlsx = false;
-                products = [];
-            }
-        }
-
-        if (!useXlsx) {
-            const csvData = await fetchCSV(sheetUrl);
-            const csvRows = parseCSV(csvData);
-            if (csvRows.length < 2) {
-                throw new Error('Google Sheets returned empty or invalid CSV data');
             }
 
-            for (let i = 1; i < csvRows.length; i++) {
-                const row = csvRows[i];
-                if (row.length < 4) continue;
-
-                const name = row[1];
-                const brand = row[2] ? row[2].trim() : '';
-                const code = row[3];
-                if (!name || !code) continue;
-
-                const id = parseInt(row[0], 10) || i;
-                const quantity = parseFloat(row[4]) || 0;
-                const cost = parsePrice(row[5]);
-                const sellingPrice = parsePrice(row[6]);
-                const discountPrice = parsePrice(row[7]);
-                const categoryName = row[9] || '';
-                const imageLink = row[10] || '';
-                const videoLink = row[11] || '';
-
-                const categoryId = getCategoryIdFromSheet(categoryName, name);
-                const title = name;
-                const finalImage = getProductImage(imageLink, categoryId);
-
-                products.push({
-                    id,
-                    category_id: categoryId,
-                    title_ar: title,
-                    slug: `prod-${code.toLowerCase().replace(/[^a-z0-9]/g, '-')}-${id}`,
-                    description_ar: `جهاز كهربائي ذكي عالي الكفاءة. الموديل: ${code}. متوفر حالياً بالمخزون بكمية ${Math.round(quantity)} قطعة.`,
-                    base_price: sellingPrice || cost || 0,
-                    discount_price: discountPrice,
-                    main_image: finalImage,
-                    youtube_url: videoLink,
-                    is_visible: 1,
-                    stock_quantity: Math.round(quantity),
-                    sku: code,
-                    brand: brand || 'ElectroHome'
-                });
+            if (products.length === 0) {
+                throw new Error('No valid products parsed from Google Sheets');
             }
-        }
 
-        if (products.length === 0) {
-            throw new Error('No valid products parsed from Google Sheets');
-        }
-
-        // Run DB operations inside transaction
-        await query('BEGIN');
-        try {
-            await query('DELETE FROM product_variants');
-            await query('DELETE FROM products');
-
-            for (const p of products) {
-                await query(
-                    'INSERT INTO products (id, category_id, title_ar, slug, description_ar, base_price, discount_price, main_image, youtube_url, is_visible, created_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)',
-                    [p.id, p.category_id, p.title_ar, p.slug, p.description_ar, p.base_price, p.discount_price, p.main_image, p.youtube_url, p.is_visible, new Date().toISOString()]
-                );
-
-                await query(
-                    'INSERT INTO product_variants (product_id, brand, model_name, variant_attributes, price_modifier, stock_quantity, sku) VALUES ($1, $2, $3, $4, $5, $6, $7)',
-                    [p.id, p.brand, p.sku, '{}', 0, p.stock_quantity, p.sku]
-                );
-            }
-            await query('COMMIT');
-            console.log(`Database: Successfully synchronized ${products.length} products and variants from Google Sheets.`);
-
-            // Write static JSON file to public and source paths for client direct sync
+            // Run DB operations inside transaction
+            await query('BEGIN');
             try {
-                const jsonContent = JSON.stringify(products, null, 2);
-                const paths = [
-                    path.join(__dirname, 'js', 'products.json'),
-                    path.join(__dirname, 'public', 'js', 'products.json')
-                ];
-                for (const pPath of paths) {
-                    const dir = path.dirname(pPath);
-                    if (!fs.existsSync(dir)) {
-                        fs.mkdirSync(dir, { recursive: true });
-                    }
-                    fs.writeFileSync(pPath, jsonContent, 'utf8');
-                    console.log(`Database: Wrote static products sync to ${pPath}`);
-                }
-            } catch (jsonErr) {
-                console.error('Database: Failed to write static JSON file:', jsonErr.message);
-            }
+                await query('DELETE FROM product_variants');
+                await query('DELETE FROM products');
 
-            return products.length;
-        } catch (dbErr) {
-            await query('ROLLBACK');
-            throw dbErr;
+                for (const p of products) {
+                    await query(
+                        'INSERT INTO products (id, category_id, title_ar, slug, description_ar, base_price, discount_price, main_image, youtube_url, is_visible, created_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)',
+                        [p.id, p.category_id, p.title_ar, p.slug, p.description_ar, p.base_price, p.discount_price, p.main_image, p.youtube_url, p.is_visible, new Date().toISOString()]
+                    );
+
+                    await query(
+                        'INSERT INTO product_variants (product_id, brand, model_name, variant_attributes, price_modifier, stock_quantity, sku) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+                        [p.id, p.brand, p.sku, '{}', 0, p.stock_quantity, p.sku]
+                    );
+                }
+                await query('COMMIT');
+                console.log(`Database: Successfully synchronized ${products.length} products and variants from Google Sheets.`);
+
+                // Write static JSON file to public and source paths for client direct sync
+                try {
+                    const jsonContent = JSON.stringify(products, null, 2);
+                    const paths = [
+                        path.join(__dirname, 'js', 'products.json'),
+                        path.join(__dirname, 'public', 'js', 'products.json')
+                    ];
+                    for (const pPath of paths) {
+                        const dir = path.dirname(pPath);
+                        if (!fs.existsSync(dir)) {
+                            fs.mkdirSync(dir, { recursive: true });
+                        }
+                        fs.writeFileSync(pPath, jsonContent, 'utf8');
+                        console.log(`Database: Wrote static products sync to ${pPath}`);
+                    }
+                } catch (jsonErr) {
+                    console.error('Database: Failed to write static JSON file:', jsonErr.message);
+                }
+
+                return products.length;
+            } catch (dbErr) {
+                await query('ROLLBACK');
+                throw dbErr;
+            }
+        } catch (err) {
+            console.error('Database: Google Sheets sync failed:', err.message);
+            throw err;
         }
-    } catch (err) {
-        console.error('Database: Google Sheets sync failed:', err.message);
-        throw err;
+    } finally {
+        isSyncInProgress = false;
     }
 }
 
