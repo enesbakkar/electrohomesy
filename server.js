@@ -520,11 +520,6 @@ app.post('/api/admin/sync', requireAdmin, async (req, res) => {
 // Serve Static Assets & SPA Routing
 app.use(express.static(PUBLIC_DIR));
 
-// Page routes mapping
-app.get('/admin', (req, res) => {
-    res.sendFile(path.join(PUBLIC_DIR, 'admin.html'));
-});
-
 app.get('/product.html', (req, res) => {
     res.sendFile(path.join(PUBLIC_DIR, 'product.html'));
 });
@@ -537,7 +532,6 @@ app.get('*', (req, res) => {
 app.listen(PORT, async () => {
     console.log(`===================================================`);
     console.log(`🚀 ElectroHomeSY Server running locally at: http://localhost:${PORT}`);
-    console.log(`🔑 Admin Dashboard available at: http://localhost:${PORT}/admin`);
     console.log(`===================================================`);
 
     // Initial Google Sheets product synchronization
