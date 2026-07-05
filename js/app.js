@@ -94,8 +94,8 @@ const FALLBACK_REQUESTS = [
     }
 ];
 
-// Global State Pre-populated for Instant Rendering
-let allProducts = [...FALLBACK_PRODUCTS];
+// Global State — start empty, real data loaded async from Google Sheets
+let allProducts = [];
 let isGoogleSheetsDataLoaded = false;
 let allCategories = [...FALLBACK_CATEGORIES];
 let cart = JSON.parse(localStorage.getItem('electro_cart') || '[]');
@@ -169,23 +169,6 @@ if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', checkAndInit);
 } else {
     checkAndInit();
-
-// Mobile announcement bar hide on scroll
-let lastScrollY = 0;
-window.addEventListener('scroll', () => {
-    if (window.innerWidth > 768) return; // Only on mobile widths
-    const announcementBar = document.querySelector('.announcement-bar');
-    if (!announcementBar) return;
-    const currentY = window.scrollY;
-    if (currentY > lastScrollY && currentY > 50) {
-        // Scrolling down
-        announcementBar.classList.add('hidden');
-    } else if (currentY < lastScrollY) {
-        // Scrolling up
-        announcementBar.classList.remove('hidden');
-    }
-    lastScrollY = currentY;
-});
 }
 
 function initStorefront() {
@@ -209,11 +192,11 @@ function initStorefront() {
     updateCartBadge();
     updateUserAuthUI();
     
-    // INSTANT RENDER
+    // Show category tabs immediately, loading skeleton for products
     renderCategoryTabs(allCategories);
-    renderProducts(allProducts);
+    renderLoadingSkeleton();
 
-    // Async Network Fetch Attempts
+    // Async Network Fetch — real products from Google Sheets
     fetchCategories();
     fetchProducts('all');
 
@@ -347,18 +330,29 @@ async function fetchCategories() {
 }
 
 // Fetch Products with Static Fallback
+// On GitHub Pages there is no /api server, so we skip straight to
+// Google Sheets CSV (live data) → products.json (cached) → FALLBACK_PRODUCTS.
 async function fetchProducts(categorySlug) {
     try {
-        const res = await fetch(`/api/products?category=${categorySlug}`);
-        if (!res.ok) throw new Error('Not ok');
-        allProducts = await res.json();
-        renderProducts(allProducts);
-    } catch (e) {
+        const products = await fetchProductsFromGoogleSheetsClient(categorySlug);
+        renderProducts(products);
+    } catch (sheetErr) {
+        console.warn('Google Sheets fetch failed, using cached products.json:', sheetErr);
         try {
-            const products = await fetchProductsFromGoogleSheetsClient(categorySlug);
-            renderProducts(products);
-        } catch (sheetErr) {
-            console.error('Client Google Sheets fallback failed:', sheetErr);
+            const jsonRes = await fetch('./js/products.json?t=' + Date.now());
+            if (!jsonRes.ok) throw new Error('products.json not found');
+            const cached = await jsonRes.json();
+            allProducts = cached;
+            isGoogleSheetsDataLoaded = true;
+            if (categorySlug === 'all') {
+                renderProducts(cached);
+            } else {
+                const catMap = { 'irons': 1, 'vacuums': 2, 'kitchen': 3, 'large-appliances': 4 };
+                const catId = catMap[categorySlug];
+                renderProducts(cached.filter(p => p.category_id === catId));
+            }
+        } catch (jsonErr) {
+            console.error('All data sources failed, using hardcoded fallback:', jsonErr);
             if (categorySlug === 'all') {
                 allProducts = FALLBACK_PRODUCTS.filter(p => p.is_visible);
             } else {
@@ -376,6 +370,30 @@ function filterCategory(slug, btn) {
     fetchProducts(slug);
 }
 
+function renderLoadingSkeleton() {
+    const grid = document.getElementById('productsGrid');
+    if (!grid) return;
+    // Show 6 animated skeleton cards while real data loads
+    const skeletonCard = `
+        <div style="background:var(--white); border-radius:24px; overflow:hidden; box-shadow:var(--card-shadow); border:1px solid var(--border-color);">
+            <div style="height:200px; background:linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%); background-size:200% 100%; animation:shimmer 1.4s infinite;"></div>
+            <div style="padding:16px; display:flex; flex-direction:column; gap:10px;">
+                <div style="height:14px; border-radius:8px; background:linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%); background-size:200% 100%; animation:shimmer 1.4s infinite;"></div>
+                <div style="height:14px; width:60%; border-radius:8px; background:linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%); background-size:200% 100%; animation:shimmer 1.4s infinite;"></div>
+                <div style="height:20px; width:40%; border-radius:8px; background:linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%); background-size:200% 100%; animation:shimmer 1.4s infinite; margin-top:4px;"></div>
+                <div style="height:40px; border-radius:12px; background:linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%); background-size:200% 100%; animation:shimmer 1.4s infinite;"></div>
+            </div>
+        </div>`;
+    grid.innerHTML = skeletonCard.repeat(6);
+    // Inject shimmer keyframe if not already present
+    if (!document.getElementById('shimmer-style')) {
+        const style = document.createElement('style');
+        style.id = 'shimmer-style';
+        style.textContent = '@keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }';
+        document.head.appendChild(style);
+    }
+}
+
 function renderProductsPlaceholder() {
     const grid = document.getElementById('productsGrid');
     if (!grid) return;
@@ -390,16 +408,16 @@ function renderProductsPlaceholder() {
 
 async function fetchProductsInBackground() {
     try {
-        const res = await fetch('/api/products?category=all');
-        if (res.ok) {
-            allProducts = await res.json();
-        } else {
-            throw new Error('Not ok');
-        }
-    } catch (e) {
+        await fetchProductsFromGoogleSheetsClient('all');
+    } catch (sheetErr) {
         try {
-            await fetchProductsFromGoogleSheetsClient('all');
-        } catch (sheetErr) {
+            const jsonRes = await fetch('./js/products.json?t=' + Date.now());
+            if (jsonRes.ok) {
+                const cached = await jsonRes.json();
+                allProducts = cached;
+                isGoogleSheetsDataLoaded = true;
+            }
+        } catch (jsonErr) {
             allProducts = FALLBACK_PRODUCTS.filter(p => p.is_visible);
         }
     }
@@ -482,6 +500,16 @@ function getFallbackImageClient(categoryId) {
         4: 'https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=800&q=80'  // large-appliances
     };
     return placeholders[categoryId] || placeholders[4];
+}
+
+function getCategoryNameById(categoryId) {
+    const names = {
+        1: 'المكاوي وأجهزة البخار',
+        2: 'المكاس والتنظيف',
+        3: 'أجهزة المطبخ والخلاطات',
+        4: 'الأجهزة المنزلية الكبيرة'
+    };
+    return names[categoryId] || 'عام';
 }
 
 function getGoogleDriveDirectLinkClient(link) {
@@ -944,368 +972,4 @@ async function handleRequestSubmit(e) {
     closeModal('requestModal');
 }
 
-/* ==========================================
-   ADMIN DASHBOARD FUNCTIONALITY (100% Arabic RTL)
-   ========================================== */
 
-let adminProducts = [];
-
-document.getElementById('adminLoginForm')?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const username = document.getElementById('adminUser').value;
-    const password = document.getElementById('adminPass').value;
-
-    try {
-        const res = await fetch('/api/admin/login', {
-            method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json',
-                'X-CSRF-Token': getCookie('csrf_token')
-            },
-            body: JSON.stringify({ username, password })
-        });
-        if (res.ok) {
-            document.getElementById('adminLoginOverlay').style.display = 'none';
-            loadAdminData();
-            return;
-        }
-    } catch (err) {
-        // Fallback for static hosting
-    }
-
-    if (username === 'admin' && password === 'admin123') {
-        sessionStorage.setItem('adminToken', 'mock-admin-token');
-        document.getElementById('adminLoginOverlay').style.display = 'none';
-        loadAdminData();
-    } else {
-        alert('اسم المستخدم أو كلمة المرور غير صحيحة');
-    }
-});
-
-async function logoutAdmin() {
-    try {
-        await fetch('/api/admin/logout', { 
-            method: 'POST',
-            headers: { 'X-CSRF-Token': getCookie('csrf_token') }
-        });
-    } catch (err) {}
-    sessionStorage.removeItem('adminToken');
-    location.reload();
-}
-
-function switchAdminTab(tabId, el) {
-    document.querySelectorAll('.admin-nav-item').forEach(item => item.classList.remove('active'));
-    el.classList.add('active');
-
-    document.getElementById('productsTab').style.display = 'none';
-    document.getElementById('ordersTab').style.display = 'none';
-    document.getElementById('requestsTab').style.display = 'none';
-
-    document.getElementById(tabId).style.display = 'block';
-}
-
-async function loadAdminData() {
-    fetchAdminProducts();
-    fetchAdminOrders();
-    fetchAdminRequests();
-}
-
-async function fetchAdminProducts() {
-    try {
-        const res = await fetch('/api/products?include_hidden=true');
-        if (!res.ok) throw new Error('Not ok');
-        adminProducts = await res.json();
-    } catch (e) {
-        adminProducts = FALLBACK_PRODUCTS;
-    }
-
-    renderAdminProductsTable(adminProducts);
-}
-
-function renderAdminProductsTable(products) {
-    const tbody = document.getElementById('adminProductsTableBody');
-    if (!tbody) return;
-
-    tbody.innerHTML = products.map(p => {
-        const productCode = p.variants && p.variants.length > 0 && p.variants[0].sku ? p.variants[0].sku : (p.sku || generateProductCode(p.id));
-        const productUrl = (window.location.origin || '') + `/product.html?id=${p.id}`;
-        return `
-        <tr>
-            <td><strong>#${p.id}</strong></td>
-            <td><img src="${p.main_image || ''}" style="width:48px; height:48px; object-fit:cover; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.1);"></td>
-            <td><strong style="color:var(--onyx); font-size:1.05rem;">${p.title_ar}</strong></td>
-            <td><span style="background:#f1f5f9; padding:4px 10px; border-radius:12px; font-weight:700; font-size:0.88rem;">${p.category_name || 'عام'}</span></td>
-            <td><strong style="color:var(--damascus-green); font-size:1.1rem;">${formatSYP(p.base_price)}</strong></td>
-            <td>
-                <div style="display:flex; flex-direction:column; gap:5px;">
-                    <span style="background:#e0f2fe; color:#0369a1; padding:3px 10px; border-radius:10px; font-size:0.82rem; font-weight:800; display:inline-block; width:fit-content;">
-                        📦 ${productCode}
-                    </span>
-                    <button onclick="navigator.clipboard.writeText('${productUrl}').then(()=>alert('تم نسخ رابط المنتج!'))"
-                        style="background:none; border:1px solid var(--border-color); border-radius:8px; padding:3px 8px; cursor:pointer; font-family:'Cairo',sans-serif; font-size:0.78rem; color:var(--steel-grey); white-space:nowrap;">
-                        <i class="fa-solid fa-copy"></i> نسخ الرابط
-                    </button>
-                </div>
-            </td>
-            <td><span class="badge-status" style="background:#e0f2fe; color:#0369a1;">${p.variants ? p.variants.length : 0} تنوعات</span></td>
-            <td>
-                <label class="switch">
-                    <input type="checkbox" ${p.is_visible ? 'checked' : ''} onchange="toggleVisibility(${p.id}, this.checked)">
-                    <span class="slider"></span>
-                </label>
-            </td>
-            <td>
-                <button class="btn-admin-act btn-admin-edit" title="تعديل" onclick="editProduct(${p.id})"><i class="fa-solid fa-pen"></i></button>
-                <button class="btn-admin-act btn-admin-delete" title="حذف" onclick="deleteProduct(${p.id})"><i class="fa-solid fa-trash-can"></i></button>
-            </td>
-        </tr>`;
-    }).join('');
-}
-
-async function toggleVisibility(id, isVisible) {
-    try {
-        await fetch(`/api/products/${id}/visibility`, {
-            method: 'PUT',
-            headers: { 
-                'Content-Type': 'application/json',
-                'X-CSRF-Token': getCookie('csrf_token')
-            },
-            body: JSON.stringify({ is_visible: isVisible })
-        });
-    } catch (e) {}
-}
-
-async function deleteProduct(id) {
-    if (!confirm('هل أنت تأكد من رغبتك بحذف هذا الجهاز نهائياً من المخزون؟')) return;
-    try {
-        await fetch(`/api/products/${id}`, { 
-            method: 'DELETE',
-            headers: { 'X-CSRF-Token': getCookie('csrf_token') }
-        });
-    } catch (e) {}
-    fetchAdminProducts();
-}
-
-function addVariantRow(data = {}) {
-    const container = document.getElementById('variantsContainer');
-    if (!container) return;
-
-    const div = document.createElement('div');
-    div.className = 'variant-row';
-    div.style.cssText = 'display:grid; grid-template-columns: 1fr 1fr 1.2fr 1fr 1fr auto; gap:12px; margin-bottom:14px; background:#fff; padding:16px; border-radius:16px; border:1.5px solid var(--border-color); align-items:center; box-shadow: 0 4px 14px rgba(0,0,0,0.03);';
-    
-    const colorVal = (data.variant_attributes && data.variant_attributes['اللون']) ? data.variant_attributes['اللون'] : 'أسود';
-    const stockVal = data.stock_quantity !== undefined ? data.stock_quantity : 10;
-
-    div.innerHTML = `
-        <div>
-            <label style="font-size:0.82rem; font-weight:800; color:var(--onyx); display:block; margin-bottom:5px;">الماركة (Brand)</label>
-            <input type="text" class="form-control v-brand" placeholder="Philips, Tefal..." value="${data.brand || ''}" required style="padding:9px 12px; font-size:0.9rem;">
-        </div>
-        <div>
-            <label style="font-size:0.82rem; font-weight:800; color:var(--onyx); display:block; margin-bottom:5px;">الموديل (Model)</label>
-            <input type="text" class="form-control v-model" placeholder="GC4909, Series 6..." value="${data.model_name || ''}" style="padding:9px 12px; font-size:0.9rem;">
-        </div>
-        <div>
-            <label style="font-size:0.82rem; font-weight:800; color:var(--onyx); display:block; margin-bottom:5px;">اختيار اللون (لوحة الألوان)</label>
-            <select class="form-control v-color" style="padding:9px 12px; font-size:0.9rem; font-weight:700;">
-                <option value="أسود" ${colorVal==='أسود'?'selected':''}>⚫ أسود (Black)</option>
-                <option value="أبيض" ${colorVal==='أبيض'?'selected':''}>⚪ أبيض (White)</option>
-                <option value="أزرق ملكي" ${colorVal==='أزرق ملكي'?'selected':''}>🔵 أزرق ملكي (Royal Blue)</option>
-                <option value="أحمر دمشقي" ${colorVal==='أحمر دمشقي'?'selected':''}>🔴 أحمر دمشقي (Damascus Red)</option>
-                <option value="فضي معدني" ${colorVal==='فضي معدني'?'selected':''}>🔘 فضي معدني (Silver)</option>
-                <option value="أسود ذهبي" ${colorVal==='أسود ذهبي'?'selected':''}>🟡 أسود ذهبي (Gold Black)</option>
-            </select>
-        </div>
-        <div>
-            <label style="font-size:0.82rem; font-weight:800; color:var(--onyx); display:block; margin-bottom:5px;">الكمية بالمخزون (عدد)</label>
-            <input type="number" class="form-control v-stock" min="0" placeholder="10" value="${stockVal}" style="padding:9px 12px; font-size:0.9rem;" required>
-        </div>
-        <div>
-            <label style="font-size:0.82rem; font-weight:800; color:var(--onyx); display:block; margin-bottom:5px;">فارق السعر (+/- ل.س)</label>
-            <input type="number" class="form-control v-price" placeholder="0" value="${data.price_modifier || 0}" style="padding:9px 12px; font-size:0.9rem;">
-        </div>
-        <div style="padding-top:22px;">
-            <button type="button" onclick="this.closest('.variant-row').remove()" style="color:var(--spark-red); background:none; border:none; font-size:1.4rem; cursor:pointer; transition:transform 0.2s;" title="حذف التنوع" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"><i class="fa-solid fa-circle-xmark"></i></button>
-        </div>
-    `;
-    container.appendChild(div);
-}
-
-function openAddProductModal() {
-    document.getElementById('adminProductModalTitle').innerText = 'إضافة جهاز جديد للمتجر';
-    document.getElementById('editProductId').value = '';
-    document.getElementById('adminProductForm').reset();
-    document.getElementById('variantsContainer').innerHTML = '';
-    addVariantRow();
-    openModal('adminProductModal');
-}
-
-function editProduct(id) {
-    const p = adminProducts.find(item => item.id === id);
-    if (!p) return;
-
-    document.getElementById('adminProductModalTitle').innerText = 'تعديل الجهاز #' + p.id;
-    document.getElementById('editProductId').value = p.id;
-    document.getElementById('pTitleAr').value = p.title_ar;
-    document.getElementById('pCategory').value = p.category_id || 1;
-    document.getElementById('pDescAr').value = p.description_ar || '';
-    document.getElementById('pBasePrice').value = p.base_price;
-    document.getElementById('pDiscountPrice').value = p.discount_price || '';
-    document.getElementById('pMainImage').value = p.main_image || '';
-    document.getElementById('pYoutubeUrl').value = p.youtube_url || '';
-
-    const container = document.getElementById('variantsContainer');
-    container.innerHTML = '';
-    if (p.variants && p.variants.length > 0) {
-        p.variants.forEach(v => addVariantRow(v));
-    } else {
-        addVariantRow();
-    }
-
-    openModal('adminProductModal');
-}
-
-document.getElementById('adminProductForm')?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const productId = document.getElementById('editProductId').value;
-    const title_ar = document.getElementById('pTitleAr').value.trim();
-    const category_id = Number(document.getElementById('pCategory').value);
-    const description_ar = document.getElementById('pDescAr').value.trim();
-    const base_price = Number(document.getElementById('pBasePrice').value);
-    const discount_price = document.getElementById('pDiscountPrice').value ? Number(document.getElementById('pDiscountPrice').value) : null;
-    const main_image = document.getElementById('pMainImage').value.trim();
-    const youtube_url = document.getElementById('pYoutubeUrl').value.trim();
-
-    const variantRows = document.querySelectorAll('.variant-row');
-    const variants = [];
-    variantRows.forEach(row => {
-        const brand = row.querySelector('.v-brand').value.trim();
-        const model_name = row.querySelector('.v-model').value.trim();
-        const color = row.querySelector('.v-color').value;
-        const stock_quantity = Number(row.querySelector('.v-stock').value || 10);
-        const price_modifier = Number(row.querySelector('.v-price').value || 0);
-
-        if (brand) {
-            variants.push({
-                brand,
-                model_name,
-                variant_attributes: { "اللون": color },
-                stock_quantity,
-                price_modifier
-            });
-        }
-    });
-
-    const payload = { category_id, title_ar, description_ar, base_price, discount_price, main_image, youtube_url, is_visible: 1, variants };
-
-    try {
-        const url = productId ? `/api/products/${productId}` : '/api/products';
-        const method = productId ? 'PUT' : 'POST';
-        const res = await fetch(url, {
-            method,
-            headers: { 
-                'Content-Type': 'application/json',
-                'X-CSRF-Token': getCookie('csrf_token')
-            },
-            body: JSON.stringify(payload)
-        });
-        if (res.ok) {
-            alert('تم حفظ بيانات الجهاز بنجاح!');
-        } else {
-            alert('تم حفظ البيانات بنجاح!');
-        }
-    } catch (err) {
-        alert('تم حفظ البيانات بنجاح!');
-    }
-
-    closeModal('adminProductModal');
-    fetchAdminProducts();
-    fetchProducts('all');
-});
-
-async function fetchAdminOrders() {
-    let orders = [];
-    try {
-        const res = await fetch('/api/orders');
-        if (!res.ok) throw new Error('Not ok');
-        orders = await res.json();
-    } catch (e) {
-        orders = FALLBACK_ORDERS;
-    }
-
-    const tbody = document.getElementById('adminOrdersTableBody');
-    if (!tbody) return;
-
-    tbody.innerHTML = orders.map(o => `
-        <tr>
-            <td><strong style="color:var(--damascus-green)">#ORD-${o.id}</strong></td>
-            <td><strong>${o.customer_name}</strong></td>
-            <td><a href="tel:${o.customer_phone}" style="color:var(--onyx); font-weight:700;">${o.customer_phone}</a></td>
-            <td>${o.delivery_address}</td>
-            <td><span class="badge-status" style="background:#fef3c7; color:#d97706;">${o.payment_method === 'cod' ? 'الدفع عند الاستلام (COD)' : 'شام كاش (ShamCash)'}</span></td>
-            <td><strong style="color:var(--damascus-green); font-size:1.1rem;">${formatSYP(o.total_amount)}</strong></td>
-            <td>${new Date(o.created_at).toLocaleDateString('ar-SY')}</td>
-        </tr>
-    `).join('');
-}
-
-async function fetchAdminRequests() {
-    let reqs = [];
-    try {
-        const res = await fetch('/api/requests');
-        if (!res.ok) throw new Error('Not ok');
-        reqs = await res.json();
-    } catch (e) {
-        reqs = FALLBACK_REQUESTS;
-    }
-
-    const tbody = document.getElementById('adminRequestsTableBody');
-    if (!tbody) return;
-
-    tbody.innerHTML = reqs.map(r => `
-        <tr>
-            <td>#${r.id}</td>
-            <td><strong>${r.customer_name}</strong></td>
-            <td>${r.customer_phone}</td>
-            <td style="color:var(--damascus-green); font-weight:800; font-size:1.05rem;">${r.requested_product}</td>
-            <td>${r.notes || '-'}</td>
-            <td>${new Date(r.created_at).toLocaleDateString('ar-SY')}</td>
-        </tr>
-    `).join('');
-}
-
-async function syncFromExcel() {
-    const btn = document.getElementById('syncExcelBtn');
-    if (!btn) return;
-
-    const originalHtml = btn.innerHTML;
-    btn.disabled = true;
-    btn.style.opacity = '0.7';
-    btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> جاري المزامنة...`;
-
-    try {
-        const res = await fetch('/api/admin/sync', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-Token': getCookie('csrf_token')
-            }
-        });
-        
-        const data = await res.json();
-        if (res.ok && data.success) {
-            alert(`تمت المزامنة بنجاح! تم تحديث ${data.count} منتج من جدول إكسل.`);
-            fetchAdminProducts();
-        } else {
-            alert(`فشلت المزامنة: ${data.error || 'خطأ غير معروف'}`);
-        }
-    } catch (err) {
-        console.error('Manual Excel sync client error:', err);
-        alert(`فشلت المزامنة: ${err.message}`);
-    } finally {
-        btn.disabled = false;
-        btn.style.opacity = '1';
-        btn.innerHTML = originalHtml;
-    }
-}
