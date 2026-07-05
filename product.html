@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <!-- Custom Brand Stylesheet -->
-    <link rel="stylesheet" href="/css/style.css?v=2.9.0">
+    <link rel="stylesheet" href="/css/style.css?v=3.0.0">
 
     <style>
         .product-page-container {
@@ -269,10 +269,32 @@
             flex-direction: row;
             gap: 14px;
         }
-        .btn-buy-now-hero {
-            background: var(--damascus-green);
-            color: white;
-            border: none;
+        .aurora-btn-wrapper {
+            position: relative;
+            display: inline-block;
+            flex: 2;
+        }
+        .aurora-glow {
+            position: absolute;
+            top: -2px; left: -2px; right: -2px; bottom: -2px;
+            border-radius: 14px;
+            background: linear-gradient(90deg, var(--volt-mint), var(--damascus-green), var(--spark-red));
+            opacity: 0.7;
+            filter: blur(8px);
+            transition: all 0.3s ease;
+            z-index: 1;
+            pointer-events: none;
+        }
+        .aurora-btn-wrapper:hover .aurora-glow {
+            opacity: 0.95;
+            filter: blur(12px);
+        }
+        .btn-buy-now-hero-aurora {
+            position: relative;
+            width: 100%;
+            background: var(--onyx) !important;
+            color: var(--white) !important;
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
             padding: 16px 28px;
             border-radius: 12px;
             font-family: 'Cairo', sans-serif;
@@ -283,15 +305,15 @@
             align-items: center;
             justify-content: center;
             gap: 12px;
-            box-shadow: 0 4px 15px rgba(7, 48, 102, 0.2);
             transition: all 0.25s ease;
-            flex: 2;
-            text-decoration: none;
+            z-index: 2;
         }
-        .btn-buy-now-hero:hover {
-            background: var(--damascus-green-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(7, 48, 102, 0.3);
+        .btn-buy-now-hero-aurora:hover {
+            background: #1e3a47 !important;
+            transform: translateY(-1px);
+        }
+        .btn-buy-now-hero-aurora:active {
+            transform: translateY(1px);
         }
         .btn-whatsapp-hero {
             background: var(--whatsapp-green);
@@ -441,7 +463,7 @@
 
 
     <!-- App JS -->
-    <script src="/js/app.js?v=2.7.0"></script>
+    <script src="/js/app.js?v=3.0.0"></script>
     <script>
         let detailProduct = null;
         let detailVariant = null;
@@ -560,7 +582,7 @@
                         </div>
 
                         ${p.variants && p.variants.length > 0 && p.variants[0].brand && p.variants[0].brand !== 'ElectroHome' 
-                            ? `<div class="product-detail-brand" style="font-size: 1.1rem; color: var(--steel-grey); text-transform: uppercase; font-weight: 700; margin-bottom: 5px;">${p.variants[0].brand}</div>` 
+                            ? `<div class="product-detail-brand" style="font-size: 1.35rem; color: var(--damascus-green); text-transform: uppercase; font-weight: 900; letter-spacing: 1px; margin-bottom: 2px;">${p.variants[0].brand}</div>` 
                             : ''}
                         <h1 class="product-main-title" style="margin-top: 5px;">${p.title_ar}</h1>
 
@@ -590,7 +612,7 @@
                                                 <div class="variant-card-info">
                                                     <div class="variant-radio"></div>
                                                     <div>
-                                                        <strong style="display:block; color:var(--onyx); font-size:0.98rem;">${v.brand} - ${v.model_name}</strong>
+                                                        <strong style="display:block; color:var(--onyx); font-size:0.98rem;">${v.brand}</strong>
                                                         <span style="font-size:0.84rem; color:var(--steel-grey);">${attrs || 'المواصفات القياسية'}</span>
                                                     </div>
                                                 </div>
@@ -603,11 +625,14 @@
                         ` : ''}
 
                         <div class="action-buttons-group">
-                            <button class="btn-buy-now-hero" onclick="addMasterProductToCart()">
-                                <i class="fa-solid fa-cart-plus" style="font-size:1.3rem;"></i> إضافة إلى السلة وإتمام الشراء
-                            </button>
+                            <div class="aurora-btn-wrapper">
+                                <div class="aurora-glow"></div>
+                                <button class="btn-buy-now-hero-aurora" onclick="addMasterProductToCart()">
+                                    <i class="fa-solid fa-cart-plus" style="font-size:1.3rem;"></i> إضافة إلى السلة وإتمام الشراء
+                                </button>
+                            </div>
                             <a href="${waLink}" target="_blank" class="btn-whatsapp-hero">
-                                <i class="fa-brands fa-whatsapp" style="font-size:1.4rem;"></i> استفسار مباشر عبر الواتساب (${formattedPhone})
+                                <i class="fa-brands fa-whatsapp" style="font-size:1.4rem;"></i> استفسار مباشر عبر الواتساب
                             </a>
                         </div>
 
