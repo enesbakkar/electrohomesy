@@ -222,6 +222,27 @@ function initStorefront() {
     document.getElementById('checkoutForm')?.addEventListener('submit', handleCheckoutSubmit);
     document.getElementById('productRequestForm')?.addEventListener('submit', handleRequestSubmit);
     document.getElementById('customerAuthForm')?.addEventListener('submit', handleCustomerAuthSubmit);
+
+    // Toggle active class on mobile bottom nav based on hash
+    const updateBottomNavActiveState = () => {
+        const hash = window.location.hash;
+        document.querySelectorAll('.mobile-bottom-nav .mobile-nav-item').forEach(item => {
+            const href = item.getAttribute('href');
+            if (href === '#' || href === '/' || href === '') {
+                if (!hash || hash === '#' || hash === '#/') {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            } else if (href === hash) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
+        });
+    };
+    window.addEventListener('hashchange', updateBottomNavActiveState);
+    updateBottomNavActiveState();
 }
 
 // User Auth UI State Updates

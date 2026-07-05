@@ -862,6 +862,15 @@ input:checked + .slider:before { transform: translateX(22px); }
     .footer-logo-link { display: inline-block; width: auto; margin: 0 auto 12px auto; }
     .footer-white-logo { height: 38px !important; max-height: 40px !important; width: auto !important; margin: 0 auto 12px auto; display: block; }
     .copyright-bar { padding-top: 18px; padding-bottom: 30px; font-size: 0.82rem; line-height: 1.6; }
+
+    /* Hide category tabs on mobile by default (Home view) */
+    .category-tabs {
+        display: none !important;
+    }
+    /* Only show category tabs when #products-section is targeted (Categories tab) */
+    #products-section:target .category-tabs {
+        display: flex !important;
+    }
 }
 
 @media (max-width: 480px) {
