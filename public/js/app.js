@@ -1088,7 +1088,11 @@ function renderCartPage() {
 }
 
 function renderCartModal() {
-    window.location.hash = '#cart-section';
+    if (window.location.pathname.includes('product.html')) {
+        window.location.href = 'index.html#cart-section';
+    } else {
+        window.location.hash = '#cart-section';
+    }
 }
 
 function changeQty(index, delta) {

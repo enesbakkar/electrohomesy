@@ -138,6 +138,67 @@
                 </div>
             </div>
         </section>
+
+        <!-- MODAL-FREE CART SECTION -->
+        <section id="cart-section" style="display: none; padding-top: 20px; margin-bottom: 50px;">
+            <div class="cart-view-container">
+                <!-- Right column: Cart Items -->
+                <div class="cart-card">
+                    <label class="cart-card-title">سلة التسوق الخاصة بك</label>
+                    <div class="cart-products-list" id="cartItemsList">
+                        <!-- Dynamic items will load here -->
+                    </div>
+                </div>
+
+                <!-- Left column: Delivery & Checkout Details -->
+                <div class="cart-card">
+                    <label class="cart-card-title">إتمام عملية الشراء</label>
+                    
+                    <form id="checkoutForm">
+                        <div class="checkout-summary-details">
+                            <h4 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 12px; color: var(--onyx);">معلومات التوصيل (دمشق، سوريا)</h4>
+                            <div class="form-group">
+                                <label>الاسم الكامل <span style="color:var(--spark-red)">*</span></label>
+                                <input type="text" id="custName" class="form-control" placeholder="أدخل اسمك الكريم" required>
+                            </div>
+                            <div class="form-group">
+                                <label>رقم الهاتف / الواتساب السوري <span style="color:var(--spark-red)">*</span></label>
+                                <input type="tel" id="custPhone" class="form-control" placeholder="مثال: 0912345678" required>
+                            </div>
+                            <div class="form-group">
+                                <label>عنوان التوصيل بالتفصيل في دمشق <span style="color:var(--spark-red)">*</span></label>
+                                <input type="text" id="custAddress" class="form-control" placeholder="المنطقة، الشارع، البناء، رقم الشقة" required>
+                            </div>
+                        </div>
+
+                        <div class="checkout-summary-details" style="margin-top: 15px;">
+                            <h4 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 12px; color: var(--onyx);">طريقة الدفع المتاحة</h4>
+                            <div class="payment-methods-grid">
+                                <div class="payment-method-card selected" data-method="cod" onclick="selectPaymentMethod('cod')">
+                                    <i class="fa-solid fa-hand-holding-dollar"></i>
+                                    <h4>الدفع عند الاستلام (COD)</h4>
+                                    <p style="font-size: 0.8rem; color: var(--steel-grey); margin-top: 4px;">تسليم المبلغ للمندوب فور وصول الجهاز</p>
+                                </div>
+                                <div class="payment-method-card" data-method="shamcash" onclick="selectPaymentMethod('shamcash')">
+                                    <i class="fa-solid fa-mobile-screen-button"></i>
+                                    <h4>شام كاش (ShamCash)</h4>
+                                    <p style="font-size: 0.8rem; color: var(--steel-grey); margin-top: 4px;">الدفع الإلكتروني السريع عبر محفظة شام كاش</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="checkout-total-row">
+                            <span class="checkout-total-label">إجمالي المبلغ المستحق:</span>
+                            <span class="checkout-total-value" id="cartTotalPrice">0 ل.س</span>
+                        </div>
+
+                        <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 16px; font-size: 1.1rem; margin-top: 20px; border-radius: 14px;">
+                            <i class="fa-solid fa-check-double"></i> تأكيد وإرسال الطلب الآن
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- Floating WhatsApp Direct Button -->
