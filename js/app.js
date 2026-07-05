@@ -223,9 +223,17 @@ function initStorefront() {
     document.getElementById('productRequestForm')?.addEventListener('submit', handleRequestSubmit);
     document.getElementById('customerAuthForm')?.addEventListener('submit', handleCustomerAuthSubmit);
 
-    // Toggle active class on mobile bottom nav based on hash
+    // Toggle active class on mobile bottom nav based on hash & handle SPA view switching
     const updateBottomNavActiveState = () => {
         const hash = window.location.hash;
+        
+        if (hash === '#cart-section') {
+            showView('cart');
+            renderCartPage();
+        } else {
+            showView('home');
+        }
+
         document.querySelectorAll('.mobile-bottom-nav .mobile-nav-item').forEach(item => {
             const href = item.getAttribute('href');
             if (href === '#' || href === '/' || href === '') {
