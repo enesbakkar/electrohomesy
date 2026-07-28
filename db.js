@@ -195,6 +195,7 @@ async function initSchema() {
             base_price NUMERIC NOT NULL,
             discount_price NUMERIC,
             main_image TEXT,
+            images TEXT,
             youtube_url TEXT,
             is_visible INTEGER DEFAULT 1,
             created_at TEXT
@@ -519,6 +520,16 @@ async function syncGoogleSheets() {
     }
     isSyncInProgress = true;
     try {
+        const localJson = path.join(__dirname, 'electrohomesy_db.json');
+        if (fs.existsSync(localJson)) {
+            const raw = fs.readFileSync(localJson, 'utf8');
+            const data = JSON.parse(raw);
+            if (data.products && data.products.length >= 40) {
+                console.log(`Database: Local database has ${data.products.length} products loaded. Skipping remote sync.`);
+                return data.products.length;
+            }
+        }
+
         const sheetUrl = 'https://docs.google.com/spreadsheets/d/1hioi7V5yDDsOmm5_StTI3b8poxnCsgMQXP30lC75PRI/gviz/tq?tqx=out:csv';
         console.log('Database: Starting Google Sheets product sync...');
         
@@ -542,6 +553,7 @@ async function syncGoogleSheets() {
             console.warn('Database: XLSX extraction failed, falling back to CSV sync:', e.message);
             useXlsx = false;
         }
+
 
         try {
             if (useXlsx) {
@@ -615,52 +627,70 @@ async function syncGoogleSheets() {
                         rows.push({ rowNum, cells: rowCells });
                     }
 
-                    // Compile products from rows
+                    // Compile products from rows using exact user column mapping
                     for (const r of rows) {
                         if (r.rowNum < 3) continue;
                         const cells = r.cells;
                         
-                        const name = cells.B || '';
-                        const brand = cells.C ? cells.C.trim() : '';
-                        const code = cells.D || '';
-                        if (!name || !code) continue;
+                        const name = cells.C || cells.D || '';
+                        const brand = cells.D || cells.C || 'ElectroHome';
+                        const code = cells.E || cells.J || `PROD-${r.rowNum}`;
+                        if (!name) continue;
 
-                        const id = parseInt(cells.A, 10) || r.rowNum;
-                        const quantity = parseFloat(cells.E) || 0;
-                        const cost = parsePrice(cells.F);
-                        const sellingPrice = parsePrice(cells.G);
-                        const discountPrice = parsePrice(cells.H);
-                        const categoryName = cells.J || '';
+                        const id = parseInt(cells.A, 10) || (r.rowNum - 2);
+                        const quantity = parseFloat(cells.F) || 0;
+                        const cost = parsePrice(cells.G);
+                        const sellingPrice = parsePrice(cells.H);
+                        const discountPrice = parsePrice(cells.I);
                         
-                        // Column K holds image - check hyperlink first, otherwise raw text
-                        const cellRefK = `K${r.rowNum}`;
-                        let imageLink = cellHyperlinks[cellRefK] || cells.K || '';
-                        imageLink = getGoogleDriveDirectLink(imageLink);
+                        // Column K: Fav / Featured
+                        const favVal = cells.K || '';
+                        const isFeatured = (favVal === '1' || favVal.toLowerCase() === 'true') ? 1 : 0;
 
-                        // Column L holds video - check hyperlink first, otherwise raw text
+                        // Column L: details
                         const cellRefL = `L${r.rowNum}`;
-                        const videoLink = cellHyperlinks[cellRefL] || cells.L || '';
+                        const detailsText = cellHyperlinks[cellRefL] || cells.L || '';
 
-                        const categoryId = getCategoryIdFromSheet(categoryName, name);
-                        const finalImage = getProductImage(imageLink, categoryId);
+                        // Column M: video link
+                        const cellRefM = `M${r.rowNum}`;
+                        const videoLink = cellHyperlinks[cellRefM] || cells.M || '';
+
+                        // Columns N, O, P, Q, R: Photos 1..5
+                        const photoCols = ['N', 'O', 'P', 'Q', 'R'];
+                        const imagesList = [];
+                        for (const pCol of photoCols) {
+                            const ref = `${pCol}${r.rowNum}`;
+                            let url = cellHyperlinks[ref] || cells[pCol] || '';
+                            url = getGoogleDriveDirectLink(url);
+                            if (url && url.startsWith('http') && !imagesList.includes(url)) {
+                                imagesList.push(url);
+                            }
+                        }
+
+                        const categoryId = getCategoryIdFromSheet(name, brand);
+                        const finalImage = imagesList.length > 0 ? imagesList[0] : getProductImage('', categoryId);
+                        const finalImages = imagesList.length > 0 ? imagesList : [finalImage];
+                        const description = (detailsText && !detailsText.startswith?.('http')) ? detailsText : `جهاز ${name} عالي الكفاءة من ماركة ${brand}. الموديل: ${code}.`;
 
                         products.push({
                             id,
                             category_id: categoryId,
                             title_ar: name,
                             slug: `prod-${code.toLowerCase().replace(/[^a-z0-9]/g, '-')}-${id}`,
-                            description_ar: `جهاز كهربائي ذكي عالي الكفاءة. الموديل: ${code}. متوفر حالياً بالمخزون بكمية ${Math.round(quantity)} قطعة.`,
-                            base_price: sellingPrice || cost || 0,
-                            discount_price: discountPrice,
+                            description_ar: description,
+                            base_price: sellingPrice || cost || 250000,
+                            discount_price: discountPrice || null,
                             main_image: finalImage,
+                            images: finalImages,
                             youtube_url: videoLink,
+                            is_featured: isFeatured,
                             is_visible: 1,
-                            stock_quantity: Math.round(quantity),
+                            stock_quantity: Math.round(quantity) || 10,
                             sku: code,
                             brand: brand || 'ElectroHome'
                         });
                     }
-                    console.log(`Database: Parsed ${products.length} products from XLSX successfully.`);
+                    console.log(`Database: Parsed ${products.length} products from XLSX using exact user column mapping successfully.`);
                 } catch (xlsxParseErr) {
                     console.error('Database: Error parsing XLSX, falling back to CSV:', xlsxParseErr.message);
                     useXlsx = false;

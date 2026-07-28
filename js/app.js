@@ -6,65 +6,2005 @@ let featuredCarouselProducts = [];
 
 // Static Fallbacks for GitHub Pages static hosting
 const FALLBACK_CATEGORIES = [
-    { id: 1, name_ar: "المكاوي وأجهزة البخار", slug: "irons", icon: "fa-shirt" },
-    { id: 2, name_ar: "المكاس والتنظيف", slug: "vacuums", icon: "fa-broom" },
-    { id: 3, name_ar: "أجهزة المطبخ والخلاطات", slug: "kitchen", icon: "fa-blender" },
-    { id: 4, name_ar: "الأجهزة المنزلية الكبيرة", slug: "large-appliances", icon: "fa-tv" }
+    {
+        "id": 1,
+        "name_ar": "المكاوي وأجهزة البخار",
+        "slug": "irons",
+        "icon": "fa-shirt"
+    },
+    {
+        "id": 2,
+        "name_ar": "المكانس والتنظيف",
+        "slug": "vacuums",
+        "icon": "fa-broom"
+    },
+    {
+        "id": 3,
+        "name_ar": "أجهزة المطبخ والطهي",
+        "slug": "kitchen",
+        "icon": "fa-blender"
+    },
+    {
+        "id": 4,
+        "name_ar": "العناية الشخصية والحلاقة",
+        "slug": "personal-care",
+        "icon": "fa-scissors"
+    },
+    {
+        "id": 5,
+        "name_ar": "الإضاءة والمنزل والأجهزة الطبية",
+        "slug": "home-living",
+        "icon": "fa-lightbulb"
+    }
 ];
 
 const FALLBACK_PRODUCTS = [
     {
-        id: 1,
-        category_id: 1,
-        category_name: "المكاوي وأجهزة البخار",
-        title_ar: "مكواة بخار ذكية عالية الكفاءة",
-        slug: "smart-steam-iron",
-        description_ar: "مكواة بخار احترافية بقاعدة سيراميك مانعة للالتصاق، نظام ضغط مضاعف لكيّ الأقمشة الثقيلة والخفيفة بسرعة فائقة مع خاصية التنظيف الذاتي.",
-        base_price: 185000,
-        discount_price: 165000,
-        main_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbx6CskjLi6LVNBaxh3i405FYeYLZXKFdUuA&s",
-        youtube_url: "https://www.youtube.com/shorts/4KBMVXmrY2Q",
-        is_visible: 1,
-        variants: [
-            { id: 9, product_id: 1, brand: "Philips", model_name: "PerfectCare 7000", variant_attributes: { "اللون": "أزرق ملكي", "القوة": "2400 واط", "سعة الخزان": "300 مل" }, price_modifier: 0 },
-            { id: 10, product_id: 1, brand: "Tefal", model_name: "Ultimate Pure", variant_attributes: { "اللون": "أسود ذهبي", "القوة": "3000 واط", "سعة الخزان": "350 مل" }, price_modifier: 35000 }
-        ]
+        "id": 1,
+        "category_id": 4,
+        "title_ar": "فيليبس ماكينة قص الشعر سلسلة 3000",
+        "slug": "prod-1.0-1",
+        "description_ar": "الحلاقة والعناية الشخصية",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
+        "images": [
+            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
+            "https://media.kruidvat.nl/medias/sys_master/prd-images/h0d/h58/34247171014686/prd-front-5178398-2_600x600/prd-front-5178398-2-600x600.jpg",
+            "https://media.kruidvat.nl/medias/sys_master/prd-images/h3d/h51/34247171211294/prd-front-5178398-4_600x600/prd-front-5178398-4-600x600.jpg",
+            "https://media.kruidvat.nl/medias/sys_master/prd-images/h7d/h4d/34247171342366/prd-front-5178398-5_600x600/prd-front-5178398-5-600x600.jpg",
+            "https://media.kruidvat.nl/medias/sys_master/prd-images/h80/h4a/34247171407902/prd-front-5178398-6_600x600/prd-front-5178398-6-600x600.jpg"
+        ],
+        "youtube_url": "https://www.youtube.com/watch?v=Afk3jznDe6o",
+        "is_featured": 1,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "العناية الشخصية والحلاقة",
+        "variants": [
+            {
+                "id": 1,
+                "product_id": 1,
+                "brand": "Philips",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "Philips",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "Philips",
+        "sku": "1.0"
     },
     {
-        id: 2,
-        category_id: 2,
-        category_name: "المكاس والتنظيف",
-        title_ar: "مكنسة كهربائية سيلكون صامتة بقوة شفط هائلة",
-        slug: "silent-vacuum-cleaner",
-        description_ar: "مكنسة كهربائية فائقة الهدوء مزودة بفلتر HEPA طبي مضاد للحساسية ومحرك توربو لإزالة أصعب الأتربة والغبار من السجاد والأرضيات.",
-        base_price: 420000,
-        discount_price: 390000,
-        main_image: "https://images.unsplash.com/photo-1558317374-067fb5f30001?auto=format&fit=crop&w=800&q=80",
-        youtube_url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-        is_visible: 1,
-        variants: [
-            { id: 3, product_id: 2, brand: "Bosch", model_name: "ProSilence Series 6", variant_attributes: { "اللون": "أحمر دمشقي", "السعة": "4 لتر", "طول السلك": "9 متر" }, price_modifier: 0 },
-            { id: 4, product_id: 2, brand: "Samsung", model_name: "PowerMotion Eco", variant_attributes: { "اللون": "فضي معدني", "السعة": "4.5 لتر", "طول السلك": "10 متر" }, price_modifier: 45000 }
-        ]
+        "id": 2,
+        "category_id": 4,
+        "title_ar": "براون سلسلة 5 ماكينة حلاقة كهربائية 51-M1000s",
+        "slug": "prod-1.0-2",
+        "description_ar": "51-M1000s",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_2.jpg",
+        "images": [
+            "/asset/images/products/prod_2.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "العناية الشخصية والحلاقة",
+        "variants": [
+            {
+                "id": 2,
+                "product_id": 2,
+                "brand": "Braun",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "Braun",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "Braun",
+        "sku": "1.0"
     },
     {
-        id: 3,
-        category_id: 3,
-        category_name: "أجهزة المطبخ والخلاطات",
-        title_ar: "خلاط ومحضر طعام متعدد الوظائف 4 في 1",
-        slug: "multi-blender-4in1",
-        description_ar: "محضر طعام متعدد الاستخدامات يشمل خلاط عصائر، مطحنة بهارات، مفرمة لحوم وخفاقة. شفرات فولاذية مقاومة للصدأ مع سرعتين ونظام خفق نبضي.",
-        base_price: 275000,
-        discount_price: null,
-        main_image: "https://images.unsplash.com/photo-1570222094114-d054a817e56b?auto=format&fit=crop&w=800&q=80",
-        youtube_url: "",
-        is_visible: 1,
-        variants: [
-            { id: 5, product_id: 3, brand: "Moulinex", model_name: "DoubleForce", variant_attributes: { "الوعاء": "زجاج مقوى 1.75 لتر", "القوة": "1000 واط" }, price_modifier: 0 },
-            { id: 6, product_id: 3, brand: "Kenwood", model_name: "Multipro Express", variant_attributes: { "الوعاء": "بلاستيك غير قابل للكسر 2 لتر", "القوة": "1200 واط" }, price_modifier: 50000 }
-        ]
+        "id": 3,
+        "category_id": 5,
+        "title_ar": "ليفارنو هوم مصباح طاولة LED مع خاصية اللمس",
+        "slug": "prod-1.0-3",
+        "description_ar": "الإضاءة والديكور",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_3.jpg",
+        "images": [
+            "/asset/images/products/prod_3.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 1,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "الإضاءة والمنزل والأجهزة الطبية",
+        "variants": [
+            {
+                "id": 3,
+                "product_id": 3,
+                "brand": "LIVARNO home",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "LIVARNO home",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "LIVARNO home",
+        "sku": "1.0"
+    },
+    {
+        "id": 4,
+        "category_id": 4,
+        "title_ar": "كاريرا ماكينة تشذيب متعددة الوظائف",
+        "slug": "prod-1.0-4",
+        "description_ar": "CR-MG-01",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_4.jpg",
+        "images": [
+            "/asset/images/products/prod_4.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "العناية الشخصية والحلاقة",
+        "variants": [
+            {
+                "id": 4,
+                "product_id": 4,
+                "brand": "CARRERA",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "CARRERA",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "CARRERA",
+        "sku": "1.0"
+    },
+    {
+        "id": 5,
+        "category_id": 4,
+        "title_ar": "براون سلسلة 5 ماكينة حلاقة كهربائية 51-M1000s",
+        "slug": "prod-1.0-5",
+        "description_ar": "BR-BG5",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_5.jpg",
+        "images": [
+            "/asset/images/products/prod_5.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "العناية الشخصية والحلاقة",
+        "variants": [
+            {
+                "id": 5,
+                "product_id": 5,
+                "brand": "براون ماكينة حلاقة الجسم سلسلة 5",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "براون ماكينة حلاقة الجسم سلسلة 5",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "براون ماكينة حلاقة الجسم سلسلة 5",
+        "sku": "1.0"
+    },
+    {
+        "id": 6,
+        "category_id": 4,
+        "title_ar": "كاريرا ماكينة تشذيب متعددة الوظائف",
+        "slug": "prod-1.0-6",
+        "description_ar": "CR-MG-02",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_6.jpg",
+        "images": [
+            "/asset/images/products/prod_6.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "العناية الشخصية والحلاقة",
+        "variants": [
+            {
+                "id": 6,
+                "product_id": 6,
+                "brand": "كاريرا ماكينة تشذيب متعددة الوظائف (صندوق آخر)",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "كاريرا ماكينة تشذيب متعددة الوظائف (صندوق آخر)",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "كاريرا ماكينة تشذيب متعددة الوظائف (صندوق آخر)",
+        "sku": "1.0"
+    },
+    {
+        "id": 7,
+        "category_id": 3,
+        "title_ar": "كروبس نستله دولسي غوستو بيكولو XS ماكينة قهوة",
+        "slug": "prod-1.0-7",
+        "description_ar": "أجهزة المطبخ والخلاطات",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_7.jpg",
+        "images": [
+            "/asset/images/products/prod_7.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "أجهزة المطبخ والطهي",
+        "variants": [
+            {
+                "id": 7,
+                "product_id": 7,
+                "brand": "Krups",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "Krups",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "Krups",
+        "sku": "1.0"
+    },
+    {
+        "id": 8,
+        "category_id": 4,
+        "title_ar": "براون سلسلة 5 ماكينة حلاقة كهربائية 51-M1000s",
+        "slug": "prod-1.0-8",
+        "description_ar": "BR-AIO3",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_8.jpg",
+        "images": [
+            "/asset/images/products/prod_8.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "العناية الشخصية والحلاقة",
+        "variants": [
+            {
+                "id": 8,
+                "product_id": 8,
+                "brand": "براون ماكينة حلاقة شاملة سلسلة 3 / 8 في 1",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "براون ماكينة حلاقة شاملة سلسلة 3 / 8 في 1",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "براون ماكينة حلاقة شاملة سلسلة 3 / 8 في 1",
+        "sku": "1.0"
+    },
+    {
+        "id": 9,
+        "category_id": 5,
+        "title_ar": "ليفارنو هوم مصباح طاولة LED مع خاصية اللمس",
+        "slug": "prod-1.0-9",
+        "description_ar": "LV-WC-01",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_9.jpg",
+        "images": [
+            "/asset/images/products/prod_9.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "الإضاءة والمنزل والأجهزة الطبية",
+        "variants": [
+            {
+                "id": 9,
+                "product_id": 9,
+                "brand": "ليفارنو هوم ساعة حائط لاسلكية",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "ليفارنو هوم ساعة حائط لاسلكية",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "ليفارنو هوم ساعة حائط لاسلكية",
+        "sku": "1.0"
+    },
+    {
+        "id": 10,
+        "category_id": 3,
+        "title_ar": "سيلفر كريست ماكينة وافل مزدوجة",
+        "slug": "prod-1.0-10",
+        "description_ar": "SC-DW-01",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_10.jpg",
+        "images": [
+            "/asset/images/products/prod_10.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "أجهزة المطبخ والطهي",
+        "variants": [
+            {
+                "id": 10,
+                "product_id": 10,
+                "brand": "SilverCrest",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "SilverCrest",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "SilverCrest",
+        "sku": "1.0"
+    },
+    {
+        "id": 11,
+        "category_id": 3,
+        "title_ar": "سويتش أون ماكينة سموثي للتنقل",
+        "slug": "prod-1.0-11",
+        "description_ar": "SO-SM-01",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_11.jpg",
+        "images": [
+            "/asset/images/products/prod_11.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 1,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "أجهزة المطبخ والطهي",
+        "variants": [
+            {
+                "id": 11,
+                "product_id": 11,
+                "brand": "Switch On",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "Switch On",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "Switch On",
+        "sku": "1.0"
+    },
+    {
+        "id": 12,
+        "category_id": 3,
+        "title_ar": "تيفال محمصة خبز",
+        "slug": "prod-1.0-12",
+        "description_ar": "TF-TS-01",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_12.jpg",
+        "images": [
+            "/asset/images/products/prod_12.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "أجهزة المطبخ والطهي",
+        "variants": [
+            {
+                "id": 12,
+                "product_id": 12,
+                "brand": "Tefal",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "Tefal",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "Tefal",
+        "sku": "1.0"
+    },
+    {
+        "id": 13,
+        "category_id": 1,
+        "title_ar": "فيليبس ماكينة قص الشعر سلسلة 3000",
+        "slug": "prod-1.0-13",
+        "description_ar": "المكاوي وأجهزة البخار",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_13.jpg",
+        "images": [
+            "/asset/images/products/prod_13.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "المكاوي وأجهزة البخار",
+        "variants": [
+            {
+                "id": 13,
+                "product_id": 13,
+                "brand": "فيليبس مولد بخار ومكواة HI5920",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "فيليبس مولد بخار ومكواة HI5920",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "فيليبس مولد بخار ومكواة HI5920",
+        "sku": "1.0"
+    },
+    {
+        "id": 14,
+        "category_id": 3,
+        "title_ar": "سويتش أون ماكينة سموثي للتنقل",
+        "slug": "prod-1.0-14",
+        "description_ar": "SO-KT-01",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_14.jpg",
+        "images": [
+            "/asset/images/products/prod_14.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "أجهزة المطبخ والطهي",
+        "variants": [
+            {
+                "id": 14,
+                "product_id": 14,
+                "brand": "سويتش أون غلاية ماء كهربائية - أسود",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "سويتش أون غلاية ماء كهربائية - أسود",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "سويتش أون غلاية ماء كهربائية - أسود",
+        "sku": "1.0"
+    },
+    {
+        "id": 15,
+        "category_id": 3,
+        "title_ar": "سويتش أون ماكينة سموثي للتنقل",
+        "slug": "prod-1.0-15",
+        "description_ar": "SO-HB-01",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_15.jpg",
+        "images": [
+            "/asset/images/products/prod_15.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 1,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "أجهزة المطبخ والطهي",
+        "variants": [
+            {
+                "id": 15,
+                "product_id": 15,
+                "brand": "سويتش أون طقم خلاط يدوي",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "سويتش أون طقم خلاط يدوي",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "سويتش أون طقم خلاط يدوي",
+        "sku": "1.0"
+    },
+    {
+        "id": 16,
+        "category_id": 5,
+        "title_ar": "دكتور سنست ميزان حرارة بالأشعة تحت الحمراء 2 في 1",
+        "slug": "prod-1.0-16",
+        "description_ar": "الأجهزة الطبية والصحية",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_16.jpg",
+        "images": [
+            "/asset/images/products/prod_16.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "الإضاءة والمنزل والأجهزة الطبية",
+        "variants": [
+            {
+                "id": 16,
+                "product_id": 16,
+                "brand": "Dr. Senst",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "Dr. Senst",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "Dr. Senst",
+        "sku": "1.0"
+    },
+    {
+        "id": 17,
+        "category_id": 3,
+        "title_ar": "سيلفر كريست ماكينة وافل مزدوجة",
+        "slug": "prod-1.0-17",
+        "description_ar": "SC-DW-02",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_17.jpg",
+        "images": [
+            "/asset/images/products/prod_17.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "أجهزة المطبخ والطهي",
+        "variants": [
+            {
+                "id": 17,
+                "product_id": 17,
+                "brand": "سيلفر كريست ماكينة وافل مزدوجة (صندوق آخر)",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "سيلفر كريست ماكينة وافل مزدوجة (صندوق آخر)",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "سيلفر كريست ماكينة وافل مزدوجة (صندوق آخر)",
+        "sku": "1.0"
+    },
+    {
+        "id": 18,
+        "category_id": 3,
+        "title_ar": "سويتش أون ماكينة سموثي للتنقل",
+        "slug": "prod-1.0-18",
+        "description_ar": "SO-KT-02",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_18.jpg",
+        "images": [
+            "/asset/images/products/prod_18.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "أجهزة المطبخ والطهي",
+        "variants": [
+            {
+                "id": 18,
+                "product_id": 18,
+                "brand": "سويتش أون غلاية ماء كهربائية - خشبية/بيج",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "سويتش أون غلاية ماء كهربائية - خشبية/بيج",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "سويتش أون غلاية ماء كهربائية - خشبية/بيج",
+        "sku": "1.0"
+    },
+    {
+        "id": 19,
+        "category_id": 4,
+        "title_ar": "فيليبس ماكينة قص الشعر سلسلة 3000",
+        "slug": "prod-1.0-19",
+        "description_ar": "PH-HC3001",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_19.jpg",
+        "images": [
+            "/asset/images/products/prod_19.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "العناية الشخصية والحلاقة",
+        "variants": [
+            {
+                "id": 19,
+                "product_id": 19,
+                "brand": "فيليبس ماكينة قص الشعر (صندوق آخر)",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "فيليبس ماكينة قص الشعر (صندوق آخر)",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "فيليبس ماكينة قص الشعر (صندوق آخر)",
+        "sku": "1.0"
+    },
+    {
+        "id": 20,
+        "category_id": 3,
+        "title_ar": "سويتش أون ماكينة سموثي للتنقل",
+        "slug": "prod-1.0-20",
+        "description_ar": "SO-CG-01",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_20.jpg",
+        "images": [
+            "/asset/images/products/prod_20.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "أجهزة المطبخ والطهي",
+        "variants": [
+            {
+                "id": 20,
+                "product_id": 20,
+                "brand": "سويتش أون شواية تلامس صغيرة",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "سويتش أون شواية تلامس صغيرة",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "سويتش أون شواية تلامس صغيرة",
+        "sku": "1.0"
+    },
+    {
+        "id": 21,
+        "category_id": 5,
+        "title_ar": "باركسايد كاشف متعدد الأغراض PMFD A3",
+        "slug": "prod-1.0-21",
+        "description_ar": "أدوات ومعدات",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_21.jpg",
+        "images": [
+            "/asset/images/products/prod_21.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "الإضاءة والمنزل والأجهزة الطبية",
+        "variants": [
+            {
+                "id": 21,
+                "product_id": 21,
+                "brand": "Parkside",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "Parkside",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "Parkside",
+        "sku": "1.0"
+    },
+    {
+        "id": 22,
+        "category_id": 3,
+        "title_ar": "سيلفر كريست ماكينة وافل مزدوجة",
+        "slug": "prod-1.0-22",
+        "description_ar": "SC-CG-02",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_22.jpg",
+        "images": [
+            "/asset/images/products/prod_22.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "أجهزة المطبخ والطهي",
+        "variants": [
+            {
+                "id": 22,
+                "product_id": 22,
+                "brand": "سيلفر كريست شواية تلامس كبيرة",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "سيلفر كريست شواية تلامس كبيرة",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "سيلفر كريست شواية تلامس كبيرة",
+        "sku": "1.0"
+    },
+    {
+        "id": 23,
+        "category_id": 3,
+        "title_ar": "سيفيرين لوح تسخين طبخ فردي",
+        "slug": "prod-1.0-23",
+        "description_ar": "SV-HP-01",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_23.jpg",
+        "images": [
+            "/asset/images/products/prod_23.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "أجهزة المطبخ والطهي",
+        "variants": [
+            {
+                "id": 23,
+                "product_id": 23,
+                "brand": "Severin",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "Severin",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "Severin",
+        "sku": "1.0"
+    },
+    {
+        "id": 24,
+        "category_id": 3,
+        "title_ar": "كروبس نستله دولسي غوستو بيكولو XS ماكينة قهوة",
+        "slug": "prod-1.0-24",
+        "description_ar": "F30908",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_24.jpg",
+        "images": [
+            "/asset/images/products/prod_24.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "أجهزة المطبخ والطهي",
+        "variants": [
+            {
+                "id": 24,
+                "product_id": 24,
+                "brand": "كروبس ماكينة قهوة فلتر F30908",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "كروبس ماكينة قهوة فلتر F30908",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "كروبس ماكينة قهوة فلتر F30908",
+        "sku": "1.0"
+    },
+    {
+        "id": 25,
+        "category_id": 3,
+        "title_ar": "سويتش أون ماكينة سموثي للتنقل",
+        "slug": "prod-1.0-25",
+        "description_ar": "SO-SW-01",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_25.jpg",
+        "images": [
+            "/asset/images/products/prod_25.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "أجهزة المطبخ والطهي",
+        "variants": [
+            {
+                "id": 25,
+                "product_id": 25,
+                "brand": "سويتش أون صانع سندويشات",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "سويتش أون صانع سندويشات",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "سويتش أون صانع سندويشات",
+        "sku": "1.0"
+    },
+    {
+        "id": 26,
+        "category_id": 3,
+        "title_ar": "سويتش أون ماكينة سموثي للتنقل",
+        "slug": "prod-1.0-26",
+        "description_ar": "SO-CM-01",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_26.jpg",
+        "images": [
+            "/asset/images/products/prod_26.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "أجهزة المطبخ والطهي",
+        "variants": [
+            {
+                "id": 26,
+                "product_id": 26,
+                "brand": "سويتش أون ماكينة قهوة فلتر مع ترمس حراري",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "سويتش أون ماكينة قهوة فلتر مع ترمس حراري",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "سويتش أون ماكينة قهوة فلتر مع ترمس حراري",
+        "sku": "1.0"
+    },
+    {
+        "id": 27,
+        "category_id": 3,
+        "title_ar": "سيلفر كريست ماكينة وافل مزدوجة",
+        "slug": "prod-1.0-27",
+        "description_ar": "SC-GR-01",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_27.jpg",
+        "images": [
+            "/asset/images/products/prod_27.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "أجهزة المطبخ والطهي",
+        "variants": [
+            {
+                "id": 27,
+                "product_id": 27,
+                "brand": "سيلفر كريست مبشرة خضروات كهربائية",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "سيلفر كريست مبشرة خضروات كهربائية",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "سيلفر كريست مبشرة خضروات كهربائية",
+        "sku": "1.0"
+    },
+    {
+        "id": 28,
+        "category_id": 2,
+        "title_ar": "سويتش أون ماكينة سموثي للتنقل",
+        "slug": "prod-1.0-28",
+        "description_ar": "المكابس والتنظيف",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_28.jpg",
+        "images": [
+            "/asset/images/products/prod_28.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "المكانس والتنظيف",
+        "variants": [
+            {
+                "id": 28,
+                "product_id": 28,
+                "brand": "سويتش أون مكنسة كهربائية يدوية للتنظيف الجاف والرطب",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "سويتش أون مكنسة كهربائية يدوية للتنظيف الجاف والرطب",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "سويتش أون مكنسة كهربائية يدوية للتنظيف الجاف والرطب",
+        "sku": "1.0"
+    },
+    {
+        "id": 29,
+        "category_id": 4,
+        "title_ar": "روفنتا x كارل لاغرفيلد مجفف شعر ستوديو دراي",
+        "slug": "prod-1.0-29",
+        "description_ar": "RW-HD-01",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_29.jpg",
+        "images": [
+            "/asset/images/products/prod_29.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "العناية الشخصية والحلاقة",
+        "variants": [
+            {
+                "id": 29,
+                "product_id": 29,
+                "brand": "Rowenta",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "Rowenta",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "Rowenta",
+        "sku": "1.0"
+    },
+    {
+        "id": 30,
+        "category_id": 3,
+        "title_ar": "بوش خلاط يدوي كليفر ميكس 300 واط",
+        "slug": "prod-1.0-30",
+        "description_ar": "BS-CM300",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_30.jpg",
+        "images": [
+            "/asset/images/products/prod_30.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "أجهزة المطبخ والطهي",
+        "variants": [
+            {
+                "id": 30,
+                "product_id": 30,
+                "brand": "Bosch",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "Bosch",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "Bosch",
+        "sku": "1.0"
+    },
+    {
+        "id": 31,
+        "category_id": 3,
+        "title_ar": "سويتش أون ماكينة سموثي للتنقل",
+        "slug": "prod-1.0-31",
+        "description_ar": "SO-KT-03",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_31.jpg",
+        "images": [
+            "/asset/images/products/prod_31.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "أجهزة المطبخ والطهي",
+        "variants": [
+            {
+                "id": 31,
+                "product_id": 31,
+                "brand": "سويتش أون غلاية ماء - سوداء مع خشب",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "سويتش أون غلاية ماء - سوداء مع خشب",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "سويتش أون غلاية ماء - سوداء مع خشب",
+        "sku": "1.0"
+    },
+    {
+        "id": 32,
+        "category_id": 5,
+        "title_ar": "ون فور أول ريموت كنترول بديل لتلفزيون سامسونج",
+        "slug": "prod-1.0-32",
+        "description_ar": "إلكترونيات",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_32.jpg",
+        "images": [
+            "/asset/images/products/prod_32.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "الإضاءة والمنزل والأجهزة الطبية",
+        "variants": [
+            {
+                "id": 32,
+                "product_id": 32,
+                "brand": "One For All",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "One For All",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "One For All",
+        "sku": "1.0"
+    },
+    {
+        "id": 33,
+        "category_id": 1,
+        "title_ar": "فيليبس ماكينة قص الشعر سلسلة 3000",
+        "slug": "prod-1.0-33",
+        "description_ar": "PH-SG2000",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_33.jpg",
+        "images": [
+            "/asset/images/products/prod_33.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "المكاوي وأجهزة البخار",
+        "variants": [
+            {
+                "id": 33,
+                "product_id": 33,
+                "brand": "فيليبس مولد بخار ومكواة سلسلة 2000",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "فيليبس مولد بخار ومكواة سلسلة 2000",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "فيليبس مولد بخار ومكواة سلسلة 2000",
+        "sku": "1.0"
+    },
+    {
+        "id": 34,
+        "category_id": 3,
+        "title_ar": "بوش خلاط يدوي كليفر ميكس 300 واط",
+        "slug": "prod-1.0-34",
+        "description_ar": "BS-TAS-01",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_34.jpg",
+        "images": [
+            "/asset/images/products/prod_34.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "أجهزة المطبخ والطهي",
+        "variants": [
+            {
+                "id": 34,
+                "product_id": 34,
+                "brand": "بوش تاسيمو ماكينة قهوة صديقة للأناقة",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "بوش تاسيمو ماكينة قهوة صديقة للأناقة",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "بوش تاسيمو ماكينة قهوة صديقة للأناقة",
+        "sku": "1.0"
+    },
+    {
+        "id": 35,
+        "category_id": 3,
+        "title_ar": "سويتش أون ماكينة سموثي للتنقل",
+        "slug": "prod-1.0-35",
+        "description_ar": "SO-CF-01",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_35.jpg",
+        "images": [
+            "/asset/images/products/prod_35.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "أجهزة المطبخ والطهي",
+        "variants": [
+            {
+                "id": 35,
+                "product_id": 35,
+                "brand": "سويتش أون نافورة شوكولاتة كهربائية",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "سويتش أون نافورة شوكولاتة كهربائية",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "سويتش أون نافورة شوكولاتة كهربائية",
+        "sku": "1.0"
+    },
+    {
+        "id": 36,
+        "category_id": 3,
+        "title_ar": "سيلفر كريست ماكينة وافل مزدوجة",
+        "slug": "prod-1.0-36",
+        "description_ar": "SC-PM-01",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_36.jpg",
+        "images": [
+            "/asset/images/products/prod_36.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "أجهزة المطبخ والطهي",
+        "variants": [
+            {
+                "id": 36,
+                "product_id": 36,
+                "brand": "سيلفر كريست صانع فشار ومحمصة لوز",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "سيلفر كريست صانع فشار ومحمصة لوز",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "سيلفر كريست صانع فشار ومحمصة لوز",
+        "sku": "1.0"
+    },
+    {
+        "id": 37,
+        "category_id": 4,
+        "title_ar": "براون سلسلة 5 ماكينة حلاقة كهربائية 51-M1000s",
+        "slug": "prod-1.0-37",
+        "description_ar": "BR-BT5",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_37.jpg",
+        "images": [
+            "/asset/images/products/prod_37.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "العناية الشخصية والحلاقة",
+        "variants": [
+            {
+                "id": 37,
+                "product_id": 37,
+                "brand": "براون ماكينة تشذيب اللحية سلسلة 5",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "براون ماكينة تشذيب اللحية سلسلة 5",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "براون ماكينة تشذيب اللحية سلسلة 5",
+        "sku": "1.0"
+    },
+    {
+        "id": 38,
+        "category_id": 4,
+        "title_ar": "فيليبس ماكينة قص الشعر سلسلة 3000",
+        "slug": "prod-1.0-38",
+        "description_ar": "PH-EP800",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_38.jpg",
+        "images": [
+            "/asset/images/products/prod_38.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "العناية الشخصية والحلاقة",
+        "variants": [
+            {
+                "id": 38,
+                "product_id": 38,
+                "brand": "فيليبس ماكينة إسبريسو أوتوماتيكية بالكامل سلسلة 800",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "فيليبس ماكينة إسبريسو أوتوماتيكية بالكامل سلسلة 800",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "فيليبس ماكينة إسبريسو أوتوماتيكية بالكامل سلسلة 800",
+        "sku": "1.0"
+    },
+    {
+        "id": 39,
+        "category_id": 3,
+        "title_ar": "سيلفر كريست ماكينة وافل مزدوجة",
+        "slug": "prod-1.0-39",
+        "description_ar": "SC-RG-01",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_39.jpg",
+        "images": [
+            "/asset/images/products/prod_39.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "أجهزة المطبخ والطهي",
+        "variants": [
+            {
+                "id": 39,
+                "product_id": 39,
+                "brand": "سيلفر كريست شواية راكليت",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "سيلفر كريست شواية راكليت",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "سيلفر كريست شواية راكليت",
+        "sku": "1.0"
+    },
+    {
+        "id": 40,
+        "category_id": 4,
+        "title_ar": "روفنتا x كارل لاغرفيلد مجفف شعر ستوديو دراي",
+        "slug": "prod-1.0-40",
+        "description_ar": "RW-HD-02",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_40.jpg",
+        "images": [
+            "/asset/images/products/prod_40.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "العناية الشخصية والحلاقة",
+        "variants": [
+            {
+                "id": 40,
+                "product_id": 40,
+                "brand": "روفنتا مجفف شعر شاين إكسبرس",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "روفنتا مجفف شعر شاين إكسبرس",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "روفنتا مجفف شعر شاين إكسبرس",
+        "sku": "1.0"
+    },
+    {
+        "id": 41,
+        "category_id": 1,
+        "title_ar": "فيليدا ممسحة بخار ستيم بلس",
+        "slug": "prod-1.0-41",
+        "description_ar": "VL-SP-01",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_41.jpg",
+        "images": [
+            "/asset/images/products/prod_41.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "المكاوي وأجهزة البخار",
+        "variants": [
+            {
+                "id": 41,
+                "product_id": 41,
+                "brand": "Vileda",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "Vileda",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "Vileda",
+        "sku": "1.0"
+    },
+    {
+        "id": 42,
+        "category_id": 3,
+        "title_ar": "سيلفر كريست ماكينة وافل مزدوجة",
+        "slug": "prod-1.0-42",
+        "description_ar": "SC-MW-01",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_42.jpg",
+        "images": [
+            "/asset/images/products/prod_42.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "أجهزة المطبخ والطهي",
+        "variants": [
+            {
+                "id": 42,
+                "product_id": 42,
+                "brand": "سيلفر كريست فرن ميكروويف",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "سيلفر كريست فرن ميكروويف",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "سيلفر كريست فرن ميكروويف",
+        "sku": "1.0"
+    },
+    {
+        "id": 43,
+        "category_id": 5,
+        "title_ar": "ليفارنو هوم مصباح طاولة LED مع خاصية اللمس",
+        "slug": "prod-1.0-43",
+        "description_ar": "LV-WL-01",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_43.jpg",
+        "images": [
+            "/asset/images/products/prod_43.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "الإضاءة والمنزل والأجهزة الطبية",
+        "variants": [
+            {
+                "id": 43,
+                "product_id": 43,
+                "brand": "ليفارنو هوم مصباح حائط خارجي LED يعمل بالبطارية",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "ليفارنو هوم مصباح حائط خارجي LED يعمل بالبطارية",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "ليفارنو هوم مصباح حائط خارجي LED يعمل بالبطارية",
+        "sku": "1.0"
+    },
+    {
+        "id": 44,
+        "category_id": 5,
+        "title_ar": "ليفارنو هوم مصباح طاولة LED مع خاصية اللمس",
+        "slug": "prod-1.0-44",
+        "description_ar": "LV-CL-01",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_44.jpg",
+        "images": [
+            "/asset/images/products/prod_44.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "الإضاءة والمنزل والأجهزة الطبية",
+        "variants": [
+            {
+                "id": 44,
+                "product_id": 44,
+                "brand": "ليفارنو هوم شمعة LED من الشمع الحقيقي في زجاج",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "ليفارنو هوم شمعة LED من الشمع الحقيقي في زجاج",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "ليفارنو هوم شمعة LED من الشمع الحقيقي في زجاج",
+        "sku": "1.0"
+    },
+    {
+        "id": 45,
+        "category_id": 5,
+        "title_ar": "فاينبيرجر جهاز استنشاق ضاغط للعلاج التنفسي",
+        "slug": "prod-1.0-45",
+        "description_ar": "WB-IN-01",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_45.jpg",
+        "images": [
+            "/asset/images/products/prod_45.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "الإضاءة والمنزل والأجهزة الطبية",
+        "variants": [
+            {
+                "id": 45,
+                "product_id": 45,
+                "brand": "Weinberger",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "Weinberger",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "Weinberger",
+        "sku": "1.0"
+    },
+    {
+        "id": 46,
+        "category_id": 2,
+        "title_ar": "سيفيرين لوح تسخين طبخ فردي",
+        "slug": "prod-1.0-46",
+        "description_ar": "SV-VC-01",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_46.jpg",
+        "images": [
+            "/asset/images/products/prod_46.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "المكانس والتنظيف",
+        "variants": [
+            {
+                "id": 46,
+                "product_id": 46,
+                "brand": "سيفيرين مكنسة كهربائية 2 في 1 يدوية وعصوية",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "سيفيرين مكنسة كهربائية 2 في 1 يدوية وعصوية",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "سيفيرين مكنسة كهربائية 2 في 1 يدوية وعصوية",
+        "sku": "1.0"
+    },
+    {
+        "id": 47,
+        "category_id": 5,
+        "title_ar": "ليفارنو هوم مصباح طاولة LED مع خاصية اللمس",
+        "slug": "prod-1.0-47",
+        "description_ar": "LV-TL-02",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_47.jpg",
+        "images": [
+            "/asset/images/products/prod_47.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "الإضاءة والمنزل والأجهزة الطبية",
+        "variants": [
+            {
+                "id": 47,
+                "product_id": 47,
+                "brand": "ليفارنو هوم مصباح طاولة LED باللمس (صندوق بطول مختلف)",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "ليفارنو هوم مصباح طاولة LED باللمس (صندوق بطول مختلف)",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "ليفارنو هوم مصباح طاولة LED باللمس (صندوق بطول مختلف)",
+        "sku": "1.0"
+    },
+    {
+        "id": 48,
+        "category_id": 5,
+        "title_ar": "ليفارنو هوم مصباح طاولة LED مع خاصية اللمس",
+        "slug": "prod-1.0-48",
+        "description_ar": "LV-SL-01",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_48.jpg",
+        "images": [
+            "/asset/images/products/prod_48.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "الإضاءة والمنزل والأجهزة الطبية",
+        "variants": [
+            {
+                "id": 48,
+                "product_id": 48,
+                "brand": "سلسلة إضاءة LED من ليفارنو هوم",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "سلسلة إضاءة LED من ليفارنو هوم",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "سلسلة إضاءة LED من ليفارنو هوم",
+        "sku": "1.0"
+    },
+    {
+        "id": 49,
+        "category_id": 5,
+        "title_ar": "باركسايد كاشف متعدد الأغراض PMFD A3",
+        "slug": "prod-1.0-49",
+        "description_ar": "PS-SL-01",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_49.jpg",
+        "images": [
+            "/asset/images/products/prod_49.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "الإضاءة والمنزل والأجهزة الطبية",
+        "variants": [
+            {
+                "id": 49,
+                "product_id": 49,
+                "brand": "كشاف بناء LED من باركسايد",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "كشاف بناء LED من باركسايد",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "كشاف بناء LED من باركسايد",
+        "sku": "1.0"
+    },
+    {
+        "id": 50,
+        "category_id": 5,
+        "title_ar": "سلسلة إضاءة LED من ليفوبو",
+        "slug": "prod-1.0-50",
+        "description_ar": "LB-SL-01",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_50.jpg",
+        "images": [
+            "/asset/images/products/prod_50.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "الإضاءة والمنزل والأجهزة الطبية",
+        "variants": [
+            {
+                "id": 50,
+                "product_id": 50,
+                "brand": "LIVOBO",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "LIVOBO",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "LIVOBO",
+        "sku": "1.0"
+    },
+    {
+        "id": 51,
+        "category_id": 5,
+        "title_ar": "ليفارنو هوم مصباح طاولة LED مع خاصية اللمس",
+        "slug": "prod-1.0-51",
+        "description_ar": "LV-LC-01",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_51.jpg",
+        "images": [
+            "/asset/images/products/prod_51.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "الإضاءة والمنزل والأجهزة الطبية",
+        "variants": [
+            {
+                "id": 51,
+                "product_id": 51,
+                "brand": "ستارة إضاءة LED من ليفارنو هوم",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "ستارة إضاءة LED من ليفارنو هوم",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "ستارة إضاءة LED من ليفارنو هوم",
+        "sku": "1.0"
+    },
+    {
+        "id": 52,
+        "category_id": 5,
+        "title_ar": "ليفارنو هوم مصباح طاولة LED مع خاصية اللمس",
+        "slug": "prod-1.0-52",
+        "description_ar": "LV-TL-03",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_52.jpg",
+        "images": [
+            "/asset/images/products/prod_52.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "الإضاءة والمنزل والأجهزة الطبية",
+        "variants": [
+            {
+                "id": 52,
+                "product_id": 52,
+                "brand": "مصباح طاولة LED أساسي من ليفارنو هوم",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "مصباح طاولة LED أساسي من ليفارنو هوم",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "مصباح طاولة LED أساسي من ليفارنو هوم",
+        "sku": "1.0"
+    },
+    {
+        "id": 53,
+        "category_id": 4,
+        "title_ar": "براون سلسلة 5 ماكينة حلاقة كهربائية 51-M1000s",
+        "slug": "prod-1.0-53",
+        "description_ar": "BR-BG3",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_53.jpg",
+        "images": [
+            "/asset/images/products/prod_53.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "العناية الشخصية والحلاقة",
+        "variants": [
+            {
+                "id": 53,
+                "product_id": 53,
+                "brand": "ماكينة تشذيب الجسم سلسلة 3 من براون (BG3)",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "ماكينة تشذيب الجسم سلسلة 3 من براون (BG3)",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "ماكينة تشذيب الجسم سلسلة 3 من براون (BG3)",
+        "sku": "1.0"
+    },
+    {
+        "id": 54,
+        "category_id": 5,
+        "title_ar": "سلسلة إضاءة LED من ليفوبو",
+        "slug": "prod-1.0-54",
+        "description_ar": "LB-TL-01",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_54.jpg",
+        "images": [
+            "/asset/images/products/prod_54.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "الإضاءة والمنزل والأجهزة الطبية",
+        "variants": [
+            {
+                "id": 54,
+                "product_id": 54,
+                "brand": "مصباح طاولة LED لاسلكي يعمل بالبطارية من ليفوبو",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "مصباح طاولة LED لاسلكي يعمل بالبطارية من ليفوبو",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "مصباح طاولة LED لاسلكي يعمل بالبطارية من ليفوبو",
+        "sku": "1.0"
+    },
+    {
+        "id": 55,
+        "category_id": 4,
+        "title_ar": "فيليبس ماكينة قص الشعر سلسلة 3000",
+        "slug": "prod-1.0-55",
+        "description_ar": "PH-AIO3000",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_55.jpg",
+        "images": [
+            "/asset/images/products/prod_55.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "العناية الشخصية والحلاقة",
+        "variants": [
+            {
+                "id": 55,
+                "product_id": 55,
+                "brand": "ماكينة تشذيب شاملة 6 في 1 من فيليبس سلسلة 3000",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "ماكينة تشذيب شاملة 6 في 1 من فيليبس سلسلة 3000",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "ماكينة تشذيب شاملة 6 في 1 من فيليبس سلسلة 3000",
+        "sku": "1.0"
+    },
+    {
+        "id": 56,
+        "category_id": 4,
+        "title_ar": "فيليبس ماكينة قص الشعر سلسلة 3000",
+        "slug": "prod-1.0-56",
+        "description_ar": "S1141",
+        "base_price": 250000,
+        "discount_price": 220000,
+        "main_image": "/asset/images/products/prod_56.jpg",
+        "images": [
+            "/asset/images/products/prod_56.jpg"
+        ],
+        "youtube_url": "",
+        "is_featured": 0,
+        "is_visible": 1,
+        "created_at": "2026-07-28T12:00:00.000Z",
+        "category_name": "العناية الشخصية والحلاقة",
+        "variants": [
+            {
+                "id": 56,
+                "product_id": 56,
+                "brand": "ماكينة حلاقة كهربائية دوارة سلسلة 1000 من فيليبس S1141",
+                "model_name": "1.0",
+                "variant_attributes": {
+                    "الماركة": "ماكينة حلاقة كهربائية دوارة سلسلة 1000 من فيليبس S1141",
+                    "الموديل": "1.0"
+                },
+                "price_modifier": 0,
+                "stock_quantity": 0,
+                "sku": "1.0"
+            }
+        ],
+        "brand": "ماكينة حلاقة كهربائية دوارة سلسلة 1000 من فيليبس S1141",
+        "sku": "1.0"
     }
 ];
+
 
 const FALLBACK_ORDERS = [
     {

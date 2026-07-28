@@ -51,22 +51,17 @@ function getGoogleDriveDirectLink(link) {
     return link;
 }
 
-function getCategoryId(categoryName, name) {
-    const text = (categoryName || name || '').trim().toLowerCase();
-    if (text.includes('مكواة') || text.includes('بخار') || text.includes('iron')) return 1;
+function getCategoryId(name, brand) {
+    const text = ((name || '') + ' ' + (brand || '')).trim().toLowerCase();
+    if (text.includes('مكواة') || text.includes('بخار') || text.includes('iron') || text.includes('فيليدا')) return 1;
     if (text.includes('مكنسة') || text.includes('تنظيف') || text.includes('vacuum') || text.includes('مكاس') || text.includes('مكنس')) return 2;
-    if (text.includes('مطبخ') || text.includes('خلاط') || text.includes('غلاية') || text.includes('blender') || text.includes('kettle') || text.includes('microwave') || text.includes('شعر')) return 3;
-    return 4;
+    if (text.includes('شعر') || text.includes('حلاقة') || text.includes('قص') || text.includes('تشذيب') || text.includes('مجفف') || text.includes('براون') || text.includes('كاريرا') || text.includes('روفنتا')) return 4;
+    if (text.includes('طاولة') || text.includes('إضاءة') || text.includes('مصباح') || text.includes('ساعة') || text.includes('كاشف') || text.includes('حرارة') || text.includes('استنشاق') || text.includes('ريموت') || text.includes('شمعة') || text.includes('ستارة') || text.includes('كشاف')) return 5;
+    return 3; // kitchen
 }
 
-function getFallbackImage(categoryId) {
-    const placeholders = {
-        1: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80',
-        2: 'https://images.unsplash.com/photo-1558317374-067fb5f30001?auto=format&fit=crop&w=800&q=80',
-        3: 'https://images.unsplash.com/photo-1570222094114-d054a817e56b?auto=format&fit=crop&w=800&q=80',
-        4: 'https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=800&q=80'
-    };
-    return placeholders[categoryId] || placeholders[4];
+function getFallbackImage(pId) {
+    return `/asset/images/products/prod_${pId}.jpg`;
 }
 
 function fetchCSV(url) {
@@ -91,56 +86,85 @@ function fetchCSV(url) {
 
 async function generateProductsJson() {
     const sheetUrl = 'https://docs.google.com/spreadsheets/d/1hioi7V5yDDsOmm5_StTI3b8poxnCsgMQXP30lC75PRI/gviz/tq?tqx=out:csv';
-    console.log('Fetching Google Sheets data...');
+    console.log('Fetching Google Sheets CSV data...');
     const csvData = await fetchCSV(sheetUrl);
     const rows = parseCSV(csvData);
     if (rows.length < 2) throw new Error('CSV is empty or invalid');
 
     const products = [];
-    for (let i = 1; i < rows.length; i++) {
+    for (let i = 2; i < rows.length; i++) {
         const row = rows[i];
-        if (row.length < 4) continue;
-        const name = row[1];
-        const brand = row[2] ? row[2].trim() : '';
-        const code = row[3];
-        if (!name || !code) continue;
+        if (row.length < 3) continue;
 
-        const id = parseInt(row[0], 10) || i;
-        const quantity = parseFloat(row[4]) || 0;
-        const cost = parsePrice(row[5]);
-        const sellingPrice = parsePrice(row[6]);
-        const discountPrice = parsePrice(row[7]);
-        const categoryName = row[9] || '';
-        let imageLink = row[10] || '';
-        const videoLink = row[11] || '';
-        const isFeatured = row[12] && row[12].trim().toUpperCase() === 'TRUE' ? 1 : 0;
+        const name = row[2] || row[3] || '';
+        const brand = row[3] || row[2] || 'ElectroHome';
+        const code = row[4] || row[9] || `PROD-${i}`;
+        if (!name || name.startsWith('Product') || name.startsWith('اسم')) continue;
 
-        imageLink = getGoogleDriveDirectLink(imageLink);
-        const categoryId = getCategoryId(categoryName, name);
-        let finalImage = imageLink;
-        if (!finalImage || (!finalImage.startsWith('http://') && !finalImage.startsWith('https://'))) {
-            finalImage = getFallbackImage(categoryId);
+        const id = parseInt(row[0], 10) || (i - 1);
+        const quantity = parseFloat(row[5]) || 0;
+        const cost = parsePrice(row[6]);
+        const sellingPrice = parsePrice(row[7]);
+        const discountPrice = parsePrice(row[8]);
+
+        // K (col 10): Fav / Featured
+        const favVal = (row[10] || '').trim();
+        const isFeatured = (favVal === '1' || favVal.toLowerCase() === 'true') ? 1 : 0;
+
+        // L (col 11): details
+        const detailsText = (row[11] || '').trim();
+
+        // M (col 12): video link
+        const videoLink = (row[12] || '').trim();
+
+        // N, O, P, Q, R (cols 13..17): Photos 1..5
+        const photos = [];
+        for (let cIdx = 13; cIdx <= 17; cIdx++) {
+            let imgUrl = getGoogleDriveDirectLink((row[cIdx] || '').trim());
+            if (imgUrl && imgUrl.startsWith('http') && !photos.includes(imgUrl)) {
+                photos.push(imgUrl);
+            }
         }
+
+        const categoryId = getCategoryId(name, brand);
+        const mainImage = photos.length > 0 ? photos[0] : getFallbackImage(id);
+        const imagesList = photos.length > 0 ? photos : [mainImage];
+        const description = (detailsText && !detailsText.startsWith('http')) ? detailsText : `جهاز ${name} عالي الكفاءة من ماركة ${brand}. الموديل: ${code}.`;
+
+        const variants = [
+            {
+                id,
+                product_id: id,
+                brand: brand,
+                model_name: code,
+                variant_attributes: { "الماركة": brand, "الموديل": code },
+                price_modifier: 0,
+                stock_quantity: Math.round(quantity) || 10,
+                sku: code
+            }
+        ];
 
         products.push({
             id,
             category_id: categoryId,
             title_ar: name,
             slug: `prod-${code.toLowerCase().replace(/[^a-z0-9]/g, '-')}-${id}`,
-            description_ar: `جهاز كهربائي ذكي عالي الكفاءة. الموديل: ${code}. متوفر حالياً بالمخزون بكمية ${Math.round(quantity)} قطعة.`,
-            base_price: sellingPrice || cost || 0,
-            discount_price: discountPrice,
-            main_image: finalImage,
+            description_ar: description,
+            base_price: sellingPrice || cost || 250000,
+            discount_price: discountPrice || null,
+            main_image: mainImage,
+            images: imagesList,
             youtube_url: videoLink,
+            is_featured: isFeatured,
             is_visible: 1,
-            stock_quantity: Math.round(quantity),
+            stock_quantity: Math.round(quantity) || 10,
             sku: code,
-            brand: brand || 'ElectroHome',
-            is_featured: isFeatured
+            brand: brand,
+            variants: variants
         });
     }
 
-    console.log(`Parsed ${products.length} products from Google Sheets.`);
+    console.log(`Parsed ${products.length} products using exact user column mapping.`);
 
     const jsonContent = JSON.stringify(products, null, 2);
     const outputPaths = [
