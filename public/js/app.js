@@ -45,8 +45,8 @@ const FALLBACK_PRODUCTS = [
         "title_ar": "فيليبس ماكينة قص الشعر سلسلة 3000",
         "slug": "prod-ph-hc3000-1",
         "description_ar": "ماكينة قص شعر لاسلكية مع إعدادات طول متعددة",
-        "base_price": 40,
-        "discount_price": 2999,
+        "base_price": 280000,
+        "discount_price": 245000,
         "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
         "images": [
             "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
@@ -83,8 +83,8 @@ const FALLBACK_PRODUCTS = [
         "title_ar": "براون سلسلة 5 ماكينة حلاقة كهربائية 51-M1000s",
         "slug": "prod-51-m1000s-2",
         "description_ar": "ماكينة حلاقة كهربائية للرجال للاستخدام الجاف والرطب",
-        "base_price": 40,
-        "discount_price": 2999,
+        "base_price": 490000,
+        "discount_price": 450000,
         "main_image": "https://afosto-cdn-01.afosto.com/k7ems/product/400/7596392450-1.png",
         "images": [
             "https://afosto-cdn-01.afosto.com/k7ems/product/400/7596392450-1.png",
@@ -121,8 +121,8 @@ const FALLBACK_PRODUCTS = [
         "title_ar": "ليفارنو هوم مصباح طاولة LED مع خاصية اللمس",
         "slug": "prod-lv-tl-01-3",
         "description_ar": "مصباح طاولة يعمل باللمس مع مستويات إضاءة قابلة للضبط",
-        "base_price": 40,
-        "discount_price": 2999,
+        "base_price": 145000,
+        "discount_price": 125000,
         "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
         "images": [
             "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
@@ -155,8 +155,8 @@ const FALLBACK_PRODUCTS = [
         "title_ar": "كاريرا ماكينة تشذيب متعددة الوظائف",
         "slug": "prod-cr-mg-01-4",
         "description_ar": "ماكينة تشذيب متعددة الاستخدامات لشعر الوجه والجسم",
-        "base_price": 40,
-        "discount_price": 2999,
+        "base_price": 320000,
+        "discount_price": 290000,
         "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
         "images": [
             "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
@@ -189,8 +189,8 @@ const FALLBACK_PRODUCTS = [
         "title_ar": "براون ماكينة حلاقة الجسم سلسلة 5",
         "slug": "prod-br-bg5-5",
         "description_ar": "ماكينة حلاقة وتشذيب شعر الجسم للبشرة الحساسة",
-        "base_price": 40,
-        "discount_price": 2999,
+        "base_price": 420000,
+        "discount_price": 380000,
         "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
         "images": [
             "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
@@ -223,8 +223,8 @@ const FALLBACK_PRODUCTS = [
         "title_ar": "كاريرا ماكينة تشذيب متعددة الوظائف (صندوق آخر)",
         "slug": "prod-cr-mg-02-6",
         "description_ar": "ماكينة تشذيب متعددة الاستخدامات للعناية الشخصية",
-        "base_price": 40,
-        "discount_price": 2999,
+        "base_price": 340000,
+        "discount_price": 305000,
         "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
         "images": [
             "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
@@ -257,8 +257,8 @@ const FALLBACK_PRODUCTS = [
         "title_ar": "كروبس نستله دولسي غوستو بيكولو XS ماكينة قهوة",
         "slug": "prod-kp1a08-7",
         "description_ar": "ماكينة إعداد القهوة بالكبسولات بتصميم مدمج وسريع",
-        "base_price": 100,
-        "discount_price": 75,
+        "base_price": 540000,
+        "discount_price": 490000,
         "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
         "images": [
             "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
@@ -291,8 +291,8 @@ const FALLBACK_PRODUCTS = [
         "title_ar": "براون ماكينة حلاقة شاملة سلسلة 3 / 8 في 1",
         "slug": "prod-br-aio3-8",
         "description_ar": "طقم حلاقة وتصفيف شامل 8 في 1 للحد من اللحية والشعر",
-        "base_price": 50,
-        "discount_price": 35,
+        "base_price": 380000,
+        "discount_price": 340000,
         "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
         "images": [
             "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
@@ -325,8 +325,8 @@ const FALLBACK_PRODUCTS = [
         "title_ar": "ليفارنو هوم ساعة حائط لاسلكية",
         "slug": "prod-lv-wc-01-9",
         "description_ar": "ساعة حائط لاسلكية بتعديل تلقائي ودقيق للوقت",
-        "base_price": 15,
-        "discount_price": 999,
+        "base_price": 135000,
+        "discount_price": 115000,
         "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
         "images": [
             "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
@@ -359,8 +359,8 @@ const FALLBACK_PRODUCTS = [
         "title_ar": "سيلفر كريست ماكينة وافل مزدوجة",
         "slug": "prod-sc-dw-01-10",
         "description_ar": "جهاز إعداد الوافل المزدوج بطلاء غير لاصق",
-        "base_price": 35,
-        "discount_price": 25,
+        "base_price": 260000,
+        "discount_price": 230000,
         "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
         "images": [
             "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
@@ -393,8 +393,8 @@ const FALLBACK_PRODUCTS = [
         "title_ar": "سويتش أون ماكينة سموثي للتنقل",
         "slug": "prod-so-sm-01-11",
         "description_ar": "خلاط سموثي محمول مع كوب مزود بغطاء للتنقل",
-        "base_price": 30,
-        "discount_price": 1999,
+        "base_price": 210000,
+        "discount_price": 185000,
         "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
         "images": [
             "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
@@ -427,8 +427,8 @@ const FALLBACK_PRODUCTS = [
         "title_ar": "تيفال محمصة خبز",
         "slug": "prod-tf-ts-01-12",
         "description_ar": "محمصة خبز توستر بفتحتين ومستويات تحمير متعددة",
-        "base_price": 30,
-        "discount_price": 1999,
+        "base_price": 240000,
+        "discount_price": 210000,
         "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
         "images": [
             "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
@@ -461,8 +461,8 @@ const FALLBACK_PRODUCTS = [
         "title_ar": "فيليبس بخار ومكواة HI5920",
         "slug": "prod-hi5920-13",
         "description_ar": "مكواة بخار قوية مع خزان ماء كبير لكي سريع",
-        "base_price": 80,
-        "discount_price": 5999,
+        "base_price": 780000,
+        "discount_price": 690000,
         "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
         "images": [
             "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
@@ -495,8 +495,8 @@ const FALLBACK_PRODUCTS = [
         "title_ar": "سويتش أون غلاية ماء كهربائية - أسود",
         "slug": "prod-so-kt-01-14",
         "description_ar": "غلاية ماء كهربائية سريعة التسخين باللون الأسود",
-        "base_price": 25,
-        "discount_price": 1999,
+        "base_price": 165000,
+        "discount_price": 140000,
         "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
         "images": [
             "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
@@ -529,8 +529,8 @@ const FALLBACK_PRODUCTS = [
         "title_ar": "سويتش أون طقم خلاط يدوي",
         "slug": "prod-so-hb-01-15",
         "description_ar": "طقم خلاط يدوي مع ملحقات للفرم والخفق",
-        "base_price": 25,
-        "discount_price": 1999,
+        "base_price": 230000,
+        "discount_price": 195000,
         "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
         "images": [
             "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
@@ -563,8 +563,8 @@ const FALLBACK_PRODUCTS = [
         "title_ar": "دكتور سنست ميزان حرارة بالأشعة تحت الحمراء 2 في 1",
         "slug": "prod-ds-th-01-16",
         "description_ar": "ميزان حرارة إلكتروني بدون تلامس لقياس الحرارة",
-        "base_price": 40,
-        "discount_price": 25,
+        "base_price": 155000,
+        "discount_price": 130000,
         "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
         "images": [
             "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
@@ -597,8 +597,8 @@ const FALLBACK_PRODUCTS = [
         "title_ar": "سيلفر كريست ماكينة وافل مزدوجة (صندوق آخر)",
         "slug": "prod-sc-dw-02-17",
         "description_ar": "جهاز صانع وافل مزدوج سريع التحضير",
-        "base_price": 30,
-        "discount_price": 25,
+        "base_price": 270000,
+        "discount_price": 235000,
         "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
         "images": [
             "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
@@ -1412,7 +1412,7 @@ const FALLBACK_PRODUCTS = [
         "category_id": 1,
         "title_ar": "فيليدا ممسحة بخار ستيم بلس",
         "slug": "prod-vl-sp-01-41",
-        "description_ar": "ممسحة بخار لتنظيف وتعقيم الأرضيات بدون كيميائيات",
+        "description_ar": "��مسحة بخار لتنظيف وتعقيم الأرضيات بدون كيميائيات",
         "base_price": 440000,
         "discount_price": 390000,
         "main_image": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80",
@@ -2650,6 +2650,65 @@ function getCategoryIdFromNameClient(name) {
     }
     return 4; // large-appliances
 }
+
+const PRODUCT_FALLBACK_IMAGES = {
+    "1": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
+    "2": "https://images.unsplash.com/photo-1508380702597-707c1b00a9a6?auto=format&fit=crop&w=800&q=80",
+    "3": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80",
+    "4": "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=800&q=80",
+    "5": "https://images.unsplash.com/photo-1621607512022-6aecc4fed814?auto=format&fit=crop&w=800&q=80",
+    "6": "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=800&q=80",
+    "7": "https://images.unsplash.com/photo-1517668808822-9eaa03afd2af?auto=format&fit=crop&w=800&q=80",
+    "8": "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=800&q=80",
+    "9": "https://images.unsplash.com/photo-1563861826100-9cb868fdbe1c?auto=format&fit=crop&w=800&q=80",
+    "10": "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=800&q=80",
+    "11": "https://images.unsplash.com/photo-1553530666-ba11a7da3888?auto=format&fit=crop&w=800&q=80",
+    "12": "https://images.unsplash.com/photo-1583634648128-3a58222169ff?auto=format&fit=crop&w=800&q=80",
+    "13": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80",
+    "14": "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f6?auto=format&fit=crop&w=800&q=80",
+    "15": "https://images.unsplash.com/photo-1570222094114-d054a817e56b?auto=format&fit=crop&w=800&q=80",
+    "16": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=800&q=80",
+    "17": "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=800&q=80",
+    "18": "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f6?auto=format&fit=crop&w=800&q=80",
+    "19": "https://images.unsplash.com/photo-1621607512214-68297480165e?auto=format&fit=crop&w=800&q=80",
+    "20": "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=800&q=80",
+    "21": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80",
+    "22": "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=800&q=80",
+    "23": "https://images.unsplash.com/photo-1585515320310-259814833e62?auto=format&fit=crop&w=800&q=80",
+    "24": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80",
+    "25": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=800&q=80",
+    "26": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80",
+    "27": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80",
+    "28": "https://images.unsplash.com/photo-1558317374-067fb5f30001?auto=format&fit=crop&w=800&q=80",
+    "29": "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80",
+    "30": "https://images.unsplash.com/photo-1578645510447-e20b4311e3ce?auto=format&fit=crop&w=800&q=80",
+    "31": "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f6?auto=format&fit=crop&w=800&q=80",
+    "32": "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80",
+    "33": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80",
+    "34": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80",
+    "35": "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=800&q=80",
+    "36": "https://images.unsplash.com/photo-1578849278619-e73505e9610f?auto=format&fit=crop&w=800&q=80",
+    "37": "https://images.unsplash.com/photo-1621607512214-68297480165e?auto=format&fit=crop&w=800&q=80",
+    "38": "https://images.unsplash.com/photo-1517668808822-9eaa03afd2af?auto=format&fit=crop&w=800&q=80",
+    "39": "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=800&q=80",
+    "40": "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80",
+    "41": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80",
+    "42": "https://images.unsplash.com/photo-1585515320310-259814833e62?auto=format&fit=crop&w=800&q=80",
+    "43": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80",
+    "44": "https://images.unsplash.com/photo-1603006905003-be475563bc59?auto=format&fit=crop&w=800&q=80",
+    "45": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=800&q=80",
+    "46": "https://images.unsplash.com/photo-1558317374-067fb5f30001?auto=format&fit=crop&w=800&q=80",
+    "47": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80",
+    "48": "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80",
+    "49": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80",
+    "50": "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80",
+    "51": "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80",
+    "52": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80",
+    "53": "https://images.unsplash.com/photo-1621607512022-6aecc4fed814?auto=format&fit=crop&w=800&q=80",
+    "54": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80",
+    "55": "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=800&q=80",
+    "56": "https://images.unsplash.com/photo-1508380702597-707c1b00a9a6?auto=format&fit=crop&w=800&q=80"
+};
 
 const PRODUCT_FALLBACK_IMAGES = {
     "1": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
