@@ -5,8 +5,8 @@
     "title_ar": "فيليبس ماكينة قص الشعر سلسلة 3000",
     "slug": "prod-ph-hc3000-1",
     "description_ar": "ماكينة قص شعر لاسلكية مع إعدادات طول متعددة",
-    "base_price": 280000,
-    "discount_price": 245000,
+    "base_price": 40,
+    "discount_price": 2999,
     "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
     "images": [
       "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
@@ -43,8 +43,8 @@
     "title_ar": "براون سلسلة 5 ماكينة حلاقة كهربائية 51-M1000s",
     "slug": "prod-51-m1000s-2",
     "description_ar": "ماكينة حلاقة كهربائية للرجال للاستخدام الجاف والرطب",
-    "base_price": 490000,
-    "discount_price": 450000,
+    "base_price": 40,
+    "discount_price": 2999,
     "main_image": "/asset/images/products/prod_2.jpg",
     "images": [
       "/asset/images/products/prod_2.jpg"
@@ -77,8 +77,8 @@
     "title_ar": "ليفارنو هوم مصباح طاولة LED مع خاصية اللمس",
     "slug": "prod-lv-tl-01-3",
     "description_ar": "مصباح طاولة يعمل باللمس مع مستويات إضاءة قابلة للضبط",
-    "base_price": 145000,
-    "discount_price": 125000,
+    "base_price": 40,
+    "discount_price": 2999,
     "main_image": "/asset/images/products/prod_3.jpg",
     "images": [
       "/asset/images/products/prod_3.jpg"
@@ -111,8 +111,8 @@
     "title_ar": "كاريرا ماكينة تشذيب متعددة الوظائف",
     "slug": "prod-cr-mg-01-4",
     "description_ar": "ماكينة تشذيب متعددة الاستخدامات لشعر الوجه والجسم",
-    "base_price": 320000,
-    "discount_price": 290000,
+    "base_price": 40,
+    "discount_price": 2999,
     "main_image": "/asset/images/products/prod_4.jpg",
     "images": [
       "/asset/images/products/prod_4.jpg"
@@ -145,8 +145,8 @@
     "title_ar": "براون ماكينة حلاقة الجسم سلسلة 5",
     "slug": "prod-br-bg5-5",
     "description_ar": "ماكينة حلاقة وتشذيب شعر الجسم للبشرة الحساسة",
-    "base_price": 420000,
-    "discount_price": 380000,
+    "base_price": 40,
+    "discount_price": 2999,
     "main_image": "/asset/images/products/prod_5.jpg",
     "images": [
       "/asset/images/products/prod_5.jpg"
@@ -179,8 +179,8 @@
     "title_ar": "كاريرا ماكينة تشذيب متعددة الوظائف (صندوق آخر)",
     "slug": "prod-cr-mg-02-6",
     "description_ar": "ماكينة تشذيب متعددة الاستخدامات للعناية الشخصية",
-    "base_price": 340000,
-    "discount_price": 305000,
+    "base_price": 40,
+    "discount_price": 2999,
     "main_image": "/asset/images/products/prod_6.jpg",
     "images": [
       "/asset/images/products/prod_6.jpg"
@@ -213,8 +213,8 @@
     "title_ar": "كروبس نستله دولسي غوستو بيكولو XS ماكينة قهوة",
     "slug": "prod-kp1a08-7",
     "description_ar": "ماكينة إعداد القهوة بالكبسولات بتصميم مدمج وسريع",
-    "base_price": 540000,
-    "discount_price": 490000,
+    "base_price": 100,
+    "discount_price": 75,
     "main_image": "/asset/images/products/prod_7.jpg",
     "images": [
       "/asset/images/products/prod_7.jpg"
@@ -247,8 +247,8 @@
     "title_ar": "براون ماكينة حلاقة شاملة سلسلة 3 / 8 في 1",
     "slug": "prod-br-aio3-8",
     "description_ar": "طقم حلاقة وتصفيف شامل 8 في 1 للحد من اللحية والشعر",
-    "base_price": 380000,
-    "discount_price": 340000,
+    "base_price": 50,
+    "discount_price": 35,
     "main_image": "/asset/images/products/prod_8.jpg",
     "images": [
       "/asset/images/products/prod_8.jpg"
@@ -281,8 +281,8 @@
     "title_ar": "ليفارنو هوم ساعة حائط لاسلكية",
     "slug": "prod-lv-wc-01-9",
     "description_ar": "ساعة حائط لاسلكية بتعديل تلقائي ودقيق للوقت",
-    "base_price": 135000,
-    "discount_price": 115000,
+    "base_price": 15,
+    "discount_price": 999,
     "main_image": "/asset/images/products/prod_9.jpg",
     "images": [
       "/asset/images/products/prod_9.jpg"
@@ -315,8 +315,8 @@
     "title_ar": "سيلفر كريست ماكينة وافل مزدوجة",
     "slug": "prod-sc-dw-01-10",
     "description_ar": "جهاز إعداد الوافل المزدوج بطلاء غير لاصق",
-    "base_price": 260000,
-    "discount_price": 230000,
+    "base_price": 35,
+    "discount_price": 25,
     "main_image": "/asset/images/products/prod_10.jpg",
     "images": [
       "/asset/images/products/prod_10.jpg"
@@ -349,8 +349,8 @@
     "title_ar": "سويتش أون ماكينة سموثي للتنقل",
     "slug": "prod-so-sm-01-11",
     "description_ar": "خلاط سموثي محمول مع كوب مزود بغطاء للتنقل",
-    "base_price": 210000,
-    "discount_price": 185000,
+    "base_price": 30,
+    "discount_price": 1999,
     "main_image": "/asset/images/products/prod_11.jpg",
     "images": [
       "/asset/images/products/prod_11.jpg"
@@ -383,8 +383,8 @@
     "title_ar": "تيفال محمصة خبز",
     "slug": "prod-tf-ts-01-12",
     "description_ar": "محمصة خبز توستر بفتحتين ومستويات تحمير متعددة",
-    "base_price": 240000,
-    "discount_price": 210000,
+    "base_price": 30,
+    "discount_price": 1999,
     "main_image": "/asset/images/products/prod_12.jpg",
     "images": [
       "/asset/images/products/prod_12.jpg"
@@ -414,11 +414,11 @@
   {
     "id": 13,
     "category_id": 1,
-    "title_ar": "فيليبس مولد بخار ومكواة HI5920",
+    "title_ar": "فيليبس بخار ومكواة HI5920",
     "slug": "prod-hi5920-13",
     "description_ar": "مكواة بخار قوية مع خزان ماء كبير لكي سريع",
-    "base_price": 780000,
-    "discount_price": 690000,
+    "base_price": 80,
+    "discount_price": 5999,
     "main_image": "/asset/images/products/prod_13.jpg",
     "images": [
       "/asset/images/products/prod_13.jpg"
@@ -451,8 +451,8 @@
     "title_ar": "سويتش أون غلاية ماء كهربائية - أسود",
     "slug": "prod-so-kt-01-14",
     "description_ar": "غلاية ماء كهربائية سريعة التسخين باللون الأسود",
-    "base_price": 165000,
-    "discount_price": 140000,
+    "base_price": 25,
+    "discount_price": 1999,
     "main_image": "/asset/images/products/prod_14.jpg",
     "images": [
       "/asset/images/products/prod_14.jpg"
@@ -485,8 +485,8 @@
     "title_ar": "سويتش أون طقم خلاط يدوي",
     "slug": "prod-so-hb-01-15",
     "description_ar": "طقم خلاط يدوي مع ملحقات للفرم والخفق",
-    "base_price": 230000,
-    "discount_price": 195000,
+    "base_price": 25,
+    "discount_price": 1999,
     "main_image": "/asset/images/products/prod_15.jpg",
     "images": [
       "/asset/images/products/prod_15.jpg"
@@ -519,8 +519,8 @@
     "title_ar": "دكتور سنست ميزان حرارة بالأشعة تحت الحمراء 2 في 1",
     "slug": "prod-ds-th-01-16",
     "description_ar": "ميزان حرارة إلكتروني بدون تلامس لقياس الحرارة",
-    "base_price": 155000,
-    "discount_price": 130000,
+    "base_price": 40,
+    "discount_price": 25,
     "main_image": "/asset/images/products/prod_16.jpg",
     "images": [
       "/asset/images/products/prod_16.jpg"
@@ -553,8 +553,8 @@
     "title_ar": "سيلفر كريست ماكينة وافل مزدوجة (صندوق آخر)",
     "slug": "prod-sc-dw-02-17",
     "description_ar": "جهاز صانع وافل مزدوج سريع التحضير",
-    "base_price": 270000,
-    "discount_price": 235000,
+    "base_price": 30,
+    "discount_price": 25,
     "main_image": "/asset/images/products/prod_17.jpg",
     "images": [
       "/asset/images/products/prod_17.jpg"
@@ -858,7 +858,7 @@
     "category_id": 3,
     "title_ar": "سويتش أون ماكينة قهوة فلتر مع ترمس حراري",
     "slug": "prod-so-cm-01-26",
-    "description_ar": "ماكينة قهوة فلتر مزودة بإبريق حراري حافظ للحرارة",
+    "description_ar": "��اكينة قهوة فلتر مزودة بإبريق حراري حافظ للحرارة",
     "base_price": 280000,
     "discount_price": 240000,
     "main_image": "/asset/images/products/prod_26.jpg",
@@ -890,7 +890,7 @@
   {
     "id": 27,
     "category_id": 3,
-    "title_ar": "سيلفر ��ريست مبشرة خضروات كهربائية",
+    "title_ar": "سيلفر كريست مبشرة خضروات كهربائية",
     "slug": "prod-sc-gr-01-27",
     "description_ar": "مبشرة وتقطاعة خضروات كهربائية بشفرات متعددة",
     "base_price": 220000,
