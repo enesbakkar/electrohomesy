@@ -2704,14 +2704,11 @@ function getCategoryIdFromNameClient(name) {
     return 4; // large-appliances
 }
 
-function getFallbackImageClient(categoryId) {
-    const placeholders = {
-        1: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80', // irons
-        2: 'https://images.unsplash.com/photo-1558317374-067fb5f30001?auto=format&fit=crop&w=800&q=80', // vacuums
-        3: 'https://images.unsplash.com/photo-1570222094114-d054a817e56b?auto=format&fit=crop&w=800&q=80', // kitchen
-        4: 'https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=800&q=80'  // large-appliances
-    };
-    return placeholders[categoryId] || placeholders[4];
+function getFallbackImageClient(pId) {
+    if (pId) {
+        return `/asset/images/products/prod_${pId}.jpg`;
+    }
+    return 'https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=800&q=80';
 }
 
 function getCategoryNameById(categoryId) {
@@ -2869,7 +2866,7 @@ async function fetchProductsFromGoogleSheetsClient(categorySlug) {
             }
 
             const categoryId = getCategoryIdFromSheetClient(name, brand);
-            const mainImage = photos.length > 0 ? photos[0] : getFallbackImageClient(categoryId);
+            const mainImage = photos.length > 0 ? photos[0] : getFallbackImageClient(id);
             const imagesList = photos.length > 0 ? photos : [mainImage];
             const description = (detailsText && !detailsText.startsWith('http')) ? detailsText : `جهاز ${name} عالي الكفاءة من ماركة ${brand}. الموديل: ${code}.`;
 
@@ -2994,14 +2991,11 @@ function getCategoryIdFromNameClient(name) {
     return 4; // large-appliances
 }
 
-function getFallbackImageClient(categoryId) {
-    const placeholders = {
-        1: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80', // irons
-        2: 'https://images.unsplash.com/photo-1558317374-067fb5f30001?auto=format&fit=crop&w=800&q=80', // vacuums
-        3: 'https://images.unsplash.com/photo-1570222094114-d054a817e56b?auto=format&fit=crop&w=800&q=80', // kitchen
-        4: 'https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=800&q=80'  // large-appliances
-    };
-    return placeholders[categoryId] || placeholders[4];
+function getFallbackImageClient(pId) {
+    if (pId) {
+        return `/asset/images/products/prod_${pId}.jpg`;
+    }
+    return 'https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=800&q=80';
 }
 
 function getCategoryNameById(categoryId) {
