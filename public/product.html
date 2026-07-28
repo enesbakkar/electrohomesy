@@ -465,7 +465,7 @@
 
 
     <!-- App JS -->
-    <script src="/js/app.js?v=3.2.0"></script>
+    <script src="/js/app.js?v=5.0.0"></script>
     <script>
         let detailProduct = null;
         let detailVariant = null;
@@ -491,16 +491,15 @@
             }
 
             try {
-                const res = await fetch(`/api/products/${id}`);
-                if (!res.ok) throw new Error();
-                detailProduct = await res.json();
-            } catch (e) {
-                try {
-                    detailProduct = await fetchProductDetailsFromGoogleSheetsClient(id);
-                } catch (sheetErr) {
-                    console.error('Client Google Sheets details fallback failed:', sheetErr);
-                    detailProduct = FALLBACK_PRODUCTS.find(p => p.id === id) || null;
+                const res = await fetch('/js/products.json');
+                if (res.ok) {
+                    const list = await res.json();
+                    detailProduct = list.find(p => p.id === id);
                 }
+            } catch (e) {}
+
+            if (!detailProduct && typeof FALLBACK_PRODUCTS !== 'undefined') {
+                detailProduct = FALLBACK_PRODUCTS.find(p => p.id === id) || null;
             }
 
             if (!detailProduct) {

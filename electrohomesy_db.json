@@ -61,9 +61,9 @@
       "description_ar": "51-M1000s",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_2.jpg",
+      "main_image": "https://images.unsplash.com/photo-1508380702597-707c1b00a9a6?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_2.jpg"
+        "https://images.unsplash.com/photo-1508380702597-707c1b00a9a6?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -78,9 +78,9 @@
       "description_ar": "الإضاءة والديكور",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_3.jpg",
+      "main_image": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_3.jpg"
+        "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 1,
@@ -95,9 +95,9 @@
       "description_ar": "CR-MG-01",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_4.jpg",
+      "main_image": "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_4.jpg"
+        "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -112,9 +112,9 @@
       "description_ar": "BR-BG5",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_5.jpg",
+      "main_image": "https://images.unsplash.com/photo-1621607512022-6aecc4fed814?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_5.jpg"
+        "https://images.unsplash.com/photo-1621607512022-6aecc4fed814?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -129,9 +129,9 @@
       "description_ar": "CR-MG-02",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_6.jpg",
+      "main_image": "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_6.jpg"
+        "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -146,9 +146,9 @@
       "description_ar": "أجهزة المطبخ والخلاطات",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_7.jpg",
+      "main_image": "https://images.unsplash.com/photo-1517668808822-9eaa03afd2af?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_7.jpg"
+        "https://images.unsplash.com/photo-1517668808822-9eaa03afd2af?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -163,9 +163,9 @@
       "description_ar": "BR-AIO3",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_8.jpg",
+      "main_image": "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_8.jpg"
+        "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -180,9 +180,9 @@
       "description_ar": "LV-WC-01",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_9.jpg",
+      "main_image": "https://images.unsplash.com/photo-1563861826100-9cb868fdbe1c?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_9.jpg"
+        "https://images.unsplash.com/photo-1563861826100-9cb868fdbe1c?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -197,9 +197,9 @@
       "description_ar": "SC-DW-01",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_10.jpg",
+      "main_image": "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_10.jpg"
+        "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -214,9 +214,9 @@
       "description_ar": "SO-SM-01",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_11.jpg",
+      "main_image": "https://images.unsplash.com/photo-1553530666-ba11a7da3888?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_11.jpg"
+        "https://images.unsplash.com/photo-1553530666-ba11a7da3888?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 1,
@@ -231,9 +231,9 @@
       "description_ar": "TF-TS-01",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_12.jpg",
+      "main_image": "https://images.unsplash.com/photo-1583634648128-3a58222169ff?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_12.jpg"
+        "https://images.unsplash.com/photo-1583634648128-3a58222169ff?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -248,9 +248,9 @@
       "description_ar": "المكاوي وأجهزة البخار",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_13.jpg",
+      "main_image": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_13.jpg"
+        "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -265,9 +265,9 @@
       "description_ar": "SO-KT-01",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_14.jpg",
+      "main_image": "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f6?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_14.jpg"
+        "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f6?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -282,9 +282,9 @@
       "description_ar": "SO-HB-01",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_15.jpg",
+      "main_image": "https://images.unsplash.com/photo-1570222094114-d054a817e56b?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_15.jpg"
+        "https://images.unsplash.com/photo-1570222094114-d054a817e56b?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 1,
@@ -299,9 +299,9 @@
       "description_ar": "الأجهزة الطبية والصحية",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_16.jpg",
+      "main_image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_16.jpg"
+        "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -316,9 +316,9 @@
       "description_ar": "SC-DW-02",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_17.jpg",
+      "main_image": "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_17.jpg"
+        "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -333,9 +333,9 @@
       "description_ar": "SO-KT-02",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_18.jpg",
+      "main_image": "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f6?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_18.jpg"
+        "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f6?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -350,9 +350,9 @@
       "description_ar": "PH-HC3001",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_19.jpg",
+      "main_image": "https://images.unsplash.com/photo-1621607512214-68297480165e?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_19.jpg"
+        "https://images.unsplash.com/photo-1621607512214-68297480165e?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -367,9 +367,9 @@
       "description_ar": "SO-CG-01",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_20.jpg",
+      "main_image": "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_20.jpg"
+        "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -384,9 +384,9 @@
       "description_ar": "أدوات ومعدات",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_21.jpg",
+      "main_image": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_21.jpg"
+        "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -401,9 +401,9 @@
       "description_ar": "SC-CG-02",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_22.jpg",
+      "main_image": "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_22.jpg"
+        "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -418,9 +418,9 @@
       "description_ar": "SV-HP-01",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_23.jpg",
+      "main_image": "https://images.unsplash.com/photo-1585515320310-259814833e62?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_23.jpg"
+        "https://images.unsplash.com/photo-1585515320310-259814833e62?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -435,9 +435,9 @@
       "description_ar": "F30908",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_24.jpg",
+      "main_image": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_24.jpg"
+        "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -452,9 +452,9 @@
       "description_ar": "SO-SW-01",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_25.jpg",
+      "main_image": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_25.jpg"
+        "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -469,9 +469,9 @@
       "description_ar": "SO-CM-01",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_26.jpg",
+      "main_image": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_26.jpg"
+        "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -486,9 +486,9 @@
       "description_ar": "SC-GR-01",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_27.jpg",
+      "main_image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_27.jpg"
+        "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -503,9 +503,9 @@
       "description_ar": "المكابس والتنظيف",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_28.jpg",
+      "main_image": "https://images.unsplash.com/photo-1558317374-067fb5f30001?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_28.jpg"
+        "https://images.unsplash.com/photo-1558317374-067fb5f30001?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -520,9 +520,9 @@
       "description_ar": "RW-HD-01",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_29.jpg",
+      "main_image": "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_29.jpg"
+        "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -537,9 +537,9 @@
       "description_ar": "BS-CM300",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_30.jpg",
+      "main_image": "https://images.unsplash.com/photo-1578645510447-e20b4311e3ce?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_30.jpg"
+        "https://images.unsplash.com/photo-1578645510447-e20b4311e3ce?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -554,9 +554,9 @@
       "description_ar": "SO-KT-03",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_31.jpg",
+      "main_image": "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f6?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_31.jpg"
+        "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f6?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -571,9 +571,9 @@
       "description_ar": "إلكترونيات",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_32.jpg",
+      "main_image": "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_32.jpg"
+        "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -588,9 +588,9 @@
       "description_ar": "PH-SG2000",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_33.jpg",
+      "main_image": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_33.jpg"
+        "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -605,9 +605,9 @@
       "description_ar": "BS-TAS-01",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_34.jpg",
+      "main_image": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_34.jpg"
+        "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -622,9 +622,9 @@
       "description_ar": "SO-CF-01",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_35.jpg",
+      "main_image": "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_35.jpg"
+        "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -639,9 +639,9 @@
       "description_ar": "SC-PM-01",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_36.jpg",
+      "main_image": "https://images.unsplash.com/photo-1578849278619-e73505e9610f?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_36.jpg"
+        "https://images.unsplash.com/photo-1578849278619-e73505e9610f?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -656,9 +656,9 @@
       "description_ar": "BR-BT5",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_37.jpg",
+      "main_image": "https://images.unsplash.com/photo-1621607512214-68297480165e?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_37.jpg"
+        "https://images.unsplash.com/photo-1621607512214-68297480165e?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -673,9 +673,9 @@
       "description_ar": "PH-EP800",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_38.jpg",
+      "main_image": "https://images.unsplash.com/photo-1517668808822-9eaa03afd2af?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_38.jpg"
+        "https://images.unsplash.com/photo-1517668808822-9eaa03afd2af?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -690,9 +690,9 @@
       "description_ar": "SC-RG-01",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_39.jpg",
+      "main_image": "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_39.jpg"
+        "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -707,9 +707,9 @@
       "description_ar": "RW-HD-02",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_40.jpg",
+      "main_image": "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_40.jpg"
+        "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -724,9 +724,9 @@
       "description_ar": "VL-SP-01",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_41.jpg",
+      "main_image": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_41.jpg"
+        "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -741,9 +741,9 @@
       "description_ar": "SC-MW-01",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_42.jpg",
+      "main_image": "https://images.unsplash.com/photo-1585515320310-259814833e62?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_42.jpg"
+        "https://images.unsplash.com/photo-1585515320310-259814833e62?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -758,9 +758,9 @@
       "description_ar": "LV-WL-01",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_43.jpg",
+      "main_image": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_43.jpg"
+        "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -775,9 +775,9 @@
       "description_ar": "LV-CL-01",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_44.jpg",
+      "main_image": "https://images.unsplash.com/photo-1603006905003-be475563bc59?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_44.jpg"
+        "https://images.unsplash.com/photo-1603006905003-be475563bc59?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -792,9 +792,9 @@
       "description_ar": "WB-IN-01",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_45.jpg",
+      "main_image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_45.jpg"
+        "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -809,9 +809,9 @@
       "description_ar": "SV-VC-01",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_46.jpg",
+      "main_image": "https://images.unsplash.com/photo-1558317374-067fb5f30001?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_46.jpg"
+        "https://images.unsplash.com/photo-1558317374-067fb5f30001?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -826,9 +826,9 @@
       "description_ar": "LV-TL-02",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_47.jpg",
+      "main_image": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_47.jpg"
+        "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -843,9 +843,9 @@
       "description_ar": "LV-SL-01",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_48.jpg",
+      "main_image": "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_48.jpg"
+        "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -860,9 +860,9 @@
       "description_ar": "PS-SL-01",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_49.jpg",
+      "main_image": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_49.jpg"
+        "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -877,9 +877,9 @@
       "description_ar": "LB-SL-01",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_50.jpg",
+      "main_image": "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_50.jpg"
+        "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -894,9 +894,9 @@
       "description_ar": "LV-LC-01",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_51.jpg",
+      "main_image": "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_51.jpg"
+        "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -911,9 +911,9 @@
       "description_ar": "LV-TL-03",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_52.jpg",
+      "main_image": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_52.jpg"
+        "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -928,9 +928,9 @@
       "description_ar": "BR-BG3",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_53.jpg",
+      "main_image": "https://images.unsplash.com/photo-1621607512022-6aecc4fed814?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_53.jpg"
+        "https://images.unsplash.com/photo-1621607512022-6aecc4fed814?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -945,9 +945,9 @@
       "description_ar": "LB-TL-01",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_54.jpg",
+      "main_image": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_54.jpg"
+        "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -962,9 +962,9 @@
       "description_ar": "PH-AIO3000",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_55.jpg",
+      "main_image": "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_55.jpg"
+        "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
@@ -979,9 +979,9 @@
       "description_ar": "S1141",
       "base_price": 250000,
       "discount_price": 220000,
-      "main_image": "/asset/images/products/prod_56.jpg",
+      "main_image": "https://images.unsplash.com/photo-1508380702597-707c1b00a9a6?auto=format&fit=crop&w=800&q=80",
       "images": [
-        "/asset/images/products/prod_56.jpg"
+        "https://images.unsplash.com/photo-1508380702597-707c1b00a9a6?auto=format&fit=crop&w=800&q=80"
       ],
       "youtube_url": "",
       "is_featured": 0,
