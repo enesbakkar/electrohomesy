@@ -1,10 +1,10 @@
-name: Sync Products from Google Sheets
+name: Sync Products from Google Sheets (Daily Backup)
 
 on:
-  # Her 30 dakikada bir otomatik çalış
+  # Gece 00:00 UTC'de günlük yedek olarak çalış (ana kaynak: doğrudan Google Sheets)
   schedule:
-    - cron: '*/30 * * * *'
-  # Admin panelinden ya da elle tetiklenebilsin
+    - cron: '0 0 * * *'
+  # Elle tetiklenebilsin
   workflow_dispatch:
 
 jobs:
