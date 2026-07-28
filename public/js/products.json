@@ -1035,9 +1035,9 @@
     "description_ar": "غلاية ماء كهربائية باللون الأسود ولمسات خشبية",
     "base_price": 180000,
     "discount_price": 155000,
-    "main_image": "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f6?auto=format&fit=crop&w=800&q=80",
+    "main_image": "/asset/images/products/prod_31.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f6?auto=format&fit=crop&w=800&q=80"
+      "/asset/images/products/prod_31.jpg"
     ],
     "youtube_url": "",
     "is_featured": 0,
@@ -1069,9 +1069,9 @@
     "description_ar": "جهاز تحكم عن بعد بديل وشامل لتلفزيونات سامسونج",
     "base_price": 95000,
     "discount_price": 80000,
-    "main_image": "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80",
+    "main_image": "/asset/images/products/prod_32.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80"
+      "/asset/images/products/prod_32.jpg"
     ],
     "youtube_url": "",
     "is_featured": 0,
@@ -1103,9 +1103,9 @@
     "description_ar": "مولد بخار قوي لكي الملابس وإزالة التجاعيد",
     "base_price": 850000,
     "discount_price": 760000,
-    "main_image": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80",
+    "main_image": "/asset/images/products/prod_33.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80"
+      "/asset/images/products/prod_33.jpg"
     ],
     "youtube_url": "",
     "is_featured": 0,
@@ -1137,9 +1137,9 @@
     "description_ar": "ماكينة تحضير المشروبات والقهوة بالكبسولات التلقائية",
     "base_price": 460000,
     "discount_price": 410000,
-    "main_image": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80",
+    "main_image": "/asset/images/products/prod_34.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80"
+      "/asset/images/products/prod_34.jpg"
     ],
     "youtube_url": "",
     "is_featured": 0,
@@ -1171,9 +1171,9 @@
     "description_ar": "نافورة شوكولاتة كهربائية للحفلات والحلويات",
     "base_price": 220000,
     "discount_price": 195000,
-    "main_image": "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=800&q=80",
+    "main_image": "/asset/images/products/prod_35.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=800&q=80"
+      "/asset/images/products/prod_35.jpg"
     ],
     "youtube_url": "",
     "is_featured": 0,
@@ -1205,9 +1205,9 @@
     "description_ar": "جهاز إعداد الفشار وتحميص المكسرات بالهواء الساخن",
     "base_price": 195000,
     "discount_price": 165000,
-    "main_image": "https://images.unsplash.com/photo-1578849278619-e73505e9610f?auto=format&fit=crop&w=800&q=80",
+    "main_image": "/asset/images/products/prod_36.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1578849278619-e73505e9610f?auto=format&fit=crop&w=800&q=80"
+      "/asset/images/products/prod_36.jpg"
     ],
     "youtube_url": "",
     "is_featured": 0,
@@ -1239,9 +1239,9 @@
     "description_ar": "ماكينة تشذيب اللحية بدقة عالية مع قرص تعديل الطول",
     "base_price": 410000,
     "discount_price": 365000,
-    "main_image": "https://images.unsplash.com/photo-1621607512214-68297480165e?auto=format&fit=crop&w=800&q=80",
+    "main_image": "/asset/images/products/prod_37.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1621607512214-68297480165e?auto=format&fit=crop&w=800&q=80"
+      "/asset/images/products/prod_37.jpg"
     ],
     "youtube_url": "",
     "is_featured": 0,
@@ -1273,9 +1273,9 @@
     "description_ar": "ماكينة إسبريسو أوتوماتيكية بالكامل لتحضير القهوة",
     "base_price": 2800000,
     "discount_price": 2450000,
-    "main_image": "https://images.unsplash.com/photo-1517668808822-9eaa03afd2af?auto=format&fit=crop&w=800&q=80",
+    "main_image": "/asset/images/products/prod_38.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1517668808822-9eaa03afd2af?auto=format&fit=crop&w=800&q=80"
+      "/asset/images/products/prod_38.jpg"
     ],
     "youtube_url": "",
     "is_featured": 0,
@@ -1307,9 +1307,9 @@
     "description_ar": "شواية راكليت كهربائية للجبن والمشويات مع مقالي",
     "base_price": 360000,
     "discount_price": 315000,
-    "main_image": "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=800&q=80",
+    "main_image": "/asset/images/products/prod_39.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=800&q=80"
+      "/asset/images/products/prod_39.jpg"
     ],
     "youtube_url": "",
     "is_featured": 0,
@@ -1341,9 +1341,9 @@
     "description_ar": "مجفف شعر صغير وسريع بإنبعاث أيوني لمعان الشعر",
     "base_price": 210000,
     "discount_price": 180000,
-    "main_image": "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80",
+    "main_image": "/asset/images/products/prod_40.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80"
+      "/asset/images/products/prod_40.jpg"
     ],
     "youtube_url": "",
     "is_featured": 0,
@@ -1375,9 +1375,9 @@
     "description_ar": "ممسحة بخار لتنظيف وتعقيم الأرضيات بدون كيميائيات",
     "base_price": 440000,
     "discount_price": 390000,
-    "main_image": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80",
+    "main_image": "/asset/images/products/prod_41.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80"
+      "/asset/images/products/prod_41.jpg"
     ],
     "youtube_url": "",
     "is_featured": 0,
@@ -1409,9 +1409,9 @@
     "description_ar": "فرن ميكروويف متعدد المستويات للتسخين والطهي",
     "base_price": 680000,
     "discount_price": 590000,
-    "main_image": "https://images.unsplash.com/photo-1585515320310-259814833e62?auto=format&fit=crop&w=800&q=80",
+    "main_image": "/asset/images/products/prod_42.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1585515320310-259814833e62?auto=format&fit=crop&w=800&q=80"
+      "/asset/images/products/prod_42.jpg"
     ],
     "youtube_url": "",
     "is_featured": 0,
@@ -1443,9 +1443,9 @@
     "description_ar": "مصباح جداري خارجي يعمل بالبطارية مع مستشعر حركة",
     "base_price": 160000,
     "discount_price": 135000,
-    "main_image": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80",
+    "main_image": "/asset/images/products/prod_43.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80"
+      "/asset/images/products/prod_43.jpg"
     ],
     "youtube_url": "",
     "is_featured": 0,
@@ -1477,9 +1477,9 @@
     "description_ar": "شمعة LED ديكورية مصنوعة من الشمع الحقيقي بوعاء زجاجي",
     "base_price": 85000,
     "discount_price": 70000,
-    "main_image": "https://images.unsplash.com/photo-1603006905003-be475563bc59?auto=format&fit=crop&w=800&q=80",
+    "main_image": "/asset/images/products/prod_44.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1603006905003-be475563bc59?auto=format&fit=crop&w=800&q=80"
+      "/asset/images/products/prod_44.jpg"
     ],
     "youtube_url": "",
     "is_featured": 0,
@@ -1511,9 +1511,9 @@
     "description_ar": "جهاز استنشاق ضاغط لعلاج أمراض الجهاز التنفسي",
     "base_price": 270000,
     "discount_price": 235000,
-    "main_image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=800&q=80",
+    "main_image": "/asset/images/products/prod_45.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=800&q=80"
+      "/asset/images/products/prod_45.jpg"
     ],
     "youtube_url": "",
     "is_featured": 0,
@@ -1545,9 +1545,9 @@
     "description_ar": "مكنسة كهربائية 2 في 1 تعمل كمكنسة عصوية ويدوية",
     "base_price": 580000,
     "discount_price": 510000,
-    "main_image": "https://images.unsplash.com/photo-1558317374-067fb5f30001?auto=format&fit=crop&w=800&q=80",
+    "main_image": "/asset/images/products/prod_46.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1558317374-067fb5f30001?auto=format&fit=crop&w=800&q=80"
+      "/asset/images/products/prod_46.jpg"
     ],
     "youtube_url": "",
     "is_featured": 0,
@@ -1579,9 +1579,9 @@
     "description_ar": "مصباح طاولة LED باللمس بتصميم طول مختلف",
     "base_price": 155000,
     "discount_price": 130000,
-    "main_image": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80",
+    "main_image": "/asset/images/products/prod_47.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80"
+      "/asset/images/products/prod_47.jpg"
     ],
     "youtube_url": "",
     "is_featured": 0,
@@ -1613,9 +1613,9 @@
     "description_ar": "حبل إضاءة LED ديكوري للمناسبات والديكور",
     "base_price": 75000,
     "discount_price": 60000,
-    "main_image": "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80",
+    "main_image": "/asset/images/products/prod_48.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80"
+      "/asset/images/products/prod_48.jpg"
     ],
     "youtube_url": "",
     "is_featured": 0,
@@ -1647,9 +1647,9 @@
     "description_ar": "كشاف إضاءة LED قوي ومقاوم للصدمات للمواقع والأعمال",
     "base_price": 280000,
     "discount_price": 240000,
-    "main_image": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80",
+    "main_image": "/asset/images/products/prod_49.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80"
+      "/asset/images/products/prod_49.jpg"
     ],
     "youtube_url": "",
     "is_featured": 0,
@@ -1681,9 +1681,9 @@
     "description_ar": "شريط إضاءة LED موفر للطاقة للديكور الداخلي",
     "base_price": 65000,
     "discount_price": 50000,
-    "main_image": "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80",
+    "main_image": "/asset/images/products/prod_50.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80"
+      "/asset/images/products/prod_50.jpg"
     ],
     "youtube_url": "",
     "is_featured": 0,
@@ -1715,9 +1715,9 @@
     "description_ar": "ستارة ضوئية LED مع مؤثرات إضاءة متعددة للزينة",
     "base_price": 110000,
     "discount_price": 90000,
-    "main_image": "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80",
+    "main_image": "/asset/images/products/prod_51.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80"
+      "/asset/images/products/prod_51.jpg"
     ],
     "youtube_url": "",
     "is_featured": 0,
@@ -1749,9 +1749,9 @@
     "description_ar": "مصباح طاولة LED أساسي وإضاءة مريحة للعين",
     "base_price": 95000,
     "discount_price": 80000,
-    "main_image": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80",
+    "main_image": "/asset/images/products/prod_52.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80"
+      "/asset/images/products/prod_52.jpg"
     ],
     "youtube_url": "",
     "is_featured": 0,
@@ -1783,9 +1783,9 @@
     "description_ar": "ماكينة تشذيب شعر الجسم للرجال مع أمشاط حماية",
     "base_price": 310000,
     "discount_price": 270000,
-    "main_image": "https://images.unsplash.com/photo-1621607512022-6aecc4fed814?auto=format&fit=crop&w=800&q=80",
+    "main_image": "/asset/images/products/prod_53.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1621607512022-6aecc4fed814?auto=format&fit=crop&w=800&q=80"
+      "/asset/images/products/prod_53.jpg"
     ],
     "youtube_url": "",
     "is_featured": 0,
@@ -1817,9 +1817,9 @@
     "description_ar": "مصباح طاولة LED محمول يعمل بالبطارية القابلة للشحن",
     "base_price": 120000,
     "discount_price": 100000,
-    "main_image": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80",
+    "main_image": "/asset/images/products/prod_54.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80"
+      "/asset/images/products/prod_54.jpg"
     ],
     "youtube_url": "",
     "is_featured": 0,
@@ -1851,9 +1851,9 @@
     "description_ar": "طقم حلاقة وتصفيف 6 في 1 للوجه والشعر",
     "base_price": 330000,
     "discount_price": 290000,
-    "main_image": "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=800&q=80",
+    "main_image": "/asset/images/products/prod_55.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=800&q=80"
+      "/asset/images/products/prod_55.jpg"
     ],
     "youtube_url": "",
     "is_featured": 0,
@@ -1885,9 +1885,9 @@
     "description_ar": "ماكينة حلاقة دوارة بحركات مرنة لقص شعر الوجه بسلاسة",
     "base_price": 410000,
     "discount_price": 360000,
-    "main_image": "https://images.unsplash.com/photo-1508380702597-707c1b00a9a6?auto=format&fit=crop&w=800&q=80",
+    "main_image": "/asset/images/products/prod_56.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1508380702597-707c1b00a9a6?auto=format&fit=crop&w=800&q=80"
+      "/asset/images/products/prod_56.jpg"
     ],
     "youtube_url": "",
     "is_featured": 0,
