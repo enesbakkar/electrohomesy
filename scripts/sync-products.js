@@ -2,7 +2,65 @@ const https = require('https');
 const fs = require('fs');
 const path = require('path');
 
-// Parses CSV text, handling quoted fields
+const DEFAULT_PRICES = {
+    1: { price: 280000, discount: 245000 },
+    2: { price: 490000, discount: 450000 },
+    3: { price: 145000, discount: 125000 },
+    4: { price: 320000, discount: 290000 },
+    5: { price: 420000, discount: 380000 },
+    6: { price: 340000, discount: 305000 },
+    7: { price: 540000, discount: 490000 },
+    8: { price: 380000, discount: 340000 },
+    9: { price: 135000, discount: 115000 },
+    10: { price: 260000, discount: 230000 },
+    11: { price: 210000, discount: 185000 },
+    12: { price: 240000, discount: 210000 },
+    13: { price: 780000, discount: 690000 },
+    14: { price: 165000, discount: 140000 },
+    15: { price: 230000, discount: 195000 },
+    16: { price: 155000, discount: 130000 },
+    17: { price: 270000, discount: 235000 },
+    18: { price: 175000, discount: 150000 },
+    19: { price: 290000, discount: 250000 },
+    20: { price: 190000, discount: 165000 },
+    21: { price: 210000, discount: 180000 },
+    22: { price: 390000, discount: 345000 },
+    23: { price: 180000, discount: 155000 },
+    24: { price: 290000, discount: 255000 },
+    25: { price: 170000, discount: 145000 },
+    26: { price: 280000, discount: 240000 },
+    27: { price: 220000, discount: 190000 },
+    28: { price: 240000, discount: 210000 },
+    29: { price: 310000, discount: 275000 },
+    30: { price: 250000, discount: 220000 },
+    31: { price: 180000, discount: 155000 },
+    32: { price: 95000, discount: 80000 },
+    33: { price: 850000, discount: 760000 },
+    34: { price: 460000, discount: 410000 },
+    35: { price: 220000, discount: 195000 },
+    36: { price: 195000, discount: 165000 },
+    37: { price: 410000, discount: 365000 },
+    38: { price: 2800000, discount: 2450000 },
+    39: { price: 360000, discount: 315000 },
+    40: { price: 210000, discount: 180000 },
+    41: { price: 440000, discount: 390000 },
+    42: { price: 680000, discount: 590000 },
+    43: { price: 160000, discount: 135000 },
+    44: { price: 85000, discount: 70000 },
+    45: { price: 270000, discount: 235000 },
+    46: { price: 580000, discount: 510000 },
+    47: { price: 155000, discount: 130000 },
+    48: { price: 75000, discount: 60000 },
+    49: { price: 280000, discount: 240000 },
+    50: { price: 65000, discount: 50000 },
+    51: { price: 110000, discount: 90000 },
+    52: { price: 95000, discount: 80000 },
+    53: { price: 310000, discount: 270000 },
+    54: { price: 120000, discount: 100000 },
+    55: { price: 330000, discount: 290000 },
+    56: { price: 410000, discount: 360000 }
+};
+
 function parseCSV(text) {
     const lines = text.split(/\r?\n/);
     const rows = [];
@@ -30,7 +88,7 @@ function parseCSV(text) {
 }
 
 function parsePrice(val) {
-    if (!val || val === '-') return null;
+    if (!val || val === '-' || val === '0' || val === '0.00') return null;
     const clean = val.replace(/[^\d]/g, '');
     return clean ? parseInt(clean, 10) : null;
 }
@@ -92,32 +150,41 @@ async function generateProductsJson() {
     if (rows.length < 2) throw new Error('CSV is empty or invalid');
 
     const products = [];
-    for (let i = 2; i < rows.length; i++) {
+    for (let i = 1; i < rows.length; i++) {
         const row = rows[i];
         if (row.length < 3) continue;
 
-        const name = row[2] || row[3] || '';
-        const brand = row[3] || row[2] || 'ElectroHome';
-        const code = row[4] || row[9] || `PROD-${i}`;
+        const name = row[1];
+        const brand = row[2] || 'ElectroHome';
+        const code = row[3] || `PROD-${i}`;
         if (!name || name.startsWith('Product') || name.startsWith('اسم')) continue;
 
-        const id = parseInt(row[0], 10) || (i - 1);
-        const quantity = parseFloat(row[5]) || 0;
-        const cost = parsePrice(row[6]);
-        const sellingPrice = parsePrice(row[7]);
-        const discountPrice = parsePrice(row[8]);
+        const id = parseInt(row[0], 10) || i;
+        const quantity = parseFloat(row[4]) || 0;
+        let cost = parsePrice(row[5]);
+        let sellingPrice = parsePrice(row[6]);
+        let discountPrice = parsePrice(row[7]);
 
-        // K (col 10): Fav / Featured
+        // Fallback price logic if Google Sheet price is 0 or empty
+        const defaultP = DEFAULT_PRICES[id] || { price: 250000, discount: 220000 };
+        if (!sellingPrice) {
+            sellingPrice = defaultP.price;
+        }
+        if (!discountPrice) {
+            discountPrice = defaultP.discount;
+        }
+
+        // Col 10 (K): Fav / Featured
         const favVal = (row[10] || '').trim();
-        const isFeatured = (favVal === '1' || favVal.toLowerCase() === 'true') ? 1 : 0;
+        const isFeatured = (favVal === '1' || favVal.toUpperCase() === 'TRUE') ? 1 : 0;
 
-        // L (col 11): details
+        // Col 11 (L): details
         const detailsText = (row[11] || '').trim();
 
-        // M (col 12): video link
+        // Col 12 (M): video link
         const videoLink = (row[12] || '').trim();
 
-        // N, O, P, Q, R (cols 13..17): Photos 1..5
+        // Col 13..17 (N, O, P, Q, R): Photos 1..5
         const photos = [];
         for (let cIdx = 13; cIdx <= 17; cIdx++) {
             let imgUrl = getGoogleDriveDirectLink((row[cIdx] || '').trim());
@@ -150,8 +217,8 @@ async function generateProductsJson() {
             title_ar: name,
             slug: `prod-${code.toLowerCase().replace(/[^a-z0-9]/g, '-')}-${id}`,
             description_ar: description,
-            base_price: sellingPrice || cost || 250000,
-            discount_price: discountPrice || null,
+            base_price: sellingPrice,
+            discount_price: discountPrice,
             main_image: mainImage,
             images: imagesList,
             youtube_url: videoLink,
@@ -164,7 +231,7 @@ async function generateProductsJson() {
         });
     }
 
-    console.log(`Parsed ${products.length} products using exact user column mapping.`);
+    console.log(`Parsed ${products.length} products using exact user column mapping and default price fallbacks.`);
 
     const jsonContent = JSON.stringify(products, null, 2);
     const outputPaths = [
