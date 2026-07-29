@@ -465,7 +465,7 @@
 
 
     <!-- App JS -->
-    <script src="/js/app.js?v=10.0.0"></script>
+    <script src="/js/app.js?v=11.0.0"></script>
     <script>
         let detailProduct = null;
         let detailVariant = null;
@@ -683,11 +683,18 @@
                             : ''}
                         <h1 class="product-main-title" style="margin-top: 5px;">${p.title_ar}</h1>
 
-                        <div class="product-price-container">
-                            <span class="price-hero-current" id="detailFinalPrice">${formatSYP(finalPrice)}</span>
+                        <div class="product-price-container" style="display:flex; align-items:center; gap:16px; flex-wrap:wrap; margin: 15px 0 22px 0;">
+                            <div style="display:flex; flex-direction:column; gap:2px;">
+                                <span style="font-size:0.82rem; color:var(--steel-grey); font-weight:700;">سعر البيع الآن:</span>
+                                <span class="price-hero-current" id="detailFinalPrice" style="font-size:2.4rem; font-weight:900; color:var(--damascus-green);">${formatSYP(finalPrice)}</span>
+                            </div>
+
                             ${hasDiscount ? `
-                                <span class="price-hero-old" style="margin-right: 10px;">${formatSYP(p.base_price)}</span>
-                                <span class="discount-tag-badge">🔥 وفر ${formatSYP(p.base_price - p.discount_price)}</span>
+                                <div style="display:flex; flex-direction:column; gap:2px; margin-right:10px;">
+                                    <span style="font-size:0.82rem; color:#94a3b8; font-weight:700;">السعر الأصلي:</span>
+                                    <span class="price-hero-old" style="font-size:1.3rem; color:#94a3b8; text-decoration:line-through; font-weight:600;">${formatSYP(p.base_price)}</span>
+                                </div>
+                                <span class="discount-tag-badge" style="background:rgba(239,68,68,0.1); color:#ef4444; padding:8px 14px; border-radius:12px; font-weight:800; font-size:0.95rem; align-self:flex-end;">🔥 وفر ${formatSYP(p.base_price - p.discount_price)}</span>
                             ` : ''}
                         </div>
 
