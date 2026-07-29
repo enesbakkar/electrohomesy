@@ -1877,11 +1877,10 @@ let currentSelectedVariant = null;
 
 // Utility: Format currency in Syrian Pounds (ل.س)
 function formatSYP(amount) {
-    if (amount === null || amount === undefined) return '';
+    if (amount === null || amount === undefined || amount === '') return '';
     const n = Number(amount);
     if (isNaN(n)) return '';
-    // Show as decimal if needed (e.g. 29.99), otherwise as integer
-    const formatted = n % 1 !== 0 ? n.toFixed(2) : n.toLocaleString('ar-SY');
+    const formatted = n % 1 !== 0 ? n.toFixed(2) : n.toLocaleString('en-US');
     return '$' + formatted;
 }
 
