@@ -151,10 +151,8 @@
     "description_ar": "ماكينة حلاقة وتشذيب شعر الجسم للبشرة الحساسة",
     "base_price": 40,
     "discount_price": 29.99,
-    "main_image": "https://images.unsplash.com/photo-1621607512022-6aecc4fed814?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1621607512022-6aecc4fed814?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -185,10 +183,8 @@
     "description_ar": "ماكينة تشذيب متعددة الاستخدامات للعناية الشخصية",
     "base_price": 40,
     "discount_price": 29.99,
-    "main_image": "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -219,10 +215,8 @@
     "description_ar": "ماكينة إعداد القهوة بالكبسولات بتصميم مدمج وسريع",
     "base_price": 100,
     "discount_price": 75,
-    "main_image": "https://images.unsplash.com/photo-1517668808822-9eaa03afd2af?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1517668808822-9eaa03afd2af?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -253,10 +247,8 @@
     "description_ar": "طقم حلاقة وتصفيف شامل 8 في 1 للحد من اللحية والشعر",
     "base_price": 50,
     "discount_price": 35,
-    "main_image": "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -287,10 +279,8 @@
     "description_ar": "ساعة حائط لاسلكية بتعديل تلقائي ودقيق للوقت",
     "base_price": 15,
     "discount_price": 9.99,
-    "main_image": "https://images.unsplash.com/photo-1563861826100-9cb868fdbe1c?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1563861826100-9cb868fdbe1c?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -321,10 +311,8 @@
     "description_ar": "جهاز إعداد الوافل المزدوج بطلاء غير لاصق",
     "base_price": 35,
     "discount_price": 25,
-    "main_image": "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -355,10 +343,8 @@
     "description_ar": "خلاط سموثي محمول مع كوب مزود بغطاء للتنقل",
     "base_price": 30,
     "discount_price": 19.99,
-    "main_image": "https://images.unsplash.com/photo-1553530666-ba11a7da3888?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1553530666-ba11a7da3888?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 1,
     "is_visible": 1,
@@ -389,10 +375,8 @@
     "description_ar": "محمصة خبز توستر بفتحتين ومستويات تحمير متعددة",
     "base_price": 30,
     "discount_price": 19.99,
-    "main_image": "https://images.unsplash.com/photo-1583634648128-3a58222169ff?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1583634648128-3a58222169ff?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -423,10 +407,8 @@
     "description_ar": "مكواة بخار قوية مع خزان ماء كبير لكي سريع",
     "base_price": 80,
     "discount_price": 59.99,
-    "main_image": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -457,10 +439,8 @@
     "description_ar": "غلاية ماء كهربائية سريعة التسخين باللون الأسود",
     "base_price": 25,
     "discount_price": 19.99,
-    "main_image": "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f6?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f6?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -491,10 +471,8 @@
     "description_ar": "طقم خلاط يدوي مع ملحقات للفرم والخفق",
     "base_price": 25,
     "discount_price": 19.99,
-    "main_image": "https://images.unsplash.com/photo-1570222094114-d054a817e56b?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1570222094114-d054a817e56b?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 1,
     "is_visible": 1,
@@ -525,10 +503,8 @@
     "description_ar": "ميزان حرارة إلكتروني بدون تلامس لقياس الحرارة",
     "base_price": 40,
     "discount_price": 25,
-    "main_image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -559,10 +535,8 @@
     "description_ar": "جهاز صانع وافل مزدوج سريع التحضير",
     "base_price": 30,
     "discount_price": 25,
-    "main_image": "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -593,10 +567,8 @@
     "description_ar": "غلاية ماء كهربائية بتصميم خشبي وبيج أنيق",
     "base_price": null,
     "discount_price": null,
-    "main_image": "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f6?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f6?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -627,10 +599,8 @@
     "description_ar": "ماكينة قص الشعر الكهربائية من فيليبس",
     "base_price": null,
     "discount_price": null,
-    "main_image": "https://images.unsplash.com/photo-1621607512214-68297480165e?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1621607512214-68297480165e?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -661,10 +631,8 @@
     "description_ar": "شواية تلامس صغيرة مدمجة لتحضير السندويشات",
     "base_price": null,
     "discount_price": null,
-    "main_image": "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -695,10 +663,8 @@
     "description_ar": "جهاز كشف متعدد الاستخدامات للمعادن والكابلات بالجدران",
     "base_price": null,
     "discount_price": null,
-    "main_image": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -729,10 +695,8 @@
     "description_ar": "شواية تلامس كهربائية كبيرة مع ألواح غير لاصقة",
     "base_price": null,
     "discount_price": null,
-    "main_image": "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -763,10 +727,8 @@
     "description_ar": "موقد كهربائي مفرد للطبخ والتسخين السريع",
     "base_price": null,
     "discount_price": null,
-    "main_image": "https://images.unsplash.com/photo-1585515320310-259814833e62?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1585515320310-259814833e62?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -797,10 +759,8 @@
     "description_ar": "ماكينة تحضير القهوة المفلترة بتصميم كلاسيكي",
     "base_price": null,
     "discount_price": null,
-    "main_image": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -831,10 +791,8 @@
     "description_ar": "جهاز تحضير السندويشات والمحمصة بطلاء غير لاصق",
     "base_price": null,
     "discount_price": null,
-    "main_image": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -865,10 +823,8 @@
     "description_ar": "ماكينة قهوة فلتر مزودة بإبريق حراري حافظ للحرارة",
     "base_price": null,
     "discount_price": null,
-    "main_image": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -899,10 +855,8 @@
     "description_ar": "مبشرة وتقطاعة خضروات كهربائية بشفرات متعددة",
     "base_price": null,
     "discount_price": null,
-    "main_image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -933,10 +887,8 @@
     "description_ar": "مكنسة يدوية لاسلكية لشفط السوائل والغبار",
     "base_price": null,
     "discount_price": null,
-    "main_image": "https://images.unsplash.com/photo-1558317374-067fb5f30001?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1558317374-067fb5f30001?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -967,10 +919,8 @@
     "description_ar": "مجفف شعر احترافي بتصميم خاص وقوة تجفيف عالية",
     "base_price": null,
     "discount_price": null,
-    "main_image": "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -1001,10 +951,8 @@
     "description_ar": "خلاط يدوي خفيف الوزن بقوة 300 واط لإعداد الأطعمة",
     "base_price": null,
     "discount_price": null,
-    "main_image": "https://images.unsplash.com/photo-1578645510447-e20b4311e3ce?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1578645510447-e20b4311e3ce?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -1035,10 +983,8 @@
     "description_ar": "غلاية ماء كهربائية باللون الأسود ولمسات خشبية",
     "base_price": null,
     "discount_price": null,
-    "main_image": "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f6?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f6?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -1069,10 +1015,8 @@
     "description_ar": "جهاز تحكم عن بعد بديل وشامل لتلفزيونات سامسونج",
     "base_price": null,
     "discount_price": null,
-    "main_image": "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -1103,10 +1047,8 @@
     "description_ar": "مولد بخار قوي لكي الملابس وإزالة التجاعيد",
     "base_price": null,
     "discount_price": null,
-    "main_image": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -1137,10 +1079,8 @@
     "description_ar": "ماكينة تحضير المشروبات والقهوة بالكبسولات التلقائية",
     "base_price": null,
     "discount_price": null,
-    "main_image": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -1171,10 +1111,8 @@
     "description_ar": "نافورة شوكولاتة كهربائية للحفلات والحلويات",
     "base_price": null,
     "discount_price": null,
-    "main_image": "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -1205,10 +1143,8 @@
     "description_ar": "جهاز إعداد الفشار وتحميص المكسرات بالهواء الساخن",
     "base_price": null,
     "discount_price": null,
-    "main_image": "https://images.unsplash.com/photo-1578849278619-e73505e9610f?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1578849278619-e73505e9610f?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -1239,10 +1175,8 @@
     "description_ar": "ماكينة تشذيب اللحية بدقة عالية مع قرص تعديل الطول",
     "base_price": null,
     "discount_price": null,
-    "main_image": "https://images.unsplash.com/photo-1621607512214-68297480165e?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1621607512214-68297480165e?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -1273,10 +1207,8 @@
     "description_ar": "ماكينة إسبريسو أوتوماتيكية بالكامل لتحضير القهوة",
     "base_price": null,
     "discount_price": null,
-    "main_image": "https://images.unsplash.com/photo-1517668808822-9eaa03afd2af?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1517668808822-9eaa03afd2af?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -1307,10 +1239,8 @@
     "description_ar": "شواية راكليت كهربائية للجبن والمشويات مع مقالي",
     "base_price": null,
     "discount_price": null,
-    "main_image": "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -1341,10 +1271,8 @@
     "description_ar": "مجفف شعر صغير وسريع بإنبعاث أيوني لمعان الشعر",
     "base_price": null,
     "discount_price": null,
-    "main_image": "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -1375,10 +1303,8 @@
     "description_ar": "ممسحة بخار لتنظيف وتعقيم الأرضيات بدون كيميائيات",
     "base_price": null,
     "discount_price": null,
-    "main_image": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -1409,10 +1335,8 @@
     "description_ar": "فرن ميكروويف متعدد المستويات للتسخين والطهي",
     "base_price": null,
     "discount_price": null,
-    "main_image": "https://images.unsplash.com/photo-1585515320310-259814833e62?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1585515320310-259814833e62?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -1443,10 +1367,8 @@
     "description_ar": "مصباح جداري خارجي يعمل بالبطارية مع مستشعر حركة",
     "base_price": null,
     "discount_price": null,
-    "main_image": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -1477,10 +1399,8 @@
     "description_ar": "شمعة LED ديكورية مصنوعة من الشمع الحقيقي بوعاء زجاجي",
     "base_price": null,
     "discount_price": null,
-    "main_image": "https://images.unsplash.com/photo-1603006905003-be475563bc59?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1603006905003-be475563bc59?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -1511,10 +1431,8 @@
     "description_ar": "جهاز استنشاق ضاغط لعلاج أمراض الجهاز التنفسي",
     "base_price": null,
     "discount_price": null,
-    "main_image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -1545,10 +1463,8 @@
     "description_ar": "مكنسة كهربائية 2 في 1 تعمل كمكنسة عصوية ويدوية",
     "base_price": null,
     "discount_price": null,
-    "main_image": "https://images.unsplash.com/photo-1558317374-067fb5f30001?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1558317374-067fb5f30001?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -1579,10 +1495,8 @@
     "description_ar": "مصباح طاولة LED باللمس بتصميم طول مختلف",
     "base_price": null,
     "discount_price": null,
-    "main_image": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -1613,10 +1527,8 @@
     "description_ar": "حبل إضاءة LED ديكوري للمناسبات والديكور",
     "base_price": null,
     "discount_price": null,
-    "main_image": "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -1647,10 +1559,8 @@
     "description_ar": "كشاف إضاءة LED قوي ومقاوم للصدمات للمواقع والأعمال",
     "base_price": null,
     "discount_price": null,
-    "main_image": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -1681,10 +1591,8 @@
     "description_ar": "شريط إضاءة LED موفر للطاقة للديكور الداخلي",
     "base_price": null,
     "discount_price": null,
-    "main_image": "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -1715,10 +1623,8 @@
     "description_ar": "ستارة ضوئية LED مع مؤثرات إضاءة متعددة للزينة",
     "base_price": null,
     "discount_price": null,
-    "main_image": "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -1749,10 +1655,8 @@
     "description_ar": "مصباح طاولة LED أساسي وإضاءة مريحة للعين",
     "base_price": null,
     "discount_price": null,
-    "main_image": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -1783,10 +1687,8 @@
     "description_ar": "ماكينة تشذيب شعر الجسم للرجال مع أمشاط حماية",
     "base_price": null,
     "discount_price": null,
-    "main_image": "https://images.unsplash.com/photo-1621607512022-6aecc4fed814?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1621607512022-6aecc4fed814?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -1817,10 +1719,8 @@
     "description_ar": "مصباح طاولة LED محمول يعمل بالبطارية القابلة للشحن",
     "base_price": null,
     "discount_price": null,
-    "main_image": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -1851,10 +1751,8 @@
     "description_ar": "طقم حلاقة وتصفيف 6 في 1 للوجه والشعر",
     "base_price": null,
     "discount_price": null,
-    "main_image": "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -1885,10 +1783,8 @@
     "description_ar": "ماكينة حلاقة دوارة بحركات مرنة لقص شعر الوجه بسلاسة",
     "base_price": null,
     "discount_price": null,
-    "main_image": "https://images.unsplash.com/photo-1508380702597-707c1b00a9a6?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1508380702597-707c1b00a9a6?auto=format&fit=crop&w=800&q=80"
-    ],
+    "main_image": "",
+    "images": [],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,

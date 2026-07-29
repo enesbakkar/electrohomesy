@@ -47,14 +47,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "ماكينة قص شعر لاسلكية مع إعدادات طول متعددة",
         "base_price": 280000,
         "discount_price": 245000,
-        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
-        "images": [
-            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
-            "https://media.kruidvat.nl/medias/sys_master/prd-images/h0d/h58/34247171014686/prd-front-5178398-2_600x600/prd-front-5178398-2-600x600.jpg",
-            "https://media.kruidvat.nl/medias/sys_master/prd-images/h3d/h51/34247171211294/prd-front-5178398-4_600x600/prd-front-5178398-4-600x600.jpg",
-            "https://media.kruidvat.nl/medias/sys_master/prd-images/h7d/h4d/34247171342366/prd-front-5178398-5_600x600/prd-front-5178398-5-600x600.jpg",
-            "https://media.kruidvat.nl/medias/sys_master/prd-images/h80/h4a/34247171407902/prd-front-5178398-6_600x600/prd-front-5178398-6-600x600.jpg"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "https://www.youtube.com/watch?v=Afk3jznDe6o",
         "is_featured": 1,
         "is_visible": 1,
@@ -85,14 +79,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "ماكينة حلاقة كهربائية للرجال للاستخدام الجاف والرطب",
         "base_price": 490000,
         "discount_price": 450000,
-        "main_image": "https://afosto-cdn-01.afosto.com/k7ems/product/400/7596392450-1.png",
-        "images": [
-            "https://afosto-cdn-01.afosto.com/k7ems/product/400/7596392450-1.png",
-            "https://afosto-cdn-01.afosto.com/k7ems/product/400/3079170663-2.png",
-            "https://afosto-cdn-01.afosto.com/k7ems/product/400/9459071020-3.png",
-            "https://afosto-cdn-01.afosto.com/k7ems/product/400/2013163670-1200x120077.jpg",
-            "https://afosto-cdn-01.afosto.com/k7ems/product/400/5867059140-1200x120078.jpg"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -123,10 +111,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "مصباح طاولة يعمل باللمس مع مستويات إضاءة قابلة للضبط",
         "base_price": 145000,
         "discount_price": 125000,
-        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
-        "images": [
-            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 1,
         "is_visible": 1,
@@ -157,10 +143,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "ماكينة تشذيب متعددة الاستخدامات لشعر الوجه والجسم",
         "base_price": 320000,
         "discount_price": 290000,
-        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
-        "images": [
-            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -191,10 +175,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "ماكينة حلاقة وتشذيب شعر الجسم للبشرة الحساسة",
         "base_price": 420000,
         "discount_price": 380000,
-        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
-        "images": [
-            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -225,10 +207,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "ماكينة تشذيب متعددة الاستخدامات للعناية الشخصية",
         "base_price": 340000,
         "discount_price": 305000,
-        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
-        "images": [
-            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -259,10 +239,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "ماكينة إعداد القهوة بالكبسولات بتصميم مدمج وسريع",
         "base_price": 540000,
         "discount_price": 490000,
-        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
-        "images": [
-            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -293,10 +271,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "طقم حلاقة وتصفيف شامل 8 في 1 للحد من اللحية والشعر",
         "base_price": 380000,
         "discount_price": 340000,
-        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
-        "images": [
-            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -327,10 +303,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "ساعة حائط لاسلكية بتعديل تلقائي ودقيق للوقت",
         "base_price": 135000,
         "discount_price": 115000,
-        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
-        "images": [
-            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -361,10 +335,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "جهاز إعداد الوافل المزدوج بطلاء غير لاصق",
         "base_price": 260000,
         "discount_price": 230000,
-        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
-        "images": [
-            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -395,10 +367,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "خلاط سموثي محمول مع كوب مزود بغطاء للتنقل",
         "base_price": 210000,
         "discount_price": 185000,
-        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
-        "images": [
-            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 1,
         "is_visible": 1,
@@ -429,10 +399,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "محمصة خبز توستر بفتحتين ومستويات تحمير متعددة",
         "base_price": 240000,
         "discount_price": 210000,
-        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
-        "images": [
-            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -463,10 +431,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "مكواة بخار قوية مع خزان ماء كبير لكي سريع",
         "base_price": 780000,
         "discount_price": 690000,
-        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
-        "images": [
-            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -497,10 +463,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "غلاية ماء كهربائية سريعة التسخين باللون الأسود",
         "base_price": 165000,
         "discount_price": 140000,
-        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
-        "images": [
-            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -531,10 +495,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "طقم خلاط يدوي مع ملحقات للفرم والخفق",
         "base_price": 230000,
         "discount_price": 195000,
-        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
-        "images": [
-            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 1,
         "is_visible": 1,
@@ -565,10 +527,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "ميزان حرارة إلكتروني بدون تلامس لقياس الحرارة",
         "base_price": 155000,
         "discount_price": 130000,
-        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
-        "images": [
-            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -599,10 +559,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "جهاز صانع وافل مزدوج سريع التحضير",
         "base_price": 270000,
         "discount_price": 235000,
-        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
-        "images": [
-            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -633,10 +591,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "غلاية ماء كهربائية بتصميم خشبي وبيج أنيق",
         "base_price": 175000,
         "discount_price": 150000,
-        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
-        "images": [
-            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -667,10 +623,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "ماكينة قص الشعر الكهربائية من فيليبس",
         "base_price": 290000,
         "discount_price": 250000,
-        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
-        "images": [
-            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -701,10 +655,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "شواية تلامس صغيرة مدمجة لتحضير السندويشات",
         "base_price": 190000,
         "discount_price": 165000,
-        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
-        "images": [
-            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -735,10 +687,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "جهاز كشف متعدد الاستخدامات للمعادن والكابلات بالجدران",
         "base_price": 210000,
         "discount_price": 180000,
-        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
-        "images": [
-            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -769,10 +719,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "شواية تلامس كهربائية كبيرة مع ألواح غير لاصقة",
         "base_price": 390000,
         "discount_price": 345000,
-        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
-        "images": [
-            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -803,10 +751,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "موقد كهربائي مفرد للطبخ والتسخين السريع",
         "base_price": 180000,
         "discount_price": 155000,
-        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
-        "images": [
-            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -837,10 +783,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "ماكينة تحضير القهوة المفلترة بتصميم كلاسيكي",
         "base_price": 290000,
         "discount_price": 255000,
-        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
-        "images": [
-            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -871,10 +815,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "جهاز تحضير السندويشات والمحمصة بطلاء غير لاصق",
         "base_price": 170000,
         "discount_price": 145000,
-        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
-        "images": [
-            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -905,10 +847,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "ماكينة قهوة فلتر مزودة بإبريق حراري حافظ للحرارة",
         "base_price": 280000,
         "discount_price": 240000,
-        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
-        "images": [
-            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -939,10 +879,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "مبشرة وتقطاعة خضروات كهربائية بشفرات متعددة",
         "base_price": 220000,
         "discount_price": 190000,
-        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
-        "images": [
-            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -973,10 +911,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "مكنسة يدوية لاسلكية لشفط السوائل والغبار",
         "base_price": 240000,
         "discount_price": 210000,
-        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
-        "images": [
-            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1007,10 +943,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "مجفف شعر احترافي بتصميم خاص وقوة تجفيف عالية",
         "base_price": 310000,
         "discount_price": 275000,
-        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
-        "images": [
-            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1041,10 +975,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "خلاط يدوي خفيف الوزن بقوة 300 واط لإعداد الأطعمة",
         "base_price": 250000,
         "discount_price": 220000,
-        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
-        "images": [
-            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1075,10 +1007,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "غلاية ماء كهربائية باللون الأسود ولمسات خشبية",
         "base_price": 180000,
         "discount_price": 155000,
-        "main_image": "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f6?auto=format&fit=crop&w=800&q=80",
-        "images": [
-            "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f6?auto=format&fit=crop&w=800&q=80"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1109,10 +1039,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "جهاز تحكم عن بعد بديل وشامل لتلفزيونات سامسونج",
         "base_price": 95000,
         "discount_price": 80000,
-        "main_image": "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80",
-        "images": [
-            "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1143,10 +1071,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "مولد بخار قوي لكي الملابس وإزالة التجاعيد",
         "base_price": 850000,
         "discount_price": 760000,
-        "main_image": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80",
-        "images": [
-            "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1177,10 +1103,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "ماكينة تحضير المشروبات والقهوة بالكبسولات التلقائية",
         "base_price": 460000,
         "discount_price": 410000,
-        "main_image": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80",
-        "images": [
-            "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1211,10 +1135,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "نافورة شوكولاتة كهربائية للحفلات والحلويات",
         "base_price": 220000,
         "discount_price": 195000,
-        "main_image": "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=800&q=80",
-        "images": [
-            "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=800&q=80"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1245,10 +1167,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "جهاز إعداد الفشار وتحميص المكسرات بالهواء الساخن",
         "base_price": 195000,
         "discount_price": 165000,
-        "main_image": "https://images.unsplash.com/photo-1578849278619-e73505e9610f?auto=format&fit=crop&w=800&q=80",
-        "images": [
-            "https://images.unsplash.com/photo-1578849278619-e73505e9610f?auto=format&fit=crop&w=800&q=80"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1279,10 +1199,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "ماكينة تشذيب اللحية بدقة عالية مع قرص تعديل الطول",
         "base_price": 410000,
         "discount_price": 365000,
-        "main_image": "https://images.unsplash.com/photo-1621607512214-68297480165e?auto=format&fit=crop&w=800&q=80",
-        "images": [
-            "https://images.unsplash.com/photo-1621607512214-68297480165e?auto=format&fit=crop&w=800&q=80"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1313,10 +1231,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "ماكينة إسبريسو أوتوماتيكية بالكامل لتحضير القهوة",
         "base_price": 2800000,
         "discount_price": 2450000,
-        "main_image": "https://images.unsplash.com/photo-1517668808822-9eaa03afd2af?auto=format&fit=crop&w=800&q=80",
-        "images": [
-            "https://images.unsplash.com/photo-1517668808822-9eaa03afd2af?auto=format&fit=crop&w=800&q=80"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1347,10 +1263,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "شواية راكليت كهربائية للجبن والمشويات مع مقالي",
         "base_price": 360000,
         "discount_price": 315000,
-        "main_image": "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=800&q=80",
-        "images": [
-            "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=800&q=80"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1381,10 +1295,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "مجفف شعر صغير وسريع بإنبعاث أيوني لمعان الشعر",
         "base_price": 210000,
         "discount_price": 180000,
-        "main_image": "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80",
-        "images": [
-            "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1415,10 +1327,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "ممسحة بخار لتنظيف وتعقيم الأرضيا�� بدون كيميائيات",
         "base_price": 440000,
         "discount_price": 390000,
-        "main_image": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80",
-        "images": [
-            "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1449,10 +1359,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "فرن ميكروويف متعدد المستويات للتسخين والطهي",
         "base_price": 680000,
         "discount_price": 590000,
-        "main_image": "https://images.unsplash.com/photo-1585515320310-259814833e62?auto=format&fit=crop&w=800&q=80",
-        "images": [
-            "https://images.unsplash.com/photo-1585515320310-259814833e62?auto=format&fit=crop&w=800&q=80"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1483,10 +1391,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "مصباح جداري خارجي يعمل بالبطارية مع مستشعر حركة",
         "base_price": 160000,
         "discount_price": 135000,
-        "main_image": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80",
-        "images": [
-            "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1517,10 +1423,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "شمعة LED ديكورية مصنوعة من الشمع الحقيقي بوعاء زجاجي",
         "base_price": 85000,
         "discount_price": 70000,
-        "main_image": "https://images.unsplash.com/photo-1603006905003-be475563bc59?auto=format&fit=crop&w=800&q=80",
-        "images": [
-            "https://images.unsplash.com/photo-1603006905003-be475563bc59?auto=format&fit=crop&w=800&q=80"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1551,10 +1455,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "جهاز استنشاق ضاغط لعلاج أمراض الجهاز التنفسي",
         "base_price": 270000,
         "discount_price": 235000,
-        "main_image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=800&q=80",
-        "images": [
-            "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=800&q=80"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1585,10 +1487,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "مكنسة كهربائية 2 في 1 تعمل كمكنسة عصوية ويدوية",
         "base_price": 580000,
         "discount_price": 510000,
-        "main_image": "https://images.unsplash.com/photo-1558317374-067fb5f30001?auto=format&fit=crop&w=800&q=80",
-        "images": [
-            "https://images.unsplash.com/photo-1558317374-067fb5f30001?auto=format&fit=crop&w=800&q=80"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1619,10 +1519,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "مصباح طاولة LED باللمس بتصميم طول مختلف",
         "base_price": 155000,
         "discount_price": 130000,
-        "main_image": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80",
-        "images": [
-            "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1653,10 +1551,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "حبل إضاءة LED ديكوري للمناسبات والديكور",
         "base_price": 75000,
         "discount_price": 60000,
-        "main_image": "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80",
-        "images": [
-            "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1687,10 +1583,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "كشاف إضاءة LED قوي ومقاوم للصدمات للمواقع والأعمال",
         "base_price": 280000,
         "discount_price": 240000,
-        "main_image": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80",
-        "images": [
-            "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1721,10 +1615,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "شريط إضاءة LED موفر للطاقة للديكور الداخلي",
         "base_price": 65000,
         "discount_price": 50000,
-        "main_image": "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80",
-        "images": [
-            "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1755,10 +1647,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "ستارة ضوئية LED مع مؤثرات إضاءة متعددة للزينة",
         "base_price": 110000,
         "discount_price": 90000,
-        "main_image": "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80",
-        "images": [
-            "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1789,10 +1679,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "مصباح طاولة LED أساسي وإضاءة مريحة للعين",
         "base_price": 95000,
         "discount_price": 80000,
-        "main_image": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80",
-        "images": [
-            "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1823,10 +1711,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "ماكينة تشذيب شعر الجسم للرجال مع أمشاط حماية",
         "base_price": 310000,
         "discount_price": 270000,
-        "main_image": "https://images.unsplash.com/photo-1621607512022-6aecc4fed814?auto=format&fit=crop&w=800&q=80",
-        "images": [
-            "https://images.unsplash.com/photo-1621607512022-6aecc4fed814?auto=format&fit=crop&w=800&q=80"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1857,10 +1743,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "مصباح طاولة LED محمول يعمل بالبطارية القابلة للشحن",
         "base_price": 120000,
         "discount_price": 100000,
-        "main_image": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80",
-        "images": [
-            "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1891,10 +1775,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "طقم حلاقة وتصفيف 6 في 1 للوجه والشعر",
         "base_price": 330000,
         "discount_price": 290000,
-        "main_image": "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=800&q=80",
-        "images": [
-            "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=800&q=80"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1925,10 +1807,8 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "ماكينة حلاقة دوارة بحركات مرنة لقص شعر الوجه بسلاسة",
         "base_price": 410000,
         "discount_price": 360000,
-        "main_image": "https://images.unsplash.com/photo-1508380702597-707c1b00a9a6?auto=format&fit=crop&w=800&q=80",
-        "images": [
-            "https://images.unsplash.com/photo-1508380702597-707c1b00a9a6?auto=format&fit=crop&w=800&q=80"
-        ],
+        "main_image": "",
+        "images": [],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -2002,7 +1882,7 @@ function formatSYP(amount) {
     if (isNaN(n)) return '';
     // Show as decimal if needed (e.g. 29.99), otherwise as integer
     const formatted = n % 1 !== 0 ? n.toFixed(2) : n.toLocaleString('ar-SY');
-    return formatted + ' €';
+    return '$' + formatted;
 }
 
 // Utility: Generate unique product code  e.g. EHS-001
@@ -2716,12 +2596,8 @@ const PRODUCT_FALLBACK_IMAGES = {
     "56": "https://images.unsplash.com/photo-1508380702597-707c1b00a9a6?auto=format&fit=crop&w=800&q=80"
 };
 
-function getFallbackImageClient(pId) {
-    if (pId && PRODUCT_FALLBACK_IMAGES[pId]) {
-        return PRODUCT_FALLBACK_IMAGES[pId];
-    }
-    return 'https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=800&q=80';
-}
+function getFallbackImageClient(id) { return ''; }
+
 
 function getCategoryNameById(categoryId) {
     const names = {
@@ -2809,8 +2685,8 @@ async function fetchProductsFromGoogleSheetsClient(categorySlug) {
             }
 
             const categoryId = getCategoryIdFromSheetClient(name, brand);
-            const mainImage = photos.length > 0 ? photos[0] : getFallbackImageClient(id);
-            const imagesList = photos.length > 0 ? photos : [mainImage];
+            const mainImage = photos.length > 0 ? photos[0] : '';
+            const imagesList = photos.length > 0 ? photos : [];
             const description = (detailsText && !detailsText.startsWith('http')) ? detailsText : `جهاز ${name} عالي الكفاءة من ماركة ${brand}. الموديل: ${code}.`;
 
             products.push({

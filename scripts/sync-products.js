@@ -121,12 +121,8 @@ const PRODUCT_FALLBACK_IMAGES = {
     "56": "https://images.unsplash.com/photo-1508380702597-707c1b00a9a6?auto=format&fit=crop&w=800&q=80"
 };
 
-function getFallbackImage(pId) {
-    if (pId && PRODUCT_FALLBACK_IMAGES[pId]) {
-        return PRODUCT_FALLBACK_IMAGES[pId];
-    }
-    return 'https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=800&q=80';
-}
+function getFallbackImage(id) { return ''; }
+
 
 function fetchCSV(url) {
     return new Promise((resolve, reject) => {
@@ -191,8 +187,8 @@ async function generateProductsJson() {
         }
 
         const categoryId = getCategoryId(name, brand);
-        const mainImage = photos.length > 0 ? photos[0] : getFallbackImage(id);
-        const imagesList = photos.length > 0 ? photos : [mainImage];
+        const mainImage = photos.length > 0 ? photos[0] : '';
+        const imagesList = photos.length > 0 ? photos : [];
         const description = (detailsText && !detailsText.startsWith('http')) ? detailsText : `جهاز ${name} عالي الكفاءة من ماركة ${brand}. الموديل: ${code}.`;
 
         const variants = [
