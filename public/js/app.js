@@ -2538,65 +2538,65 @@ function getCategoryIdFromNameClient(name) {
 }
 
 const PRODUCT_FALLBACK_IMAGES = {
-    "1": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
-    "2": "https://images.unsplash.com/photo-1508380702597-707c1b00a9a6?auto=format&fit=crop&w=800&q=80",
-    "3": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80",
-    "4": "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=800&q=80",
-    "5": "https://images.unsplash.com/photo-1621607512022-6aecc4fed814?auto=format&fit=crop&w=800&q=80",
-    "6": "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=800&q=80",
-    "7": "https://images.unsplash.com/photo-1517668808822-9eaa03afd2af?auto=format&fit=crop&w=800&q=80",
-    "8": "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=800&q=80",
-    "9": "https://images.unsplash.com/photo-1563861826100-9cb868fdbe1c?auto=format&fit=crop&w=800&q=80",
-    "10": "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=800&q=80",
-    "11": "https://images.unsplash.com/photo-1553530666-ba11a7da3888?auto=format&fit=crop&w=800&q=80",
-    "12": "https://images.unsplash.com/photo-1583634648128-3a58222169ff?auto=format&fit=crop&w=800&q=80",
-    "13": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80",
-    "14": "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f6?auto=format&fit=crop&w=800&q=80",
-    "15": "https://images.unsplash.com/photo-1570222094114-d054a817e56b?auto=format&fit=crop&w=800&q=80",
-    "16": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=800&q=80",
-    "17": "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=800&q=80",
-    "18": "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f6?auto=format&fit=crop&w=800&q=80",
-    "19": "https://images.unsplash.com/photo-1621607512214-68297480165e?auto=format&fit=crop&w=800&q=80",
-    "20": "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=800&q=80",
-    "21": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80",
-    "22": "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=800&q=80",
-    "23": "https://images.unsplash.com/photo-1585515320310-259814833e62?auto=format&fit=crop&w=800&q=80",
-    "24": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80",
-    "25": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=800&q=80",
-    "26": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80",
-    "27": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80",
-    "28": "https://images.unsplash.com/photo-1558317374-067fb5f30001?auto=format&fit=crop&w=800&q=80",
-    "29": "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80",
-    "30": "https://images.unsplash.com/photo-1578645510447-e20b4311e3ce?auto=format&fit=crop&w=800&q=80",
-    "31": "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f6?auto=format&fit=crop&w=800&q=80",
-    "32": "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80",
-    "33": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80",
-    "34": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80",
-    "35": "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=800&q=80",
-    "36": "https://images.unsplash.com/photo-1578849278619-e73505e9610f?auto=format&fit=crop&w=800&q=80",
-    "37": "https://images.unsplash.com/photo-1621607512214-68297480165e?auto=format&fit=crop&w=800&q=80",
-    "38": "https://images.unsplash.com/photo-1517668808822-9eaa03afd2af?auto=format&fit=crop&w=800&q=80",
-    "39": "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=800&q=80",
-    "40": "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80",
-    "41": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80",
-    "42": "https://images.unsplash.com/photo-1585515320310-259814833e62?auto=format&fit=crop&w=800&q=80",
-    "43": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80",
-    "44": "https://images.unsplash.com/photo-1603006905003-be475563bc59?auto=format&fit=crop&w=800&q=80",
-    "45": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=800&q=80",
-    "46": "https://images.unsplash.com/photo-1558317374-067fb5f30001?auto=format&fit=crop&w=800&q=80",
-    "47": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80",
-    "48": "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80",
-    "49": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80",
-    "50": "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80",
-    "51": "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80",
-    "52": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80",
-    "53": "https://images.unsplash.com/photo-1621607512022-6aecc4fed814?auto=format&fit=crop&w=800&q=80",
-    "54": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80",
-    "55": "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=800&q=80",
-    "56": "https://images.unsplash.com/photo-1508380702597-707c1b00a9a6?auto=format&fit=crop&w=800&q=80"
+    "1": "/Logo/ElectroHomeSY-logo-blue.png",
+    "2": "/Logo/ElectroHomeSY-logo-blue.png",
+    "3": "/Logo/ElectroHomeSY-logo-blue.png",
+    "4": "/Logo/ElectroHomeSY-logo-blue.png",
+    "5": "/Logo/ElectroHomeSY-logo-blue.png",
+    "6": "/Logo/ElectroHomeSY-logo-blue.png",
+    "7": "/Logo/ElectroHomeSY-logo-blue.png",
+    "8": "/Logo/ElectroHomeSY-logo-blue.png",
+    "9": "/Logo/ElectroHomeSY-logo-blue.png",
+    "10": "/Logo/ElectroHomeSY-logo-blue.png",
+    "11": "/Logo/ElectroHomeSY-logo-blue.png",
+    "12": "/Logo/ElectroHomeSY-logo-blue.png",
+    "13": "/Logo/ElectroHomeSY-logo-blue.png",
+    "14": "/Logo/ElectroHomeSY-logo-blue.png",
+    "15": "/Logo/ElectroHomeSY-logo-blue.png",
+    "16": "/Logo/ElectroHomeSY-logo-blue.png",
+    "17": "/Logo/ElectroHomeSY-logo-blue.png",
+    "18": "/Logo/ElectroHomeSY-logo-blue.png",
+    "19": "/Logo/ElectroHomeSY-logo-blue.png",
+    "20": "/Logo/ElectroHomeSY-logo-blue.png",
+    "21": "/Logo/ElectroHomeSY-logo-blue.png",
+    "22": "/Logo/ElectroHomeSY-logo-blue.png",
+    "23": "/Logo/ElectroHomeSY-logo-blue.png",
+    "24": "/Logo/ElectroHomeSY-logo-blue.png",
+    "25": "/Logo/ElectroHomeSY-logo-blue.png",
+    "26": "/Logo/ElectroHomeSY-logo-blue.png",
+    "27": "/Logo/ElectroHomeSY-logo-blue.png",
+    "28": "/Logo/ElectroHomeSY-logo-blue.png",
+    "29": "/Logo/ElectroHomeSY-logo-blue.png",
+    "30": "/Logo/ElectroHomeSY-logo-blue.png",
+    "31": "/Logo/ElectroHomeSY-logo-blue.png",
+    "32": "/Logo/ElectroHomeSY-logo-blue.png",
+    "33": "/Logo/ElectroHomeSY-logo-blue.png",
+    "34": "/Logo/ElectroHomeSY-logo-blue.png",
+    "35": "/Logo/ElectroHomeSY-logo-blue.png",
+    "36": "/Logo/ElectroHomeSY-logo-blue.png",
+    "37": "/Logo/ElectroHomeSY-logo-blue.png",
+    "38": "/Logo/ElectroHomeSY-logo-blue.png",
+    "39": "/Logo/ElectroHomeSY-logo-blue.png",
+    "40": "/Logo/ElectroHomeSY-logo-blue.png",
+    "41": "/Logo/ElectroHomeSY-logo-blue.png",
+    "42": "/Logo/ElectroHomeSY-logo-blue.png",
+    "43": "/Logo/ElectroHomeSY-logo-blue.png",
+    "44": "/Logo/ElectroHomeSY-logo-blue.png",
+    "45": "/Logo/ElectroHomeSY-logo-blue.png",
+    "46": "/Logo/ElectroHomeSY-logo-blue.png",
+    "47": "/Logo/ElectroHomeSY-logo-blue.png",
+    "48": "/Logo/ElectroHomeSY-logo-blue.png",
+    "49": "/Logo/ElectroHomeSY-logo-blue.png",
+    "50": "/Logo/ElectroHomeSY-logo-blue.png",
+    "51": "/Logo/ElectroHomeSY-logo-blue.png",
+    "52": "/Logo/ElectroHomeSY-logo-blue.png",
+    "53": "/Logo/ElectroHomeSY-logo-blue.png",
+    "54": "/Logo/ElectroHomeSY-logo-blue.png",
+    "55": "/Logo/ElectroHomeSY-logo-blue.png",
+    "56": "/Logo/ElectroHomeSY-logo-blue.png"
 };
 
-function getFallbackImageClient(id) { return ''; }
+function getFallbackImageClient(id) { return '/Logo/ElectroHomeSY-logo-blue.png'; }
 
 
 function getCategoryNameById(categoryId) {
@@ -2685,7 +2685,7 @@ async function fetchProductsFromGoogleSheetsClient(categorySlug) {
             }
 
             const categoryId = getCategoryIdFromSheetClient(name, brand);
-            const mainImage = photos.length > 0 ? photos[0] : '';
+            const mainImage = photos.length > 0 ? photos[0] : '/Logo/ElectroHomeSY-logo-blue.png';
             const imagesList = photos.length > 0 ? photos : [];
             const description = (detailsText && !detailsText.startsWith('http')) ? detailsText : `جهاز ${name} عالي الكفاءة من ماركة ${brand}. الموديل: ${code}.`;
 
@@ -2889,7 +2889,7 @@ function renderProducts(products) {
                     : (isBestseller ? `<span class="badge-trendyol-bestseller">⚡ الأكثر طلباً</span>` : '')}
                 
                 <a href="${productUrl}" target="_blank" rel="noopener">
-                    <img src="${p.main_image || 'https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=800&q=80'}" alt="${p.title_ar}" class="product-thumb" style="cursor: pointer;">
+                    <img src="${p.main_image || '/Logo/ElectroHomeSY-logo-blue.png'}" alt="${p.title_ar}" class="product-thumb" style="cursor: pointer;">
                 </a>
                 
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
@@ -2956,7 +2956,7 @@ function renderModalContent() {
 
     body.innerHTML = `
         <div>
-            <img src="${product.main_image || 'https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=800&q=80'}" alt="${product.title_ar}" style="width:100%; border-radius:20px; box-shadow:0 12px 30px rgba(0,0,0,0.12);">
+            <img src="${product.main_image || '/Logo/ElectroHomeSY-logo-blue.png'}" alt="${product.title_ar}" style="width:100%; border-radius:20px; box-shadow:0 12px 30px rgba(0,0,0,0.12);">
             
             ${youtubeEmbed ? `
                 <div class="youtube-embed-box">
@@ -3113,7 +3113,7 @@ function renderCartPage() {
         return `
             <div class="cart-product-item">
                 <div class="cart-product-image-wrapper" style="width:60px; height:60px; border-radius:12px; border:1px solid var(--border-color); background:#ffffff; display:flex; align-items:center; justify-content:center; overflow:hidden; flex-shrink:0;">
-                    <img src="${item.main_image || 'https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=800&q=80'}" alt="${item.product_name}" style="max-width:100%; max-height:100%; object-fit:contain; padding:4px;">
+                    <img src="${item.main_image || '/Logo/ElectroHomeSY-logo-blue.png'}" alt="${item.product_name}" style="max-width:100%; max-height:100%; object-fit:contain; padding:4px;">
                 </div>
                 <div class="cart-product-details">
                     <span class="cart-product-title">${item.product_name}</span>
@@ -3292,7 +3292,7 @@ function renderFeaturedCarousel() {
                 <div class="featured-product-card">
                     ${discountTag}
                     <div class="product-thumb-wrapper" onclick="window.location.href='product.html?id=${p.id}'" style="cursor:pointer; text-align:center;">
-                        <img class="product-thumb" src="${p.main_image || 'https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=800&q=80'}" alt="${p.title_ar}">
+                        <img class="product-thumb" src="${p.main_image || '/Logo/ElectroHomeSY-logo-blue.png'}" alt="${p.title_ar}">
                     </div>
                     <a href="product.html?id=${p.id}" class="product-title">${p.title_ar}</a>
                     <div class="product-price-box">
