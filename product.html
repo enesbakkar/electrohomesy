@@ -465,7 +465,7 @@
 
 
     <!-- App JS -->
-    <script src="/js/app.js?v=13.0.0"></script>
+    <script src="/js/app.js?v=14.0.0"></script>
     <script>
         let detailProduct = null;
         let detailVariant = null;
@@ -618,15 +618,19 @@
             }
         }
 
-        function renderMasterProductCard() {
+                function renderMasterProductCard() {
             const p = detailProduct;
             const card = document.getElementById('productMasterCard');
             const code = p.variants && p.variants.length > 0 && p.variants[0].sku ? p.variants[0].sku : generateProductCode(p.id);
             const url = window.location.href;
-            const basePrice = p.discount_price ? p.discount_price : p.base_price;
-            const modifier = detailVariant ? detailVariant.price_modifier : 0;
-            const finalPrice = basePrice + modifier;
-            const hasDiscount = p.discount_price && p.discount_price < p.base_price;
+
+            const sellingPrice = p.discount_price ? Number(p.discount_price) : Number(p.base_price);
+            const originalPrice = Number(p.base_price);
+            const modifier = detailVariant ? (Number(detailVariant.price_modifier) || 0) : 0;
+            const finalPrice = sellingPrice + modifier;
+            const hasDiscount = p.discount_price && Number(p.discount_price) < Number(p.base_price);
+            const savings = hasDiscount ? (originalPrice - Number(p.discount_price)) : 0;
+
             const p1 = '963';
             const p2 = '959';
             const p3 = '930';
@@ -634,6 +638,10 @@
             const formattedPhone = `+${p1} ${p2} ${p3} ${p4}`;
             const waLink = getWhatsAppInquiryLink(p.title_ar, p.id);
             const youtubeEmbed = getYouTubeEmbedUrl(p.youtube_url);
+
+            const displayFinalPrice = formatSYP(finalPrice) || ('$' + finalPrice);
+            const displayOriginalPrice = formatSYP(originalPrice) || ('$' + originalPrice);
+            const displaySavings = formatSYP(savings) || ('$' + savings);
 
             card.innerHTML = `
                 <div class="product-grid-layout">
@@ -685,16 +693,16 @@
 
                         <div class="product-price-container" style="display:flex; align-items:center; gap:16px; flex-wrap:wrap; margin: 15px 0 22px 0;">
                             <div style="display:flex; flex-direction:column; gap:2px;">
-                                <span style="font-size:0.85rem; color:var(--steel-grey); font-weight:700;">سعر البيع الآن:</span>
-                                <span class="price-hero-current" id="detailFinalPrice" style="font-size:2.5rem; font-weight:900; color:#073066; display:inline-block; line-height:1.2;">${formatSYP(finalPrice)}</span>
+                                <span style="font-size:0.85rem; color:#475569; font-weight:700;">سعر البيع الآن:</span>
+                                <span class="price-hero-current" id="detailFinalPrice" style="font-size:2.5rem; font-weight:900; color:#073066; display:inline-block; line-height:1.2;">${displayFinalPrice}</span>
                             </div>
 
                             ${hasDiscount ? `
                                 <div style="display:flex; flex-direction:column; gap:2px; margin-right:10px;">
                                     <span style="font-size:0.85rem; color:#94a3b8; font-weight:700;">السعر الأصلي:</span>
-                                    <span class="price-hero-old" style="font-size:1.3rem; color:#94a3b8; text-decoration:line-through; font-weight:600;">${formatSYP(p.base_price)}</span>
+                                    <span class="price-hero-old" style="font-size:1.3rem; color:#94a3b8; text-decoration:line-through; font-weight:600;">${displayOriginalPrice}</span>
                                 </div>
-                                <span class="discount-tag-badge" style="background:rgba(239,68,68,0.1); color:#ef4444; padding:8px 14px; border-radius:12px; font-weight:800; font-size:0.95rem; align-self:flex-end;">🔥 وفر ${formatSYP(p.base_price - p.discount_price)}</span>
+                                <span class="discount-tag-badge" style="background:rgba(239,68,68,0.1); color:#ef4444; padding:8px 14px; border-radius:12px; font-weight:800; font-size:0.95rem; align-self:flex-end;">🔥 وفر ${displaySavings}</span>
                             ` : ''}
                         </div>
 
@@ -755,7 +763,7 @@
                                     <span>فيديو معاينة المنتج:</span>
                                 </h3>
                                 <div style="border-radius:18px; overflow:hidden; box-shadow:0 6px 20px rgba(0,0,0,0.08); margin-top:10px; aspect-ratio: 16/9; width:100%;">
-                                    <iframe src="${youtubeEmbed}" title="فيديو معاينة الجهاز" style="width:100%; height:100%; border:none; display:block;" allowfullscreen></iframe>
+                                    <iframe src="${youtubeEmbed}" title="معاينة الجهاز بالفيديو" style="width:100%; height:100%; border:none;" allowfullscreen></iframe>
                                 </div>
                             </div>
                         ` : ''}
