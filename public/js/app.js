@@ -1,3 +1,6 @@
+// Google Sheets Orders Webhook Endpoint (Google Apps Script Web App URL)
+window.GOOGLE_SHEETS_ORDERS_WEBHOOK = window.GOOGLE_SHEETS_ORDERS_WEBHOOK || '';
+
 /* ElectroHomeSY - Main Application & Admin Logic */
 
 let featuredCarouselIndex = 0;
@@ -3207,32 +3210,42 @@ function selectPaymentMethod(method) {
 
 // Checkout Submit - Enforces Customer Login Requirement
 
-// Helper: Send order email notification to electrohomesy@gmail.com via Web3Forms API
+// Helper: Send order email notification & record in Google Sheets
 async function sendOrderEmailNotification(orderData) {
     const itemsFormatted = (orderData.items || []).map((item, idx) => 
-        `• ${item.product_name} (${item.variant_details || 'افتراضي'}) - العدد: ${item.quantity} - السعر: $${((item.unit_price || 0) * item.quantity).toFixed(2)}`
+        `${idx + 1}. ${item.product_name} (${item.variant_details || 'افتراضي'}) - العدد: ${item.quantity} - السعر: $${((item.unit_price || 0) * item.quantity).toFixed(2)}`
     ).join('\n');
 
-    const emailText = `📦 طلب جديد من متجر ElectroHomeSY
-----------------------------------------
-• اسم الزبون: ${orderData.customer_name}
-• رقم الهاتف: ${orderData.customer_phone}
-• عنوان التوصيل: ${orderData.delivery_address || 'دمشق'}
-• طريقة الدفع: ${orderData.payment_method === 'cash' ? 'الدفع عند الاستلام (COD)' : orderData.payment_method}
-• المبلغ الإجمالي: $${(orderData.total_amount || 0).toFixed(2)}
+    const payload = {
+        customer_name: orderData.customer_name,
+        customer_phone: orderData.customer_phone,
+        delivery_address: orderData.delivery_address || 'دمشق',
+        payment_method: orderData.payment_method === 'cash' ? 'الدفع عند الاستلام' : orderData.payment_method,
+        total_amount: orderData.total_amount || 0,
+        items: itemsFormatted,
+        date: new Date().toLocaleString('ar-SY')
+    };
 
-🛒 تفاصيل المنتجات:
-${itemsFormatted}
+    // 1. Post directly to Google Sheets Webhook if configured
+    if (window.GOOGLE_SHEETS_ORDERS_WEBHOOK && window.GOOGLE_SHEETS_ORDERS_WEBHOOK.includes('script.google.com')) {
+        try {
+            await fetch(window.GOOGLE_SHEETS_ORDERS_WEBHOOK, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+            console.log('Order sent to Google Sheets Webhook');
+        } catch (e) {
+            console.warn('Google Sheets Webhook Notice:', e);
+        }
+    }
 
-🕒 تاريخ الطلب: ${new Date().toLocaleString()}`;
-
+    // 2. Secondary Web API backup
     try {
         await fetch("https://api.web3forms.com/submit", {
             method: "POST",
-            headers: { 
-                "Content-Type": "application/json", 
-                "Accept": "application/json" 
-            },
+            headers: { "Content-Type": "application/json", "Accept": "application/json" },
             body: JSON.stringify({
                 access_key: "b890a887-f831-4a41-b1e7-814d2417743d",
                 subject: `📦 طلب جديد من متجر ElectroHomeSY - ${orderData.customer_name}`,
@@ -3241,32 +3254,37 @@ ${itemsFormatted}
                 name: orderData.customer_name,
                 phone: orderData.customer_phone,
                 address: orderData.delivery_address,
-                message: emailText
+                message: `الاسم: ${orderData.customer_name}\nالهاتف: ${orderData.customer_phone}\nالعنوان: ${orderData.delivery_address}\nالمبلغ الإجمالي: $${(orderData.total_amount||0).toFixed(2)}\n\nالمنتجات:\n${itemsFormatted}`
             })
         });
-    } catch (e) {
-        console.warn('Email send notice:', e);
-    }
+    } catch (e) {}
 }
 
-// Helper: Send special product request email notification to electrohomesy@gmail.com
+// Helper: Send special product request email notification & record in Google Sheets
 async function sendProductRequestEmailNotification(reqData) {
-    const emailText = `🔔 طلب جهاز خاص من متجر ElectroHomeSY
-----------------------------------------
-• اسم الزبون: ${reqData.customer_name}
-• رقم الهاتف: ${reqData.customer_phone}
-• الجهاز المطلوب: ${reqData.requested_product}
-• ملاحظات إضافية: ${reqData.notes || 'لا يوجد'}
+    const payload = {
+        customer_name: reqData.customer_name,
+        customer_phone: reqData.customer_phone,
+        requested_product: reqData.requested_product,
+        notes: reqData.notes || 'لا يوجد',
+        date: new Date().toLocaleString('ar-SY')
+    };
 
-🕒 تاريخ الطلب: ${new Date().toLocaleString()}`;
+    if (window.GOOGLE_SHEETS_ORDERS_WEBHOOK && window.GOOGLE_SHEETS_ORDERS_WEBHOOK.includes('script.google.com')) {
+        try {
+            await fetch(window.GOOGLE_SHEETS_ORDERS_WEBHOOK, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+        } catch (e) {}
+    }
 
     try {
         await fetch("https://api.web3forms.com/submit", {
             method: "POST",
-            headers: { 
-                "Content-Type": "application/json", 
-                "Accept": "application/json" 
-            },
+            headers: { "Content-Type": "application/json", "Accept": "application/json" },
             body: JSON.stringify({
                 access_key: "b890a887-f831-4a41-b1e7-814d2417743d",
                 subject: `🔔 طلب جهاز خاص من متجر ElectroHomeSY - ${reqData.customer_name}`,
@@ -3274,12 +3292,10 @@ async function sendProductRequestEmailNotification(reqData) {
                 to_email: "electrohomesy@gmail.com",
                 name: reqData.customer_name,
                 phone: reqData.customer_phone,
-                message: emailText
+                message: `اسم الزبون: ${reqData.customer_name}\nرقم الهاتف: ${reqData.customer_phone}\nالجهاز المطلوب: ${reqData.requested_product}\nملاحظات: ${reqData.notes || 'لا يوجد'}`
             })
         });
-    } catch (e) {
-        console.warn('Request email send notice:', e);
-    }
+    } catch (e) {}
 }
 
 async function handleCheckoutSubmit(e) {
