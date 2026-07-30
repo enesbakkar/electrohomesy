@@ -3534,10 +3534,8 @@ function renderFeaturedCarousel() {
     const container = document.getElementById('featuredCarouselContainer');
     if (!track || !indicators || !container) return;
 
-    // Filter featured products
     featuredCarouselProducts = allProducts.filter(p => p.is_featured === 1);
     
-    // If no featured products, display fallback top products or hide carousel
     if (featuredCarouselProducts.length === 0) {
         featuredCarouselProducts = allProducts.slice(0, 5);
     }
@@ -3551,27 +3549,28 @@ function renderFeaturedCarousel() {
         if (hs) hs.style.display = 'block';
     }
 
-    // Render slides
     track.innerHTML = featuredCarouselProducts.map(p => {
         const finalPrice = p.discount_price ? p.discount_price : p.base_price;
         const discountTag = p.discount_price && p.discount_price < p.base_price 
             ? `<div class="discount-tag">خصم ${Math.round((1 - p.discount_price/p.base_price)*100)}%</div>` 
             : '';
+        const productUrl = typeof getProductUrl === 'function' ? getProductUrl(p.id) : `product.html?id=${p.id}`;
+
         return `
             <div class="carousel-slide">
                 <div class="featured-product-card">
                     ${discountTag}
-                    <div class="product-thumb-wrapper" onclick="window.location.href='product.html?id=${p.id}'" style="cursor:pointer; text-align:center;">
+                    <a href="${productUrl}" target="_blank" rel="noopener" class="product-thumb-wrapper" style="cursor:pointer; text-align:center; display:block;">
                         <img class="product-thumb" src="${p.main_image || '/Logo/ElectroHomeSY-logo-blue.png'}" alt="${p.title_ar}">
-                    </div>
-                    <a href="product.html?id=${p.id}" class="product-title">${p.title_ar}</a>
+                    </a>
+                    <a href="${productUrl}" target="_blank" rel="noopener" class="product-title" style="text-decoration:none;">${p.title_ar}</a>
                     <div class="product-price-box">
                         <span class="current-price">${formatSYP(finalPrice)}</span>
                         ${p.discount_price && p.discount_price < p.base_price ? `<span class="old-price">${formatSYP(p.base_price)}</span>` : ''}
                     </div>
-                    <button class="btn-add-cart" onclick="addCart(${p.id})">
-                        <i class="fa-solid fa-basket-shopping"></i> إضافة للسلة
-                    </button>
+                    <a href="${productUrl}" target="_blank" rel="noopener" class="btn-add-cart" style="text-decoration:none; display:flex; align-items:center; justify-content:center; gap:8px;">
+                        <i class="fa-solid fa-eye"></i> عرض التفاصيل
+                    </a>
                 </div>
             </div>
         `;
