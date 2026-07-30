@@ -2705,223 +2705,121 @@ function getProductImageClient(imageLink, categoryId) {
 }
 
 async function fetchProductsFromGoogleSheetsClient(categorySlug) {
-    try {
-        const sheetUrl = 'https://docs.google.com/spreadsheets/d/1hioi7V5yDDsOmm5_StTI3b8poxnCsgMQXP30lC75PRI/gviz/tq?tqx=out:csv&t=' + Date.now();
-        const res = await fetch(sheetUrl);
-        if (!res.ok) throw new Error('Failed to fetch from Google Sheets directly');
-        const text = await res.text();
-        const rows = parseCSVClient(text);
-        if (rows.length < 2) throw new Error('Empty CSV');
+    let rawCsvText = '';
 
-        const products = [];
-        for (let i = 1; i < rows.length; i++) {
-            const row = rows[i];
-            if (row.length < 3) continue;
+    const urls = [
+        'https://docs.google.com/spreadsheets/d/1hioi7V5yDDsOmm5_StTI3b8poxnCsgMQXP30lC75PRI/gviz/tq?tqx=out:csv&gid=0&t=' + Date.now(),
+        'https://docs.google.com/spreadsheets/d/1hioi7V5yDDsOmm5_StTI3b8poxnCsgMQXP30lC75PRI/export?format=csv&gid=0&t=' + Date.now()
+    ];
 
-            const name = (row[1] || row[2] || '').trim();
-            const brand = (row[2] || 'ElectroHome').trim();
-            const code = (row[3] || `PROD-${i}`).trim();
-            if (!name || name.startsWith('Product') || name.startswith?.('اسم')) continue;
-
-            const id = parseInt(row[0], 10) || i;
-            const quantity = parseFloat(row[4]) || 0;
-            let cost = parsePriceClient(row[5]);
-            let sellingPrice = parsePriceClient(row[6]);
-            let discountPrice = parsePriceClient(row[7]);
-
-            // Col 10 (K): Fav / Featured
-            const favVal = (row[10] || '').trim();
-            const isFeatured = (favVal === '1' || favVal.toUpperCase() === 'TRUE') ? 1 : 0;
-
-            // Col 11 (L): details
-            const detailsText = (row[11] || '').trim();
-
-            // Col 12 (M): video link
-            const videoLink = (row[12] || '').trim();
-
-            // Col 13..17 (N, O, P, Q, R): Photos 1..5
-            const photos = [];
-            for (let cIdx = 13; cIdx <= 17; cIdx++) {
-                let imgUrl = getGoogleDriveDirectLinkClient((row[cIdx] || '').trim());
-                if (imgUrl && imgUrl.startsWith('http') && !photos.includes(imgUrl)) {
-                    photos.push(imgUrl);
+    for (const url of urls) {
+        try {
+            const res = await fetch(url);
+            if (res.ok) {
+                const text = await res.text();
+                if (text && text.length > 500 && text.includes(',')) {
+                    rawCsvText = text;
+                    break;
                 }
             }
-
-            const categoryId = getCategoryIdFromSheetClient(name, brand);
-            const mainImage = photos.length > 0 ? photos[0] : '/Logo/ElectroHomeSY-logo-blue.png';
-            const imagesList = photos.length > 0 ? photos : [];
-            const description = (detailsText && !detailsText.startsWith('http')) ? detailsText : `جهاز ${name} عالي الكفاءة من ماركة ${brand}. الموديل: ${code}.`;
-
-            products.push({
-                id,
-                category_id: categoryId,
-                title_ar: name,
-                slug: `prod-${code.toLowerCase().replace(/[^a-z0-9]/g, '-')}-${id}`,
-                description_ar: description,
-                base_price: sellingPrice,
-                discount_price: discountPrice,
-                main_image: mainImage,
-                images: imagesList,
-                youtube_url: videoLink,
-                is_visible: 1,
-                is_featured: isFeatured,
-                variants: [
-                    { id: id * 100, product_id: id, brand: brand || 'ElectroHome', model_name: code, variant_attributes: { "الماركة": brand, "الموديل": code }, price_modifier: 0, stock_quantity: Math.round(quantity) || 10, sku: code }
-                ]
-            });
+        } catch (e) {
+            console.warn('Failed URL:', url, e);
         }
+    }
 
-        allProducts = products;
-        isGoogleSheetsDataLoaded = true;
-
-        if (categorySlug === 'all') {
-            return products;
-        } else {
-            const catMap = { 'irons': 1, 'vacuums': 2, 'kitchen': 3, 'personal-care': 4, 'home-living': 5 };
-            const catId = catMap[categorySlug];
-            return products.filter(p => p.category_id === catId);
-        }
-    } catch (sheetErr) {
-        console.warn('Failed to fetch direct CSV, falling back to pre-compiled products.json:', sheetErr);
+    if (rawCsvText) {
         try {
-            const jsonRes = await fetch('./js/products.json');
-            if (!jsonRes.ok) throw new Error('Static products.json not found');
+            const rows = parseCSVClient(rawCsvText);
+            if (rows.length >= 2) {
+                const products = [];
+                for (let i = 1; i < rows.length; i++) {
+                    const row = rows[i];
+                    if (!row || row.length < 3) continue;
+
+                    const name = (row[1] || row[2] || '').trim();
+                    const brand = (row[2] || 'ElectroHome').trim();
+                    const code = (row[3] || `PROD-${i}`).trim();
+
+                    if (!name || name.startsWith('Product') || name.startsWith('اسم') || name === '-') continue;
+
+                    const id = parseInt(row[0], 10) || i;
+                    const quantity = parseFloat(row[4]) || 10;
+                    let cost = parsePriceClient(row[5]);
+                    let sellingPrice = parsePriceClient(row[6]);
+                    let discountPrice = parsePriceClient(row[7]);
+
+                    const favVal = (row[10] || '').trim();
+                    const isFeatured = (favVal === '1' || favVal.toUpperCase() === 'TRUE') ? 1 : 0;
+                    const detailsText = (row[11] || '').trim();
+                    const videoLink = (row[12] || '').trim();
+
+                    const photos = [];
+                    for (let cIdx = 13; cIdx <= 17; cIdx++) {
+                        let imgUrl = getGoogleDriveDirectLinkClient((row[cIdx] || '').trim());
+                        if (imgUrl && imgUrl.startsWith('http') && !photos.includes(imgUrl)) {
+                            photos.push(imgUrl);
+                        }
+                    }
+
+                    const categoryId = getCategoryIdFromSheetClient(name, brand);
+                    const mainImage = photos.length > 0 ? photos[0] : getFallbackImageClient(categoryId);
+                    const imagesList = photos.length > 0 ? photos : [mainImage];
+                    const description = (detailsText && !detailsText.startsWith('http')) ? detailsText : `جهاز ${name} عالي الكفاءة من ماركة ${brand}. الموديل: ${code}.`;
+
+                    products.push({
+                        id,
+                        category_id: categoryId,
+                        title_ar: name,
+                        slug: `prod-${code.toLowerCase().replace(/[^a-z0-9]/g, '-')}-${id}`,
+                        description_ar: description,
+                        base_price: sellingPrice || cost || 29.99,
+                        discount_price: discountPrice,
+                        main_image: mainImage,
+                        images: imagesList,
+                        youtube_url: videoLink,
+                        is_visible: 1,
+                        is_featured: isFeatured,
+                        variants: [
+                            { id: id * 100, product_id: id, brand: brand || 'ElectroHome', model_name: code, variant_attributes: { "الماركة": brand, "الموديل": code }, price_modifier: 0, stock_quantity: Math.round(quantity) || 10, sku: code }
+                        ]
+                    });
+                }
+
+                if (products.length > 0) {
+                    allProducts = products;
+                    isGoogleSheetsDataLoaded = true;
+                    if (categorySlug === 'all') return products;
+                    const catMap = { 'irons': 1, 'vacuums': 2, 'kitchen': 3, 'personal-care': 4, 'home-living': 5, 'coffee-machines': 6 };
+                    const catId = catMap[categorySlug];
+                    return catId ? products.filter(p => p.category_id === catId) : products;
+                }
+            }
+        } catch (parseErr) {
+            console.error('Error parsing Google Sheets CSV:', parseErr);
+        }
+    }
+
+    // Fallback 1: Local products.json file
+    try {
+        const jsonRes = await fetch('./js/products.json?v=25.0.0');
+        if (jsonRes.ok) {
             const products = await jsonRes.json();
             allProducts = products;
             isGoogleSheetsDataLoaded = true;
-
-            if (categorySlug === 'all') {
-                return products;
-            } else {
-                const catMap = { 'irons': 1, 'vacuums': 2, 'kitchen': 3, 'personal-care': 4, 'home-living': 5 };
-                const catId = catMap[categorySlug];
-                return products.filter(p => p.category_id === catId);
-            }
-        } catch (jsonErr) {
-            console.error('Static products.json fallback also failed:', jsonErr);
-            throw jsonErr;
+            if (categorySlug === 'all') return products;
+            const catMap = { 'irons': 1, 'vacuums': 2, 'kitchen': 3, 'personal-care': 4, 'home-living': 5, 'coffee-machines': 6 };
+            const catId = catMap[categorySlug];
+            return catId ? products.filter(p => p.category_id === catId) : products;
         }
+    } catch (jsonErr) {
+        console.warn('Local products.json fallback failed:', jsonErr);
     }
-}
 
-
-function parseCSVClient(text) {
-    const lines = text.split(/\r?\n/);
-    const rows = [];
-    for (let i = 0; i < lines.length; i++) {
-        const line = lines[i].trim();
-        if (!line) continue;
-        
-        const row = [];
-        let inQuotes = false;
-        let currentCell = '';
-        
-        for (let j = 0; j < line.length; j++) {
-            const char = line[j];
-            if (char === '"') {
-                inQuotes = !inQuotes;
-            } else if (char === ',' && !inQuotes) {
-                row.push(currentCell.trim());
-                currentCell = '';
-            } else {
-                currentCell += char;
-            }
-        }
-        row.push(currentCell.trim());
-        rows.push(row);
+    // Fallback 2: Hardcoded FALLBACK_PRODUCTS
+    if (typeof FALLBACK_PRODUCTS !== 'undefined' && FALLBACK_PRODUCTS.length > 0) {
+        allProducts = FALLBACK_PRODUCTS.filter(p => p.is_visible);
     }
-    return rows;
-}
-
-function parsePriceClient(val) {
-    if (!val || val === '-' || val.trim() === '' || val.trim() === '0') return null;
-    // Support decimals like 29.99, 100.00 and integers
-    const clean = val.replace(/[^\d.]/g, '');
-    const num = parseFloat(clean);
-    return isNaN(num) || num === 0 ? null : num;
-}
-
-function getCategoryIdFromSheetClient(categoryName, productName) {
-    if (!categoryName) {
-        return getCategoryIdFromNameClient(productName);
-    }
-    const clean = categoryName.trim().toLowerCase();
-    if (clean.includes('مكواة') || clean.includes('بخار') || clean.includes('iron') || clean.includes('ملابس')) {
-        return 1; // irons
-    }
-    if (clean.includes('مكنسة') || clean.includes('تنظيف') || clean.includes('vacuum') || clean.includes('مكاس') || clean.includes('مكنس')) {
-        return 2; // vacuums
-    }
-    if (clean.includes('مطبخ') || clean.includes('خلاط') || clean.includes('غلاية') || clean.includes('blender') || clean.includes('kettle') || clean.includes('microwave') || clean.includes('طعام') || clean.includes('شعر')) {
-        return 3; // kitchen
-    }
-    if (clean.includes('كبير') || clean.includes('ثلاجة') || clean.includes('غسالة') || clean.includes('تلفزيون') || clean.includes('مكيف')) {
-        return 4; // large-appliances
-    }
-    return getCategoryIdFromNameClient(productName);
-}
-
-function getCategoryIdFromNameClient(name) {
-    const lowerName = name.toLowerCase();
-    if (lowerName.includes('مكواة') || lowerName.includes('بخار') || lowerName.includes('iron')) {
-        return 1; // irons
-    }
-    if (lowerName.includes('مكنسة') || lowerName.includes('تنظيف') || lowerName.includes('vacuum') || lowerName.includes('broom')) {
-        return 2; // vacuums
-    }
-    if (lowerName.includes('ميكروويف') || lowerName.includes('خلاط') || lowerName.includes('غلاية') || lowerName.includes('blender') || lowerName.includes('kettle') || lowerName.includes('microwave') || lowerName.includes('شعر')) {
-        return 3; // kitchen
-    }
-    return 4; // large-appliances
-}
-
-function getCategoryNameById(categoryId) {
-    const names = {
-        1: 'المكاوي وأجهزة البخار',
-        2: 'المكاس والتنظيف',
-        3: 'أجهزة المطبخ والخلاطات',
-        4: 'الأجهزة المنزلية الكبيرة'
-    };
-    return names[categoryId] || 'عام';
-}
-
-function getGoogleDriveDirectLinkClient(link) {
-    if (!link) return '';
-    if (link.includes('drive.google.com')) {
-        let fileId = '';
-        const idMatch = link.match(/[?&]id=([a-zA-Z0-9_-]+)/);
-        if (idMatch) {
-            fileId = idMatch[1];
-        } else {
-            const fileMatch = link.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
-            if (fileMatch) {
-                fileId = fileMatch[1];
-            }
-        }
-        if (fileId) {
-            return `https://lh3.googleusercontent.com/d/${fileId}`;
-        }
-    }
-    return link;
-}
-
-function getProductImageClient(imageLink, categoryId) {
-    if (!imageLink) {
-        return getFallbackImageClient(categoryId);
-    }
-    const resolvedLink = getGoogleDriveDirectLinkClient(imageLink);
-    if (resolvedLink.startsWith('http://') || resolvedLink.startsWith('https://') || resolvedLink.startsWith('/')) {
-        return resolvedLink;
-    }
-    return getFallbackImageClient(categoryId);
-}
-
-async function fetchProductDetailsFromGoogleSheetsClient(productId) {
-    if (!isGoogleSheetsDataLoaded) {
-        await fetchProductsFromGoogleSheetsClient('all');
-    }
-    return allProducts.find(p => p.id === productId) || null;
+    return allProducts;
 }
 
 // Render Products Grid - Cards open product page in new tab
