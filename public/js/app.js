@@ -1888,6 +1888,123 @@ function formatSYP(amount) {
 }
 
 // Utility: Generate unique product code  e.g. EHS-001
+function showCustomSuccessModal(title, message, btnText = 'متابعة التسوق 🛍️', onConfirm = null) {
+    const oldModal = document.getElementById('customSuccessModalWrapper');
+    if (oldModal) oldModal.remove();
+
+    const wrapper = document.createElement('div');
+    wrapper.id = 'customSuccessModalWrapper';
+    wrapper.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(15, 23, 42, 0.65);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        z-index: 999999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        animation: fadeInOverlay 0.3s ease-out forwards;
+    `;
+
+    wrapper.innerHTML = `
+        <div style="
+            background: #ffffff;
+            border-radius: 28px;
+            max-width: 480px;
+            width: 100%;
+            padding: 36px 28px;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            transform: scale(0.85);
+            opacity: 0;
+            animation: modalScaleUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            font-family: 'Cairo', sans-serif;
+            direction: rtl;
+        ">
+            <div style="
+                width: 84px;
+                height: 84px;
+                background: #dcfce7;
+                color: #16a34a;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto 20px auto;
+                font-size: 2.6rem;
+                box-shadow: 0 0 0 10px rgba(220, 252, 231, 0.5);
+                animation: pulseIcon 2s infinite;
+            ">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+
+            <h3 style="
+                font-size: 1.55rem;
+                font-weight: 800;
+                color: #0f172a;
+                margin: 0 0 12px 0;
+                line-height: 1.3;
+            ">${title}</h3>
+
+            <p style="
+                font-size: 1rem;
+                color: #475569;
+                line-height: 1.65;
+                margin: 0 0 26px 0;
+            ">${message}</p>
+
+            <button type="button" id="btnCustomSuccessOk" style="
+                width: 100%;
+                background: linear-gradient(135deg, #1e3a8a, #2563eb);
+                color: #ffffff;
+                border: none;
+                padding: 16px;
+                font-size: 1.1rem;
+                font-weight: 700;
+                border-radius: 16px;
+                cursor: pointer;
+                box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.4);
+                transition: all 0.2s ease;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+            " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                <span>${btnText}</span>
+            </button>
+        </div>
+
+        <style>
+            @keyframes fadeInOverlay {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            @keyframes modalScaleUp {
+                from { opacity: 0; transform: scale(0.85); }
+                to { opacity: 1; transform: scale(1); }
+            }
+            @keyframes pulseIcon {
+                0% { box-shadow: 0 0 0 0 rgba(220, 252, 231, 0.7); }
+                70% { box-shadow: 0 0 0 18px rgba(220, 252, 231, 0); }
+                100% { box-shadow: 0 0 0 0 rgba(220, 252, 231, 0); }
+            }
+        </style>
+    `;
+
+    document.body.appendChild(wrapper);
+
+    document.getElementById('btnCustomSuccessOk')?.addEventListener('click', () => {
+        wrapper.remove();
+        if (typeof onConfirm === 'function') onConfirm();
+    });
+}
+
 function validateSyrianPhoneNumber(phone) {
     if (!phone) return false;
     const clean = phone.replace(/[\s\-\(\)]/g, '');
@@ -3335,10 +3452,9 @@ async function handleCheckoutSubmit(e) {
         submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري إرسال الطلب...';
     }
 
-    // AWAIT email notification
+    // AWAIT email & Google Sheets notification
     await sendOrderEmailNotification(orderPayload);
 
-    // Also attempt backend order recording if server exists
     try {
         await fetch('/api/orders', {
             method: 'POST',
@@ -3355,11 +3471,16 @@ async function handleCheckoutSubmit(e) {
         submitBtn.innerHTML = origBtnHtml;
     }
 
-    alert('✅ تم إرسال طلبكم بنجاح!\n\nتم إرسال تفاصيل الطلب بالكامل إلى بريد المتجر (electrohomesy@gmail.com). سيتواصل معكم فريق المبيعات قريباً لتأكيد التوصيل في دمشق.');
-
     cart = [];
     saveCart();
     window.location.hash = '';
+
+    showCustomSuccessModal(
+        '🎉 تم استلام طلبكم بنجاح!',
+        'شكراً لثقتكم بمتجر ElectroHomeSY. تم توثيق بيانات الطلب بنجاح وسيتواصل معكم فريق المبيعات قريباً لتأكيد التوصيل في دمشق.',
+        'متابعة التسوق 🛍️',
+        () => { showView('home'); }
+    );
 }
 
 async function handleRequestSubmit(e) {
@@ -3396,9 +3517,14 @@ async function handleRequestSubmit(e) {
         submitBtn.innerHTML = origBtnHtml;
     }
 
-    alert('✅ تم إرسال طلبكم بنجاح إلى بريد المتجر وسنقوم بتوفير الجهاز والتواصل معكم بأسرع وقت!');
     document.getElementById('productRequestForm').reset();
     closeModal('requestModal');
+
+    showCustomSuccessModal(
+        '✨ تم استلام طلبك الخاص بنجاح!',
+        'تم تسجيل طلب الجهاز والتفاصيل بنجاح. وسيقوم فريق إلكتروهومسي بتوفير الجهاز والتواصل معكم بأسرع وقت.',
+        'تم، شكراً 👍'
+    );
 }
 
 // Featured Carousel Functions
