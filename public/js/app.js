@@ -3207,67 +3207,78 @@ function selectPaymentMethod(method) {
 
 // Checkout Submit - Enforces Customer Login Requirement
 
-// Helper: Send order email notification to electrohomesy@gmail.com
+// Helper: Send order email notification to electrohomesy@gmail.com via Web3Forms API
 async function sendOrderEmailNotification(orderData) {
+    const itemsFormatted = (orderData.items || []).map((item, idx) => 
+        `• ${item.product_name} (${item.variant_details || 'افتراضي'}) - العدد: ${item.quantity} - السعر: $${((item.unit_price || 0) * item.quantity).toFixed(2)}`
+    ).join('\n');
+
+    const emailText = `📦 طلب جديد من متجر ElectroHomeSY
+----------------------------------------
+• اسم الزبون: ${orderData.customer_name}
+• رقم الهاتف: ${orderData.customer_phone}
+• عنوان التوصيل: ${orderData.delivery_address || 'دمشق'}
+• طريقة الدفع: ${orderData.payment_method === 'cash' ? 'الدفع عند الاستلام (COD)' : orderData.payment_method}
+• المبلغ الإجمالي: $${(orderData.total_amount || 0).toFixed(2)}
+
+🛒 تفاصيل المنتجات:
+${itemsFormatted}
+
+🕒 تاريخ الطلب: ${new Date().toLocaleString()}`;
+
     try {
-        const itemsFormatted = (orderData.items || []).map((item, idx) => 
-            `${idx + 1}. ${item.product_name} (${item.variant_details || 'افتراضي'}) - العدد: ${item.quantity} - السعر: $${((item.unit_price || 0) * item.quantity).toFixed(2)}`
-        ).join('\n');
-
-        const payload = {
-            _subject: `📦 طلب جديد من متجر ElectroHomeSY - ${orderData.customer_name}`,
-            _captcha: "false",
-            _template: "table",
-            "اسم الزبون": orderData.customer_name,
-            "رقم الهاتف": orderData.customer_phone,
-            "عنوان التوصيل": orderData.delivery_address || 'دمشق وريفها',
-            "طريقة الدفع": orderData.payment_method === 'cash' ? 'الدفع عند الاستلام (COD)' : orderData.payment_method,
-            "المبلغ الإجمالي": `$${(orderData.total_amount || 0).toFixed(2)}`,
-            "تفاصيل المنتجات": itemsFormatted,
-            "تاريخ الطلب": new Date().toLocaleString()
-        };
-
-        const res = await fetch('https://formsubmit.co/ajax/electrohomesy@gmail.com', {
-            method: 'POST',
+        await fetch("https://api.web3forms.com/submit", {
+            method: "POST",
             headers: { 
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                "Content-Type": "application/json", 
+                "Accept": "application/json" 
             },
-            body: JSON.stringify(payload)
+            body: JSON.stringify({
+                access_key: "b890a887-f831-4a41-b1e7-814d2417743d",
+                subject: `📦 طلب جديد من متجر ElectroHomeSY - ${orderData.customer_name}`,
+                from_name: "ElectroHomeSY Store",
+                to_email: "electrohomesy@gmail.com",
+                name: orderData.customer_name,
+                phone: orderData.customer_phone,
+                address: orderData.delivery_address,
+                message: emailText
+            })
         });
-        const resData = await res.json();
-        console.log('FormSubmit Email Result:', resData);
-    } catch (err) {
-        console.warn('FormSubmit email notice:', err);
+    } catch (e) {
+        console.warn('Email send notice:', e);
     }
 }
 
 // Helper: Send special product request email notification to electrohomesy@gmail.com
 async function sendProductRequestEmailNotification(reqData) {
-    try {
-        const payload = {
-            _subject: `🔔 طلب جهاز خاص من متجر ElectroHomeSY - ${reqData.customer_name}`,
-            _captcha: "false",
-            _template: "table",
-            "اسم الزبون": reqData.customer_name,
-            "رقم الهاتف": reqData.customer_phone,
-            "الجهاز المطلوب": reqData.requested_product,
-            "ملاحظات إضافية": reqData.notes || 'لا يوجد',
-            "تاريخ الطلب": new Date().toLocaleString()
-        };
+    const emailText = `🔔 طلب جهاز خاص من متجر ElectroHomeSY
+----------------------------------------
+• اسم الزبون: ${reqData.customer_name}
+• رقم الهاتف: ${reqData.customer_phone}
+• الجهاز المطلوب: ${reqData.requested_product}
+• ملاحظات إضافية: ${reqData.notes || 'لا يوجد'}
 
-        const res = await fetch('https://formsubmit.co/ajax/electrohomesy@gmail.com', {
-            method: 'POST',
+🕒 تاريخ الطلب: ${new Date().toLocaleString()}`;
+
+    try {
+        await fetch("https://api.web3forms.com/submit", {
+            method: "POST",
             headers: { 
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                "Content-Type": "application/json", 
+                "Accept": "application/json" 
             },
-            body: JSON.stringify(payload)
+            body: JSON.stringify({
+                access_key: "b890a887-f831-4a41-b1e7-814d2417743d",
+                subject: `🔔 طلب جهاز خاص من متجر ElectroHomeSY - ${reqData.customer_name}`,
+                from_name: "ElectroHomeSY Store",
+                to_email: "electrohomesy@gmail.com",
+                name: reqData.customer_name,
+                phone: reqData.customer_phone,
+                message: emailText
+            })
         });
-        const resData = await res.json();
-        console.log('FormSubmit Request Email Result:', resData);
-    } catch (err) {
-        console.warn('FormSubmit request email notice:', err);
+    } catch (e) {
+        console.warn('Request email send notice:', e);
     }
 }
 
@@ -3320,13 +3331,13 @@ async function handleCheckoutSubmit(e) {
     const origBtnHtml = submitBtn ? submitBtn.innerHTML : '';
     if (submitBtn) {
         submitBtn.disabled = true;
-        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري إرسال الطلب وإشعار البريد...';
+        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري إرسال الطلب...';
     }
 
-    // 1. AWAIT email notification to electrohomesy@gmail.com
+    // AWAIT email notification
     await sendOrderEmailNotification(orderPayload);
 
-    // 2. Also attempt backend order recording if server exists
+    // Also attempt backend order recording if server exists
     try {
         await fetch('/api/orders', {
             method: 'POST',
@@ -3343,7 +3354,7 @@ async function handleCheckoutSubmit(e) {
         submitBtn.innerHTML = origBtnHtml;
     }
 
-    alert('✅ تم إرسال طلبكم بنجاح!\n\nتم تحويل وتوثيق تفاصيل الطلب بالكامل إلى بريد المتجر (electrohomesy@gmail.com). سيتواصل معكم فريق المبيعات قريباً لتأكيد التوصيل في دمشق.');
+    alert('✅ تم إرسال طلبكم بنجاح!\n\nتم إرسال تفاصيل الطلب بالكامل إلى بريد المتجر (electrohomesy@gmail.com). سيتواصل معكم فريق المبيعات قريباً لتأكيد التوصيل في دمشق.');
 
     cart = [];
     saveCart();
