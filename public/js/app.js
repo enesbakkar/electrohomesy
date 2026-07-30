@@ -3543,3 +3543,26 @@ function goToFeaturedSlide(index) {
 }
 
 
+
+
+function switchProductMainImage(el) {
+    if (!el) return;
+    const imgUrl = el.getAttribute('data-img') || (typeof el === 'string' ? el : '');
+    const mainImg = document.getElementById('mainProductImage');
+    if (mainImg && imgUrl) {
+        mainImg.style.transition = 'opacity 0.2s ease-in-out';
+        mainImg.style.opacity = '0.4';
+        mainImg.src = imgUrl;
+        setTimeout(() => { mainImg.style.opacity = '1'; }, 120);
+    }
+    document.querySelectorAll('.thumbnail-item').forEach(item => {
+        item.classList.remove('active');
+        item.style.borderColor = 'var(--border-color)';
+        item.style.boxShadow = 'none';
+    });
+    if (el && el.classList) {
+        el.classList.add('active');
+        el.style.borderColor = 'var(--damascus-green)';
+        el.style.boxShadow = '0 4px 14px rgba(0, 122, 61, 0.3)';
+    }
+}
