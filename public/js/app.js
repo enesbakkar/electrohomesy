@@ -2704,6 +2704,26 @@ function getProductImageClient(imageLink, categoryId) {
     return getFallbackImageClient(categoryId);
 }
 
+async function fetchProducts(categorySlug = 'all') {
+    renderLoadingSkeleton();
+    try {
+        const products = await fetchProductsFromGoogleSheetsClient(categorySlug);
+        renderProducts(products);
+        renderFeaturedCarousel();
+        return products;
+    } catch (err) {
+        console.error('Error fetching products:', err);
+        if (allProducts && allProducts.length > 0) {
+            renderProducts(allProducts);
+            renderFeaturedCarousel();
+        } else {
+            const fallback = (typeof FALLBACK_PRODUCTS !== 'undefined') ? FALLBACK_PRODUCTS : [];
+            renderProducts(fallback);
+            renderFeaturedCarousel();
+        }
+    }
+}
+
 async function fetchProductsFromGoogleSheetsClient(categorySlug) {
     let rawCsvText = '';
 
