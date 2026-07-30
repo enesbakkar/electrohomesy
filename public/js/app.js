@@ -3221,13 +3221,13 @@ async function sendOrderEmailNotification(orderData) {
             "اسم الزبون": orderData.customer_name,
             "رقم الهاتف": orderData.customer_phone,
             "عنوان التوصيل": orderData.delivery_address || 'دمشق وريفها',
-            "طريقة الدفع": orderData.payment_method === 'cash' ? 'الدفع عند الاستلام' : orderData.payment_method,
+            "طريقة الدفع": orderData.payment_method === 'cash' ? 'الدفع عند الاستلام (COD)' : orderData.payment_method,
             "المبلغ الإجمالي": `$${(orderData.total_amount || 0).toFixed(2)}`,
             "تفاصيل المنتجات": itemsFormatted,
             "تاريخ الطلب": new Date().toLocaleString()
         };
 
-        await fetch('https://formsubmit.co/ajax/electrohomesy@gmail.com', {
+        const res = await fetch('https://formsubmit.co/ajax/electrohomesy@gmail.com', {
             method: 'POST',
             headers: { 
                 'Content-Type': 'application/json',
@@ -3235,6 +3235,8 @@ async function sendOrderEmailNotification(orderData) {
             },
             body: JSON.stringify(payload)
         });
+        const resData = await res.json();
+        console.log('FormSubmit Email Result:', resData);
     } catch (err) {
         console.warn('FormSubmit email notice:', err);
     }
@@ -3254,7 +3256,7 @@ async function sendProductRequestEmailNotification(reqData) {
             "تاريخ الطلب": new Date().toLocaleString()
         };
 
-        await fetch('https://formsubmit.co/ajax/electrohomesy@gmail.com', {
+        const res = await fetch('https://formsubmit.co/ajax/electrohomesy@gmail.com', {
             method: 'POST',
             headers: { 
                 'Content-Type': 'application/json',
@@ -3262,6 +3264,8 @@ async function sendProductRequestEmailNotification(reqData) {
             },
             body: JSON.stringify(payload)
         });
+        const resData = await res.json();
+        console.log('FormSubmit Request Email Result:', resData);
     } catch (err) {
         console.warn('FormSubmit request email notice:', err);
     }
@@ -3312,32 +3316,40 @@ async function handleCheckoutSubmit(e) {
         items: [...cart]
     };
 
-    // 1. Send instant email notification to electrohomesy@gmail.com
-    sendOrderEmailNotification(orderPayload);
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    const origBtnHtml = submitBtn ? submitBtn.innerHTML : '';
+    if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري إرسال الطلب وإشعار البريد...';
+    }
 
-    // 2. Format WhatsApp order confirmation message
-    const waPhone = '963959930005';
-    let waMsg = '📦 *طلب جديد من متجر ElectroHomeSY*\n\n';
-    waMsg += '👤 *الاسم:* ' + customer_name + '\n';
-    waMsg += '📞 *الهاتف:* ' + customer_phone + '\n';
-    waMsg += '📍 *العنوان:* ' + delivery_address + '\n';
-    waMsg += '💰 *الإجمالي:* $' + total_amount.toFixed(2) + '\n\n';
-    waMsg += '🛒 *المنتجات المطلوبة:*\n';
-    cart.forEach((item, idx) => {
-        waMsg += (idx + 1) + '. ' + item.product_name + ' (' + (item.variant_details || 'افتراضي') + ') × ' + item.quantity + ' = $' + (item.unit_price * item.quantity).toFixed(2) + '\n';
-    });
+    // 1. AWAIT email notification to electrohomesy@gmail.com
+    await sendOrderEmailNotification(orderPayload);
 
-    const waUrl = 'https://wa.me/' + waPhone + '?text=' + encodeURIComponent(waMsg);
+    // 2. Also attempt backend order recording if server exists
+    try {
+        await fetch('/api/orders', {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json',
+                'X-CSRF-Token': getCookie('csrf_token')
+            },
+            body: JSON.stringify(orderPayload)
+        });
+    } catch (err) {}
 
-    alert('✅ تم إرسال الطلب وإشعارات التفاصيل بنجاح! سيتم فتح الواتساب الآن لتأكيد التوصيل السريع في دمشق.');
-    window.open(waUrl, '_blank');
+    if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = origBtnHtml;
+    }
+
+    alert('✅ تم إرسال طلبكم بنجاح!\n\nتم تحويل وتوثيق تفاصيل الطلب بالكامل إلى بريد المتجر (electrohomesy@gmail.com). سيتواصل معكم فريق المبيعات قريباً لتأكيد التوصيل في دمشق.');
 
     cart = [];
     saveCart();
     window.location.hash = '';
 }
 
-// Product Request Submit
 async function handleRequestSubmit(e) {
     e.preventDefault();
     const customer_name = document.getElementById('reqName').value.trim();
@@ -3346,7 +3358,15 @@ async function handleRequestSubmit(e) {
     const notes = document.getElementById('reqNotes').value.trim();
 
     const reqPayload = { customer_name, customer_phone, requested_product, notes };
-    sendProductRequestEmailNotification(reqPayload);
+
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    const origBtnHtml = submitBtn ? submitBtn.innerHTML : '';
+    if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري إرسال الطلب...';
+    }
+
+    await sendProductRequestEmailNotification(reqPayload);
 
     try {
         await fetch('/api/requests', {
@@ -3359,7 +3379,12 @@ async function handleRequestSubmit(e) {
         });
     } catch (e) {}
 
-    alert('تم إرسال طلبكم بنجاح وسنقوم بتوفير الجهاز التواصل معكم بأسرع وقت!');
+    if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = origBtnHtml;
+    }
+
+    alert('✅ تم إرسال طلبكم بنجاح إلى بريد المتجر وسنقوم بتوفير الجهاز والتواصل معكم بأسرع وقت!');
     document.getElementById('productRequestForm').reset();
     closeModal('requestModal');
 }
