@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <!-- Custom Brand Stylesheet (Cache Busted v=1.4.0 Clean Transparent SVG Favicon) -->
-    <link rel="stylesheet" href="/css/style.css?v=25.0.0">
+    <link rel="stylesheet" href="/css/style.css?v=26.0.0">
 </head>
 
 <body>
@@ -136,10 +136,16 @@
             </div>
 
             <!-- Categories Filter Tabs -->
-            <div class="category-tabs" id="categoryTabs">
+            <div class="category-tabs-sticky-bar">
+                <button type="button" class="btn-toggle-sidebar" onclick="openMobileCategoryDrawer()">
+                    <i class="fa-solid fa-sliders"></i>
+                    <span>الأصناف</span>
+                </button>
+                <div class="category-tabs" id="categoryTabs">
                 <button class="cat-tab active" data-category="all"><i class="fa-solid fa-border-all"></i> كافة
                     المنتجات</button>
                 <!-- Dynamic categories will load here -->
+            </div>
             </div>
 
             <!-- Products Grid -->
@@ -352,7 +358,24 @@
     </footer>
 
     <!-- Frontend Application Logic Script (Cache Busted v=9.0.0) -->
-    <script src="/js/app.js?v=25.0.0"></script>
+    <script src="/js/app.js?v=26.0.0"></script>
+
+    <!-- Mobile Category Sidebar Drawer -->
+    <div id="mobileCategoryDrawerBackdrop" class="mobile-drawer-backdrop" onclick="closeMobileCategoryDrawer()"></div>
+    <div id="mobileCategoryDrawer" class="mobile-category-drawer">
+        <div class="drawer-header">
+            <div style="display:flex; align-items:center; gap:10px;">
+                <img src="/Logo/ElectroHomeSY-logo-blue.png" alt="ElectroHomeSY" style="height:32px;">
+                <h4 style="font-size:1.1rem; font-weight:800; color:var(--onyx); margin:0;">أصناف المتجر</h4>
+            </div>
+            <button type="button" class="close-drawer-btn" onclick="closeMobileCategoryDrawer()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <div class="drawer-body" id="drawerCategoryList">
+            <!-- Dynamic category drawer items -->
+        </div>
+    </div>
 </body>
 
 </html>

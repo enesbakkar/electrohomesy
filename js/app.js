@@ -9,36 +9,12 @@ let featuredCarouselProducts = [];
 
 // Static Fallbacks for GitHub Pages static hosting
 const FALLBACK_CATEGORIES = [
-    {
-        "id": 1,
-        "name_ar": "المكاوي وأجهزة البخار",
-        "slug": "irons",
-        "icon": "fa-shirt"
-    },
-    {
-        "id": 2,
-        "name_ar": "المكانس والتنظيف",
-        "slug": "vacuums",
-        "icon": "fa-broom"
-    },
-    {
-        "id": 3,
-        "name_ar": "أجهزة المطبخ والطهي",
-        "slug": "kitchen",
-        "icon": "fa-blender"
-    },
-    {
-        "id": 4,
-        "name_ar": "العناية الشخصية والحلاقة",
-        "slug": "personal-care",
-        "icon": "fa-scissors"
-    },
-    {
-        "id": 5,
-        "name_ar": "الإضاءة والمنزل والأجهزة الطبية",
-        "slug": "home-living",
-        "icon": "fa-lightbulb"
-    }
+    { id: 1, name_ar: 'المكاوي وأجهزة البخار', slug: 'irons', icon: 'fa-shirt' },
+    { id: 2, name_ar: 'المكانس والتنظيف', slug: 'vacuums', icon: 'fa-broom' },
+    { id: 3, name_ar: 'أجهزة المطبخ والطهي', slug: 'kitchen', icon: 'fa-blender' },
+    { id: 4, name_ar: 'العناية الشخصية والحلاقة', slug: 'personal-care', icon: 'fa-scissors' },
+    { id: 5, name_ar: 'الإضاءة والمنزل والأجهزة الطبية', slug: 'home-living', icon: 'fa-lightbulb' },
+    { id: 6, name_ar: 'ماكينات القهوة والكبسولات', slug: 'coffee-machines', icon: 'fa-mug-hot' }
 ];
 
 const FALLBACK_PRODUCTS = [
@@ -2325,73 +2301,71 @@ function handleGoogleAuthMock() {
     alert(`أهلاً بك يا ${currentCustomer.full_name}! تم ربط حساب Google برقم هاتفك بنجاح.`);
 }
 
+function openMobileCategoryDrawer() {
+    document.getElementById('mobileCategoryDrawerBackdrop')?.classList.add('active');
+    document.getElementById('mobileCategoryDrawer')?.classList.add('active');
+}
+
+function closeMobileCategoryDrawer() {
+    document.getElementById('mobileCategoryDrawerBackdrop')?.classList.remove('active');
+    document.getElementById('mobileCategoryDrawer')?.classList.remove('active');
+}
+
 function renderCategoryTabs(categories) {
     const tabsContainer = document.getElementById('categoryTabs');
-    if (!tabsContainer) return;
-    tabsContainer.innerHTML = `<button class="cat-tab active" data-category="all" onclick="filterCategory('all', this)"><i class="fa-solid fa-border-all"></i> كافة المنتجات</button>`;
-    categories.forEach(cat => {
-        tabsContainer.innerHTML += `
-            <button class="cat-tab" data-category="${cat.slug}" onclick="filterCategory('${cat.slug}', this)">
-                <i class="fa-solid ${cat.icon || 'fa-tag'}"></i> ${cat.name_ar}
-            </button>
-        `;
-    });
-}
+    const drawerList = document.getElementById('drawerCategoryList');
 
-// Fetch Categories with Static Fallback
-async function fetchCategories() {
-    try {
-        const res = await fetch('/api/categories');
-        if (!res.ok) throw new Error('Not ok');
-        allCategories = await res.json();
-        renderCategoryTabs(allCategories);
-    } catch (e) {
-        allCategories = FALLBACK_CATEGORIES;
-        renderCategoryTabs(allCategories);
+    if (!categories || categories.length === 0) categories = FALLBACK_CATEGORIES;
+
+    // Horizontal Pills
+    if (tabsContainer) {
+        let pillsHtml = `<button class="cat-tab active" data-category="all" onclick="filterCategory('all', this)"><i class="fa-solid fa-border-all"></i> كافة المنتجات</button>`;
+        categories.forEach(cat => {
+            pillsHtml += `
+                <button class="cat-tab" data-category="${cat.slug}" onclick="filterCategory('${cat.slug}', this)">
+                    <i class="fa-solid ${cat.icon || 'fa-tag'}"></i> ${cat.name_ar}
+                </button>
+            `;
+        });
+        tabsContainer.innerHTML = pillsHtml;
     }
-}
 
-// Fetch Products with Static Fallback
-// On GitHub Pages there is no /api server, so we skip straight to
-// Google Sheets CSV (live data) → products.json (cached) → FALLBACK_PRODUCTS.
-async function fetchProducts(categorySlug) {
-    try {
-        const products = await fetchProductsFromGoogleSheetsClient(categorySlug);
-        renderProducts(products);
-        renderFeaturedCarousel();
-    } catch (sheetErr) {
-        console.warn('Google Sheets fetch failed, using cached products.json:', sheetErr);
-        try {
-            const jsonRes = await fetch('./js/products.json?t=' + Date.now());
-            if (!jsonRes.ok) throw new Error('products.json not found');
-            const cached = await jsonRes.json();
-            allProducts = cached;
-            isGoogleSheetsDataLoaded = true;
-            if (categorySlug === 'all') {
-                renderProducts(cached);
-            } else {
-                const catMap = { 'irons': 1, 'vacuums': 2, 'kitchen': 3, 'large-appliances': 4 };
-                const catId = catMap[categorySlug];
-                renderProducts(cached.filter(p => p.category_id === catId));
-            }
-            renderFeaturedCarousel();
-        } catch (jsonErr) {
-            console.error('All data sources failed, using hardcoded fallback:', jsonErr);
-            if (categorySlug === 'all') {
-                allProducts = FALLBACK_PRODUCTS.filter(p => p.is_visible);
-            } else {
-                const cat = FALLBACK_CATEGORIES.find(c => c.slug === categorySlug);
-                allProducts = cat ? FALLBACK_PRODUCTS.filter(p => p.category_id === cat.id && p.is_visible) : [];
-            }
-            renderProducts(allProducts);
-            renderFeaturedCarousel();
-        }
+    // Mobile Sidebar Drawer List
+    if (drawerList) {
+        let drawerHtml = `
+            <div class="drawer-cat-item active" data-category="all" onclick="filterCategory('all', this)">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <i class="fa-solid fa-border-all" style="color:#2563eb;"></i>
+                    <span>كافة المنتجات</span>
+                </div>
+                <i class="fa-solid fa-chevron-left" style="font-size:0.85rem; opacity:0.6;"></i>
+            </div>
+        `;
+        categories.forEach(cat => {
+            drawerHtml += `
+                <div class="drawer-cat-item" data-category="${cat.slug}" onclick="filterCategory('${cat.slug}', this)">
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <i class="fa-solid ${cat.icon || 'fa-tag'}" style="color:#2563eb;"></i>
+                        <span>${cat.name_ar}</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-left" style="font-size:0.85rem; opacity:0.6;"></i>
+                </div>
+            `;
+        });
+        drawerList.innerHTML = drawerHtml;
     }
 }
 
 function filterCategory(slug, btn) {
     document.querySelectorAll('.cat-tab').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.drawer-cat-item').forEach(b => b.classList.remove('active'));
+
     if (btn) btn.classList.add('active');
+
+    const matchingDrawerItem = document.querySelector(`.drawer-cat-item[data-category="${slug}"]`);
+    if (matchingDrawerItem) matchingDrawerItem.classList.add('active');
+    const matchingPillItem = document.querySelector(`.cat-tab[data-category="${slug}"]`);
+    if (matchingPillItem) matchingPillItem.classList.add('active');
 
     if (slug === 'all') {
         renderProducts(allProducts);
@@ -2401,24 +2375,27 @@ function filterCategory(slug, btn) {
             'vacuums': [2],
             'kitchen': [3],
             'personal-care': [4],
-            'large-appliances': [4],
-            'home-living': [5]
+            'home-living': [5],
+            'coffee-machines': [6]
         };
         const targetCatIds = catMap[slug] || [];
         const filtered = allProducts.filter(p => {
             if (targetCatIds.includes(p.category_id)) return true;
             const pCatName = (p.category_name || '').toLowerCase();
             const pTitle = (p.title_ar || '').toLowerCase();
+            if (slug === 'coffee-machines' && (pCatName.includes('قهوة') || pTitle.includes('قهوة') || pTitle.includes('إسبريسو') || pTitle.includes('اسبريسو') || pTitle.includes('دولسي') || pTitle.includes('تاسيمو'))) return true;
             if (slug === 'irons' && (pCatName.includes('مكواة') || pTitle.includes('مكواة') || pTitle.includes('بخار'))) return true;
             if (slug === 'vacuums' && (pCatName.includes('مكنسة') || pTitle.includes('مكنسة') || pTitle.includes('تنظيف'))) return true;
-            if (slug === 'kitchen' && (pCatName.includes('مطبخ') || pTitle.includes('خلاط') || pTitle.includes('طعام') || pTitle.includes('ميكروويف'))) return true;
-            if (slug === 'personal-care' && (pCatName.includes('حلاقة') || pTitle.includes('حلاقة') || pTitle.includes('شعر') || pTitle.includes('براون'))) return true;
+            if (slug === 'kitchen' && (pCatName.includes('مطبخ') || pTitle.includes('خلاط') || pTitle.includes('طعام') || pTitle.includes('ميكروويف') || pTitle.includes('غلاية') || pTitle.includes('وافل') || pTitle.includes('شواية'))) return true;
+            if (slug === 'personal-care' && (pCatName.includes('حلاقة') || pTitle.includes('حلاقة') || pTitle.includes('شعر') || pTitle.includes('تشذيب') || pTitle.includes('قص الشعر'))) return true;
+            if (slug === 'home-living' && (pCatName.includes('إضاءة') || pTitle.includes('مصباح') || pTitle.includes('شمعة') || pTitle.includes('ميزان') || pTitle.includes('ريموت'))) return true;
             return false;
         });
         renderProducts(filtered.length > 0 ? filtered : allProducts);
     }
 
-    // Smooth scroll to products grid
+    closeMobileCategoryDrawer();
+
     const targetEl = document.getElementById('productsGrid') || document.getElementById('products-section');
     if (targetEl) {
         const yOffset = -70; 
@@ -2663,107 +2640,35 @@ function parsePriceClient(val) {
 }
 
 function getCategoryIdFromSheetClient(categoryName, productName) {
-    if (!categoryName) {
-        return getCategoryIdFromNameClient(productName);
+    const cleanName = (productName || '').toLowerCase();
+    const cleanCat = (categoryName || '').toLowerCase();
+
+    if (cleanName.includes('قهوة') || cleanName.includes('إسبريسو') || cleanName.includes('اسبريسو') || cleanName.includes('دولسي') || cleanName.includes('تاسيمو') || cleanCat.includes('قهوة')) {
+        return 6; // coffee-machines
     }
-    const clean = categoryName.trim().toLowerCase();
-    if (clean.includes('مكواة') || clean.includes('بخار') || clean.includes('iron') || clean.includes('ملابس')) {
+    if (cleanName.includes('مكواة') || cleanName.includes('بخار') || cleanName.includes('iron') || cleanCat.includes('مكواة')) {
         return 1; // irons
     }
-    if (clean.includes('مكنسة') || clean.includes('تنظيف') || clean.includes('vacuum') || clean.includes('مكاس') || clean.includes('مكنس')) {
+    if (cleanName.includes('مكنسة') || cleanName.includes('تنظيف') || cleanName.includes('vacuum') || cleanCat.includes('مكنسة')) {
         return 2; // vacuums
     }
-    if (clean.includes('مطبخ') || clean.includes('خلاط') || clean.includes('غلاية') || clean.includes('blender') || clean.includes('kettle') || clean.includes('microwave') || clean.includes('طعام') || clean.includes('شعر')) {
+    if (cleanName.includes('وافل') || cleanName.includes('سموثي') || cleanName.includes('خلاط') || cleanName.includes('محمصة') || cleanName.includes('غلاية') || cleanName.includes('شواية') || cleanName.includes('لوح تسخين') || cleanName.includes('سندويش') || cleanName.includes('مبشرة') || cleanName.includes('ميكروويف') || cleanName.includes('فرن') || cleanName.includes('فشار') || cleanName.includes('شوكولاتة') || cleanCat.includes('مطبخ')) {
         return 3; // kitchen
     }
-    if (clean.includes('كبير') || clean.includes('ثلاجة') || clean.includes('غسالة') || clean.includes('تلفزيون') || clean.includes('مكيف')) {
-        return 4; // large-appliances
+    if (cleanName.includes('حلاقة') || cleanName.includes('قص الشعر') || cleanName.includes('تشذيب') || cleanName.includes('مجفف شعر') || cleanName.includes('ستوديو دراي') || cleanName.includes('شاين إكسبرس') || cleanCat.includes('حلاقة') || cleanCat.includes('شخصية')) {
+        return 4; // personal-care
     }
-    return getCategoryIdFromNameClient(productName);
+    return 5; // home-living
 }
-
-function getCategoryIdFromNameClient(name) {
-    const lowerName = name.toLowerCase();
-    if (lowerName.includes('مكواة') || lowerName.includes('بخار') || lowerName.includes('iron')) {
-        return 1; // irons
-    }
-    if (lowerName.includes('مكنسة') || lowerName.includes('تنظيف') || lowerName.includes('vacuum') || lowerName.includes('broom')) {
-        return 2; // vacuums
-    }
-    if (lowerName.includes('ميكروويف') || lowerName.includes('خلاط') || lowerName.includes('غلاية') || lowerName.includes('blender') || lowerName.includes('kettle') || lowerName.includes('microwave') || lowerName.includes('شعر')) {
-        return 3; // kitchen
-    }
-    return 4; // large-appliances
-}
-
-const PRODUCT_FALLBACK_IMAGES = {
-    "1": "/Logo/ElectroHomeSY-logo-blue.png",
-    "2": "/Logo/ElectroHomeSY-logo-blue.png",
-    "3": "/Logo/ElectroHomeSY-logo-blue.png",
-    "4": "/Logo/ElectroHomeSY-logo-blue.png",
-    "5": "/Logo/ElectroHomeSY-logo-blue.png",
-    "6": "/Logo/ElectroHomeSY-logo-blue.png",
-    "7": "/Logo/ElectroHomeSY-logo-blue.png",
-    "8": "/Logo/ElectroHomeSY-logo-blue.png",
-    "9": "/Logo/ElectroHomeSY-logo-blue.png",
-    "10": "/Logo/ElectroHomeSY-logo-blue.png",
-    "11": "/Logo/ElectroHomeSY-logo-blue.png",
-    "12": "/Logo/ElectroHomeSY-logo-blue.png",
-    "13": "/Logo/ElectroHomeSY-logo-blue.png",
-    "14": "/Logo/ElectroHomeSY-logo-blue.png",
-    "15": "/Logo/ElectroHomeSY-logo-blue.png",
-    "16": "/Logo/ElectroHomeSY-logo-blue.png",
-    "17": "/Logo/ElectroHomeSY-logo-blue.png",
-    "18": "/Logo/ElectroHomeSY-logo-blue.png",
-    "19": "/Logo/ElectroHomeSY-logo-blue.png",
-    "20": "/Logo/ElectroHomeSY-logo-blue.png",
-    "21": "/Logo/ElectroHomeSY-logo-blue.png",
-    "22": "/Logo/ElectroHomeSY-logo-blue.png",
-    "23": "/Logo/ElectroHomeSY-logo-blue.png",
-    "24": "/Logo/ElectroHomeSY-logo-blue.png",
-    "25": "/Logo/ElectroHomeSY-logo-blue.png",
-    "26": "/Logo/ElectroHomeSY-logo-blue.png",
-    "27": "/Logo/ElectroHomeSY-logo-blue.png",
-    "28": "/Logo/ElectroHomeSY-logo-blue.png",
-    "29": "/Logo/ElectroHomeSY-logo-blue.png",
-    "30": "/Logo/ElectroHomeSY-logo-blue.png",
-    "31": "/Logo/ElectroHomeSY-logo-blue.png",
-    "32": "/Logo/ElectroHomeSY-logo-blue.png",
-    "33": "/Logo/ElectroHomeSY-logo-blue.png",
-    "34": "/Logo/ElectroHomeSY-logo-blue.png",
-    "35": "/Logo/ElectroHomeSY-logo-blue.png",
-    "36": "/Logo/ElectroHomeSY-logo-blue.png",
-    "37": "/Logo/ElectroHomeSY-logo-blue.png",
-    "38": "/Logo/ElectroHomeSY-logo-blue.png",
-    "39": "/Logo/ElectroHomeSY-logo-blue.png",
-    "40": "/Logo/ElectroHomeSY-logo-blue.png",
-    "41": "/Logo/ElectroHomeSY-logo-blue.png",
-    "42": "/Logo/ElectroHomeSY-logo-blue.png",
-    "43": "/Logo/ElectroHomeSY-logo-blue.png",
-    "44": "/Logo/ElectroHomeSY-logo-blue.png",
-    "45": "/Logo/ElectroHomeSY-logo-blue.png",
-    "46": "/Logo/ElectroHomeSY-logo-blue.png",
-    "47": "/Logo/ElectroHomeSY-logo-blue.png",
-    "48": "/Logo/ElectroHomeSY-logo-blue.png",
-    "49": "/Logo/ElectroHomeSY-logo-blue.png",
-    "50": "/Logo/ElectroHomeSY-logo-blue.png",
-    "51": "/Logo/ElectroHomeSY-logo-blue.png",
-    "52": "/Logo/ElectroHomeSY-logo-blue.png",
-    "53": "/Logo/ElectroHomeSY-logo-blue.png",
-    "54": "/Logo/ElectroHomeSY-logo-blue.png",
-    "55": "/Logo/ElectroHomeSY-logo-blue.png",
-    "56": "/Logo/ElectroHomeSY-logo-blue.png"
-};
-
-function getFallbackImageClient(id) { return '/Logo/ElectroHomeSY-logo-blue.png'; }
-
 
 function getCategoryNameById(categoryId) {
     const names = {
         1: 'المكاوي وأجهزة البخار',
-        2: 'المكاس والتنظيف',
-        3: 'أجهزة المطبخ والخلاطات',
-        4: 'الأجهزة المنزلية الكبيرة'
+        2: 'المكانس والتنظيف',
+        3: 'أجهزة المطبخ والطهي',
+        4: 'العناية الشخصية والحلاقة',
+        5: 'الإضاءة والمنزل والأجهزة الطبية',
+        6: 'ماكينات القهوة والكبسولات'
     };
     return names[categoryId] || 'عام';
 }

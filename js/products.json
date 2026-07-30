@@ -35,7 +35,8 @@
         "stock_quantity": 1,
         "sku": "PH-HC3000"
       }
-    ]
+    ],
+    "category_name": "العناية الشخصية والحلاقة"
   },
   {
     "id": 2,
@@ -73,7 +74,8 @@
         "stock_quantity": 1,
         "sku": "51-M1000s"
       }
-    ]
+    ],
+    "category_name": "العناية الشخصية والحلاقة"
   },
   {
     "id": 3,
@@ -107,7 +109,8 @@
         "stock_quantity": 1,
         "sku": "LV-TL-01"
       }
-    ]
+    ],
+    "category_name": "الإضاءة والمنزل والأجهزة الطبية"
   },
   {
     "id": 4,
@@ -144,7 +147,8 @@
         "stock_quantity": 2,
         "sku": "CR-MG-01"
       }
-    ]
+    ],
+    "category_name": "العناية الشخصية والحلاقة"
   },
   {
     "id": 5,
@@ -182,11 +186,12 @@
         "stock_quantity": 1,
         "sku": "BR-BG5"
       }
-    ]
+    ],
+    "category_name": "العناية الشخصية والحلاقة"
   },
   {
     "id": 7,
-    "category_id": 3,
+    "category_id": 6,
     "title_ar": "كروبس نستله دولسي غوستو بيكولو XS ماكينة قهوة",
     "slug": "prod-kp1a08-7",
     "description_ar": "ماكينة إعداد القهوة بالكبسولات بتصميم مدمج وسريع",
@@ -220,7 +225,8 @@
         "stock_quantity": 1,
         "sku": "KP1A08"
       }
-    ]
+    ],
+    "category_name": "ماكينات القهوة والكبسولات"
   },
   {
     "id": 8,
@@ -258,7 +264,8 @@
         "stock_quantity": 1,
         "sku": "BR-AIO3"
       }
-    ]
+    ],
+    "category_name": "العناية الشخصية والحلاقة"
   },
   {
     "id": 9,
@@ -290,7 +297,8 @@
         "stock_quantity": 1,
         "sku": "LV-WC-01"
       }
-    ]
+    ],
+    "category_name": "الإضاءة والمنزل والأجهزة الطبية"
   },
   {
     "id": 10,
@@ -322,7 +330,8 @@
         "stock_quantity": 1,
         "sku": "SC-DW-01"
       }
-    ]
+    ],
+    "category_name": "أجهزة المطبخ والطهي"
   },
   {
     "id": 11,
@@ -354,7 +363,8 @@
         "stock_quantity": 1,
         "sku": "SO-SM-01"
       }
-    ]
+    ],
+    "category_name": "أجهزة المطبخ والطهي"
   },
   {
     "id": 12,
@@ -386,7 +396,8 @@
         "stock_quantity": 1,
         "sku": "TF-TS-01"
       }
-    ]
+    ],
+    "category_name": "أجهزة المطبخ والطهي"
   },
   {
     "id": 13,
@@ -418,7 +429,8 @@
         "stock_quantity": 1,
         "sku": "HI5920"
       }
-    ]
+    ],
+    "category_name": "المكاوي وأجهزة البخار"
   },
   {
     "id": 14,
@@ -450,7 +462,8 @@
         "stock_quantity": 1,
         "sku": "SO-KT-01"
       }
-    ]
+    ],
+    "category_name": "أجهزة المطبخ والطهي"
   },
   {
     "id": 15,
@@ -482,7 +495,8 @@
         "stock_quantity": 1,
         "sku": "SO-HB-01"
       }
-    ]
+    ],
+    "category_name": "أجهزة المطبخ والطهي"
   },
   {
     "id": 16,
@@ -514,7 +528,8 @@
         "stock_quantity": 1,
         "sku": "DS-TH-01"
       }
-    ]
+    ],
+    "category_name": "الإضاءة والمنزل والأجهزة الطبية"
   },
   {
     "id": 17,
@@ -546,7 +561,8 @@
         "stock_quantity": 1,
         "sku": "SC-DW-02"
       }
-    ]
+    ],
+    "category_name": "أجهزة المطبخ والطهي"
   },
   {
     "id": 18,
@@ -578,7 +594,8 @@
         "stock_quantity": 1,
         "sku": "SO-KT-02"
       }
-    ]
+    ],
+    "category_name": "أجهزة المطبخ والطهي"
   },
   {
     "id": 19,
@@ -610,7 +627,8 @@
         "stock_quantity": 1,
         "sku": "PH-HC3001"
       }
-    ]
+    ],
+    "category_name": "العناية الشخصية والحلاقة"
   },
   {
     "id": 20,
@@ -642,7 +660,8 @@
         "stock_quantity": 1,
         "sku": "SO-CG-01"
       }
-    ]
+    ],
+    "category_name": "أجهزة المطبخ والطهي"
   },
   {
     "id": 21,
@@ -674,7 +693,8 @@
         "stock_quantity": 1,
         "sku": "PMFD A3"
       }
-    ]
+    ],
+    "category_name": "الإضاءة والمنزل والأجهزة الطبية"
   },
   {
     "id": 22,
@@ -706,7 +726,8 @@
         "stock_quantity": 1,
         "sku": "SC-CG-02"
       }
-    ]
+    ],
+    "category_name": "أجهزة المطبخ والطهي"
   },
   {
     "id": 23,
@@ -738,11 +759,12 @@
         "stock_quantity": 1,
         "sku": "SV-HP-01"
       }
-    ]
+    ],
+    "category_name": "أجهزة المطبخ والطهي"
   },
   {
     "id": 24,
-    "category_id": 3,
+    "category_id": 6,
     "title_ar": "كروبس ماكينة قهوة فلتر F30908",
     "slug": "prod-f30908-24",
     "description_ar": "ماكينة تحضير القهوة المفلترة بتصميم كلاسيكي",
@@ -770,7 +792,8 @@
         "stock_quantity": 1,
         "sku": "F30908"
       }
-    ]
+    ],
+    "category_name": "ماكينات القهوة والكبسولات"
   },
   {
     "id": 25,
@@ -802,11 +825,12 @@
         "stock_quantity": 1,
         "sku": "SO-SW-01"
       }
-    ]
+    ],
+    "category_name": "أجهزة المطبخ والطهي"
   },
   {
     "id": 26,
-    "category_id": 3,
+    "category_id": 6,
     "title_ar": "سويتش أون ماكينة قهوة فلتر مع ترمس حراري",
     "slug": "prod-so-cm-01-26",
     "description_ar": "ماكينة قهوة فلتر مزودة بإبريق حراري حافظ للحرارة",
@@ -834,7 +858,8 @@
         "stock_quantity": 1,
         "sku": "SO-CM-01"
       }
-    ]
+    ],
+    "category_name": "ماكينات القهوة والكبسولات"
   },
   {
     "id": 27,
@@ -866,7 +891,8 @@
         "stock_quantity": 1,
         "sku": "SC-GR-01"
       }
-    ]
+    ],
+    "category_name": "أجهزة المطبخ والطهي"
   },
   {
     "id": 28,
@@ -898,7 +924,8 @@
         "stock_quantity": 1,
         "sku": "SO-HV-01"
       }
-    ]
+    ],
+    "category_name": "المكانس والتنظيف"
   },
   {
     "id": 29,
@@ -930,7 +957,8 @@
         "stock_quantity": 1,
         "sku": "RW-HD-01"
       }
-    ]
+    ],
+    "category_name": "العناية الشخصية والحلاقة"
   },
   {
     "id": 30,
@@ -962,7 +990,8 @@
         "stock_quantity": 1,
         "sku": "BS-CM300"
       }
-    ]
+    ],
+    "category_name": "أجهزة المطبخ والطهي"
   },
   {
     "id": 31,
@@ -994,7 +1023,8 @@
         "stock_quantity": 1,
         "sku": "SO-KT-03"
       }
-    ]
+    ],
+    "category_name": "أجهزة المطبخ والطهي"
   },
   {
     "id": 32,
@@ -1026,7 +1056,8 @@
         "stock_quantity": 1,
         "sku": "OFA-URC-01"
       }
-    ]
+    ],
+    "category_name": "الإضاءة والمنزل والأجهزة الطبية"
   },
   {
     "id": 33,
@@ -1058,11 +1089,12 @@
         "stock_quantity": 1,
         "sku": "PH-SG2000"
       }
-    ]
+    ],
+    "category_name": "المكاوي وأجهزة البخار"
   },
   {
     "id": 34,
-    "category_id": 3,
+    "category_id": 6,
     "title_ar": "بوش تاسيمو ماكينة قهوة صديقة للأناقة",
     "slug": "prod-bs-tas-01-34",
     "description_ar": "ماكينة تحضير المشروبات والقهوة بالكبسولات التلقائية",
@@ -1090,7 +1122,8 @@
         "stock_quantity": 1,
         "sku": "BS-TAS-01"
       }
-    ]
+    ],
+    "category_name": "ماكينات القهوة والكبسولات"
   },
   {
     "id": 35,
@@ -1122,7 +1155,8 @@
         "stock_quantity": 1,
         "sku": "SO-CF-01"
       }
-    ]
+    ],
+    "category_name": "أجهزة المطبخ والطهي"
   },
   {
     "id": 36,
@@ -1154,7 +1188,8 @@
         "stock_quantity": 1,
         "sku": "SC-PM-01"
       }
-    ]
+    ],
+    "category_name": "أجهزة المطبخ والطهي"
   },
   {
     "id": 37,
@@ -1186,11 +1221,12 @@
         "stock_quantity": 1,
         "sku": "BR-BT5"
       }
-    ]
+    ],
+    "category_name": "العناية الشخصية والحلاقة"
   },
   {
     "id": 38,
-    "category_id": 3,
+    "category_id": 6,
     "title_ar": "فيليبس ماكينة إسبريسو أوتوماتيكية بالكامل سلسلة 800",
     "slug": "prod-ph-ep800-38",
     "description_ar": "ماكينة إسبريسو أوتوماتيكية بالكامل لتحضير القهوة",
@@ -1218,7 +1254,8 @@
         "stock_quantity": 1,
         "sku": "PH-EP800"
       }
-    ]
+    ],
+    "category_name": "ماكينات القهوة والكبسولات"
   },
   {
     "id": 39,
@@ -1250,7 +1287,8 @@
         "stock_quantity": 1,
         "sku": "SC-RG-01"
       }
-    ]
+    ],
+    "category_name": "أجهزة المطبخ والطهي"
   },
   {
     "id": 40,
@@ -1282,7 +1320,8 @@
         "stock_quantity": 1,
         "sku": "RW-HD-02"
       }
-    ]
+    ],
+    "category_name": "العناية الشخصية والحلاقة"
   },
   {
     "id": 41,
@@ -1314,7 +1353,8 @@
         "stock_quantity": 1,
         "sku": "VL-SP-01"
       }
-    ]
+    ],
+    "category_name": "المكاوي وأجهزة البخار"
   },
   {
     "id": 42,
@@ -1346,7 +1386,8 @@
         "stock_quantity": 1,
         "sku": "SC-MW-01"
       }
-    ]
+    ],
+    "category_name": "أجهزة المطبخ والطهي"
   },
   {
     "id": 43,
@@ -1378,7 +1419,8 @@
         "stock_quantity": 1,
         "sku": "LV-WL-01"
       }
-    ]
+    ],
+    "category_name": "الإضاءة والمنزل والأجهزة الطبية"
   },
   {
     "id": 44,
@@ -1410,7 +1452,8 @@
         "stock_quantity": 1,
         "sku": "LV-CL-01"
       }
-    ]
+    ],
+    "category_name": "الإضاءة والمنزل والأجهزة الطبية"
   },
   {
     "id": 45,
@@ -1442,7 +1485,8 @@
         "stock_quantity": 1,
         "sku": "WB-IN-01"
       }
-    ]
+    ],
+    "category_name": "الإضاءة والمنزل والأجهزة الطبية"
   },
   {
     "id": 46,
@@ -1474,7 +1518,8 @@
         "stock_quantity": 1,
         "sku": "SV-VC-01"
       }
-    ]
+    ],
+    "category_name": "المكانس والتنظيف"
   },
   {
     "id": 47,
@@ -1506,7 +1551,8 @@
         "stock_quantity": 1,
         "sku": "LV-TL-02"
       }
-    ]
+    ],
+    "category_name": "الإضاءة والمنزل والأجهزة الطبية"
   },
   {
     "id": 48,
@@ -1538,7 +1584,8 @@
         "stock_quantity": 1,
         "sku": "LV-SL-01"
       }
-    ]
+    ],
+    "category_name": "الإضاءة والمنزل والأجهزة الطبية"
   },
   {
     "id": 49,
@@ -1570,7 +1617,8 @@
         "stock_quantity": 1,
         "sku": "PS-SL-01"
       }
-    ]
+    ],
+    "category_name": "الإضاءة والمنزل والأجهزة الطبية"
   },
   {
     "id": 50,
@@ -1602,7 +1650,8 @@
         "stock_quantity": 1,
         "sku": "LB-SL-01"
       }
-    ]
+    ],
+    "category_name": "الإضاءة والمنزل والأجهزة الطبية"
   },
   {
     "id": 51,
@@ -1634,7 +1683,8 @@
         "stock_quantity": 1,
         "sku": "LV-LC-01"
       }
-    ]
+    ],
+    "category_name": "الإضاءة والمنزل والأجهزة الطبية"
   },
   {
     "id": 52,
@@ -1666,7 +1716,8 @@
         "stock_quantity": 1,
         "sku": "LV-TL-03"
       }
-    ]
+    ],
+    "category_name": "الإضاءة والمنزل والأجهزة الطبية"
   },
   {
     "id": 53,
@@ -1698,7 +1749,8 @@
         "stock_quantity": 1,
         "sku": "BR-BG3"
       }
-    ]
+    ],
+    "category_name": "العناية الشخصية والحلاقة"
   },
   {
     "id": 54,
@@ -1730,7 +1782,8 @@
         "stock_quantity": 1,
         "sku": "LB-TL-01"
       }
-    ]
+    ],
+    "category_name": "الإضاءة والمنزل والأجهزة الطبية"
   },
   {
     "id": 55,
@@ -1762,7 +1815,8 @@
         "stock_quantity": 1,
         "sku": "PH-AIO3000"
       }
-    ]
+    ],
+    "category_name": "العناية الشخصية والحلاقة"
   },
   {
     "id": 56,
@@ -1794,6 +1848,7 @@
         "stock_quantity": 1,
         "sku": "S1141"
       }
-    ]
+    ],
+    "category_name": "العناية الشخصية والحلاقة"
   }
 ]
