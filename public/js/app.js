@@ -1,5 +1,5 @@
 // Google Sheets Orders Webhook Endpoint (Google Apps Script Web App URL)
-window.GOOGLE_SHEETS_ORDERS_WEBHOOK = window.GOOGLE_SHEETS_ORDERS_WEBHOOK || '';
+window.GOOGLE_SHEETS_ORDERS_WEBHOOK = 'https://script.google.com/macros/s/AKfycbwrM6-bAv-hYJ494X0bSvWoIRp-6vjJ4An226PMUI0k7X21zYZ_iS6xBeePAxdhRecA/exec';
 
 /* ElectroHomeSY - Main Application & Admin Logic */
 
@@ -3226,38 +3226,16 @@ async function sendOrderEmailNotification(orderData) {
         date: new Date().toLocaleString('ar-SY')
     };
 
-    // 1. Post directly to Google Sheets Webhook if configured
-    if (window.GOOGLE_SHEETS_ORDERS_WEBHOOK && window.GOOGLE_SHEETS_ORDERS_WEBHOOK.includes('script.google.com')) {
-        try {
-            await fetch(window.GOOGLE_SHEETS_ORDERS_WEBHOOK, {
-                method: "POST",
-                mode: "no-cors",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload)
-            });
-            console.log('Order sent to Google Sheets Webhook');
-        } catch (e) {
-            console.warn('Google Sheets Webhook Notice:', e);
-        }
-    }
-
-    // 2. Secondary Web API backup
     try {
-        await fetch("https://api.web3forms.com/submit", {
-            method: "POST",
-            headers: { "Content-Type": "application/json", "Accept": "application/json" },
-            body: JSON.stringify({
-                access_key: "b890a887-f831-4a41-b1e7-814d2417743d",
-                subject: `📦 طلب جديد من متجر ElectroHomeSY - ${orderData.customer_name}`,
-                from_name: "ElectroHomeSY Store",
-                to_email: "electrohomesy@gmail.com",
-                name: orderData.customer_name,
-                phone: orderData.customer_phone,
-                address: orderData.delivery_address,
-                message: `الاسم: ${orderData.customer_name}\nالهاتف: ${orderData.customer_phone}\nالعنوان: ${orderData.delivery_address}\nالمبلغ الإجمالي: $${(orderData.total_amount||0).toFixed(2)}\n\nالمنتجات:\n${itemsFormatted}`
-            })
+        await fetch('https://script.google.com/macros/s/AKfycbwrM6-bAv-hYJ494X0bSvWoIRp-6vjJ4An226PMUI0k7X21zYZ_iS6xBeePAxdhRecA/exec', {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain' },
+            body: JSON.stringify(payload)
         });
-    } catch (e) {}
+        console.log('Order successfully logged to Google Sheets and sent via Gmail!');
+    } catch (e) {
+        console.warn('Google Sheets Webhook Notice:', e);
+    }
 }
 
 // Helper: Send special product request email notification & record in Google Sheets
@@ -3265,35 +3243,18 @@ async function sendProductRequestEmailNotification(reqData) {
     const payload = {
         customer_name: reqData.customer_name,
         customer_phone: reqData.customer_phone,
-        requested_product: reqData.requested_product,
-        notes: reqData.notes || 'لا يوجد',
+        delivery_address: 'طلب جهاز خاص',
+        payment_method: 'طلب جهاز خاص',
+        total_amount: 0,
+        items: `طلب جهاز خاص: ${reqData.requested_product}\nملاحظات: ${reqData.notes || 'لا يوجد'}`,
         date: new Date().toLocaleString('ar-SY')
     };
 
-    if (window.GOOGLE_SHEETS_ORDERS_WEBHOOK && window.GOOGLE_SHEETS_ORDERS_WEBHOOK.includes('script.google.com')) {
-        try {
-            await fetch(window.GOOGLE_SHEETS_ORDERS_WEBHOOK, {
-                method: "POST",
-                mode: "no-cors",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload)
-            });
-        } catch (e) {}
-    }
-
     try {
-        await fetch("https://api.web3forms.com/submit", {
-            method: "POST",
-            headers: { "Content-Type": "application/json", "Accept": "application/json" },
-            body: JSON.stringify({
-                access_key: "b890a887-f831-4a41-b1e7-814d2417743d",
-                subject: `🔔 طلب جهاز خاص من متجر ElectroHomeSY - ${reqData.customer_name}`,
-                from_name: "ElectroHomeSY Store",
-                to_email: "electrohomesy@gmail.com",
-                name: reqData.customer_name,
-                phone: reqData.customer_phone,
-                message: `اسم الزبون: ${reqData.customer_name}\nرقم الهاتف: ${reqData.customer_phone}\nالجهاز المطلوب: ${reqData.requested_product}\nملاحظات: ${reqData.notes || 'لا يوجد'}`
-            })
+        await fetch('https://script.google.com/macros/s/AKfycbwrM6-bAv-hYJ494X0bSvWoIRp-6vjJ4An226PMUI0k7X21zYZ_iS6xBeePAxdhRecA/exec', {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain' },
+            body: JSON.stringify(payload)
         });
     } catch (e) {}
 }
