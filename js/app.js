@@ -2391,8 +2391,40 @@ async function fetchProducts(categorySlug) {
 
 function filterCategory(slug, btn) {
     document.querySelectorAll('.cat-tab').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    fetchProducts(slug);
+    if (btn) btn.classList.add('active');
+
+    if (slug === 'all') {
+        renderProducts(allProducts);
+    } else {
+        const catMap = {
+            'irons': [1],
+            'vacuums': [2],
+            'kitchen': [3],
+            'personal-care': [4],
+            'large-appliances': [4],
+            'home-living': [5]
+        };
+        const targetCatIds = catMap[slug] || [];
+        const filtered = allProducts.filter(p => {
+            if (targetCatIds.includes(p.category_id)) return true;
+            const pCatName = (p.category_name || '').toLowerCase();
+            const pTitle = (p.title_ar || '').toLowerCase();
+            if (slug === 'irons' && (pCatName.includes('مكواة') || pTitle.includes('مكواة') || pTitle.includes('بخار'))) return true;
+            if (slug === 'vacuums' && (pCatName.includes('مكنسة') || pTitle.includes('مكنسة') || pTitle.includes('تنظيف'))) return true;
+            if (slug === 'kitchen' && (pCatName.includes('مطبخ') || pTitle.includes('خلاط') || pTitle.includes('طعام') || pTitle.includes('ميكروويف'))) return true;
+            if (slug === 'personal-care' && (pCatName.includes('حلاقة') || pTitle.includes('حلاقة') || pTitle.includes('شعر') || pTitle.includes('براون'))) return true;
+            return false;
+        });
+        renderProducts(filtered.length > 0 ? filtered : allProducts);
+    }
+
+    // Smooth scroll to products grid
+    const targetEl = document.getElementById('productsGrid') || document.getElementById('products-section');
+    if (targetEl) {
+        const yOffset = -70; 
+        const y = targetEl.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+    }
 }
 
 function renderLoadingSkeleton() {
