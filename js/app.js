@@ -1885,6 +1885,14 @@ function formatSYP(amount) {
 }
 
 // Utility: Generate unique product code  e.g. EHS-001
+function validateSyrianPhoneNumber(phone) {
+    if (!phone) return false;
+    const clean = phone.replace(/[\s\-\(\)]/g, '');
+    const syrianRegex = /^(\+?9639|09|9639|009639)\d{8}$/;
+    const generalRegex = /^\+?[0-9]{9,15}$/;
+    return syrianRegex.test(clean) || generalRegex.test(clean);
+}
+
 function generateProductCode(id) {
     return 'EHS-' + String(id).padStart(3, '0');
 }
@@ -3249,57 +3257,63 @@ async function handleCheckoutSubmit(e) {
         return;
     }
 
-    if (!currentCustomer) {
-        alert('⚠️ يرجى تسجيل الدخول أو إنشاء حساب جديد أولاً لإتمام طلبكم بنجاح!');
-        cameFromCheckout = true;
-        openUserAuthModal();
+    const nameInput = document.getElementById('custName');
+    const phoneInput = document.getElementById('custPhone');
+    const addressInput = document.getElementById('custAddress');
+
+    const customer_name = (nameInput ? nameInput.value.trim() : '') || (currentCustomer ? currentCustomer.full_name : '');
+    const customer_phone = (phoneInput ? phoneInput.value.trim() : '') || (currentCustomer ? currentCustomer.phone_number : '');
+    const delivery_address = (addressInput ? addressInput.value.trim() : '') || 'دمشق';
+
+    if (!customer_name) {
+        alert('⚠️ يرجى إدخال اسمك الكريم لإتمام الطلب!');
+        if (nameInput) nameInput.focus();
         return;
     }
 
-    const customer_name = document.getElementById('custName').value.trim() || currentCustomer.full_name;
-    const customer_phone = document.getElementById('custPhone').value.trim() || currentCustomer.phone_number;
-    const delivery_address = document.getElementById('custAddress').value.trim();
+    if (!validateSyrianPhoneNumber(customer_phone)) {
+        alert('⚠️ يرجى إدخال رقم هاتف محمول صحيح للتواصل عند التسليم! (مثال: 0959930005 أو 963959930005+)');
+        if (phoneInput) phoneInput.focus();
+        return;
+    }
+
+    if (!delivery_address) {
+        alert('⚠️ يرجى إدخال عنوان التوصيل بالتفصيل في دمشق!');
+        if (addressInput) addressInput.focus();
+        return;
+    }
+
     const total_amount = cart.reduce((sum, item) => sum + (item.unit_price * item.quantity), 0);
 
     const orderPayload = {
-        customer_id: currentCustomer.id,
+        customer_id: currentCustomer ? currentCustomer.id : null,
         customer_name,
         customer_phone,
         delivery_address,
-        payment_method: selectedPaymentMethod,
+        payment_method: typeof selectedPaymentMethod !== 'undefined' ? selectedPaymentMethod : 'cash',
         total_amount,
         items: [...cart]
     };
 
-    // Send instant email notification to electrohomesy@gmail.com
+    // 1. Send instant email notification to electrohomesy@gmail.com
     sendOrderEmailNotification(orderPayload);
 
-    try {
-        const res = await fetch('/api/orders', {
-            method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json',
-                'X-CSRF-Token': getCookie('csrf_token')
-            },
-            body: JSON.stringify({
-                customer_id: currentCustomer.id,
-                customer_name,
-                customer_phone,
-                delivery_address,
-                payment_method: selectedPaymentMethod,
-                total_amount,
-                items: cart
-            })
-        });
-        if (res.ok) {
-            const data = await res.json();
-            alert(data.message || 'تم إرسال طلبكم بنجاح!');
-        } else {
-            alert('تم استلام طلبكم بنجاح وسيتواصل معكم فريق المبيعات لتأكيد التوصيل في دمشق!');
-        }
-    } catch (e) {
-        alert('تم استلام طلبكم بنجاح وسيتواصل معكم فريق المبيعات لتأكيد التوصيل في دمشق!');
-    }
+    // 2. Format WhatsApp order confirmation message
+    const waPhone = '963959930005';
+    let waMsg = '📦 *طلب جديد من متجر ElectroHomeSY*\n\n';
+    waMsg += '👤 *الاسم:* ' + customer_name + '\n';
+    waMsg += '📞 *الهاتف:* ' + customer_phone + '\n';
+    waMsg += '📍 *العنوان:* ' + delivery_address + '\n';
+    waMsg += '💰 *الإجمالي:* $' + total_amount.toFixed(2) + '\n\n';
+    waMsg += '🛒 *المنتجات المطلوبة:*\n';
+    cart.forEach((item, idx) => {
+        waMsg += (idx + 1) + '. ' + item.product_name + ' (' + (item.variant_details || 'افتراضي') + ') × ' + item.quantity + ' = $' + (item.unit_price * item.quantity).toFixed(2) + '\n';
+    });
+
+    const waUrl = 'https://wa.me/' + waPhone + '?text=' + encodeURIComponent(waMsg);
+
+    alert('✅ تم إرسال الطلب وإشعارات التفاصيل بنجاح! سيتم فتح الواتساب الآن لتأكيد التوصيل السريع في دمشق.');
+    window.open(waUrl, '_blank');
 
     cart = [];
     saveCart();
