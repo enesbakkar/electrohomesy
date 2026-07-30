@@ -465,7 +465,7 @@
 
 
     <!-- App JS -->
-    <script src="/js/app.js?v=16.0.0"></script>
+    <script src="/js/app.js?v=17.0.0"></script>
     <script>
         let detailProduct = null;
         let detailVariant = null;
@@ -780,9 +780,11 @@
 
         function addMasterProductToCart() {
             if (!detailProduct) return;
-            const basePrice = detailProduct.discount_price ? detailProduct.discount_price : detailProduct.base_price;
-            const modifier = detailVariant ? detailVariant.price_modifier : 0;
-            const unitPrice = basePrice + modifier;
+            const basePrice = detailProduct.discount_price ? Number(detailProduct.discount_price) : Number(detailProduct.base_price || 0);
+            const modifier = detailVariant ? (Number(detailVariant.price_modifier) || 0) : 0;
+            let unitPrice = basePrice + modifier;
+            if (!unitPrice || unitPrice <= 0) unitPrice = Number(detailProduct.base_price || 0);
+
             const variantDetails = detailVariant
                 ? `${detailVariant.brand} ${detailVariant.model_name} ` + Object.entries(detailVariant.variant_attributes || {}).map(([k, v]) => `${k}: ${v}`).join(', ')
                 : 'افتراضي';
@@ -793,22 +795,22 @@
                 product_name: detailProduct.title_ar,
                 variant_details: variantDetails,
                 unit_price: unitPrice,
+                main_image: detailProduct.main_image || '/Logo/ElectroHomeSY-logo-blue.png',
                 quantity: 1
             };
 
             const idx = cart.findIndex(ci => ci.product_id === cartItem.product_id && ci.variant_id === cartItem.variant_id);
-            if (idx > -1) { cart[idx].quantity += 1; } else { cart.push(cartItem); }
-            saveCart();
-            renderCartModal();
-        }
+            if (idx > -1) {
+                cart[idx].quantity += 1;
+                if (!cart[idx].unit_price || cart[idx].unit_price <= 0) {
+                    cart[idx].unit_price = unitPrice;
+                }
+            } else {
+                cart.push(cartItem);
+            }
 
-        function switchProductMainImage(imgUrl, thumbElem) {
-            const mainImg = document.getElementById('mainProductImage');
-            if (mainImg) mainImg.src = imgUrl;
-            document.querySelectorAll('.thumbnail-item').forEach(el => {
-                el.style.borderColor = 'var(--border-color)';
-            });
-            if (thumbElem) thumbElem.style.borderColor = 'var(--damascus-green)';
+            saveCart();
+            window.location.href = 'index.html#cart-section';
         }
 
         initDetailPage();

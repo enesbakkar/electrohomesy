@@ -3023,9 +3023,10 @@ function selectVariant(variantId) {
 function addToCartCurrentProduct() {
     if (!currentSelectedProduct) return;
 
-    const basePrice = currentSelectedProduct.discount_price ? currentSelectedProduct.discount_price : currentSelectedProduct.base_price;
-    const priceModifier = currentSelectedVariant ? currentSelectedVariant.price_modifier : 0;
-    const unitPrice = basePrice + priceModifier;
+    const basePrice = currentSelectedProduct.discount_price ? Number(currentSelectedProduct.discount_price) : Number(currentSelectedProduct.base_price || 0);
+    const priceModifier = currentSelectedVariant ? (Number(currentSelectedVariant.price_modifier) || 0) : 0;
+    let unitPrice = basePrice + priceModifier;
+    if (!unitPrice || unitPrice <= 0) unitPrice = Number(currentSelectedProduct.base_price || 0);
 
     const variantDetails = currentSelectedVariant 
         ? `${currentSelectedVariant.brand} ${currentSelectedVariant.model_name} ` + Object.entries(currentSelectedVariant.variant_attributes || {}).map(([k, v]) => `${k}: ${v}`).join(', ')
@@ -3037,13 +3038,16 @@ function addToCartCurrentProduct() {
         product_name: currentSelectedProduct.title_ar,
         variant_details: variantDetails,
         unit_price: unitPrice,
-        main_image: currentSelectedProduct.main_image,
+        main_image: currentSelectedProduct.main_image || '/Logo/ElectroHomeSY-logo-blue.png',
         quantity: 1
     };
 
     const existingIndex = cart.findIndex(ci => ci.product_id === cartItem.product_id && ci.variant_id === cartItem.variant_id);
     if (existingIndex > -1) {
         cart[existingIndex].quantity += 1;
+        if (!cart[existingIndex].unit_price || cart[existingIndex].unit_price <= 0) {
+            cart[existingIndex].unit_price = unitPrice;
+        }
     } else {
         cart.push(cartItem);
     }
@@ -3107,7 +3111,19 @@ function renderCartPage() {
     const totalPriceEl = document.getElementById('cartTotalPrice');
     if (!list || !totalPriceEl) return;
 
-    if (cart.length === 0) {
+    // Auto-repair any 0 price items in cart
+    if (Array.isArray(cart)) {
+        cart.forEach(item => {
+            if (!item.unit_price || Number(item.unit_price) <= 0) {
+                const found = (allProducts || []).find(p => p.id === item.product_id);
+                if (found) {
+                    item.unit_price = Number(found.discount_price || found.base_price || 0);
+                }
+            }
+        });
+    }
+
+    if (!cart || cart.length === 0) {
         list.innerHTML = `<p style="text-align:center; padding:35px; color:var(--steel-grey); font-size:1.05rem; font-family:'Cairo',sans-serif;">السلة فارغة حالياً. أضف بعض المنتجات للتسوق!</p>`;
         totalPriceEl.innerText = formatSYP(0);
         return;
@@ -3115,7 +3131,8 @@ function renderCartPage() {
 
     let total = 0;
     list.innerHTML = cart.map((item, index) => {
-        const itemTotal = item.unit_price * item.quantity;
+        const itemPrice = Number(item.unit_price) || 0;
+        const itemTotal = itemPrice * item.quantity;
         total += itemTotal;
         return `
             <div class="cart-product-item">
@@ -3124,7 +3141,7 @@ function renderCartPage() {
                 </div>
                 <div class="cart-product-details">
                     <span class="cart-product-title">${item.product_name}</span>
-                    <span class="cart-product-subtitle">${item.variant_details}</span>
+                    <span class="cart-product-subtitle">${item.variant_details || 'افتراضي'}</span>
                 </div>
                 <div class="cart-qty-selector">
                     <button type="button" class="cart-qty-btn" onclick="changeQty(${index}, -1)">
