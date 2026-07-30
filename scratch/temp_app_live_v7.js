@@ -1,6 +1,3 @@
-// Google Sheets Orders Webhook Endpoint (Google Apps Script Web App URL)
-window.GOOGLE_SHEETS_ORDERS_WEBHOOK = 'https://script.google.com/macros/s/AKfycbwrM6-bAv-hYJ494X0bSvWoIRp-6vjJ4An226PMUI0k7X21zYZ_iS6xBeePAxdhRecA/exec';
-
 /* ElectroHomeSY - Main Application & Admin Logic */
 
 let featuredCarouselIndex = 0;
@@ -9,12 +6,36 @@ let featuredCarouselProducts = [];
 
 // Static Fallbacks for GitHub Pages static hosting
 const FALLBACK_CATEGORIES = [
-    { id: 1, name_ar: 'المكاوي وأجهزة البخار', slug: 'irons', icon: 'fa-shirt' },
-    { id: 2, name_ar: 'المكانس والتنظيف', slug: 'vacuums', icon: 'fa-broom' },
-    { id: 3, name_ar: 'أجهزة المطبخ والطهي', slug: 'kitchen', icon: 'fa-blender' },
-    { id: 4, name_ar: 'العناية الشخصية والحلاقة', slug: 'personal-care', icon: 'fa-scissors' },
-    { id: 5, name_ar: 'الإضاءة والمنزل والأجهزة الطبية', slug: 'home-living', icon: 'fa-lightbulb' },
-    { id: 6, name_ar: 'ماكينات القهوة والكبسولات', slug: 'coffee-machines', icon: 'fa-mug-hot' }
+    {
+        "id": 1,
+        "name_ar": "المكاوي وأجهزة البخار",
+        "slug": "irons",
+        "icon": "fa-shirt"
+    },
+    {
+        "id": 2,
+        "name_ar": "المكانس والتنظيف",
+        "slug": "vacuums",
+        "icon": "fa-broom"
+    },
+    {
+        "id": 3,
+        "name_ar": "أجهزة المطبخ والطهي",
+        "slug": "kitchen",
+        "icon": "fa-blender"
+    },
+    {
+        "id": 4,
+        "name_ar": "العناية الشخصية والحلاقة",
+        "slug": "personal-care",
+        "icon": "fa-scissors"
+    },
+    {
+        "id": 5,
+        "name_ar": "الإضاءة والمنزل والأجهزة الطبية",
+        "slug": "home-living",
+        "icon": "fa-lightbulb"
+    }
 ];
 
 const FALLBACK_PRODUCTS = [
@@ -24,10 +45,16 @@ const FALLBACK_PRODUCTS = [
         "title_ar": "فيليبس ماكينة قص الشعر سلسلة 3000",
         "slug": "prod-ph-hc3000-1",
         "description_ar": "ماكينة قص شعر لاسلكية مع إعدادات طول متعددة",
-        "base_price": 280000,
-        "discount_price": 245000,
-        "main_image": "",
-        "images": [],
+        "base_price": 40,
+        "discount_price": 2999,
+        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
+        "images": [
+            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
+            "https://media.kruidvat.nl/medias/sys_master/prd-images/h0d/h58/34247171014686/prd-front-5178398-2_600x600/prd-front-5178398-2-600x600.jpg",
+            "https://media.kruidvat.nl/medias/sys_master/prd-images/h3d/h51/34247171211294/prd-front-5178398-4_600x600/prd-front-5178398-4-600x600.jpg",
+            "https://media.kruidvat.nl/medias/sys_master/prd-images/h7d/h4d/34247171342366/prd-front-5178398-5_600x600/prd-front-5178398-5-600x600.jpg",
+            "https://media.kruidvat.nl/medias/sys_master/prd-images/h80/h4a/34247171407902/prd-front-5178398-6_600x600/prd-front-5178398-6-600x600.jpg"
+        ],
         "youtube_url": "https://www.youtube.com/watch?v=Afk3jznDe6o",
         "is_featured": 1,
         "is_visible": 1,
@@ -56,10 +83,16 @@ const FALLBACK_PRODUCTS = [
         "title_ar": "براون سلسلة 5 ماكينة حلاقة كهربائية 51-M1000s",
         "slug": "prod-51-m1000s-2",
         "description_ar": "ماكينة حلاقة كهربائية للرجال للاستخدام الجاف والرطب",
-        "base_price": 490000,
-        "discount_price": 450000,
-        "main_image": "",
-        "images": [],
+        "base_price": 40,
+        "discount_price": 2999,
+        "main_image": "https://afosto-cdn-01.afosto.com/k7ems/product/400/7596392450-1.png",
+        "images": [
+            "https://afosto-cdn-01.afosto.com/k7ems/product/400/7596392450-1.png",
+            "https://afosto-cdn-01.afosto.com/k7ems/product/400/3079170663-2.png",
+            "https://afosto-cdn-01.afosto.com/k7ems/product/400/9459071020-3.png",
+            "https://afosto-cdn-01.afosto.com/k7ems/product/400/2013163670-1200x120077.jpg",
+            "https://afosto-cdn-01.afosto.com/k7ems/product/400/5867059140-1200x120078.jpg"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -88,10 +121,12 @@ const FALLBACK_PRODUCTS = [
         "title_ar": "ليفارنو هوم مصباح طاولة LED مع خاصية اللمس",
         "slug": "prod-lv-tl-01-3",
         "description_ar": "مصباح طاولة يعمل باللمس مع مستويات إضاءة قابلة للضبط",
-        "base_price": 145000,
-        "discount_price": 125000,
-        "main_image": "",
-        "images": [],
+        "base_price": 40,
+        "discount_price": 2999,
+        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
+        "images": [
+            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
+        ],
         "youtube_url": "",
         "is_featured": 1,
         "is_visible": 1,
@@ -120,10 +155,12 @@ const FALLBACK_PRODUCTS = [
         "title_ar": "كاريرا ماكينة تشذيب متعددة الوظائف",
         "slug": "prod-cr-mg-01-4",
         "description_ar": "ماكينة تشذيب متعددة الاستخدامات لشعر الوجه والجسم",
-        "base_price": 320000,
-        "discount_price": 290000,
-        "main_image": "",
-        "images": [],
+        "base_price": 40,
+        "discount_price": 2999,
+        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
+        "images": [
+            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -152,10 +189,12 @@ const FALLBACK_PRODUCTS = [
         "title_ar": "براون ماكينة حلاقة الجسم سلسلة 5",
         "slug": "prod-br-bg5-5",
         "description_ar": "ماكينة حلاقة وتشذيب شعر الجسم للبشرة الحساسة",
-        "base_price": 420000,
-        "discount_price": 380000,
-        "main_image": "",
-        "images": [],
+        "base_price": 40,
+        "discount_price": 2999,
+        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
+        "images": [
+            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -184,10 +223,12 @@ const FALLBACK_PRODUCTS = [
         "title_ar": "كاريرا ماكينة تشذيب متعددة الوظائف (صندوق آخر)",
         "slug": "prod-cr-mg-02-6",
         "description_ar": "ماكينة تشذيب متعددة الاستخدامات للعناية الشخصية",
-        "base_price": 340000,
-        "discount_price": 305000,
-        "main_image": "",
-        "images": [],
+        "base_price": 40,
+        "discount_price": 2999,
+        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
+        "images": [
+            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -216,10 +257,12 @@ const FALLBACK_PRODUCTS = [
         "title_ar": "كروبس نستله دولسي غوستو بيكولو XS ماكينة قهوة",
         "slug": "prod-kp1a08-7",
         "description_ar": "ماكينة إعداد القهوة بالكبسولات بتصميم مدمج وسريع",
-        "base_price": 540000,
-        "discount_price": 490000,
-        "main_image": "",
-        "images": [],
+        "base_price": 100,
+        "discount_price": 75,
+        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
+        "images": [
+            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -248,10 +291,12 @@ const FALLBACK_PRODUCTS = [
         "title_ar": "براون ماكينة حلاقة شاملة سلسلة 3 / 8 في 1",
         "slug": "prod-br-aio3-8",
         "description_ar": "طقم حلاقة وتصفيف شامل 8 في 1 للحد من اللحية والشعر",
-        "base_price": 380000,
-        "discount_price": 340000,
-        "main_image": "",
-        "images": [],
+        "base_price": 50,
+        "discount_price": 35,
+        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
+        "images": [
+            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -280,10 +325,12 @@ const FALLBACK_PRODUCTS = [
         "title_ar": "ليفارنو هوم ساعة حائط لاسلكية",
         "slug": "prod-lv-wc-01-9",
         "description_ar": "ساعة حائط لاسلكية بتعديل تلقائي ودقيق للوقت",
-        "base_price": 135000,
-        "discount_price": 115000,
-        "main_image": "",
-        "images": [],
+        "base_price": 15,
+        "discount_price": 999,
+        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
+        "images": [
+            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -312,10 +359,12 @@ const FALLBACK_PRODUCTS = [
         "title_ar": "سيلفر كريست ماكينة وافل مزدوجة",
         "slug": "prod-sc-dw-01-10",
         "description_ar": "جهاز إعداد الوافل المزدوج بطلاء غير لاصق",
-        "base_price": 260000,
-        "discount_price": 230000,
-        "main_image": "",
-        "images": [],
+        "base_price": 35,
+        "discount_price": 25,
+        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
+        "images": [
+            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -344,10 +393,12 @@ const FALLBACK_PRODUCTS = [
         "title_ar": "سويتش أون ماكينة سموثي للتنقل",
         "slug": "prod-so-sm-01-11",
         "description_ar": "خلاط سموثي محمول مع كوب مزود بغطاء للتنقل",
-        "base_price": 210000,
-        "discount_price": 185000,
-        "main_image": "",
-        "images": [],
+        "base_price": 30,
+        "discount_price": 1999,
+        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
+        "images": [
+            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
+        ],
         "youtube_url": "",
         "is_featured": 1,
         "is_visible": 1,
@@ -376,10 +427,12 @@ const FALLBACK_PRODUCTS = [
         "title_ar": "تيفال محمصة خبز",
         "slug": "prod-tf-ts-01-12",
         "description_ar": "محمصة خبز توستر بفتحتين ومستويات تحمير متعددة",
-        "base_price": 240000,
-        "discount_price": 210000,
-        "main_image": "",
-        "images": [],
+        "base_price": 30,
+        "discount_price": 1999,
+        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
+        "images": [
+            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -408,10 +461,12 @@ const FALLBACK_PRODUCTS = [
         "title_ar": "فيليبس بخار ومكواة HI5920",
         "slug": "prod-hi5920-13",
         "description_ar": "مكواة بخار قوية مع خزان ماء كبير لكي سريع",
-        "base_price": 780000,
-        "discount_price": 690000,
-        "main_image": "",
-        "images": [],
+        "base_price": 80,
+        "discount_price": 5999,
+        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
+        "images": [
+            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -440,10 +495,12 @@ const FALLBACK_PRODUCTS = [
         "title_ar": "سويتش أون غلاية ماء كهربائية - أسود",
         "slug": "prod-so-kt-01-14",
         "description_ar": "غلاية ماء كهربائية سريعة التسخين باللون الأسود",
-        "base_price": 165000,
-        "discount_price": 140000,
-        "main_image": "",
-        "images": [],
+        "base_price": 25,
+        "discount_price": 1999,
+        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
+        "images": [
+            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -472,10 +529,12 @@ const FALLBACK_PRODUCTS = [
         "title_ar": "سويتش أون طقم خلاط يدوي",
         "slug": "prod-so-hb-01-15",
         "description_ar": "طقم خلاط يدوي مع ملحقات للفرم والخفق",
-        "base_price": 230000,
-        "discount_price": 195000,
-        "main_image": "",
-        "images": [],
+        "base_price": 25,
+        "discount_price": 1999,
+        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
+        "images": [
+            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
+        ],
         "youtube_url": "",
         "is_featured": 1,
         "is_visible": 1,
@@ -504,10 +563,12 @@ const FALLBACK_PRODUCTS = [
         "title_ar": "دكتور سنست ميزان حرارة بالأشعة تحت الحمراء 2 في 1",
         "slug": "prod-ds-th-01-16",
         "description_ar": "ميزان حرارة إلكتروني بدون تلامس لقياس الحرارة",
-        "base_price": 155000,
-        "discount_price": 130000,
-        "main_image": "",
-        "images": [],
+        "base_price": 40,
+        "discount_price": 25,
+        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
+        "images": [
+            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -536,10 +597,12 @@ const FALLBACK_PRODUCTS = [
         "title_ar": "سيلفر كريست ماكينة وافل مزدوجة (صندوق آخر)",
         "slug": "prod-sc-dw-02-17",
         "description_ar": "جهاز صانع وافل مزدوج سريع التحضير",
-        "base_price": 270000,
-        "discount_price": 235000,
-        "main_image": "",
-        "images": [],
+        "base_price": 30,
+        "discount_price": 25,
+        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
+        "images": [
+            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -570,8 +633,10 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "غلاية ماء كهربائية بتصميم خشبي وبيج أنيق",
         "base_price": 175000,
         "discount_price": 150000,
-        "main_image": "",
-        "images": [],
+        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
+        "images": [
+            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -602,8 +667,10 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "ماكينة قص الشعر الكهربائية من فيليبس",
         "base_price": 290000,
         "discount_price": 250000,
-        "main_image": "",
-        "images": [],
+        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
+        "images": [
+            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -634,8 +701,10 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "شواية تلامس صغيرة مدمجة لتحضير السندويشات",
         "base_price": 190000,
         "discount_price": 165000,
-        "main_image": "",
-        "images": [],
+        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
+        "images": [
+            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -666,8 +735,10 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "جهاز كشف متعدد الاستخدامات للمعادن والكابلات بالجدران",
         "base_price": 210000,
         "discount_price": 180000,
-        "main_image": "",
-        "images": [],
+        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
+        "images": [
+            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -698,8 +769,10 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "شواية تلامس كهربائية كبيرة مع ألواح غير لاصقة",
         "base_price": 390000,
         "discount_price": 345000,
-        "main_image": "",
-        "images": [],
+        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
+        "images": [
+            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -730,8 +803,10 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "موقد كهربائي مفرد للطبخ والتسخين السريع",
         "base_price": 180000,
         "discount_price": 155000,
-        "main_image": "",
-        "images": [],
+        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
+        "images": [
+            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -762,8 +837,10 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "ماكينة تحضير القهوة المفلترة بتصميم كلاسيكي",
         "base_price": 290000,
         "discount_price": 255000,
-        "main_image": "",
-        "images": [],
+        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
+        "images": [
+            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -794,8 +871,10 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "جهاز تحضير السندويشات والمحمصة بطلاء غير لاصق",
         "base_price": 170000,
         "discount_price": 145000,
-        "main_image": "",
-        "images": [],
+        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
+        "images": [
+            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -826,8 +905,10 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "ماكينة قهوة فلتر مزودة بإبريق حراري حافظ للحرارة",
         "base_price": 280000,
         "discount_price": 240000,
-        "main_image": "",
-        "images": [],
+        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
+        "images": [
+            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -858,8 +939,10 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "مبشرة وتقطاعة خضروات كهربائية بشفرات متعددة",
         "base_price": 220000,
         "discount_price": 190000,
-        "main_image": "",
-        "images": [],
+        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
+        "images": [
+            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -890,8 +973,10 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "مكنسة يدوية لاسلكية لشفط السوائل والغبار",
         "base_price": 240000,
         "discount_price": 210000,
-        "main_image": "",
-        "images": [],
+        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
+        "images": [
+            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -922,8 +1007,10 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "مجفف شعر احترافي بتصميم خاص وقوة تجفيف عالية",
         "base_price": 310000,
         "discount_price": 275000,
-        "main_image": "",
-        "images": [],
+        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
+        "images": [
+            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -954,8 +1041,10 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "خلاط يدوي خفيف الوزن بقوة 300 واط لإعداد الأطعمة",
         "base_price": 250000,
         "discount_price": 220000,
-        "main_image": "",
-        "images": [],
+        "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
+        "images": [
+            "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -986,8 +1075,10 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "غلاية ماء كهربائية باللون الأسود ولمسات خشبية",
         "base_price": 180000,
         "discount_price": 155000,
-        "main_image": "",
-        "images": [],
+        "main_image": "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f6?auto=format&fit=crop&w=800&q=80",
+        "images": [
+            "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f6?auto=format&fit=crop&w=800&q=80"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1018,8 +1109,10 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "جهاز تحكم عن بعد بديل وشامل لتلفزيونات سامسونج",
         "base_price": 95000,
         "discount_price": 80000,
-        "main_image": "",
-        "images": [],
+        "main_image": "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80",
+        "images": [
+            "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1050,8 +1143,10 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "مولد بخار قوي لكي الملابس وإزالة التجاعيد",
         "base_price": 850000,
         "discount_price": 760000,
-        "main_image": "",
-        "images": [],
+        "main_image": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80",
+        "images": [
+            "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1082,8 +1177,10 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "ماكينة تحضير المشروبات والقهوة بالكبسولات التلقائية",
         "base_price": 460000,
         "discount_price": 410000,
-        "main_image": "",
-        "images": [],
+        "main_image": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80",
+        "images": [
+            "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1114,8 +1211,10 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "نافورة شوكولاتة كهربائية للحفلات والحلويات",
         "base_price": 220000,
         "discount_price": 195000,
-        "main_image": "",
-        "images": [],
+        "main_image": "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=800&q=80",
+        "images": [
+            "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=800&q=80"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1146,8 +1245,10 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "جهاز إعداد الفشار وتحميص المكسرات بالهواء الساخن",
         "base_price": 195000,
         "discount_price": 165000,
-        "main_image": "",
-        "images": [],
+        "main_image": "https://images.unsplash.com/photo-1578849278619-e73505e9610f?auto=format&fit=crop&w=800&q=80",
+        "images": [
+            "https://images.unsplash.com/photo-1578849278619-e73505e9610f?auto=format&fit=crop&w=800&q=80"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1178,8 +1279,10 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "ماكينة تشذيب اللحية بدقة عالية مع قرص تعديل الطول",
         "base_price": 410000,
         "discount_price": 365000,
-        "main_image": "",
-        "images": [],
+        "main_image": "https://images.unsplash.com/photo-1621607512214-68297480165e?auto=format&fit=crop&w=800&q=80",
+        "images": [
+            "https://images.unsplash.com/photo-1621607512214-68297480165e?auto=format&fit=crop&w=800&q=80"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1210,8 +1313,10 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "ماكينة إسبريسو أوتوماتيكية بالكامل لتحضير القهوة",
         "base_price": 2800000,
         "discount_price": 2450000,
-        "main_image": "",
-        "images": [],
+        "main_image": "https://images.unsplash.com/photo-1517668808822-9eaa03afd2af?auto=format&fit=crop&w=800&q=80",
+        "images": [
+            "https://images.unsplash.com/photo-1517668808822-9eaa03afd2af?auto=format&fit=crop&w=800&q=80"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1242,8 +1347,10 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "شواية راكليت كهربائية للجبن والمشويات مع مقالي",
         "base_price": 360000,
         "discount_price": 315000,
-        "main_image": "",
-        "images": [],
+        "main_image": "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=800&q=80",
+        "images": [
+            "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=800&q=80"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1274,8 +1381,10 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "مجفف شعر صغير وسريع بإنبعاث أيوني لمعان الشعر",
         "base_price": 210000,
         "discount_price": 180000,
-        "main_image": "",
-        "images": [],
+        "main_image": "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80",
+        "images": [
+            "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1303,11 +1412,13 @@ const FALLBACK_PRODUCTS = [
         "category_id": 1,
         "title_ar": "فيليدا ممسحة بخار ستيم بلس",
         "slug": "prod-vl-sp-01-41",
-        "description_ar": "ممسحة بخار لتنظيف وتعقيم الأرضيا�� بدون كيميائيات",
+        "description_ar": "ممسحة بخار لتنظيف وتعقيم الأرضيات بدون كيميائيات",
         "base_price": 440000,
         "discount_price": 390000,
-        "main_image": "",
-        "images": [],
+        "main_image": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80",
+        "images": [
+            "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1338,8 +1449,10 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "فرن ميكروويف متعدد المستويات للتسخين والطهي",
         "base_price": 680000,
         "discount_price": 590000,
-        "main_image": "",
-        "images": [],
+        "main_image": "https://images.unsplash.com/photo-1585515320310-259814833e62?auto=format&fit=crop&w=800&q=80",
+        "images": [
+            "https://images.unsplash.com/photo-1585515320310-259814833e62?auto=format&fit=crop&w=800&q=80"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1370,8 +1483,10 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "مصباح جداري خارجي يعمل بالبطارية مع مستشعر حركة",
         "base_price": 160000,
         "discount_price": 135000,
-        "main_image": "",
-        "images": [],
+        "main_image": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80",
+        "images": [
+            "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1402,8 +1517,10 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "شمعة LED ديكورية مصنوعة من الشمع الحقيقي بوعاء زجاجي",
         "base_price": 85000,
         "discount_price": 70000,
-        "main_image": "",
-        "images": [],
+        "main_image": "https://images.unsplash.com/photo-1603006905003-be475563bc59?auto=format&fit=crop&w=800&q=80",
+        "images": [
+            "https://images.unsplash.com/photo-1603006905003-be475563bc59?auto=format&fit=crop&w=800&q=80"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1434,8 +1551,10 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "جهاز استنشاق ضاغط لعلاج أمراض الجهاز التنفسي",
         "base_price": 270000,
         "discount_price": 235000,
-        "main_image": "",
-        "images": [],
+        "main_image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=800&q=80",
+        "images": [
+            "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=800&q=80"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1466,8 +1585,10 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "مكنسة كهربائية 2 في 1 تعمل كمكنسة عصوية ويدوية",
         "base_price": 580000,
         "discount_price": 510000,
-        "main_image": "",
-        "images": [],
+        "main_image": "https://images.unsplash.com/photo-1558317374-067fb5f30001?auto=format&fit=crop&w=800&q=80",
+        "images": [
+            "https://images.unsplash.com/photo-1558317374-067fb5f30001?auto=format&fit=crop&w=800&q=80"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1498,8 +1619,10 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "مصباح طاولة LED باللمس بتصميم طول مختلف",
         "base_price": 155000,
         "discount_price": 130000,
-        "main_image": "",
-        "images": [],
+        "main_image": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80",
+        "images": [
+            "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1530,8 +1653,10 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "حبل إضاءة LED ديكوري للمناسبات والديكور",
         "base_price": 75000,
         "discount_price": 60000,
-        "main_image": "",
-        "images": [],
+        "main_image": "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80",
+        "images": [
+            "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1562,8 +1687,10 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "كشاف إضاءة LED قوي ومقاوم للصدمات للمواقع والأعمال",
         "base_price": 280000,
         "discount_price": 240000,
-        "main_image": "",
-        "images": [],
+        "main_image": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80",
+        "images": [
+            "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1594,8 +1721,10 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "شريط إضاءة LED موفر للطاقة للديكور الداخلي",
         "base_price": 65000,
         "discount_price": 50000,
-        "main_image": "",
-        "images": [],
+        "main_image": "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80",
+        "images": [
+            "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1626,8 +1755,10 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "ستارة ضوئية LED مع مؤثرات إضاءة متعددة للزينة",
         "base_price": 110000,
         "discount_price": 90000,
-        "main_image": "",
-        "images": [],
+        "main_image": "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80",
+        "images": [
+            "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1658,8 +1789,10 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "مصباح طاولة LED أساسي وإضاءة مريحة للعين",
         "base_price": 95000,
         "discount_price": 80000,
-        "main_image": "",
-        "images": [],
+        "main_image": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80",
+        "images": [
+            "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1690,8 +1823,10 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "ماكينة تشذيب شعر الجسم للرجال مع أمشاط حماية",
         "base_price": 310000,
         "discount_price": 270000,
-        "main_image": "",
-        "images": [],
+        "main_image": "https://images.unsplash.com/photo-1621607512022-6aecc4fed814?auto=format&fit=crop&w=800&q=80",
+        "images": [
+            "https://images.unsplash.com/photo-1621607512022-6aecc4fed814?auto=format&fit=crop&w=800&q=80"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1722,8 +1857,10 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "مصباح طاولة LED محمول يعمل بالبطارية القابلة للشحن",
         "base_price": 120000,
         "discount_price": 100000,
-        "main_image": "",
-        "images": [],
+        "main_image": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80",
+        "images": [
+            "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1754,8 +1891,10 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "طقم حلاقة وتصفيف 6 في 1 للوجه والشعر",
         "base_price": 330000,
         "discount_price": 290000,
-        "main_image": "",
-        "images": [],
+        "main_image": "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=800&q=80",
+        "images": [
+            "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=800&q=80"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1786,8 +1925,10 @@ const FALLBACK_PRODUCTS = [
         "description_ar": "ماكينة حلاقة دوارة بحركات مرنة لقص شعر الوجه بسلاسة",
         "base_price": 410000,
         "discount_price": 360000,
-        "main_image": "",
-        "images": [],
+        "main_image": "https://images.unsplash.com/photo-1508380702597-707c1b00a9a6?auto=format&fit=crop&w=800&q=80",
+        "images": [
+            "https://images.unsplash.com/photo-1508380702597-707c1b00a9a6?auto=format&fit=crop&w=800&q=80"
+        ],
         "youtube_url": "",
         "is_featured": 0,
         "is_visible": 1,
@@ -1856,139 +1997,11 @@ let currentSelectedVariant = null;
 
 // Utility: Format currency in Syrian Pounds (ل.س)
 function formatSYP(amount) {
-    if (amount === null || amount === undefined || amount === '') return '';
-    const n = Number(amount);
-    if (isNaN(n)) return '';
-    const formatted = n % 1 !== 0 ? n.toFixed(2) : n.toLocaleString('en-US');
-    return '$' + formatted;
+    if (amount === null || amount === undefined) return '';
+    return Number(amount).toLocaleString('ar-SY') + ' ل.س';
 }
 
 // Utility: Generate unique product code  e.g. EHS-001
-function showCustomSuccessModal(title, message, btnText = 'متابعة التسوق 🛍️', onConfirm = null) {
-    const oldModal = document.getElementById('customSuccessModalWrapper');
-    if (oldModal) oldModal.remove();
-
-    const wrapper = document.createElement('div');
-    wrapper.id = 'customSuccessModalWrapper';
-    wrapper.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: rgba(15, 23, 42, 0.65);
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        z-index: 999999;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-        animation: fadeInOverlay 0.3s ease-out forwards;
-    `;
-
-    wrapper.innerHTML = `
-        <div style="
-            background: #ffffff;
-            border-radius: 28px;
-            max-width: 480px;
-            width: 100%;
-            padding: 36px 28px;
-            text-align: center;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            border: 1px solid rgba(226, 232, 240, 0.8);
-            transform: scale(0.85);
-            opacity: 0;
-            animation: modalScaleUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-            font-family: 'Cairo', sans-serif;
-            direction: rtl;
-        ">
-            <div style="
-                width: 84px;
-                height: 84px;
-                background: #dcfce7;
-                color: #16a34a;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                margin: 0 auto 20px auto;
-                font-size: 2.6rem;
-                box-shadow: 0 0 0 10px rgba(220, 252, 231, 0.5);
-                animation: pulseIcon 2s infinite;
-            ">
-                <i class="fa-solid fa-circle-check"></i>
-            </div>
-
-            <h3 style="
-                font-size: 1.55rem;
-                font-weight: 800;
-                color: #0f172a;
-                margin: 0 0 12px 0;
-                line-height: 1.3;
-            ">${title}</h3>
-
-            <p style="
-                font-size: 1rem;
-                color: #475569;
-                line-height: 1.65;
-                margin: 0 0 26px 0;
-            ">${message}</p>
-
-            <button type="button" id="btnCustomSuccessOk" style="
-                width: 100%;
-                background: linear-gradient(135deg, #1e3a8a, #2563eb);
-                color: #ffffff;
-                border: none;
-                padding: 16px;
-                font-size: 1.1rem;
-                font-weight: 700;
-                border-radius: 16px;
-                cursor: pointer;
-                box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.4);
-                transition: all 0.2s ease;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 8px;
-            " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
-                <span>${btnText}</span>
-            </button>
-        </div>
-
-        <style>
-            @keyframes fadeInOverlay {
-                from { opacity: 0; }
-                to { opacity: 1; }
-            }
-            @keyframes modalScaleUp {
-                from { opacity: 0; transform: scale(0.85); }
-                to { opacity: 1; transform: scale(1); }
-            }
-            @keyframes pulseIcon {
-                0% { box-shadow: 0 0 0 0 rgba(220, 252, 231, 0.7); }
-                70% { box-shadow: 0 0 0 18px rgba(220, 252, 231, 0); }
-                100% { box-shadow: 0 0 0 0 rgba(220, 252, 231, 0); }
-            }
-        </style>
-    `;
-
-    document.body.appendChild(wrapper);
-
-    document.getElementById('btnCustomSuccessOk')?.addEventListener('click', () => {
-        wrapper.remove();
-        if (typeof onConfirm === 'function') onConfirm();
-    });
-}
-
-function validateSyrianPhoneNumber(phone) {
-    if (!phone) return false;
-    const clean = phone.replace(/[\s\-\(\)]/g, '');
-    const syrianRegex = /^(\+?9639|09|9639|009639)\d{8}$/;
-    const generalRegex = /^\+?[0-9]{9,15}$/;
-    return syrianRegex.test(clean) || generalRegex.test(clean);
-}
-
 function generateProductCode(id) {
     return 'EHS-' + String(id).padStart(3, '0');
 }
@@ -2074,11 +2087,8 @@ function initStorefront() {
     renderCategoryTabs(allCategories);
     renderLoadingSkeleton();
 
-    // Load categories immediately from fallback (static hosting)
-    allCategories = [...FALLBACK_CATEGORIES];
-    renderCategoryTabs(allCategories);
-
-    // Load products immediately from products.json then upgrade from Google Sheets
+    // Async Network Fetch — real products from Google Sheets
+    fetchCategories();
     fetchProducts('all');
 
     // Search listener
@@ -2304,107 +2314,74 @@ function handleGoogleAuthMock() {
     alert(`أهلاً بك يا ${currentCustomer.full_name}! تم ربط حساب Google برقم هاتفك بنجاح.`);
 }
 
-function openMobileCategoryDrawer() {
-    document.getElementById('mobileCategoryDrawerBackdrop')?.classList.add('active');
-    document.getElementById('mobileCategoryDrawer')?.classList.add('active');
-}
-
-function closeMobileCategoryDrawer() {
-    document.getElementById('mobileCategoryDrawerBackdrop')?.classList.remove('active');
-    document.getElementById('mobileCategoryDrawer')?.classList.remove('active');
-}
-
 function renderCategoryTabs(categories) {
     const tabsContainer = document.getElementById('categoryTabs');
-    const drawerList = document.getElementById('drawerCategoryList');
-
-    if (!categories || categories.length === 0) categories = FALLBACK_CATEGORIES;
-
-    // Horizontal Pills
-    if (tabsContainer) {
-        let pillsHtml = `<button class="cat-tab active" data-category="all" onclick="filterCategory('all', this)"><i class="fa-solid fa-border-all"></i> كافة المنتجات</button>`;
-        categories.forEach(cat => {
-            pillsHtml += `
-                <button class="cat-tab" data-category="${cat.slug}" onclick="filterCategory('${cat.slug}', this)">
-                    <i class="fa-solid ${cat.icon || 'fa-tag'}"></i> ${cat.name_ar}
-                </button>
-            `;
-        });
-        tabsContainer.innerHTML = pillsHtml;
-    }
-
-    // Mobile Sidebar Drawer List
-    if (drawerList) {
-        let drawerHtml = `
-            <div class="drawer-cat-item active" data-category="all" onclick="filterCategory('all', this)">
-                <div style="display:flex; align-items:center; gap:10px;">
-                    <i class="fa-solid fa-border-all" style="color:#2563eb;"></i>
-                    <span>كافة المنتجات</span>
-                </div>
-                <i class="fa-solid fa-chevron-left" style="font-size:0.85rem; opacity:0.6;"></i>
-            </div>
+    if (!tabsContainer) return;
+    tabsContainer.innerHTML = `<button class="cat-tab active" data-category="all" onclick="filterCategory('all', this)"><i class="fa-solid fa-border-all"></i> كافة المنتجات</button>`;
+    categories.forEach(cat => {
+        tabsContainer.innerHTML += `
+            <button class="cat-tab" data-category="${cat.slug}" onclick="filterCategory('${cat.slug}', this)">
+                <i class="fa-solid ${cat.icon || 'fa-tag'}"></i> ${cat.name_ar}
+            </button>
         `;
-        categories.forEach(cat => {
-            drawerHtml += `
-                <div class="drawer-cat-item" data-category="${cat.slug}" onclick="filterCategory('${cat.slug}', this)">
-                    <div style="display:flex; align-items:center; gap:10px;">
-                        <i class="fa-solid ${cat.icon || 'fa-tag'}" style="color:#2563eb;"></i>
-                        <span>${cat.name_ar}</span>
-                    </div>
-                    <i class="fa-solid fa-chevron-left" style="font-size:0.85rem; opacity:0.6;"></i>
-                </div>
-            `;
-        });
-        drawerList.innerHTML = drawerHtml;
+    });
+}
+
+// Fetch Categories with Static Fallback
+async function fetchCategories() {
+    try {
+        const res = await fetch('/api/categories');
+        if (!res.ok) throw new Error('Not ok');
+        allCategories = await res.json();
+        renderCategoryTabs(allCategories);
+    } catch (e) {
+        allCategories = FALLBACK_CATEGORIES;
+        renderCategoryTabs(allCategories);
+    }
+}
+
+// Fetch Products with Static Fallback
+// On GitHub Pages there is no /api server, so we skip straight to
+// Google Sheets CSV (live data) → products.json (cached) → FALLBACK_PRODUCTS.
+async function fetchProducts(categorySlug) {
+    try {
+        const products = await fetchProductsFromGoogleSheetsClient(categorySlug);
+        renderProducts(products);
+        renderFeaturedCarousel();
+    } catch (sheetErr) {
+        console.warn('Google Sheets fetch failed, using cached products.json:', sheetErr);
+        try {
+            const jsonRes = await fetch('./js/products.json?t=' + Date.now());
+            if (!jsonRes.ok) throw new Error('products.json not found');
+            const cached = await jsonRes.json();
+            allProducts = cached;
+            isGoogleSheetsDataLoaded = true;
+            if (categorySlug === 'all') {
+                renderProducts(cached);
+            } else {
+                const catMap = { 'irons': 1, 'vacuums': 2, 'kitchen': 3, 'large-appliances': 4 };
+                const catId = catMap[categorySlug];
+                renderProducts(cached.filter(p => p.category_id === catId));
+            }
+            renderFeaturedCarousel();
+        } catch (jsonErr) {
+            console.error('All data sources failed, using hardcoded fallback:', jsonErr);
+            if (categorySlug === 'all') {
+                allProducts = FALLBACK_PRODUCTS.filter(p => p.is_visible);
+            } else {
+                const cat = FALLBACK_CATEGORIES.find(c => c.slug === categorySlug);
+                allProducts = cat ? FALLBACK_PRODUCTS.filter(p => p.category_id === cat.id && p.is_visible) : [];
+            }
+            renderProducts(allProducts);
+            renderFeaturedCarousel();
+        }
     }
 }
 
 function filterCategory(slug, btn) {
     document.querySelectorAll('.cat-tab').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.drawer-cat-item').forEach(b => b.classList.remove('active'));
-
-    if (btn) btn.classList.add('active');
-
-    const matchingDrawerItem = document.querySelector(`.drawer-cat-item[data-category="${slug}"]`);
-    if (matchingDrawerItem) matchingDrawerItem.classList.add('active');
-    const matchingPillItem = document.querySelector(`.cat-tab[data-category="${slug}"]`);
-    if (matchingPillItem) matchingPillItem.classList.add('active');
-
-    if (slug === 'all') {
-        renderProducts(allProducts);
-    } else {
-        const catMap = {
-            'irons': [1],
-            'vacuums': [2],
-            'kitchen': [3],
-            'personal-care': [4],
-            'home-living': [5],
-            'coffee-machines': [6]
-        };
-        const targetCatIds = catMap[slug] || [];
-        const filtered = allProducts.filter(p => {
-            if (targetCatIds.includes(p.category_id)) return true;
-            const pCatName = (p.category_name || '').toLowerCase();
-            const pTitle = (p.title_ar || '').toLowerCase();
-            if (slug === 'coffee-machines' && (pCatName.includes('قهوة') || pTitle.includes('قهوة') || pTitle.includes('إسبريسو') || pTitle.includes('اسبريسو') || pTitle.includes('دولسي') || pTitle.includes('تاسيمو'))) return true;
-            if (slug === 'irons' && (pCatName.includes('مكواة') || pTitle.includes('مكواة') || pTitle.includes('بخار'))) return true;
-            if (slug === 'vacuums' && (pCatName.includes('مكنسة') || pTitle.includes('مكنسة') || pTitle.includes('تنظيف'))) return true;
-            if (slug === 'kitchen' && (pCatName.includes('مطبخ') || pTitle.includes('خلاط') || pTitle.includes('طعام') || pTitle.includes('ميكروويف') || pTitle.includes('غلاية') || pTitle.includes('وافل') || pTitle.includes('شواية'))) return true;
-            if (slug === 'personal-care' && (pCatName.includes('حلاقة') || pTitle.includes('حلاقة') || pTitle.includes('شعر') || pTitle.includes('تشذيب') || pTitle.includes('قص الشعر'))) return true;
-            if (slug === 'home-living' && (pCatName.includes('إضاءة') || pTitle.includes('مصباح') || pTitle.includes('شمعة') || pTitle.includes('ميزان') || pTitle.includes('ريموت'))) return true;
-            return false;
-        });
-        renderProducts(filtered.length > 0 ? filtered : allProducts);
-    }
-
-    closeMobileCategoryDrawer();
-
-    const targetEl = document.getElementById('productsGrid') || document.getElementById('products-section');
-    if (targetEl) {
-        const yOffset = -70; 
-        const y = targetEl.getBoundingClientRect().top + window.pageYOffset + yOffset;
-        window.scrollTo({ top: y, behavior: 'smooth' });
-    }
+    btn.classList.add('active');
+    fetchProducts(slug);
 }
 
 function renderLoadingSkeleton() {
@@ -2635,43 +2612,117 @@ function parseCSVClient(text) {
 }
 
 function parsePriceClient(val) {
-    if (!val || val === '-' || val.trim() === '' || val.trim() === '0') return null;
-    // Support decimals like 29.99, 100.00 and integers
-    const clean = val.replace(/[^\d.]/g, '');
-    const num = parseFloat(clean);
-    return isNaN(num) || num === 0 ? null : num;
+    if (!val || val === '-') return null;
+    const clean = val.replace(/[^\d]/g, '');
+    return clean ? parseInt(clean, 10) : null;
 }
 
 function getCategoryIdFromSheetClient(categoryName, productName) {
-    const cleanName = (productName || '').toLowerCase();
-    const cleanCat = (categoryName || '').toLowerCase();
-
-    if (cleanName.includes('قهوة') || cleanName.includes('إسبريسو') || cleanName.includes('اسبريسو') || cleanName.includes('دولسي') || cleanName.includes('تاسيمو') || cleanCat.includes('قهوة')) {
-        return 6; // coffee-machines
+    if (!categoryName) {
+        return getCategoryIdFromNameClient(productName);
     }
-    if (cleanName.includes('مكواة') || cleanName.includes('بخار') || cleanName.includes('iron') || cleanCat.includes('مكواة')) {
+    const clean = categoryName.trim().toLowerCase();
+    if (clean.includes('مكواة') || clean.includes('بخار') || clean.includes('iron') || clean.includes('ملابس')) {
         return 1; // irons
     }
-    if (cleanName.includes('مكنسة') || cleanName.includes('تنظيف') || cleanName.includes('vacuum') || cleanCat.includes('مكنسة')) {
+    if (clean.includes('مكنسة') || clean.includes('تنظيف') || clean.includes('vacuum') || clean.includes('مكاس') || clean.includes('مكنس')) {
         return 2; // vacuums
     }
-    if (cleanName.includes('وافل') || cleanName.includes('سموثي') || cleanName.includes('خلاط') || cleanName.includes('محمصة') || cleanName.includes('غلاية') || cleanName.includes('شواية') || cleanName.includes('لوح تسخين') || cleanName.includes('سندويش') || cleanName.includes('مبشرة') || cleanName.includes('ميكروويف') || cleanName.includes('فرن') || cleanName.includes('فشار') || cleanName.includes('شوكولاتة') || cleanCat.includes('مطبخ')) {
+    if (clean.includes('مطبخ') || clean.includes('خلاط') || clean.includes('غلاية') || clean.includes('blender') || clean.includes('kettle') || clean.includes('microwave') || clean.includes('طعام') || clean.includes('شعر')) {
         return 3; // kitchen
     }
-    if (cleanName.includes('حلاقة') || cleanName.includes('قص الشعر') || cleanName.includes('تشذيب') || cleanName.includes('مجفف شعر') || cleanName.includes('ستوديو دراي') || cleanName.includes('شاين إكسبرس') || cleanCat.includes('حلاقة') || cleanCat.includes('شخصية')) {
-        return 4; // personal-care
+    if (clean.includes('كبير') || clean.includes('ثلاجة') || clean.includes('غسالة') || clean.includes('تلفزيون') || clean.includes('مكيف')) {
+        return 4; // large-appliances
     }
-    return 5; // home-living
+    return getCategoryIdFromNameClient(productName);
+}
+
+function getCategoryIdFromNameClient(name) {
+    const lowerName = name.toLowerCase();
+    if (lowerName.includes('مكواة') || lowerName.includes('بخار') || lowerName.includes('iron')) {
+        return 1; // irons
+    }
+    if (lowerName.includes('مكنسة') || lowerName.includes('تنظيف') || lowerName.includes('vacuum') || lowerName.includes('broom')) {
+        return 2; // vacuums
+    }
+    if (lowerName.includes('ميكروويف') || lowerName.includes('خلاط') || lowerName.includes('غلاية') || lowerName.includes('blender') || lowerName.includes('kettle') || lowerName.includes('microwave') || lowerName.includes('شعر')) {
+        return 3; // kitchen
+    }
+    return 4; // large-appliances
+}
+
+const PRODUCT_FALLBACK_IMAGES = {
+    "1": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
+    "2": "https://images.unsplash.com/photo-1508380702597-707c1b00a9a6?auto=format&fit=crop&w=800&q=80",
+    "3": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80",
+    "4": "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=800&q=80",
+    "5": "https://images.unsplash.com/photo-1621607512022-6aecc4fed814?auto=format&fit=crop&w=800&q=80",
+    "6": "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=800&q=80",
+    "7": "https://images.unsplash.com/photo-1517668808822-9eaa03afd2af?auto=format&fit=crop&w=800&q=80",
+    "8": "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=800&q=80",
+    "9": "https://images.unsplash.com/photo-1563861826100-9cb868fdbe1c?auto=format&fit=crop&w=800&q=80",
+    "10": "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=800&q=80",
+    "11": "https://images.unsplash.com/photo-1553530666-ba11a7da3888?auto=format&fit=crop&w=800&q=80",
+    "12": "https://images.unsplash.com/photo-1583634648128-3a58222169ff?auto=format&fit=crop&w=800&q=80",
+    "13": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80",
+    "14": "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f6?auto=format&fit=crop&w=800&q=80",
+    "15": "https://images.unsplash.com/photo-1570222094114-d054a817e56b?auto=format&fit=crop&w=800&q=80",
+    "16": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=800&q=80",
+    "17": "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=800&q=80",
+    "18": "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f6?auto=format&fit=crop&w=800&q=80",
+    "19": "https://images.unsplash.com/photo-1621607512214-68297480165e?auto=format&fit=crop&w=800&q=80",
+    "20": "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=800&q=80",
+    "21": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80",
+    "22": "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=800&q=80",
+    "23": "https://images.unsplash.com/photo-1585515320310-259814833e62?auto=format&fit=crop&w=800&q=80",
+    "24": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80",
+    "25": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=800&q=80",
+    "26": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80",
+    "27": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80",
+    "28": "https://images.unsplash.com/photo-1558317374-067fb5f30001?auto=format&fit=crop&w=800&q=80",
+    "29": "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80",
+    "30": "https://images.unsplash.com/photo-1578645510447-e20b4311e3ce?auto=format&fit=crop&w=800&q=80",
+    "31": "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f6?auto=format&fit=crop&w=800&q=80",
+    "32": "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80",
+    "33": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80",
+    "34": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80",
+    "35": "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=800&q=80",
+    "36": "https://images.unsplash.com/photo-1578849278619-e73505e9610f?auto=format&fit=crop&w=800&q=80",
+    "37": "https://images.unsplash.com/photo-1621607512214-68297480165e?auto=format&fit=crop&w=800&q=80",
+    "38": "https://images.unsplash.com/photo-1517668808822-9eaa03afd2af?auto=format&fit=crop&w=800&q=80",
+    "39": "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=800&q=80",
+    "40": "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80",
+    "41": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80",
+    "42": "https://images.unsplash.com/photo-1585515320310-259814833e62?auto=format&fit=crop&w=800&q=80",
+    "43": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80",
+    "44": "https://images.unsplash.com/photo-1603006905003-be475563bc59?auto=format&fit=crop&w=800&q=80",
+    "45": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=800&q=80",
+    "46": "https://images.unsplash.com/photo-1558317374-067fb5f30001?auto=format&fit=crop&w=800&q=80",
+    "47": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80",
+    "48": "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80",
+    "49": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80",
+    "50": "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80",
+    "51": "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80",
+    "52": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80",
+    "53": "https://images.unsplash.com/photo-1621607512022-6aecc4fed814?auto=format&fit=crop&w=800&q=80",
+    "54": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80",
+    "55": "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=800&q=80",
+    "56": "https://images.unsplash.com/photo-1508380702597-707c1b00a9a6?auto=format&fit=crop&w=800&q=80"
+};
+
+function getFallbackImageClient(pId) {
+    if (pId && PRODUCT_FALLBACK_IMAGES[pId]) {
+        return PRODUCT_FALLBACK_IMAGES[pId];
+    }
+    return 'https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=800&q=80';
 }
 
 function getCategoryNameById(categoryId) {
     const names = {
         1: 'المكاوي وأجهزة البخار',
-        2: 'المكانس والتنظيف',
-        3: 'أجهزة المطبخ والطهي',
-        4: 'العناية الشخصية والحلاقة',
-        5: 'الإضاءة والمنزل والأجهزة الطبية',
-        6: 'ماكينات القهوة والكبسولات'
+        2: 'المكاس والتنظيف',
+        3: 'أجهزة المطبخ والخلاطات',
+        4: 'الأجهزة المنزلية الكبيرة'
     };
     return names[categoryId] || 'عام';
 }
@@ -2707,170 +2758,383 @@ function getProductImageClient(imageLink, categoryId) {
     return getFallbackImageClient(categoryId);
 }
 
-async function fetchProducts(categorySlug = 'all') {
-    renderLoadingSkeleton();
 
-    // STEP 1: Load products.json immediately for instant display
-    try {
-        const jsonRes = await fetch('./js/products.json?v=26.0.0');
-        if (jsonRes.ok) {
-            const localProducts = await jsonRes.json();
-            if (localProducts && localProducts.length > 0) {
-                allProducts = localProducts;
-                isGoogleSheetsDataLoaded = true;
-                const filtered = categorySlug === 'all' ? localProducts : localProducts.filter(p => {
-                    const catMap = { 'irons': 1, 'vacuums': 2, 'kitchen': 3, 'personal-care': 4, 'home-living': 5, 'coffee-machines': 6 };
-                    return p.category_id === catMap[categorySlug];
-                });
-                renderProducts(filtered.length > 0 ? filtered : localProducts);
-                renderFeaturedCarousel();
-                // STEP 2: Silently try to upgrade from live Google Sheets in background
-                fetchProductsFromGoogleSheetsClient(categorySlug).then(liveProducts => {
-                    if (liveProducts && liveProducts.length > 0) {
-                        renderProducts(liveProducts);
-                        renderFeaturedCarousel();
-                    }
-                }).catch(() => {}); // ignore if fails
-                return filtered.length > 0 ? filtered : localProducts;
-            }
-        }
-    } catch (jsonErr) {
-        console.warn('products.json load failed, trying Google Sheets:', jsonErr);
-    }
-
-    // STEP 3: Try Google Sheets directly
-    try {
-        const products = await fetchProductsFromGoogleSheetsClient(categorySlug);
-        renderProducts(products);
-        renderFeaturedCarousel();
-        return products;
-    } catch (err) {
-        console.error('All product sources failed:', err);
-        // STEP 4: Last resort - hardcoded fallback
-        const fallback = (typeof FALLBACK_PRODUCTS !== 'undefined') ? FALLBACK_PRODUCTS.filter(p => p.is_visible) : [];
-        allProducts = fallback;
-        renderProducts(fallback);
-        renderFeaturedCarousel();
-        return fallback;
-    }
-}
+const DEFAULT_PRICES_CLIENT = {
+    1: { price: 280000, discount: 245000 },
+    2: { price: 490000, discount: 450000 },
+    3: { price: 145000, discount: 125000 },
+    4: { price: 320000, discount: 290000 },
+    5: { price: 420000, discount: 380000 },
+    6: { price: 340000, discount: 305000 },
+    7: { price: 540000, discount: 490000 },
+    8: { price: 380000, discount: 340000 },
+    9: { price: 135000, discount: 115000 },
+    10: { price: 260000, discount: 230000 },
+    11: { price: 210000, discount: 185000 },
+    12: { price: 240000, discount: 210000 },
+    13: { price: 780000, discount: 690000 },
+    14: { price: 165000, discount: 140000 },
+    15: { price: 230000, discount: 195000 },
+    16: { price: 155000, discount: 130000 },
+    17: { price: 270000, discount: 235000 },
+    18: { price: 175000, discount: 150000 },
+    19: { price: 290000, discount: 250000 },
+    20: { price: 190000, discount: 165000 },
+    21: { price: 210000, discount: 180000 },
+    22: { price: 390000, discount: 345000 },
+    23: { price: 180000, discount: 155000 },
+    24: { price: 290000, discount: 255000 },
+    25: { price: 170000, discount: 145000 },
+    26: { price: 280000, discount: 240000 },
+    27: { price: 220000, discount: 190000 },
+    28: { price: 240000, discount: 210000 },
+    29: { price: 310000, discount: 275000 },
+    30: { price: 250000, discount: 220000 },
+    31: { price: 180000, discount: 155000 },
+    32: { price: 95000, discount: 80000 },
+    33: { price: 850000, discount: 760000 },
+    34: { price: 460000, discount: 410000 },
+    35: { price: 220000, discount: 195000 },
+    36: { price: 195000, discount: 165000 },
+    37: { price: 410000, discount: 365000 },
+    38: { price: 2800000, discount: 2450000 },
+    39: { price: 360000, discount: 315000 },
+    40: { price: 210000, discount: 180000 },
+    41: { price: 440000, discount: 390000 },
+    42: { price: 680000, discount: 590000 },
+    43: { price: 160000, discount: 135000 },
+    44: { price: 85000, discount: 70000 },
+    45: { price: 270000, discount: 235000 },
+    46: { price: 580000, discount: 510000 },
+    47: { price: 155000, discount: 130000 },
+    48: { price: 75000, discount: 60000 },
+    49: { price: 280000, discount: 240000 },
+    50: { price: 65000, discount: 50000 },
+    51: { price: 110000, discount: 90000 },
+    52: { price: 95000, discount: 80000 },
+    53: { price: 310000, discount: 270000 },
+    54: { price: 120000, discount: 100000 },
+    55: { price: 330000, discount: 290000 },
+    56: { price: 410000, discount: 360000 }
+};
 
 async function fetchProductsFromGoogleSheetsClient(categorySlug) {
-    let rawCsvText = '';
-
-    const urls = [
-        'https://docs.google.com/spreadsheets/d/1hioi7V5yDDsOmm5_StTI3b8poxnCsgMQXP30lC75PRI/gviz/tq?tqx=out:csv&gid=0&t=' + Date.now(),
-        'https://docs.google.com/spreadsheets/d/1hioi7V5yDDsOmm5_StTI3b8poxnCsgMQXP30lC75PRI/export?format=csv&gid=0&t=' + Date.now()
-    ];
-
-    for (const url of urls) {
-        try {
-            const res = await fetch(url);
-            if (res.ok) {
-                const text = await res.text();
-                if (text && text.length > 500 && text.includes(',')) {
-                    rawCsvText = text;
-                    break;
-                }
-            }
-        } catch (e) {
-            console.warn('Failed URL:', url, e);
-        }
-    }
-
-    if (rawCsvText) {
-        try {
-            const rows = parseCSVClient(rawCsvText);
-            if (rows.length >= 2) {
-                const products = [];
-                for (let i = 1; i < rows.length; i++) {
-                    const row = rows[i];
-                    if (!row || row.length < 3) continue;
-
-                    const name = (row[1] || row[2] || '').trim();
-                    const brand = (row[2] || 'ElectroHome').trim();
-                    const code = (row[3] || `PROD-${i}`).trim();
-
-                    if (!name || name.startsWith('Product') || name.startsWith('اسم') || name === '-') continue;
-
-                    const id = parseInt(row[0], 10) || i;
-                    const quantity = parseFloat(row[4]) || 10;
-                    let cost = parsePriceClient(row[5]);
-                    let sellingPrice = parsePriceClient(row[6]);
-                    let discountPrice = parsePriceClient(row[7]);
-
-                    const favVal = (row[10] || '').trim();
-                    const isFeatured = (favVal === '1' || favVal.toUpperCase() === 'TRUE') ? 1 : 0;
-                    const detailsText = (row[11] || '').trim();
-                    const videoLink = (row[12] || '').trim();
-
-                    const photos = [];
-                    for (let cIdx = 13; cIdx <= 17; cIdx++) {
-                        let imgUrl = getGoogleDriveDirectLinkClient((row[cIdx] || '').trim());
-                        if (imgUrl && imgUrl.startsWith('http') && !photos.includes(imgUrl)) {
-                            photos.push(imgUrl);
-                        }
-                    }
-
-                    const categoryId = getCategoryIdFromSheetClient(name, brand);
-                    const mainImage = photos.length > 0 ? photos[0] : getFallbackImageClient(categoryId);
-                    const imagesList = photos.length > 0 ? photos : [mainImage];
-                    const description = (detailsText && !detailsText.startsWith('http')) ? detailsText : `جهاز ${name} عالي الكفاءة من ماركة ${brand}. الموديل: ${code}.`;
-
-                    products.push({
-                        id,
-                        category_id: categoryId,
-                        title_ar: name,
-                        slug: `prod-${code.toLowerCase().replace(/[^a-z0-9]/g, '-')}-${id}`,
-                        description_ar: description,
-                        base_price: sellingPrice || cost || 29.99,
-                        discount_price: discountPrice,
-                        main_image: mainImage,
-                        images: imagesList,
-                        youtube_url: videoLink,
-                        is_visible: 1,
-                        is_featured: isFeatured,
-                        variants: [
-                            { id: id * 100, product_id: id, brand: brand || 'ElectroHome', model_name: code, variant_attributes: { "الماركة": brand, "الموديل": code }, price_modifier: 0, stock_quantity: Math.round(quantity) || 10, sku: code }
-                        ]
-                    });
-                }
-
-                if (products.length > 0) {
-                    allProducts = products;
-                    isGoogleSheetsDataLoaded = true;
-                    if (categorySlug === 'all') return products;
-                    const catMap = { 'irons': 1, 'vacuums': 2, 'kitchen': 3, 'personal-care': 4, 'home-living': 5, 'coffee-machines': 6 };
-                    const catId = catMap[categorySlug];
-                    return catId ? products.filter(p => p.category_id === catId) : products;
-                }
-            }
-        } catch (parseErr) {
-            console.error('Error parsing Google Sheets CSV:', parseErr);
-        }
-    }
-
-    // Fallback 1: Local products.json file
     try {
-        const jsonRes = await fetch('./js/products.json?v=25.0.0');
-        if (jsonRes.ok) {
+        const sheetUrl = 'https://docs.google.com/spreadsheets/d/1hioi7V5yDDsOmm5_StTI3b8poxnCsgMQXP30lC75PRI/gviz/tq?tqx=out:csv&t=' + Date.now();
+        const res = await fetch(sheetUrl);
+        if (!res.ok) throw new Error('Failed to fetch from Google Sheets directly');
+        const text = await res.text();
+        const rows = parseCSVClient(text);
+        if (rows.length < 2) throw new Error('Empty CSV');
+
+        const products = [];
+        for (let i = 1; i < rows.length; i++) {
+            const row = rows[i];
+            if (row.length < 3) continue;
+
+            const name = (row[1] || row[2] || '').trim();
+            const brand = (row[2] || 'ElectroHome').trim();
+            const code = (row[3] || `PROD-${i}`).trim();
+            if (!name || name.startsWith('Product') || name.startswith?.('اسم')) continue;
+
+            const id = parseInt(row[0], 10) || i;
+            const quantity = parseFloat(row[4]) || 0;
+            let cost = parsePriceClient(row[5]);
+            let sellingPrice = parsePriceClient(row[6]);
+            let discountPrice = parsePriceClient(row[7]);
+
+            // Price fallback if Google Sheet price is 0 or empty
+            const defaultP = DEFAULT_PRICES_CLIENT[id] || { price: 250000, discount: 220000 };
+            if (!sellingPrice || sellingPrice === 0) {
+                sellingPrice = defaultP.price;
+            }
+            if (!discountPrice || discountPrice === 0) {
+                discountPrice = defaultP.discount;
+            }
+
+            // Col 10 (K): Fav / Featured
+            const favVal = (row[10] || '').trim();
+            const isFeatured = (favVal === '1' || favVal.toUpperCase() === 'TRUE') ? 1 : 0;
+
+            // Col 11 (L): details
+            const detailsText = (row[11] || '').trim();
+
+            // Col 12 (M): video link
+            const videoLink = (row[12] || '').trim();
+
+            // Col 13..17 (N, O, P, Q, R): Photos 1..5
+            const photos = [];
+            for (let cIdx = 13; cIdx <= 17; cIdx++) {
+                let imgUrl = getGoogleDriveDirectLinkClient((row[cIdx] || '').trim());
+                if (imgUrl && imgUrl.startsWith('http') && !photos.includes(imgUrl)) {
+                    photos.push(imgUrl);
+                }
+            }
+
+            const categoryId = getCategoryIdFromSheetClient(name, brand);
+            const mainImage = photos.length > 0 ? photos[0] : getFallbackImageClient(id);
+            const imagesList = photos.length > 0 ? photos : [mainImage];
+            const description = (detailsText && !detailsText.startsWith('http')) ? detailsText : `جهاز ${name} عالي الكفاءة من ماركة ${brand}. الموديل: ${code}.`;
+
+            products.push({
+                id,
+                category_id: categoryId,
+                title_ar: name,
+                slug: `prod-${code.toLowerCase().replace(/[^a-z0-9]/g, '-')}-${id}`,
+                description_ar: description,
+                base_price: sellingPrice,
+                discount_price: discountPrice,
+                main_image: mainImage,
+                images: imagesList,
+                youtube_url: videoLink,
+                is_visible: 1,
+                is_featured: isFeatured,
+                variants: [
+                    { id: id * 100, product_id: id, brand: brand || 'ElectroHome', model_name: code, variant_attributes: { "الماركة": brand, "الموديل": code }, price_modifier: 0, stock_quantity: Math.round(quantity) || 10, sku: code }
+                ]
+            });
+        }
+
+        allProducts = products;
+        isGoogleSheetsDataLoaded = true;
+
+        if (categorySlug === 'all') {
+            return products;
+        } else {
+            const catMap = { 'irons': 1, 'vacuums': 2, 'kitchen': 3, 'personal-care': 4, 'home-living': 5 };
+            const catId = catMap[categorySlug];
+            return products.filter(p => p.category_id === catId);
+        }
+    } catch (sheetErr) {
+        console.warn('Failed to fetch direct CSV, falling back to pre-compiled products.json:', sheetErr);
+        try {
+            const jsonRes = await fetch('./js/products.json');
+            if (!jsonRes.ok) throw new Error('Static products.json not found');
             const products = await jsonRes.json();
             allProducts = products;
             isGoogleSheetsDataLoaded = true;
-            if (categorySlug === 'all') return products;
-            const catMap = { 'irons': 1, 'vacuums': 2, 'kitchen': 3, 'personal-care': 4, 'home-living': 5, 'coffee-machines': 6 };
-            const catId = catMap[categorySlug];
-            return catId ? products.filter(p => p.category_id === catId) : products;
-        }
-    } catch (jsonErr) {
-        console.warn('Local products.json fallback failed:', jsonErr);
-    }
 
-    // Fallback 2: Hardcoded FALLBACK_PRODUCTS
-    if (typeof FALLBACK_PRODUCTS !== 'undefined' && FALLBACK_PRODUCTS.length > 0) {
-        allProducts = FALLBACK_PRODUCTS.filter(p => p.is_visible);
+            if (categorySlug === 'all') {
+                return products;
+            } else {
+                const catMap = { 'irons': 1, 'vacuums': 2, 'kitchen': 3, 'personal-care': 4, 'home-living': 5 };
+                const catId = catMap[categorySlug];
+                return products.filter(p => p.category_id === catId);
+            }
+        } catch (jsonErr) {
+            console.error('Static products.json fallback also failed:', jsonErr);
+            throw jsonErr;
+        }
     }
-    return allProducts;
+}
+
+
+function parseCSVClient(text) {
+    const lines = text.split(/\r?\n/);
+    const rows = [];
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (!line) continue;
+        
+        const row = [];
+        let inQuotes = false;
+        let currentCell = '';
+        
+        for (let j = 0; j < line.length; j++) {
+            const char = line[j];
+            if (char === '"') {
+                inQuotes = !inQuotes;
+            } else if (char === ',' && !inQuotes) {
+                row.push(currentCell.trim());
+                currentCell = '';
+            } else {
+                currentCell += char;
+            }
+        }
+        row.push(currentCell.trim());
+        rows.push(row);
+    }
+    return rows;
+}
+
+function parsePriceClient(val) {
+    if (!val || val === '-') return null;
+    const clean = val.replace(/[^\d]/g, '');
+    return clean ? parseInt(clean, 10) : null;
+}
+
+function getCategoryIdFromSheetClient(categoryName, productName) {
+    if (!categoryName) {
+        return getCategoryIdFromNameClient(productName);
+    }
+    const clean = categoryName.trim().toLowerCase();
+    if (clean.includes('مكواة') || clean.includes('بخار') || clean.includes('iron') || clean.includes('ملابس')) {
+        return 1; // irons
+    }
+    if (clean.includes('مكنسة') || clean.includes('تنظيف') || clean.includes('vacuum') || clean.includes('مكاس') || clean.includes('مكنس')) {
+        return 2; // vacuums
+    }
+    if (clean.includes('مطبخ') || clean.includes('خلاط') || clean.includes('غلاية') || clean.includes('blender') || clean.includes('kettle') || clean.includes('microwave') || clean.includes('طعام') || clean.includes('شعر')) {
+        return 3; // kitchen
+    }
+    if (clean.includes('كبير') || clean.includes('ثلاجة') || clean.includes('غسالة') || clean.includes('تلفزيون') || clean.includes('مكيف')) {
+        return 4; // large-appliances
+    }
+    return getCategoryIdFromNameClient(productName);
+}
+
+function getCategoryIdFromNameClient(name) {
+    const lowerName = name.toLowerCase();
+    if (lowerName.includes('مكواة') || lowerName.includes('بخار') || lowerName.includes('iron')) {
+        return 1; // irons
+    }
+    if (lowerName.includes('مكنسة') || lowerName.includes('تنظيف') || lowerName.includes('vacuum') || lowerName.includes('broom')) {
+        return 2; // vacuums
+    }
+    if (lowerName.includes('ميكروويف') || lowerName.includes('خلاط') || lowerName.includes('غلاية') || lowerName.includes('blender') || lowerName.includes('kettle') || lowerName.includes('microwave') || lowerName.includes('شعر')) {
+        return 3; // kitchen
+    }
+    return 4; // large-appliances
+}
+
+function getFallbackImageClient(pId) {
+    if (pId) {
+        return `/asset/images/products/prod_${pId}.jpg`;
+    }
+    return 'https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=800&q=80';
+}
+
+function getCategoryNameById(categoryId) {
+    const names = {
+        1: 'المكاوي وأجهزة البخار',
+        2: 'المكاس والتنظيف',
+        3: 'أجهزة المطبخ والخلاطات',
+        4: 'الأجهزة المنزلية الكبيرة'
+    };
+    return names[categoryId] || 'عام';
+}
+
+function getGoogleDriveDirectLinkClient(link) {
+    if (!link) return '';
+    if (link.includes('drive.google.com')) {
+        let fileId = '';
+        const idMatch = link.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+        if (idMatch) {
+            fileId = idMatch[1];
+        } else {
+            const fileMatch = link.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+            if (fileMatch) {
+                fileId = fileMatch[1];
+            }
+        }
+        if (fileId) {
+            return `https://lh3.googleusercontent.com/d/${fileId}`;
+        }
+    }
+    return link;
+}
+
+function getProductImageClient(imageLink, categoryId) {
+    if (!imageLink) {
+        return getFallbackImageClient(categoryId);
+    }
+    const resolvedLink = getGoogleDriveDirectLinkClient(imageLink);
+    if (resolvedLink.startsWith('http://') || resolvedLink.startsWith('https://') || resolvedLink.startsWith('/')) {
+        return resolvedLink;
+    }
+    return getFallbackImageClient(categoryId);
+}
+
+async function fetchProductsFromGoogleSheetsClient(categorySlug) {
+    try {
+        // Try fetching Google Sheets directly as the primary choice
+        const sheetUrl = 'https://docs.google.com/spreadsheets/d/1hioi7V5yDDsOmm5_StTI3b8poxnCsgMQXP30lC75PRI/gviz/tq?tqx=out:csv&t=' + Date.now();
+        const res = await fetch(sheetUrl);
+        if (!res.ok) throw new Error('Failed to fetch from Google Sheets directly');
+        const text = await res.text();
+        const rows = parseCSVClient(text);
+        if (rows.length < 2) throw new Error('Empty CSV');
+
+        const products = [];
+        for (let i = 1; i < rows.length; i++) {
+            const row = rows[i];
+            if (row.length < 4) continue;
+
+            const name = row[1];
+            const brand = row[2] ? row[2].trim() : '';
+            const code = row[3];
+            if (!name || !code) continue;
+
+            const id = parseInt(row[0], 10) || i;
+            const quantity = parseFloat(row[4]) || 0;
+            const cost = parsePriceClient(row[5]);
+            const sellingPrice = parsePriceClient(row[6]);
+            const discountPrice = parsePriceClient(row[7]);
+            const categoryName = row[9] || '';
+            const imageLink = row[10] || '';
+            const videoLink = row[11] || '';
+            const isFeatured = row[12] && row[12].trim().toUpperCase() === 'TRUE' ? 1 : 0;
+
+            const categoryId = getCategoryIdFromSheetClient(categoryName, name);
+            const title = name; // Clean name without barcode
+            const finalImage = getProductImageClient(imageLink, categoryId);
+
+            products.push({
+                id,
+                category_id: categoryId,
+                title_ar: title,
+                slug: `prod-${code.toLowerCase().replace(/[^a-z0-9]/g, '-')}-${id}`,
+                description_ar: `جهاز كهربائي ذكي عالي الكفاءة. الموديل: ${code}. متوفر حالياً بالمخزون بكمية ${Math.round(quantity)} قطعة.`,
+                base_price: sellingPrice || cost || 0,
+                discount_price: discountPrice,
+                main_image: finalImage,
+                youtube_url: videoLink,
+                is_visible: 1,
+                is_featured: isFeatured,
+                variants: [
+                    { id: id * 100, product_id: id, brand: brand || 'ElectroHome', model_name: code, variant_attributes: {}, price_modifier: 0, stock_quantity: Math.round(quantity), sku: code }
+                ]
+            });
+        }
+
+        allProducts = products;
+        isGoogleSheetsDataLoaded = true;
+
+        if (categorySlug === 'all') {
+            return products;
+        } else {
+            const catMap = { 'irons': 1, 'vacuums': 2, 'kitchen': 3, 'large-appliances': 4 };
+            const catId = catMap[categorySlug];
+            return products.filter(p => p.category_id === catId);
+        }
+    } catch (sheetErr) {
+        console.warn('Failed to fetch direct CSV, falling back to pre-compiled products.json:', sheetErr);
+        try {
+            const jsonRes = await fetch('./js/products.json');
+            if (!jsonRes.ok) throw new Error('Static products.json not found');
+            const products = await jsonRes.json();
+            allProducts = products;
+            isGoogleSheetsDataLoaded = true;
+
+            if (categorySlug === 'all') {
+                return products;
+            } else {
+                const catMap = { 'irons': 1, 'vacuums': 2, 'kitchen': 3, 'large-appliances': 4 };
+                const catId = catMap[categorySlug];
+                return products.filter(p => p.category_id === catId);
+            }
+        } catch (jsonErr) {
+            console.error('Static products.json fallback also failed:', jsonErr);
+            throw jsonErr;
+        }
+    }
+}
+
+async function fetchProductDetailsFromGoogleSheetsClient(productId) {
+    if (!isGoogleSheetsDataLoaded) {
+        await fetchProductsFromGoogleSheetsClient('all');
+    }
+    return allProducts.find(p => p.id === productId) || null;
 }
 
 // Render Products Grid - Cards open product page in new tab
@@ -2902,7 +3166,7 @@ function renderProducts(products) {
                     : (isBestseller ? `<span class="badge-trendyol-bestseller">⚡ الأكثر طلباً</span>` : '')}
                 
                 <a href="${productUrl}" target="_blank" rel="noopener">
-                    <img src="${p.main_image || '/Logo/ElectroHomeSY-logo-blue.png'}" alt="${p.title_ar}" class="product-thumb" style="cursor: pointer;">
+                    <img src="${p.main_image || 'https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=800&q=80'}" alt="${p.title_ar}" class="product-thumb" style="cursor: pointer;">
                 </a>
                 
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
@@ -2969,7 +3233,7 @@ function renderModalContent() {
 
     body.innerHTML = `
         <div>
-            <img src="${product.main_image || '/Logo/ElectroHomeSY-logo-blue.png'}" alt="${product.title_ar}" style="width:100%; border-radius:20px; box-shadow:0 12px 30px rgba(0,0,0,0.12);">
+            <img src="${product.main_image || 'https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=800&q=80'}" alt="${product.title_ar}" style="width:100%; border-radius:20px; box-shadow:0 12px 30px rgba(0,0,0,0.12);">
             
             ${youtubeEmbed ? `
                 <div class="youtube-embed-box">
@@ -3029,10 +3293,9 @@ function selectVariant(variantId) {
 function addToCartCurrentProduct() {
     if (!currentSelectedProduct) return;
 
-    const basePrice = currentSelectedProduct.discount_price ? Number(currentSelectedProduct.discount_price) : Number(currentSelectedProduct.base_price || 0);
-    const priceModifier = currentSelectedVariant ? (Number(currentSelectedVariant.price_modifier) || 0) : 0;
-    let unitPrice = basePrice + priceModifier;
-    if (!unitPrice || unitPrice <= 0) unitPrice = Number(currentSelectedProduct.base_price || 0);
+    const basePrice = currentSelectedProduct.discount_price ? currentSelectedProduct.discount_price : currentSelectedProduct.base_price;
+    const priceModifier = currentSelectedVariant ? currentSelectedVariant.price_modifier : 0;
+    const unitPrice = basePrice + priceModifier;
 
     const variantDetails = currentSelectedVariant 
         ? `${currentSelectedVariant.brand} ${currentSelectedVariant.model_name} ` + Object.entries(currentSelectedVariant.variant_attributes || {}).map(([k, v]) => `${k}: ${v}`).join(', ')
@@ -3044,16 +3307,13 @@ function addToCartCurrentProduct() {
         product_name: currentSelectedProduct.title_ar,
         variant_details: variantDetails,
         unit_price: unitPrice,
-        main_image: currentSelectedProduct.main_image || '/Logo/ElectroHomeSY-logo-blue.png',
+        main_image: currentSelectedProduct.main_image,
         quantity: 1
     };
 
     const existingIndex = cart.findIndex(ci => ci.product_id === cartItem.product_id && ci.variant_id === cartItem.variant_id);
     if (existingIndex > -1) {
         cart[existingIndex].quantity += 1;
-        if (!cart[existingIndex].unit_price || cart[existingIndex].unit_price <= 0) {
-            cart[existingIndex].unit_price = unitPrice;
-        }
     } else {
         cart.push(cartItem);
     }
@@ -3117,19 +3377,7 @@ function renderCartPage() {
     const totalPriceEl = document.getElementById('cartTotalPrice');
     if (!list || !totalPriceEl) return;
 
-    // Auto-repair any 0 price items in cart
-    if (Array.isArray(cart)) {
-        cart.forEach(item => {
-            if (!item.unit_price || Number(item.unit_price) <= 0) {
-                const found = (allProducts || []).find(p => p.id === item.product_id);
-                if (found) {
-                    item.unit_price = Number(found.discount_price || found.base_price || 0);
-                }
-            }
-        });
-    }
-
-    if (!cart || cart.length === 0) {
+    if (cart.length === 0) {
         list.innerHTML = `<p style="text-align:center; padding:35px; color:var(--steel-grey); font-size:1.05rem; font-family:'Cairo',sans-serif;">السلة فارغة حالياً. أضف بعض المنتجات للتسوق!</p>`;
         totalPriceEl.innerText = formatSYP(0);
         return;
@@ -3137,17 +3385,16 @@ function renderCartPage() {
 
     let total = 0;
     list.innerHTML = cart.map((item, index) => {
-        const itemPrice = Number(item.unit_price) || 0;
-        const itemTotal = itemPrice * item.quantity;
+        const itemTotal = item.unit_price * item.quantity;
         total += itemTotal;
         return `
             <div class="cart-product-item">
                 <div class="cart-product-image-wrapper" style="width:60px; height:60px; border-radius:12px; border:1px solid var(--border-color); background:#ffffff; display:flex; align-items:center; justify-content:center; overflow:hidden; flex-shrink:0;">
-                    <img src="${item.main_image || '/Logo/ElectroHomeSY-logo-blue.png'}" alt="${item.product_name}" style="max-width:100%; max-height:100%; object-fit:contain; padding:4px;">
+                    <img src="${item.main_image || 'https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=800&q=80'}" alt="${item.product_name}" style="max-width:100%; max-height:100%; object-fit:contain; padding:4px;">
                 </div>
                 <div class="cart-product-details">
                     <span class="cart-product-title">${item.product_name}</span>
-                    <span class="cart-product-subtitle">${item.variant_details || 'افتراضي'}</span>
+                    <span class="cart-product-subtitle">${item.variant_details}</span>
                 </div>
                 <div class="cart-qty-selector">
                     <button type="button" class="cart-qty-btn" onclick="changeQty(${index}, -1)">
@@ -3212,80 +3459,6 @@ function selectPaymentMethod(method) {
 }
 
 // Checkout Submit - Enforces Customer Login Requirement
-
-// Helper: Send order email notification & record in Google Sheets (Rich HTML & 100% Arabic)
-async function sendOrderEmailNotification(orderData) {
-    const itemsFormattedText = (orderData.items || []).map((item, idx) => {
-        const pLink = `https://electrohomesy.com/product.html?id=${item.product_id}`;
-        return `${idx + 1}. ${item.product_name} (${item.variant_details || 'افتراضي'}) | الكمية: ${item.quantity} | السعر: $${((item.unit_price || 0) * item.quantity).toFixed(2)}\nرابط المنتج: ${pLink}`;
-    }).join('\n\n');
-
-    const htmlItemsFormatted = (orderData.items || []).map((item, idx) => {
-        const pLink = `https://electrohomesy.com/product.html?id=${item.product_id}`;
-        return `
-        <div style="padding: 12px; margin-bottom: 10px; background: #f8fafc; border-radius: 8px; border-right: 4px solid #2563eb;">
-            <div style="font-weight: bold; font-size: 15px; color: #0f172a;">${idx + 1}. ${item.product_name}</div>
-            <div style="font-size: 13px; color: #64748b; margin-top: 2px;">المواصفات: ${item.variant_details || 'افتراضي'}</div>
-            <div style="font-size: 14px; font-weight: bold; color: #16a34a; margin-top: 4px;">الكمية: ${item.quantity} | السعر الإجمالي: $${((item.unit_price || 0) * item.quantity).toFixed(2)}</div>
-            <div style="margin-top: 6px;">
-                <a href="${pLink}" target="_blank" style="display: inline-block; padding: 6px 14px; background: #2563eb; color: #ffffff; text-decoration: none; border-radius: 6px; font-size: 12px; font-weight: bold;">🔗 فتح صفحة المنتج للمعاينة</a>
-            </div>
-        </div>
-        `;
-    }).join('');
-
-    const payload = {
-        customer_name: orderData.customer_name,
-        customer_phone: orderData.customer_phone,
-        delivery_address: orderData.delivery_address || 'دمشق',
-        payment_method: orderData.payment_method === 'cash' ? 'الدفع عند الاستلام' : orderData.payment_method,
-        total_amount: (orderData.total_amount || 0).toFixed(2),
-        items: itemsFormattedText,
-        html_items: htmlItemsFormatted,
-        date: new Date().toLocaleString('ar-SY')
-    };
-
-    try {
-        await fetch('https://script.google.com/macros/s/AKfycbwrM6-bAv-hYJ494X0bSvWoIRp-6vjJ4An226PMUI0k7X21zYZ_iS6xBeePAxdhRecA/exec', {
-            method: 'POST',
-            headers: { 'Content-Type': 'text/plain' },
-            body: JSON.stringify(payload)
-        });
-        console.log('Order notification sent in Arabic HTML with product links!');
-    } catch (e) {
-        console.warn('Google Sheets Webhook Notice:', e);
-    }
-}
-
-// Helper: Send special product request email notification & record in Google Sheets
-async function sendProductRequestEmailNotification(reqData) {
-    const htmlItems = `
-    <div style="padding: 12px; background: #f8fafc; border-radius: 8px; border-right: 4px solid #ef4444;">
-        <div style="font-weight: bold; font-size: 15px; color: #0f172a;">الجهاز المطلوب: ${reqData.requested_product}</div>
-        <div style="font-size: 13px; color: #64748b; margin-top: 4px;">ملاحظات الزبون: ${reqData.notes || 'لا يوجد'}</div>
-    </div>
-    `;
-
-    const payload = {
-        customer_name: reqData.customer_name,
-        customer_phone: reqData.customer_phone,
-        delivery_address: 'طلب جهاز خاص',
-        payment_method: 'طلب جهاز خاص',
-        total_amount: '0.00',
-        items: `طلب جهاز خاص: ${reqData.requested_product}\nملاحظات: ${reqData.notes || 'لا يوجد'}`,
-        html_items: htmlItems,
-        date: new Date().toLocaleString('ar-SY')
-    };
-
-    try {
-        await fetch('https://script.google.com/macros/s/AKfycbwrM6-bAv-hYJ494X0bSvWoIRp-6vjJ4An226PMUI0k7X21zYZ_iS6xBeePAxdhRecA/exec', {
-            method: 'POST',
-            headers: { 'Content-Type': 'text/plain' },
-            body: JSON.stringify(payload)
-        });
-    } catch (e) {}
-}
-
 async function handleCheckoutSubmit(e) {
     e.preventDefault();
     if (cart.length === 0) {
@@ -3293,99 +3466,57 @@ async function handleCheckoutSubmit(e) {
         return;
     }
 
-    const nameInput = document.getElementById('custName');
-    const phoneInput = document.getElementById('custPhone');
-    const addressInput = document.getElementById('custAddress');
-
-    const customer_name = (nameInput ? nameInput.value.trim() : '') || (currentCustomer ? currentCustomer.full_name : '');
-    const customer_phone = (phoneInput ? phoneInput.value.trim() : '') || (currentCustomer ? currentCustomer.phone_number : '');
-    const delivery_address = (addressInput ? addressInput.value.trim() : '') || 'دمشق';
-
-    if (!customer_name) {
-        alert('⚠️ يرجى إدخال اسمك الكريم لإتمام الطلب!');
-        if (nameInput) nameInput.focus();
+    if (!currentCustomer) {
+        alert('⚠️ يرجى تسجيل الدخول أو إنشاء حساب جديد أولاً لإتمام طلبكم بنجاح!');
+        cameFromCheckout = true;
+        openUserAuthModal();
         return;
     }
 
-    if (!validateSyrianPhoneNumber(customer_phone)) {
-        alert('⚠️ يرجى إدخال رقم هاتف محمول صحيح للتواصل عند التسليم! (مثال: 0959930005 أو 963959930005+)');
-        if (phoneInput) phoneInput.focus();
-        return;
-    }
-
-    if (!delivery_address) {
-        alert('⚠️ يرجى إدخال عنوان التوصيل بالتفصيل في دمشق!');
-        if (addressInput) addressInput.focus();
-        return;
-    }
-
+    const customer_name = document.getElementById('custName').value.trim() || currentCustomer.full_name;
+    const customer_phone = document.getElementById('custPhone').value.trim() || currentCustomer.phone_number;
+    const delivery_address = document.getElementById('custAddress').value.trim();
     const total_amount = cart.reduce((sum, item) => sum + (item.unit_price * item.quantity), 0);
 
-    const orderPayload = {
-        customer_id: currentCustomer ? currentCustomer.id : null,
-        customer_name,
-        customer_phone,
-        delivery_address,
-        payment_method: typeof selectedPaymentMethod !== 'undefined' ? selectedPaymentMethod : 'cash',
-        total_amount,
-        items: [...cart]
-    };
-
-    const submitBtn = e.target.querySelector('button[type="submit"]');
-    const origBtnHtml = submitBtn ? submitBtn.innerHTML : '';
-    if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري إرسال الطلب...';
-    }
-
-    // AWAIT email & Google Sheets notification
-    await sendOrderEmailNotification(orderPayload);
-
     try {
-        await fetch('/api/orders', {
+        const res = await fetch('/api/orders', {
             method: 'POST',
             headers: { 
                 'Content-Type': 'application/json',
                 'X-CSRF-Token': getCookie('csrf_token')
             },
-            body: JSON.stringify(orderPayload)
+            body: JSON.stringify({
+                customer_id: currentCustomer.id,
+                customer_name,
+                customer_phone,
+                delivery_address,
+                payment_method: selectedPaymentMethod,
+                total_amount,
+                items: cart
+            })
         });
-    } catch (err) {}
-
-    if (submitBtn) {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = origBtnHtml;
+        if (res.ok) {
+            const data = await res.json();
+            alert(data.message || 'تم إرسال طلبكم بنجاح!');
+        } else {
+            alert('تم استلام طلبكم بنجاح وسيتواصل معكم فريق المبيعات لتأكيد التوصيل في دمشق!');
+        }
+    } catch (e) {
+        alert('تم استلام طلبكم بنجاح وسيتواصل معكم فريق المبيعات لتأكيد التوصيل في دمشق!');
     }
 
     cart = [];
     saveCart();
     window.location.hash = '';
-
-    showCustomSuccessModal(
-        '🎉 تم استلام طلبكم بنجاح!',
-        'شكراً لثقتكم بمتجر ElectroHomeSY. تم توثيق بيانات الطلب بنجاح وسيتواصل معكم فريق المبيعات قريباً لتأكيد التوصيل في دمشق.',
-        'متابعة التسوق 🛍️',
-        () => { showView('home'); }
-    );
 }
 
+// Product Request Submit
 async function handleRequestSubmit(e) {
     e.preventDefault();
     const customer_name = document.getElementById('reqName').value.trim();
     const customer_phone = document.getElementById('reqPhone').value.trim();
     const requested_product = document.getElementById('reqProduct').value.trim();
     const notes = document.getElementById('reqNotes').value.trim();
-
-    const reqPayload = { customer_name, customer_phone, requested_product, notes };
-
-    const submitBtn = e.target.querySelector('button[type="submit"]');
-    const origBtnHtml = submitBtn ? submitBtn.innerHTML : '';
-    if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري إرسال الطلب...';
-    }
-
-    await sendProductRequestEmailNotification(reqPayload);
 
     try {
         await fetch('/api/requests', {
@@ -3398,19 +3529,9 @@ async function handleRequestSubmit(e) {
         });
     } catch (e) {}
 
-    if (submitBtn) {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = origBtnHtml;
-    }
-
+    alert('تم إرسال طلبكم بنجاح وسنقوم بتوفير الجهاز التواصل معكم بأسرع وقت!');
     document.getElementById('productRequestForm').reset();
     closeModal('requestModal');
-
-    showCustomSuccessModal(
-        '✨ تم استلام طلبك الخاص بنجاح!',
-        'تم تسجيل طلب الجهاز والتفاصيل بنجاح. وسيقوم فريق إلكتروهومسي بتوفير الجهاز والتواصل معكم بأسرع وقت.',
-        'تم، شكراً 👍'
-    );
 }
 
 // Featured Carousel Functions
@@ -3420,8 +3541,10 @@ function renderFeaturedCarousel() {
     const container = document.getElementById('featuredCarouselContainer');
     if (!track || !indicators || !container) return;
 
+    // Filter featured products
     featuredCarouselProducts = allProducts.filter(p => p.is_featured === 1);
     
+    // If no featured products, display fallback top products or hide carousel
     if (featuredCarouselProducts.length === 0) {
         featuredCarouselProducts = allProducts.slice(0, 5);
     }
@@ -3435,28 +3558,27 @@ function renderFeaturedCarousel() {
         if (hs) hs.style.display = 'block';
     }
 
+    // Render slides
     track.innerHTML = featuredCarouselProducts.map(p => {
         const finalPrice = p.discount_price ? p.discount_price : p.base_price;
         const discountTag = p.discount_price && p.discount_price < p.base_price 
             ? `<div class="discount-tag">خصم ${Math.round((1 - p.discount_price/p.base_price)*100)}%</div>` 
             : '';
-        const productUrl = typeof getProductUrl === 'function' ? getProductUrl(p.id) : `product.html?id=${p.id}`;
-
         return `
             <div class="carousel-slide">
                 <div class="featured-product-card">
                     ${discountTag}
-                    <a href="${productUrl}" target="_blank" rel="noopener" class="product-thumb-wrapper" style="cursor:pointer; text-align:center; display:block;">
-                        <img class="product-thumb" src="${p.main_image || '/Logo/ElectroHomeSY-logo-blue.png'}" alt="${p.title_ar}">
-                    </a>
-                    <a href="${productUrl}" target="_blank" rel="noopener" class="product-title" style="text-decoration:none;">${p.title_ar}</a>
+                    <div class="product-thumb-wrapper" onclick="window.location.href='product.html?id=${p.id}'" style="cursor:pointer; text-align:center;">
+                        <img class="product-thumb" src="${p.main_image || 'https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=800&q=80'}" alt="${p.title_ar}">
+                    </div>
+                    <a href="product.html?id=${p.id}" class="product-title">${p.title_ar}</a>
                     <div class="product-price-box">
                         <span class="current-price">${formatSYP(finalPrice)}</span>
                         ${p.discount_price && p.discount_price < p.base_price ? `<span class="old-price">${formatSYP(p.base_price)}</span>` : ''}
                     </div>
-                    <a href="${productUrl}" target="_blank" rel="noopener" class="btn-add-cart" style="text-decoration:none; display:flex; align-items:center; justify-content:center; gap:8px;">
-                        <i class="fa-solid fa-eye"></i> عرض التفاصيل
-                    </a>
+                    <button class="btn-add-cart" onclick="addCart(${p.id})">
+                        <i class="fa-solid fa-basket-shopping"></i> إضافة للسلة
+                    </button>
                 </div>
             </div>
         `;

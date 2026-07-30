@@ -2074,8 +2074,11 @@ function initStorefront() {
     renderCategoryTabs(allCategories);
     renderLoadingSkeleton();
 
-    // Async Network Fetch — real products from Google Sheets
-    fetchCategories();
+    // Load categories immediately from fallback (static hosting)
+    allCategories = [...FALLBACK_CATEGORIES];
+    renderCategoryTabs(allCategories);
+
+    // Load products immediately from products.json then upgrade from Google Sheets
     fetchProducts('all');
 
     // Search listener
@@ -2706,21 +2709,49 @@ function getProductImageClient(imageLink, categoryId) {
 
 async function fetchProducts(categorySlug = 'all') {
     renderLoadingSkeleton();
+
+    // STEP 1: Load products.json immediately for instant display
+    try {
+        const jsonRes = await fetch('./js/products.json?v=26.0.0');
+        if (jsonRes.ok) {
+            const localProducts = await jsonRes.json();
+            if (localProducts && localProducts.length > 0) {
+                allProducts = localProducts;
+                isGoogleSheetsDataLoaded = true;
+                const filtered = categorySlug === 'all' ? localProducts : localProducts.filter(p => {
+                    const catMap = { 'irons': 1, 'vacuums': 2, 'kitchen': 3, 'personal-care': 4, 'home-living': 5, 'coffee-machines': 6 };
+                    return p.category_id === catMap[categorySlug];
+                });
+                renderProducts(filtered.length > 0 ? filtered : localProducts);
+                renderFeaturedCarousel();
+                // STEP 2: Silently try to upgrade from live Google Sheets in background
+                fetchProductsFromGoogleSheetsClient(categorySlug).then(liveProducts => {
+                    if (liveProducts && liveProducts.length > 0) {
+                        renderProducts(liveProducts);
+                        renderFeaturedCarousel();
+                    }
+                }).catch(() => {}); // ignore if fails
+                return filtered.length > 0 ? filtered : localProducts;
+            }
+        }
+    } catch (jsonErr) {
+        console.warn('products.json load failed, trying Google Sheets:', jsonErr);
+    }
+
+    // STEP 3: Try Google Sheets directly
     try {
         const products = await fetchProductsFromGoogleSheetsClient(categorySlug);
         renderProducts(products);
         renderFeaturedCarousel();
         return products;
     } catch (err) {
-        console.error('Error fetching products:', err);
-        if (allProducts && allProducts.length > 0) {
-            renderProducts(allProducts);
-            renderFeaturedCarousel();
-        } else {
-            const fallback = (typeof FALLBACK_PRODUCTS !== 'undefined') ? FALLBACK_PRODUCTS : [];
-            renderProducts(fallback);
-            renderFeaturedCarousel();
-        }
+        console.error('All product sources failed:', err);
+        // STEP 4: Last resort - hardcoded fallback
+        const fallback = (typeof FALLBACK_PRODUCTS !== 'undefined') ? FALLBACK_PRODUCTS.filter(p => p.is_visible) : [];
+        allProducts = fallback;
+        renderProducts(fallback);
+        renderFeaturedCarousel();
+        return fallback;
     }
 }
 
