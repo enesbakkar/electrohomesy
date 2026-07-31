@@ -5,7 +5,7 @@
     "title_ar": "فيليبس ماكينة قص الشعر سلسلة 3000",
     "slug": "prod-ph-hc3000-1",
     "description_ar": "ماكينة قص شعر لاسلكية مع إعدادات طول متعددة",
-    "base_price": 40.0,
+    "base_price": 40,
     "discount_price": 29.99,
     "main_image": "https://media.kruidvat.nl/medias/sys_master/prd-images/hc9/ha2/34247170949150/prd-front-5178398-1_600x600/prd-front-5178398-1-600x600.jpg",
     "images": [
@@ -16,11 +16,14 @@
       "https://media.kruidvat.nl/medias/sys_master/prd-images/h80/h4a/34247171407902/prd-front-5178398-6_600x600/prd-front-5178398-6-600x600.jpg"
     ],
     "youtube_url": "https://www.youtube.com/watch?v=Afk3jznDe6o",
-    "is_visible": 1,
     "is_featured": 1,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "PH-HC3000",
+    "brand": "Philips",
     "variants": [
       {
-        "id": 100,
+        "id": 1,
         "product_id": 1,
         "brand": "Philips",
         "model_name": "PH-HC3000",
@@ -40,7 +43,7 @@
     "title_ar": "براون سلسلة 5 ماكينة حلاقة كهربائية 51-M1000s",
     "slug": "prod-51-m1000s-2",
     "description_ar": "ماكينة حلاقة كهربائية للرجال للاستخدام الجاف والرطب",
-    "base_price": 40.0,
+    "base_price": 40,
     "discount_price": 29.99,
     "main_image": "https://afosto-cdn-01.afosto.com/k7ems/product/400/7596392450-1.png",
     "images": [
@@ -51,11 +54,14 @@
       "https://afosto-cdn-01.afosto.com/k7ems/product/400/5867059140-1200x120078.jpg"
     ],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "51-M1000s",
+    "brand": "Braun",
     "variants": [
       {
-        "id": 200,
+        "id": 2,
         "product_id": 2,
         "brand": "Braun",
         "model_name": "51-M1000s",
@@ -75,18 +81,21 @@
     "title_ar": "ليفارنو هوم مصباح طاولة LED مع خاصية اللمس",
     "slug": "prod-lv-tl-01-3",
     "description_ar": "مصباح طاولة يعمل باللمس مع مستويات إضاءة قابلة للضبط",
-    "base_price": 40.0,
+    "base_price": 40,
     "discount_price": 29.99,
     "main_image": "https://src.discounto.de/pics/Angebote/2024/09/15/4433710e82f335c6ae37f8891d0c38a7/LIVARNO-home-LED-Tischleuchte-mit-Touchfunktion_xxl.webp",
     "images": [
       "https://src.discounto.de/pics/Angebote/2024/09/15/4433710e82f335c6ae37f8891d0c38a7/LIVARNO-home-LED-Tischleuchte-mit-Touchfunktion_xxl.webp"
     ],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 1,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "LV-TL-01",
+    "brand": "LIVARNO home",
     "variants": [
       {
-        "id": 300,
+        "id": 3,
         "product_id": 3,
         "brand": "LIVARNO home",
         "model_name": "LV-TL-01",
@@ -106,7 +115,7 @@
     "title_ar": "كاريرا ماكينة تشذيب متعددة الوظائف",
     "slug": "prod-cr-mg-01-4",
     "description_ar": "ماكينة تشذيب متعددة الاستخدامات لشعر الوجه والجسم",
-    "base_price": 40.0,
+    "base_price": 40,
     "discount_price": 29.99,
     "main_image": "https://www.orfgen.net/wp-content/uploads/2025/03/Orfgen_Carrera_7.jpg",
     "images": [
@@ -116,11 +125,14 @@
       "https://src.discounto.de/pics/Angebote/2025/01/23/6b58c91043e20deb2bb4395b3b61fcb8/CARRERA-Multigroomer-02473_original.webp"
     ],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 2,
+    "sku": "CR-MG-01",
+    "brand": "CARRERA",
     "variants": [
       {
-        "id": 400,
+        "id": 4,
         "product_id": 4,
         "brand": "CARRERA",
         "model_name": "CR-MG-01",
@@ -140,7 +152,7 @@
     "title_ar": "براون ماكينة حلاقة الجسم سلسلة 5",
     "slug": "prod-br-bg5-5",
     "description_ar": "ماكينة حلاقة وتشذيب شعر الجسم للبشرة الحساسة",
-    "base_price": 40.0,
+    "base_price": 40,
     "discount_price": 29.99,
     "main_image": "https://m.media-amazon.com/images/I/71UOLOuCmtL._AC_SX679_.jpg",
     "images": [
@@ -151,11 +163,14 @@
       "https://www.gosupps.com/media/catalog/product/cache/25/image/1500x/040ec09b1e35df139433887a97daa66f/9/1/91msa9eFHYL._SL1500_.jpg"
     ],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "BR-BG5",
+    "brand": "Braun",
     "variants": [
       {
-        "id": 500,
+        "id": 5,
         "product_id": 5,
         "brand": "Braun",
         "model_name": "BR-BG5",
@@ -171,12 +186,12 @@
   },
   {
     "id": 7,
-    "category_id": 6,
+    "category_id": 3,
     "title_ar": "كروبس نستله دولسي غوستو بيكولو XS ماكينة قهوة",
     "slug": "prod-kp1a08-7",
     "description_ar": "ماكينة إعداد القهوة بالكبسولات بتصميم مدمج وسريع",
-    "base_price": 100.0,
-    "discount_price": 75.0,
+    "base_price": 100,
+    "discount_price": 75,
     "main_image": "https://electrogriffe.com/wp-content/uploads/2025/01/1-8-690x690.jpg",
     "images": [
       "https://electrogriffe.com/wp-content/uploads/2025/01/1-8-690x690.jpg",
@@ -186,11 +201,14 @@
       "https://electrogriffe.com/wp-content/uploads/2025/01/1194x1200-690x690.jpg"
     ],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "KP1A08",
+    "brand": "Krups",
     "variants": [
       {
-        "id": 700,
+        "id": 7,
         "product_id": 7,
         "brand": "Krups",
         "model_name": "KP1A08",
@@ -210,8 +228,8 @@
     "title_ar": "براون ماكينة حلاقة شاملة سلسلة 3 / 8 في 1",
     "slug": "prod-br-aio3-8",
     "description_ar": "طقم حلاقة وتصفيف شامل 8 في 1 للحد من اللحية والشعر",
-    "base_price": 50.0,
-    "discount_price": 35.0,
+    "base_price": 50,
+    "discount_price": 35,
     "main_image": "https://assets.mmsrg.com/isr/166325/c1/-/ASSET_MMS_150572321?x=697&y=523&format=webp&quality=60&sp=yes&strip=yes&trim=yes&ex=697&ey=523&align=center&resizesource&unsharp=0.5x0.5",
     "images": [
       "https://assets.mmsrg.com/isr/166325/c1/-/ASSET_MMS_150572321?x=697&y=523&format=webp&quality=60&sp=yes&strip=yes&trim=yes&ex=697&ey=523&align=center&resizesource&unsharp=0.5x0.5",
@@ -221,11 +239,14 @@
       "https://prod.cdn.plein.nl/producten/300x300/1107979_5.jpg"
     ],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "BR-AIO3",
+    "brand": "Braun",
     "variants": [
       {
-        "id": 800,
+        "id": 8,
         "product_id": 8,
         "brand": "Braun",
         "model_name": "BR-AIO3",
@@ -245,18 +266,19 @@
     "title_ar": "ليفارنو هوم ساعة حائط لاسلكية",
     "slug": "prod-lv-wc-01-9",
     "description_ar": "ساعة حائط لاسلكية بتعديل تلقائي ودقيق للوقت",
-    "base_price": 15.0,
+    "base_price": 15,
     "discount_price": 9.99,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "LV-WC-01",
+    "brand": "LIVARNO home",
     "variants": [
       {
-        "id": 900,
+        "id": 9,
         "product_id": 9,
         "brand": "LIVARNO home",
         "model_name": "LV-WC-01",
@@ -276,18 +298,25 @@
     "title_ar": "سيلفر كريست ماكينة وافل مزدوجة",
     "slug": "prod-sc-dw-01-10",
     "description_ar": "جهاز إعداد الوافل المزدوج بطلاء غير لاصق",
-    "base_price": 35.0,
-    "discount_price": 25.0,
-    "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
+    "base_price": 35,
+    "discount_price": 25,
+    "main_image": "https://media.s-bol.com/OrlE75gW420r/voQw93L/550x451.jpg",
     "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
+      "https://media.s-bol.com/OrlE75gW420r/voQw93L/550x451.jpg",
+      "https://media.s-bol.com/RxYMg5lZ9nrq/voQw93L/550x371.jpg",
+      "https://media.s-bol.com/VBp5m0v46ryM/voQw93L/550x372.jpg",
+      "https://media.s-bol.com/XEx76kQg4wAW/voQw93L/550x423.jpg",
+      "https://media.s-bol.com/WDOwnjP54vzJ/voQw93L/550x368.jpg"
     ],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "SC-DW-01",
+    "brand": "SilverCrest",
     "variants": [
       {
-        "id": 1000,
+        "id": 10,
         "product_id": 10,
         "brand": "SilverCrest",
         "model_name": "SC-DW-01",
@@ -307,18 +336,19 @@
     "title_ar": "سويتش أون ماكينة سموثي للتنقل",
     "slug": "prod-so-sm-01-11",
     "description_ar": "خلاط سموثي محمول مع كوب مزود بغطاء للتنقل",
-    "base_price": 30.0,
+    "base_price": 30,
     "discount_price": 19.99,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 1,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "SO-SM-01",
+    "brand": "Switch On",
     "variants": [
       {
-        "id": 1100,
+        "id": 11,
         "product_id": 11,
         "brand": "Switch On",
         "model_name": "SO-SM-01",
@@ -338,18 +368,19 @@
     "title_ar": "تيفال محمصة خبز",
     "slug": "prod-tf-ts-01-12",
     "description_ar": "محمصة خبز توستر بفتحتين ومستويات تحمير متعددة",
-    "base_price": 30.0,
+    "base_price": 30,
     "discount_price": 19.99,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "TF-TS-01",
+    "brand": "Tefal",
     "variants": [
       {
-        "id": 1200,
+        "id": 12,
         "product_id": 12,
         "brand": "Tefal",
         "model_name": "TF-TS-01",
@@ -369,18 +400,19 @@
     "title_ar": "فيليبس بخار ومكواة HI5920",
     "slug": "prod-hi5920-13",
     "description_ar": "مكواة بخار قوية مع خزان ماء كبير لكي سريع",
-    "base_price": 80.0,
+    "base_price": 80,
     "discount_price": 59.99,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "HI5920",
+    "brand": "Philips",
     "variants": [
       {
-        "id": 1300,
+        "id": 13,
         "product_id": 13,
         "brand": "Philips",
         "model_name": "HI5920",
@@ -400,18 +432,19 @@
     "title_ar": "سويتش أون غلاية ماء كهربائية - أسود",
     "slug": "prod-so-kt-01-14",
     "description_ar": "غلاية ماء كهربائية سريعة التسخين باللون الأسود",
-    "base_price": 25.0,
+    "base_price": 25,
     "discount_price": 19.99,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "SO-KT-01",
+    "brand": "Switch On",
     "variants": [
       {
-        "id": 1400,
+        "id": 14,
         "product_id": 14,
         "brand": "Switch On",
         "model_name": "SO-KT-01",
@@ -431,18 +464,19 @@
     "title_ar": "سويتش أون طقم خلاط يدوي",
     "slug": "prod-so-hb-01-15",
     "description_ar": "طقم خلاط يدوي مع ملحقات للفرم والخفق",
-    "base_price": 25.0,
+    "base_price": 25,
     "discount_price": 19.99,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 1,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "SO-HB-01",
+    "brand": "Switch On",
     "variants": [
       {
-        "id": 1500,
+        "id": 15,
         "product_id": 15,
         "brand": "Switch On",
         "model_name": "SO-HB-01",
@@ -462,18 +496,19 @@
     "title_ar": "دكتور سنست ميزان حرارة بالأشعة تحت الحمراء 2 في 1",
     "slug": "prod-ds-th-01-16",
     "description_ar": "ميزان حرارة إلكتروني بدون تلامس لقياس الحرارة",
-    "base_price": 40.0,
-    "discount_price": 25.0,
+    "base_price": 40,
+    "discount_price": 25,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "DS-TH-01",
+    "brand": "Dr. Senst",
     "variants": [
       {
-        "id": 1600,
+        "id": 16,
         "product_id": 16,
         "brand": "Dr. Senst",
         "model_name": "DS-TH-01",
@@ -493,18 +528,19 @@
     "title_ar": "سيلفر كريست ماكينة وافل مزدوجة (صندوق آخر)",
     "slug": "prod-sc-dw-02-17",
     "description_ar": "جهاز صانع وافل مزدوج سريع التحضير",
-    "base_price": 30.0,
-    "discount_price": 25.0,
+    "base_price": 30,
+    "discount_price": 25,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "SC-DW-02",
+    "brand": "SilverCrest",
     "variants": [
       {
-        "id": 1700,
+        "id": 17,
         "product_id": 17,
         "brand": "SilverCrest",
         "model_name": "SC-DW-02",
@@ -524,18 +560,19 @@
     "title_ar": "سويتش أون غلاية ماء كهربائية - خشبية/بيج",
     "slug": "prod-so-kt-02-18",
     "description_ar": "غلاية ماء كهربائية بتصميم خشبي وبيج أنيق",
-    "base_price": 25.0,
+    "base_price": 25,
     "discount_price": 19.99,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "SO-KT-02",
+    "brand": "Switch On",
     "variants": [
       {
-        "id": 1800,
+        "id": 18,
         "product_id": 18,
         "brand": "Switch On",
         "model_name": "SO-KT-02",
@@ -555,18 +592,19 @@
     "title_ar": "فيليبس ماكينة قص الشعر (صندوق آخر)",
     "slug": "prod-ph-hc3001-19",
     "description_ar": "ماكينة قص الشعر الكهربائية من فيليبس",
-    "base_price": 40.0,
+    "base_price": 40,
     "discount_price": 29.99,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "PH-HC3001",
+    "brand": "Philips",
     "variants": [
       {
-        "id": 1900,
+        "id": 19,
         "product_id": 19,
         "brand": "Philips",
         "model_name": "PH-HC3001",
@@ -586,18 +624,19 @@
     "title_ar": "سويتش أون شواية تلامس صغيرة",
     "slug": "prod-so-cg-01-20",
     "description_ar": "شواية تلامس صغيرة مدمجة لتحضير السندويشات",
-    "base_price": 35.0,
-    "discount_price": 25.0,
+    "base_price": 35,
+    "discount_price": 25,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "SO-CG-01",
+    "brand": "Switch On",
     "variants": [
       {
-        "id": 2000,
+        "id": 20,
         "product_id": 20,
         "brand": "Switch On",
         "model_name": "SO-CG-01",
@@ -615,20 +654,21 @@
     "id": 21,
     "category_id": 5,
     "title_ar": "باركسايد كاشف متعدد الأغراض PMFD A3",
-    "slug": "prod-pmfd a3-21",
+    "slug": "prod-pmfd-a3-21",
     "description_ar": "جهاز كشف متعدد الاستخدامات للمعادن والكابلات بالجدران",
-    "base_price": 10.0,
+    "base_price": 10,
     "discount_price": null,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "PMFD A3",
+    "brand": "Parkside",
     "variants": [
       {
-        "id": 2100,
+        "id": 21,
         "product_id": 21,
         "brand": "Parkside",
         "model_name": "PMFD A3",
@@ -648,18 +688,19 @@
     "title_ar": "سيلفر كريست شواية تلامس كبيرة",
     "slug": "prod-sc-cg-02-22",
     "description_ar": "شواية تلامس كهربائية كبيرة مع ألواح غير لاصقة",
-    "base_price": 45.0,
-    "discount_price": 35.0,
+    "base_price": 45,
+    "discount_price": 35,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "SC-CG-02",
+    "brand": "SilverCrest",
     "variants": [
       {
-        "id": 2200,
+        "id": 22,
         "product_id": 22,
         "brand": "SilverCrest",
         "model_name": "SC-CG-02",
@@ -682,15 +723,16 @@
     "base_price": 19.99,
     "discount_price": null,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "SV-HP-01",
+    "brand": "Severin",
     "variants": [
       {
-        "id": 2300,
+        "id": 23,
         "product_id": 23,
         "brand": "Severin",
         "model_name": "SV-HP-01",
@@ -706,22 +748,23 @@
   },
   {
     "id": 24,
-    "category_id": 6,
+    "category_id": 3,
     "title_ar": "كروبس ماكينة قهوة فلتر F30908",
     "slug": "prod-f30908-24",
     "description_ar": "ماكينة تحضير القهوة المفلترة بتصميم كلاسيكي",
     "base_price": 39.99,
     "discount_price": null,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "F30908",
+    "brand": "Krups",
     "variants": [
       {
-        "id": 2400,
+        "id": 24,
         "product_id": 24,
         "brand": "Krups",
         "model_name": "F30908",
@@ -741,18 +784,19 @@
     "title_ar": "سويتش أون صانع سندويشات",
     "slug": "prod-so-sw-01-25",
     "description_ar": "جهاز تحضير السندويشات والمحمصة بطلاء غير لاصق",
-    "base_price": 35.0,
-    "discount_price": 25.0,
+    "base_price": 35,
+    "discount_price": 25,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "SO-SW-01",
+    "brand": "Switch On",
     "variants": [
       {
-        "id": 2500,
+        "id": 25,
         "product_id": 25,
         "brand": "Switch On",
         "model_name": "SO-SW-01",
@@ -768,22 +812,23 @@
   },
   {
     "id": 26,
-    "category_id": 6,
+    "category_id": 3,
     "title_ar": "سويتش أون ماكينة قهوة فلتر مع ترمس حراري",
     "slug": "prod-so-cm-01-26",
     "description_ar": "ماكينة قهوة فلتر مزودة بإبريق حراري حافظ للحرارة",
     "base_price": 39.99,
     "discount_price": null,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "SO-CM-01",
+    "brand": "Switch On",
     "variants": [
       {
-        "id": 2600,
+        "id": 26,
         "product_id": 26,
         "brand": "Switch On",
         "model_name": "SO-CM-01",
@@ -806,15 +851,16 @@
     "base_price": 29.99,
     "discount_price": null,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "SC-GR-01",
+    "brand": "SilverCrest",
     "variants": [
       {
-        "id": 2700,
+        "id": 27,
         "product_id": 27,
         "brand": "SilverCrest",
         "model_name": "SC-GR-01",
@@ -834,18 +880,19 @@
     "title_ar": "سويتش أون مكنسة كهربائية يدوية للتنظيف الجاف والرطب",
     "slug": "prod-so-hv-01-28",
     "description_ar": "مكنسة يدوية لاسلكية لشفط السوائل والغبار",
-    "base_price": 25.0,
+    "base_price": 25,
     "discount_price": null,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "SO-HV-01",
+    "brand": "Switch On",
     "variants": [
       {
-        "id": 2800,
+        "id": 28,
         "product_id": 28,
         "brand": "Switch On",
         "model_name": "SO-HV-01",
@@ -865,18 +912,19 @@
     "title_ar": "روفنتا x كارل لاغرفيلد مجفف شعر ستوديو دراي",
     "slug": "prod-rw-hd-01-29",
     "description_ar": "مجفف شعر احترافي بتصميم خاص وقوة تجفيف عالية",
-    "base_price": 30.0,
+    "base_price": 30,
     "discount_price": 19.99,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "RW-HD-01",
+    "brand": "Rowenta",
     "variants": [
       {
-        "id": 2900,
+        "id": 29,
         "product_id": 29,
         "brand": "Rowenta",
         "model_name": "RW-HD-01",
@@ -896,18 +944,19 @@
     "title_ar": "بوش خلاط يدوي كليفر ميكس 300 واط",
     "slug": "prod-bs-cm300-30",
     "description_ar": "خلاط يدوي خفيف الوزن بقوة 300 واط لإعداد الأطعمة",
-    "base_price": 15.0,
+    "base_price": 15,
     "discount_price": null,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "BS-CM300",
+    "brand": "Bosch",
     "variants": [
       {
-        "id": 3000,
+        "id": 30,
         "product_id": 30,
         "brand": "Bosch",
         "model_name": "BS-CM300",
@@ -927,18 +976,19 @@
     "title_ar": "سويتش أون غلاية ماء - سوداء مع خشب",
     "slug": "prod-so-kt-03-31",
     "description_ar": "غلاية ماء كهربائية باللون الأسود ولمسات خشبية",
-    "base_price": 25.0,
+    "base_price": 25,
     "discount_price": null,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "SO-KT-03",
+    "brand": "Switch On",
     "variants": [
       {
-        "id": 3100,
+        "id": 31,
         "product_id": 31,
         "brand": "Switch On",
         "model_name": "SO-KT-03",
@@ -961,15 +1011,16 @@
     "base_price": 9.99,
     "discount_price": null,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "OFA-URC-01",
+    "brand": "One For All",
     "variants": [
       {
-        "id": 3200,
+        "id": 32,
         "product_id": 32,
         "brand": "One For All",
         "model_name": "OFA-URC-01",
@@ -989,18 +1040,19 @@
     "title_ar": "فيليبس مكواة  بخار سلسلة 2000",
     "slug": "prod-ph-sg2000-33",
     "description_ar": "مولد بخار قوي لكي الملابس وإزالة التجاعيد",
-    "base_price": 75.0,
+    "base_price": 75,
     "discount_price": 59.99,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "PH-SG2000",
+    "brand": "Philips",
     "variants": [
       {
-        "id": 3300,
+        "id": 33,
         "product_id": 33,
         "brand": "Philips",
         "model_name": "PH-SG2000",
@@ -1016,22 +1068,23 @@
   },
   {
     "id": 34,
-    "category_id": 6,
+    "category_id": 3,
     "title_ar": "بوش تاسيمو ماكينة قهوة صديقة للأناقة",
     "slug": "prod-bs-tas-01-34",
     "description_ar": "ماكينة تحضير المشروبات والقهوة بالكبسولات التلقائية",
-    "base_price": 100.0,
+    "base_price": 100,
     "discount_price": 69.99,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "BS-TAS-01",
+    "brand": "Bosch",
     "variants": [
       {
-        "id": 3400,
+        "id": 34,
         "product_id": 34,
         "brand": "Bosch",
         "model_name": "BS-TAS-01",
@@ -1051,18 +1104,19 @@
     "title_ar": "سويتش أون نافورة شوكولاتة كهربائية",
     "slug": "prod-so-cf-01-35",
     "description_ar": "نافورة شوكولاتة كهربائية للحفلات والحلويات",
-    "base_price": 25.0,
+    "base_price": 25,
     "discount_price": null,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "SO-CF-01",
+    "brand": "Switch On",
     "variants": [
       {
-        "id": 3500,
+        "id": 35,
         "product_id": 35,
         "brand": "Switch On",
         "model_name": "SO-CF-01",
@@ -1082,18 +1136,19 @@
     "title_ar": "سيلفر كريست صانع فشار ومحمصة لوز",
     "slug": "prod-sc-pm-01-36",
     "description_ar": "جهاز إعداد الفشار وتحميص المكسرات بالهواء الساخن",
-    "base_price": 25.0,
+    "base_price": 25,
     "discount_price": null,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "SC-PM-01",
+    "brand": "SilverCrest",
     "variants": [
       {
-        "id": 3600,
+        "id": 36,
         "product_id": 36,
         "brand": "SilverCrest",
         "model_name": "SC-PM-01",
@@ -1113,18 +1168,19 @@
     "title_ar": "براون ماكينة تشذيب اللحية سلسلة 5",
     "slug": "prod-br-bt5-37",
     "description_ar": "ماكينة تشذيب اللحية بدقة عالية مع قرص تعديل الطول",
-    "base_price": 40.0,
+    "base_price": 40,
     "discount_price": 29.99,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "BR-BT5",
+    "brand": "Braun",
     "variants": [
       {
-        "id": 3700,
+        "id": 37,
         "product_id": 37,
         "brand": "Braun",
         "model_name": "BR-BT5",
@@ -1140,22 +1196,23 @@
   },
   {
     "id": 38,
-    "category_id": 6,
+    "category_id": 3,
     "title_ar": "فيليبس ماكينة إسبريسو أوتوماتيكية بالكامل سلسلة 800",
     "slug": "prod-ph-ep800-38",
     "description_ar": "ماكينة إسبريسو أوتوماتيكية بالكامل لتحضير القهوة",
-    "base_price": 350.0,
-    "discount_price": 250.0,
+    "base_price": 350,
+    "discount_price": 250,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "PH-EP800",
+    "brand": "Philips",
     "variants": [
       {
-        "id": 3800,
+        "id": 38,
         "product_id": 38,
         "brand": "Philips",
         "model_name": "PH-EP800",
@@ -1178,15 +1235,16 @@
     "base_price": 29.99,
     "discount_price": null,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "SC-RG-01",
+    "brand": "SilverCrest",
     "variants": [
       {
-        "id": 3900,
+        "id": 39,
         "product_id": 39,
         "brand": "SilverCrest",
         "model_name": "SC-RG-01",
@@ -1209,15 +1267,16 @@
     "base_price": 19.99,
     "discount_price": null,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "RW-HD-02",
+    "brand": "Rowenta",
     "variants": [
       {
-        "id": 4000,
+        "id": 40,
         "product_id": 40,
         "brand": "Rowenta",
         "model_name": "RW-HD-02",
@@ -1237,18 +1296,19 @@
     "title_ar": "فيليدا ممسحة بخار ستيم بلس",
     "slug": "prod-vl-sp-01-41",
     "description_ar": "ممسحة بخار لتنظيف وتعقيم الأرضيات بدون كيميائيات",
-    "base_price": 50.0,
+    "base_price": 50,
     "discount_price": 39.99,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "VL-SP-01",
+    "brand": "Vileda",
     "variants": [
       {
-        "id": 4100,
+        "id": 41,
         "product_id": 41,
         "brand": "Vileda",
         "model_name": "VL-SP-01",
@@ -1268,18 +1328,19 @@
     "title_ar": "سيلفر كريست فرن ميكروويف",
     "slug": "prod-sc-mw-01-42",
     "description_ar": "فرن ميكروويف متعدد المستويات للتسخين والطهي",
-    "base_price": 60.0,
+    "base_price": 60,
     "discount_price": 49.99,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "SC-MW-01",
+    "brand": "SilverCrest",
     "variants": [
       {
-        "id": 4200,
+        "id": 42,
         "product_id": 42,
         "brand": "SilverCrest",
         "model_name": "SC-MW-01",
@@ -1302,15 +1363,16 @@
     "base_price": 9.99,
     "discount_price": null,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "LV-WL-01",
+    "brand": "LIVARNO home",
     "variants": [
       {
-        "id": 4300,
+        "id": 43,
         "product_id": 43,
         "brand": "LIVARNO home",
         "model_name": "LV-WL-01",
@@ -1333,15 +1395,16 @@
     "base_price": 9.99,
     "discount_price": null,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "LV-CL-01",
+    "brand": "LIVARNO home",
     "variants": [
       {
-        "id": 4400,
+        "id": 44,
         "product_id": 44,
         "brand": "LIVARNO home",
         "model_name": "LV-CL-01",
@@ -1364,15 +1427,16 @@
     "base_price": 59.99,
     "discount_price": null,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "WB-IN-01",
+    "brand": "Weinberger",
     "variants": [
       {
-        "id": 4500,
+        "id": 45,
         "product_id": 45,
         "brand": "Weinberger",
         "model_name": "WB-IN-01",
@@ -1395,15 +1459,16 @@
     "base_price": 39.99,
     "discount_price": null,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "SV-VC-01",
+    "brand": "Severin",
     "variants": [
       {
-        "id": 4600,
+        "id": 46,
         "product_id": 46,
         "brand": "Severin",
         "model_name": "SV-VC-01",
@@ -1426,15 +1491,16 @@
     "base_price": 9.99,
     "discount_price": null,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "LV-TL-02",
+    "brand": "LIVARNO home",
     "variants": [
       {
-        "id": 4700,
+        "id": 47,
         "product_id": 47,
         "brand": "LIVARNO home",
         "model_name": "LV-TL-02",
@@ -1457,15 +1523,16 @@
     "base_price": 9.99,
     "discount_price": null,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "LV-SL-01",
+    "brand": "LIVARNO home",
     "variants": [
       {
-        "id": 4800,
+        "id": 48,
         "product_id": 48,
         "brand": "LIVARNO home",
         "model_name": "LV-SL-01",
@@ -1488,15 +1555,16 @@
     "base_price": 9.99,
     "discount_price": null,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "PS-SL-01",
+    "brand": "Parkside",
     "variants": [
       {
-        "id": 4900,
+        "id": 49,
         "product_id": 49,
         "brand": "Parkside",
         "model_name": "PS-SL-01",
@@ -1519,15 +1587,16 @@
     "base_price": 9.99,
     "discount_price": null,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "LB-SL-01",
+    "brand": "LIVOBO",
     "variants": [
       {
-        "id": 5000,
+        "id": 50,
         "product_id": 50,
         "brand": "LIVOBO",
         "model_name": "LB-SL-01",
@@ -1550,15 +1619,16 @@
     "base_price": 9.99,
     "discount_price": null,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "LV-LC-01",
+    "brand": "LIVARNO home",
     "variants": [
       {
-        "id": 5100,
+        "id": 51,
         "product_id": 51,
         "brand": "LIVARNO home",
         "model_name": "LV-LC-01",
@@ -1581,15 +1651,16 @@
     "base_price": 9.99,
     "discount_price": null,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "LV-TL-03",
+    "brand": "LIVARNO home",
     "variants": [
       {
-        "id": 5200,
+        "id": 52,
         "product_id": 52,
         "brand": "LIVARNO home",
         "model_name": "LV-TL-03",
@@ -1612,15 +1683,16 @@
     "base_price": 29.99,
     "discount_price": null,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "BR-BG3",
+    "brand": "Braun",
     "variants": [
       {
-        "id": 5300,
+        "id": 53,
         "product_id": 53,
         "brand": "Braun",
         "model_name": "BR-BG3",
@@ -1643,15 +1715,16 @@
     "base_price": 9.99,
     "discount_price": null,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "LB-TL-01",
+    "brand": "LIVOBO",
     "variants": [
       {
-        "id": 5400,
+        "id": 54,
         "product_id": 54,
         "brand": "LIVOBO",
         "model_name": "LB-TL-01",
@@ -1671,18 +1744,19 @@
     "title_ar": "ماكينة تشذيب شاملة 6 في 1 من فيليبس سلسلة 3000",
     "slug": "prod-ph-aio3000-55",
     "description_ar": "طقم حلاقة وتصفيف 6 في 1 للوجه والشعر",
-    "base_price": 28.0,
+    "base_price": 28,
     "discount_price": null,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "PH-AIO3000",
+    "brand": "Philips",
     "variants": [
       {
-        "id": 5500,
+        "id": 55,
         "product_id": 55,
         "brand": "Philips",
         "model_name": "PH-AIO3000",
@@ -1702,18 +1776,19 @@
     "title_ar": "ماكينة حلاقة كهربائية دوارة سلسلة 1000 من فيليبس S1141",
     "slug": "prod-s1141-56",
     "description_ar": "ماكينة حلاقة دوارة بحركات مرنة لقص شعر الوجه بسلاسة",
-    "base_price": 25.0,
+    "base_price": 25,
     "discount_price": null,
     "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [
-      "/Logo/ElectroHomeSY-logo-blue.png"
-    ],
+    "images": [],
     "youtube_url": "",
-    "is_visible": 1,
     "is_featured": 0,
+    "is_visible": 1,
+    "stock_quantity": 1,
+    "sku": "S1141",
+    "brand": "Philips",
     "variants": [
       {
-        "id": 5600,
+        "id": 56,
         "product_id": 56,
         "brand": "Philips",
         "model_name": "S1141",
