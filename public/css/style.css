@@ -1670,3 +1670,288 @@ input:checked + .slider:before { transform: translateX(22px); }
         display: inline-flex !important;
     }
 }
+
+
+
+/* ==========================================================================
+   ULTRA-PREMIUM MODERN MOBILE RESPONSIVE DESIGN (APP-LIKE EXPERIENCE)
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    /* Container & Spacing */
+    .container {
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+    }
+
+    /* Mobile Header & Search Bar */
+    .header-inner {
+        flex-direction: column !important;
+        gap: 12px !important;
+        padding: 12px 0 !important;
+    }
+    
+    .search-box-wrapper {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    .search-input {
+        padding: 12px 42px 12px 16px !important;
+        font-size: 0.92rem !important;
+        border-radius: 999px !important;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04) !important;
+    }
+
+    /* Category Horizontal Scroll Bar (Pill App Bar) */
+    .category-tabs-sticky-bar {
+        margin-bottom: 18px !important;
+        gap: 8px !important;
+    }
+
+    .category-tabs {
+        display: flex !important;
+        grid-template-columns: none !important;
+        flex-wrap: nowrap !important;
+        gap: 8px !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        padding: 4px 2px 10px 2px !important;
+        -webkit-overflow-scrolling: touch !important;
+        scrollbar-width: none !important;
+        width: 100% !important;
+    }
+    
+    .category-tabs::-webkit-scrollbar {
+        display: none !important;
+    }
+
+    .cat-tab {
+        width: auto !important;
+        min-height: 42px !important;
+        padding: 8px 16px !important;
+        font-size: 0.85rem !important;
+        white-space: nowrap !important;
+        border-radius: 12px !important;
+        flex-shrink: 0 !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04) !important;
+    }
+
+    .btn-toggle-sidebar {
+        display: inline-flex !important;
+        padding: 8px 14px !important;
+        font-size: 0.85rem !important;
+        border-radius: 12px !important;
+    }
+
+    /* Featured Products Carousel on Mobile */
+    .featured-carousel-wrapper {
+        padding: 18px 14px !important;
+        border-radius: 20px !important;
+        margin-bottom: 20px !important;
+    }
+
+    .featured-carousel-title {
+        font-size: 1.15rem !important;
+        margin-bottom: 14px !important;
+    }
+
+    .featured-cards-grid {
+        grid-template-columns: repeat(1, 1fr) !important;
+        gap: 12px !important;
+    }
+
+    .featured-product-card {
+        padding: 12px !important;
+        border-radius: 16px !important;
+    }
+
+    .featured-product-card .product-thumb {
+        height: 140px !important;
+    }
+
+    /* Main Products Grid: Sleek 2-Column Mobile Layout */
+    .products-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 12px !important;
+        margin-bottom: 80px !important;
+    }
+
+    .product-card {
+        padding: 10px !important;
+        border-radius: 16px !important;
+        border: 1px solid #e2e8f0 !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03) !important;
+        background: #ffffff !important;
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    .product-thumb {
+        height: 135px !important;
+        padding: 4px !important;
+        margin-bottom: 8px !important;
+        border-radius: 10px !important;
+        object-fit: contain !important;
+    }
+
+    .discount-tag, .badge-trendyol-bestseller {
+        top: 8px !important;
+        right: 8px !important;
+        padding: 3px 8px !important;
+        font-size: 0.7rem !important;
+        border-radius: 6px !important;
+    }
+
+    .product-category-name {
+        font-size: 0.72rem !important;
+        margin-bottom: 2px !important;
+    }
+
+    .product-title {
+        font-size: 0.86rem !important;
+        height: 2.7em !important;
+        line-height: 1.35 !important;
+        margin-bottom: 6px !important;
+        font-weight: 700 !important;
+    }
+
+    .product-price-box {
+        margin-top: auto !important;
+        padding-top: 8px !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 2px !important;
+        border-top: 1px solid #f1f5f9 !important;
+    }
+
+    .current-price {
+        font-size: 1.15rem !important;
+        font-weight: 900 !important;
+        color: #073066 !important;
+    }
+
+    .old-price {
+        font-size: 0.78rem !important;
+    }
+
+    .product-card-actions {
+        margin-top: 8px !important;
+        gap: 6px !important;
+    }
+
+    .product-card-actions .btn-add-cart,
+    .product-card-actions a.btn-add-cart {
+        padding: 8px 4px !important;
+        font-size: 0.8rem !important;
+        font-weight: 800 !important;
+        border-radius: 10px !important;
+        justify-content: center !important;
+        text-align: center !important;
+    }
+
+    .product-card-actions .btn-whatsapp-direct {
+        width: 34px !important;
+        height: 34px !important;
+        border-radius: 10px !important;
+        font-size: 0.95rem !important;
+    }
+
+    /* Product Details Page (product.html) Mobile Layout */
+    .product-detail-layout {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+        padding: 12px 0 80px 0 !important;
+    }
+
+    .product-image-frame {
+        height: 270px !important;
+        border-radius: 18px !important;
+        padding: 10px !important;
+    }
+
+    .thumbnail-item {
+        width: 58px !important;
+        height: 58px !important;
+        border-radius: 12px !important;
+    }
+
+    .product-main-title {
+        font-size: 1.35rem !important;
+        line-height: 1.35 !important;
+    }
+
+    .price-hero-current {
+        font-size: 1.95rem !important;
+    }
+
+    .action-buttons-group {
+        flex-direction: column !important;
+        gap: 10px !important;
+    }
+
+    .btn-buy-now-hero-aurora, .btn-whatsapp-hero {
+        width: 100% !important;
+        padding: 14px !important;
+        font-size: 0.95rem !important;
+        justify-content: center !important;
+        border-radius: 14px !important;
+    }
+
+    /* Mobile Bottom Navigation Bar */
+    .mobile-bottom-nav {
+        display: flex !important;
+        position: fixed !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        height: 62px !important;
+        background: rgba(255, 255, 255, 0.96) !important;
+        backdrop-filter: blur(16px) !important;
+        -webkit-backdrop-filter: blur(16px) !important;
+        z-index: 9999 !important;
+        border-top: 1px solid rgba(226, 232, 240, 0.8) !important;
+        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.05) !important;
+        justify-content: space-around !important;
+        align-items: center !important;
+        padding-bottom: env(safe-area-inset-bottom, 0px) !important;
+    }
+
+    .mobile-nav-item {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 3px !important;
+        color: #64748b !important;
+        text-decoration: none !important;
+        font-size: 0.72rem !important;
+        font-weight: 700 !important;
+        transition: all 0.2s ease !important;
+    }
+
+    .mobile-nav-item i {
+        font-size: 1.15rem !important;
+    }
+
+    .mobile-nav-item.active {
+        color: var(--damascus-green, #007a3d) !important;
+        transform: translateY(-1px) !important;
+    }
+}
+
+@media (max-width: 400px) {
+    .products-grid {
+        gap: 8px !important;
+    }
+    .product-card {
+        padding: 8px !important;
+    }
+    .product-thumb {
+        height: 120px !important;
+    }
+    .product-title {
+        font-size: 0.8rem !important;
+    }
+}
