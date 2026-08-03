@@ -1955,3 +1955,103 @@ input:checked + .slider:before { transform: translateX(22px); }
         font-size: 0.8rem !important;
     }
 }
+
+
+/* Dedicated Categories Page Layout */
+.categories-page-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-top: 20px;
+}
+
+@media (max-width: 640px) {
+    .categories-page-grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+}
+
+.category-page-card {
+    background: #ffffff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 22px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+}
+
+.category-page-card:hover, .category-page-card:active {
+    transform: translateY(-3px);
+    border-color: var(--damascus-green, #007a3d);
+    box-shadow: 0 10px 25px rgba(0, 122, 61, 0.14);
+}
+
+.cat-card-icon-box {
+    width: 62px;
+    height: 62px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, rgba(7, 48, 102, 0.08), rgba(0, 122, 61, 0.12));
+    color: var(--damascus-green, #007a3d);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.7rem;
+    flex-shrink: 0;
+    border: 1px solid rgba(0, 122, 61, 0.15);
+}
+
+.cat-card-info {
+    flex: 1;
+}
+
+.cat-card-title {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--onyx, #1e293b);
+    margin-bottom: 4px;
+}
+
+.cat-card-desc {
+    font-size: 0.83rem;
+    color: var(--steel-grey, #64748b);
+    margin-bottom: 8px;
+    line-height: 1.35;
+}
+
+.cat-card-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(7, 48, 102, 0.06);
+    color: #073066;
+    padding: 4px 12px;
+    border-radius: 10px;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.cat-card-arrow {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #f8fafc;
+    color: var(--steel-grey, #64748b);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    transition: all 0.25s ease;
+    flex-shrink: 0;
+}
+
+.category-page-card:hover .cat-card-arrow {
+    background: var(--damascus-green, #007a3d);
+    color: #ffffff;
+    transform: translateX(-4px);
+}

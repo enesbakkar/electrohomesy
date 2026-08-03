@@ -1,3 +1,62 @@
+
+function renderCategoriesPage() {
+    const container = document.getElementById('categoriesSectionContent');
+    if (!container) return;
+
+    const descriptions = {
+        'irons': 'مكاوي بخار، أجهزة كوي عمودية ومستلزمات العناية بالملابس',
+        'vacuums': 'مكانس برميلية، مكانس لاسلكية ومعدات التنظيف البخارية',
+        'kitchen': 'خلاطات، معالجات طعام، قلايات بدون زيت وغلايات ماء',
+        'personal-care': 'ماكينات حلاقة، تشذيب اللحية ومجففات الشعر العالمية',
+        'home-living': 'مصابيح طوارئ، موازين حرارة، كشافات وأجهزة منزلية وطبية',
+        'coffee-machines': 'ماكينات إسبريسو، دولسي غوستو، تاسيمو وتقطير القهوة'
+    };
+
+    let html = `
+        <div style="text-align: center; margin-bottom: 25px;">
+            <div style="width: 65px; height: 65px; background: rgba(0, 122, 61, 0.08); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; border: 1.5px solid rgba(0, 122, 61, 0.18);">
+                <i class="fa-solid fa-layer-group" style="font-size: 1.9rem; color: var(--damascus-green);"></i>
+            </div>
+            <h2 style="font-size: 1.65rem; font-weight: 900; color: var(--onyx); margin-bottom: 6px;">أصناف وتصنيفات الأجهزة</h2>
+            <p style="font-size: 0.95rem; color: var(--steel-grey);">انقر على أي صنف لتصفح الأجهزة والموديلات المتوفرة لدينا في دمشق</p>
+        </div>
+
+        <div class="categories-page-grid">
+    `;
+
+    (allCategories || FALLBACK_CATEGORIES).forEach(cat => {
+        const catMap = { 'irons': 1, 'vacuums': 2, 'kitchen': 3, 'personal-care': 4, 'home-living': 5, 'coffee-machines': 6 };
+        const catId = catMap[cat.slug];
+        const count = (allProducts || []).filter(p => p.category_id === catId || (cat.slug === 'coffee-machines' && (p.title_ar || '').includes('قهوة'))).length || 8;
+        const desc = descriptions[cat.slug] || 'تصفح أحدث الأجهزة والموديلات المتوفرة';
+
+        html += `
+            <div class="category-page-card" onclick="selectCategoryFromPage('${cat.slug}')">
+                <div class="cat-card-icon-box">
+                    <i class="fa-solid ${cat.icon || 'fa-tag'}"></i>
+                </div>
+                <div class="cat-card-info">
+                    <h3 class="cat-card-title">${cat.name_ar}</h3>
+                    <p class="cat-card-desc">${desc}</p>
+                    <span class="cat-card-badge"><i class="fa-solid fa-box-archive"></i> ${count} جهازاً متوفراً</span>
+                </div>
+                <div class="cat-card-arrow">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </div>
+            </div>
+        `;
+    });
+
+    html += `</div>`;
+    container.innerHTML = html;
+}
+
+function selectCategoryFromPage(slug) {
+    showView('home');
+    const matchingBtn = document.querySelector(`.cat-tab[data-category="${slug}"]`);
+    filterCategory(slug, matchingBtn);
+}
+
 const PRODUCT_IMAGE_FALLBACKS = {"1": ["https://m.media-amazon.com/images/I/719FfZuLpSL._AC_SL1500_.jpg"], "2": ["https://afosto-cdn-01.afosto.com/k7ems/product/400/7596392450-1.png", "https://afosto-cdn-01.afosto.com/k7ems/product/400/3079170663-2.png"], "3": ["https://src.discounto.de/pics/Angebote/2024/09/15/4433710e82f335c6ae37f8891d0c38a7/LIVARNO-home-LED-Tischleuchte-mit-Touchfunktion_xxl.webp"], "4": ["https://www.orfgen.net/wp-content/uploads/2025/03/Orfgen_Carrera_7.jpg", "https://src.discounto.de/pics/Angebote/2025/01/23/ffe5f644c0971e8d04731ba565031a56/CARRERA-Multigroomer-02473_original.webp"], "5": ["https://m.media-amazon.com/images/I/71UOLOuCmtL._AC_SX679_.jpg", "https://m.media-amazon.com/images/I/61TbcUTksuL._AC_SY879_.jpg"], "7": ["https://electrogriffe.com/wp-content/uploads/2025/01/1-8-690x690.jpg", "https://electrogriffe.com/wp-content/uploads/2025/01/61pC23gnJVL._AC_SL1500_-690x690.jpg"], "8": ["https://assets.mmsrg.com/isr/166325/c1/-/ASSET_MMS_150572321?x=697&y=523&format=webp&quality=60&sp=yes&strip=yes&trim=yes&ex=697&ey=523&align=center&resizesource&unsharp=0.5x0.5"], "9": ["https://src.discounto.de/pics/Angebote/2023/10/16/2324902_LIVARNO-home-Funk-Wanduhr_xxl.jpg"], "10": ["https://media.s-bol.com/OrlE75gW420r/voQw93L/550x451.jpg", "https://media.s-bol.com/RxYMg5lZ9nrq/voQw93L/550x371.jpg"], "11": ["https://src.discounto.de/pics/Angebote/2024/05/13/4230182e185c98d631855b4a6217c4a7/SWITCH-ON-Mini-Mixer_xxl.jpg"], "12": ["https://m.media-amazon.com/images/I/61k1j6RkY-L._AC_SL1500_.jpg"], "13": ["https://m.media-amazon.com/images/I/61FwEa07RSL._AC_SL1500_.jpg"], "14": ["https://src.discounto.de/pics/Angebote/2024/01/15/3956481a5477c7e52a818c396860d5c0/SWITCH-ON-Wasserkocher_xxl.jpg"], "15": ["https://src.discounto.de/pics/Angebote/2024/01/15/3956475b7b15a6b7c0d7c7b74f07a72d/SWITCH-ON-Stabmixer-Set_xxl.jpg"], "16": ["https://m.media-amazon.com/images/I/61-T6M2H57L._AC_SL1500_.jpg"], "17": ["https://media.s-bol.com/RxYMg5lZ9nrq/voQw93L/550x371.jpg"], "18": ["https://src.discounto.de/pics/Angebote/2024/05/13/4230185a7d3c5f949b29e2f5b84c8c3a/SWITCH-ON-Wasserkocher_xxl.jpg"], "19": ["https://m.media-amazon.com/images/I/719FfZuLpSL._AC_SL1500_.jpg"], "20": ["https://src.discounto.de/pics/Angebote/2024/05/13/4230188b776a3f8a42b10a976c7c8b0e/SWITCH-ON-Kontaktgrill_xxl.jpg"], "21": ["https://src.discounto.de/pics/Angebote/2024/01/11/3951290a1877c8e9b867c4e5e41235b2/PARKSIDE-Multifunktions-Ortungsgeraet_xxl.jpg"], "22": ["https://src.discounto.de/pics/Angebote/2024/02/19/4041285b7b15a6b7c0d7c7b74f07a72d/SILVERCREST-Kontaktgrill_xxl.jpg"], "23": ["https://m.media-amazon.com/images/I/718y6K9-y2L._AC_SL1500_.jpg"], "24": ["https://m.media-amazon.com/images/I/61O22N3WlCL._AC_SL1500_.jpg"], "25": ["https://src.discounto.de/pics/Angebote/2024/01/15/3956478a1877c8e9b867c4e5e41235b2/SWITCH-ON-Sandwichmaker_xxl.jpg"], "26": ["https://src.discounto.de/pics/Angebote/2024/01/15/3956480b7b15a6b7c0d7c7b74f07a72d/SWITCH-ON-Kaffeemaschine_xxl.jpg"], "27": ["https://src.discounto.de/pics/Angebote/2024/01/08/3945690b7b15a6b7c0d7c7b74f07a72d/SILVERCREST-Elektrische-Schnitzelwerk_xxl.jpg"], "28": ["https://src.discounto.de/pics/Angebote/2024/01/15/3956482a1877c8e9b867c4e5e41235b2/SWITCH-ON-Akku-Handstaubsauger_xxl.jpg"], "29": ["https://m.media-amazon.com/images/I/71WlA-U0tqL._AC_SL1500_.jpg"], "30": ["https://m.media-amazon.com/images/I/61k1qV7S18L._AC_SL1500_.jpg"], "31": ["https://src.discounto.de/pics/Angebote/2024/05/13/4230185a7d3c5f949b29e2f5b84c8c3a/SWITCH-ON-Wasserkocher_xxl.jpg"], "32": ["https://m.media-amazon.com/images/I/61vH2H547AL._AC_SL1500_.jpg"], "33": ["https://m.media-amazon.com/images/I/61Jc7B6gUuL._AC_SL1500_.jpg"], "34": ["https://m.media-amazon.com/images/I/61gV4C4n6NL._AC_SL1500_.jpg"], "35": ["https://src.discounto.de/pics/Angebote/2023/12/04/3902341_SWITCH-ON-Schokoladenfontaene_xxl.jpg"], "36": ["https://src.discounto.de/pics/Angebote/2024/01/18/3962152b7b15a6b7c0d7c7b74f07a72d/SILVERCREST-Popcornmaker_xxl.jpg"], "37": ["https://m.media-amazon.com/images/I/71uA-4S5H5L._AC_SL1500_.jpg"], "38": ["https://m.media-amazon.com/images/I/71H2b2U2j9L._AC_SL1500_.jpg"], "39": ["https://src.discounto.de/pics/Angebote/2023/12/11/3910245_SILVERCREST-Raclette-Grill_xxl.jpg"], "40": ["https://m.media-amazon.com/images/I/61vXgP-5N-L._AC_SL1500_.jpg"], "41": ["https://m.media-amazon.com/images/I/61hXbL7Z1KL._AC_SL1500_.jpg"], "42": ["https://src.discounto.de/pics/Angebote/2024/02/05/4012185b7b15a6b7c0d7c7b74f07a72d/SILVERCREST-Mikrowelle_xxl.jpg"], "43": ["https://src.discounto.de/pics/Angebote/2024/03/18/4102390b7b15a6b7c0d7c7b74f07a72d/LIVARNO-home-LED-Aussenleuchte_xxl.jpg"], "44": ["https://src.discounto.de/pics/Angebote/2023/11/27/3890215_LIVARNO-home-Echtwachs-LED-Kerze_xxl.jpg"], "45": ["https://m.media-amazon.com/images/I/61-8-J16bNL._AC_SL1500_.jpg"], "46": ["https://m.media-amazon.com/images/I/61Z7Z7p5Z3L._AC_SL1500_.jpg"], "47": ["https://src.discounto.de/pics/Angebote/2024/09/15/4433710e82f335c6ae37f8891d0c38a7/LIVARNO-home-LED-Tischleuchte-mit-Touchfunktion_xxl.webp"], "48": ["https://src.discounto.de/pics/Angebote/2023/11/27/3890210_LIVARNO-home-LED-Lichterkette_xxl.jpg"], "49": ["https://src.discounto.de/pics/Angebote/2024/01/11/3951288b7b15a6b7c0d7c7b74f07a72d/PARKSIDE-LED-Strahler_xxl.jpg"], "50": ["https://src.discounto.de/pics/Angebote/2023/11/27/3890210_LIVARNO-home-LED-Lichterkette_xxl.jpg"], "51": ["https://src.discounto.de/pics/Angebote/2023/11/27/3890212_LIVARNO-home-LED-Lichtervorhang_xxl.jpg"], "52": ["https://src.discounto.de/pics/Angebote/2024/09/15/4433710e82f335c6ae37f8891d0c38a7/LIVARNO-home-LED-Tischleuchte-mit-Touchfunktion_xxl.webp"], "53": ["https://m.media-amazon.com/images/I/71k6-a79y-L._AC_SL1500_.jpg"], "54": ["https://src.discounto.de/pics/Angebote/2024/09/15/4433710e82f335c6ae37f8891d0c38a7/LIVARNO-home-LED-Tischleuchte-mit-Touchfunktion_xxl.webp"], "55": ["https://m.media-amazon.com/images/I/71uA-4S5H5L._AC_SL1500_.jpg"], "56": ["https://m.media-amazon.com/images/I/61N-5585X-L._AC_SL1500_.jpg"]};
 // Google Sheets Orders Webhook Endpoint (Google Apps Script Web App URL)
 window.GOOGLE_SHEETS_ORDERS_WEBHOOK = 'https://script.google.com/macros/s/AKfycbwrM6-bAv-hYJ494X0bSvWoIRp-6vjJ4An226PMUI0k7X21zYZ_iS6xBeePAxdhRecA/exec';
@@ -2109,12 +2168,15 @@ function initStorefront() {
     const updateBottomNavActiveState = () => {
         const hash = window.location.hash;
         
-        if (hash === '#cart-section') {
+        if (hash === '#cart-section' || hash === '#cart') {
             showView('cart');
             renderCartPage();
-        } else if (hash === '#account-section') {
+        } else if (hash === '#account-section' || hash === '#account') {
             showView('account');
             renderAccountPage();
+        } else if (hash === '#categories-section' || hash === '#categories') {
+            showView('categories');
+            renderCategoriesPage();
         } else {
             showView('home');
         }
@@ -3084,6 +3146,7 @@ function showView(viewName) {
     const customRequest = document.getElementById('custom-request-section');
     const cartSec = document.getElementById('cart-section');
     const accountSec = document.getElementById('account-section');
+    const categoriesSec = document.getElementById('categories-section');
 
     if (viewName === 'cart') {
         if (hero) hero.style.display = 'none';
@@ -3091,6 +3154,7 @@ function showView(viewName) {
         if (customRequest) customRequest.style.display = 'none';
         if (cartSec) cartSec.style.display = 'block';
         if (accountSec) accountSec.style.display = 'none';
+        if (categoriesSec) categoriesSec.style.display = 'none';
         window.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (viewName === 'account') {
         if (hero) hero.style.display = 'none';
@@ -3098,6 +3162,15 @@ function showView(viewName) {
         if (customRequest) customRequest.style.display = 'none';
         if (cartSec) cartSec.style.display = 'none';
         if (accountSec) accountSec.style.display = 'block';
+        if (categoriesSec) categoriesSec.style.display = 'none';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (viewName === 'categories') {
+        if (hero) hero.style.display = 'none';
+        if (products) products.style.display = 'none';
+        if (customRequest) customRequest.style.display = 'none';
+        if (cartSec) cartSec.style.display = 'none';
+        if (accountSec) accountSec.style.display = 'none';
+        if (categoriesSec) categoriesSec.style.display = 'block';
         window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
         if (hero) {
@@ -3111,6 +3184,7 @@ function showView(viewName) {
         if (customRequest) customRequest.style.display = 'block';
         if (cartSec) cartSec.style.display = 'none';
         if (accountSec) accountSec.style.display = 'none';
+        if (categoriesSec) categoriesSec.style.display = 'none';
     }
 }
 

@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <!-- Custom Brand Stylesheet (Cache Busted v=1.4.0 Clean Transparent SVG Favicon) -->
-    <link rel="stylesheet" href="/css/style.css?v=31.0.0">
+    <link rel="stylesheet" href="/css/style.css?v=32.0.0">
 </head>
 
 <body>
@@ -239,6 +239,16 @@
             </div>
         </section>
 
+        
+        <!-- DEDICATED FULL-SCREEN CATEGORIES SECTION -->
+        <section id="categories-section" style="display: none; padding-top: 20px; margin-bottom: 70px;">
+            <div class="container" style="max-width: 850px; margin: 0 auto;">
+                <div id="categoriesSectionContent">
+                    <!-- Dynamic Category Cards Grid will render here -->
+                </div>
+            </div>
+        </section>
+
         <!-- MODAL-FREE ACCOUNT SECTION -->
         <section id="account-section" style="display: none; padding-top: 20px; margin-bottom: 50px;">
             <div class="cart-view-container" style="max-width: 600px; margin: 0 auto;">
@@ -260,7 +270,7 @@
             <i class="fa-solid fa-house"></i>
             <span>الرئيسية</span>
         </a>
-        <a href="#products-section" class="mobile-nav-item">
+        <a href="#categories-section" class="mobile-nav-item">
             <i class="fa-solid fa-layer-group"></i>
             <span>الأصناف</span>
         </a>
@@ -358,7 +368,7 @@
     </footer>
 
     <!-- Frontend Application Logic Script (Cache Busted v=9.0.0) -->
-    <script src="/js/app.js?v=31.0.0"></script>
+    <script src="/js/app.js?v=32.0.0"></script>
 
     <!-- Mobile Category Sidebar Drawer -->
     <div id="mobileCategoryDrawerBackdrop" class="mobile-drawer-backdrop" onclick="closeMobileCategoryDrawer()"></div>
