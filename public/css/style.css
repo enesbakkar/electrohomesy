@@ -436,22 +436,8 @@ header {
 .section-title { font-size: 1.8rem; font-weight: 800; color: var(--onyx); position: relative; padding-right: 18px; }
 .section-title::before { content: ''; position: absolute; right: 0; top: 10%; height: 80%; width: 6px; background: var(--damascus-green); border-radius: 4px; }
 
-.category-tabs { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 12px; margin-bottom: 30px; -webkit-overflow-scrolling: touch; }
-.cat-tab {
-    background: #f1f5f9;
-    border: 1px solid transparent;
-    padding: 10px 24px;
-    border-radius: 12px;
-    font-weight: 700;
-    font-size: 0.95rem;
-    color: var(--steel-grey);
-    cursor: pointer;
-    white-space: nowrap;
-    transition: all 0.25s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-}
+
+
 .cat-tab.active {
     background: var(--damascus-green);
     color: var(--white);
@@ -923,20 +909,8 @@ input:checked + .slider:before { transform: translateX(22px); }
     .mobile-bottom-nav { display: flex; }
     .whatsapp-floating-btn { bottom: 80px; right: 18px; width: 52px; height: 52px; font-size: 1.8rem; }
     
-    .category-tabs {
-        flex-wrap: wrap;
-        overflow-x: visible;
-        padding-bottom: 0;
-        gap: 10px;
-    }
-    .cat-tab {
-        flex: 1 1 calc(50% - 5px);
-        justify-content: center;
-        text-align: center;
-        white-space: normal;
-        font-size: 0.88rem;
-        padding: 10px 8px;
-    }
+    
+    
     
     .payment-methods-grid { grid-template-columns: 1fr; }
     .modal-overlay { padding: 15px 10px; align-items: center; justify-content: center; }
@@ -1041,13 +1015,9 @@ input:checked + .slider:before { transform: translateX(22px); }
     .copyright-bar { padding-top: 18px; padding-bottom: 30px; font-size: 0.82rem; line-height: 1.6; }
 
     /* Hide category tabs on mobile by default (Home view) */
-    .category-tabs {
-        display: none !important;
-    }
+    
     /* Only show category tabs when #products-section is targeted (Categories tab) */
-    #products-section:target .category-tabs {
-        display: flex !important;
-    }
+    #products-section:target 
 }
 
 @media (max-width: 480px) {
@@ -1487,76 +1457,19 @@ input:checked + .slider:before { transform: translateX(22px); }
 
 
 
-    .cat-tab {
-        width: 100% !important;
-        box-sizing: border-box !important;
-        justify-content: center !important;
-        text-align: center !important;
-        padding: 12px 8px !important;
-        font-size: 0.85rem !important;
-        white-space: normal !important;
-        min-height: 52px !important;
-        border-radius: 14px !important;
-        line-height: 1.3 !important;
-    }
+    
 }
 
 
 /* International E-Commerce Category Pills & Mobile Drawer Sidebar */
-.category-tabs-sticky-bar {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    width: 100%;
-    margin-bottom: 25px;
-    position: relative;
-}
 
-.btn-toggle-sidebar {
-    display: none;
-    background: linear-gradient(135deg, #1e3a8a, #2563eb);
-    color: #ffffff;
-    border: none;
-    padding: 10px 16px;
-    border-radius: 14px;
-    font-weight: 700;
-    font-size: 0.9rem;
-    cursor: pointer;
-    white-space: nowrap;
-    align-items: center;
-    gap: 8px;
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
-    flex-shrink: 0;
-}
 
-.category-tabs {
-    display: flex;
-    gap: 10px;
-    overflow-x: auto;
-    padding: 4px 2px 8px 2px;
-    width: 100%;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-}
+
+
+
 .category-tabs::-webkit-scrollbar { display: none; }
 
-.cat-tab {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    padding: 10px 20px;
-    border-radius: 14px;
-    font-weight: 700;
-    font-size: 0.92rem;
-    color: #475569;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    flex-shrink: 0;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
-}
+
 
 .cat-tab.active {
     background: linear-gradient(135deg, #1e3a8a, #2563eb);
@@ -1656,9 +1569,7 @@ input:checked + .slider:before { transform: translateX(22px); }
 }
 
 @media (max-width: 768px) {
-    .btn-toggle-sidebar {
-        display: inline-flex !important;
-    }
+    
 }
 
 
@@ -1694,45 +1605,17 @@ input:checked + .slider:before { transform: translateX(22px); }
     }
 
     /* Category Horizontal Scroll Bar (Pill App Bar) */
-    .category-tabs-sticky-bar {
-        margin-bottom: 18px !important;
-        gap: 8px !important;
-    }
+    
 
-    .category-tabs {
-        display: flex !important;
-        grid-template-columns: none !important;
-        flex-wrap: nowrap !important;
-        gap: 8px !important;
-        overflow-x: auto !important;
-        overflow-y: hidden !important;
-        padding: 4px 2px 10px 2px !important;
-        -webkit-overflow-scrolling: touch !important;
-        scrollbar-width: none !important;
-        width: 100% !important;
-    }
+    
     
     .category-tabs::-webkit-scrollbar {
         display: none !important;
     }
 
-    .cat-tab {
-        width: auto !important;
-        min-height: 42px !important;
-        padding: 8px 16px !important;
-        font-size: 0.85rem !important;
-        white-space: nowrap !important;
-        border-radius: 12px !important;
-        flex-shrink: 0 !important;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04) !important;
-    }
+    
 
-    .btn-toggle-sidebar {
-        display: inline-flex !important;
-        padding: 8px 14px !important;
-        font-size: 0.85rem !important;
-        border-radius: 12px !important;
-    }
+    
 
     /* Featured Products Carousel on Mobile */
     .featured-carousel-wrapper {
@@ -2047,100 +1930,113 @@ input:checked + .slider:before { transform: translateX(22px); }
 }
 
 
-/* Clean & Perfect Category Bar Layout */
+
+
+
+/* ==========================================================================
+   PERFECT VERTICAL ALIGNMENT CATEGORY BAR (NO MISALIGNMENT OR SHIFTING)
+   ========================================================================== */
+
 .category-tabs-sticky-bar {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
-    margin-bottom: 25px;
-    position: relative;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    width: 100% !important;
+    margin-bottom: 22px !important;
+    position: relative !important;
+    overflow: hidden !important;
 }
 
 .btn-toggle-sidebar {
-    display: none;
-    background: linear-gradient(135deg, #1e3a8a, #2563eb);
-    color: #ffffff;
-    border: none;
-    padding: 10px 16px;
-    height: 44px;
-    border-radius: 14px;
-    font-weight: 800;
-    font-size: 0.88rem;
-    cursor: pointer;
-    white-space: nowrap;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
-    flex-shrink: 0;
-    transition: all 0.25s ease;
-}
-
-.btn-toggle-sidebar:hover, .btn-toggle-sidebar:active {
-    transform: translateY(-1px);
-    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
+    display: none !important;
+    background: linear-gradient(135deg, #1e3a8a, #2563eb) !important;
+    color: #ffffff !important;
+    border: none !important;
+    padding: 0 16px !important;
+    height: 42px !important;
+    line-height: 42px !important;
+    border-radius: 12px !important;
+    font-weight: 800 !important;
+    font-size: 0.88rem !important;
+    cursor: pointer !important;
+    white-space: nowrap !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25) !important;
+    flex-shrink: 0 !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    vertical-align: middle !important;
 }
 
 .category-tabs {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    padding: 4px 2px 6px 2px;
-    flex: 1;
-    min-width: 0;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    flex: 1 !important;
+    min-width: 0 !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    box-sizing: border-box !important;
 }
-.category-tabs::-webkit-scrollbar { display: none; }
+
+.category-tabs::-webkit-scrollbar {
+    display: none !important;
+}
 
 .cat-tab {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    padding: 10px 18px;
-    height: 44px;
-    border-radius: 14px;
-    font-weight: 700;
-    font-size: 0.9rem;
-    color: #475569;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    flex-shrink: 0;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
-    box-sizing: border-border-box;
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    padding: 0 18px !important;
+    height: 42px !important;
+    line-height: 40px !important;
+    border-radius: 12px !important;
+    font-weight: 700 !important;
+    font-size: 0.88rem !important;
+    color: #475569 !important;
+    cursor: pointer !important;
+    white-space: nowrap !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    flex-shrink: 0 !important;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.03) !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    vertical-align: middle !important;
 }
 
 .cat-tab.active {
-    background: linear-gradient(135deg, #1e3a8a, #2563eb);
-    color: #ffffff;
-    border-color: #1e3a8a;
-    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
+    background: linear-gradient(135deg, #1e3a8a, #2563eb) !important;
+    color: #ffffff !important;
+    border-color: #1e3a8a !important;
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3) !important;
 }
 
 @media (max-width: 768px) {
     .btn-toggle-sidebar {
         display: inline-flex !important;
+        height: 38px !important;
+        line-height: 38px !important;
+        padding: 0 12px !important;
+        font-size: 0.82rem !important;
+        border-radius: 10px !important;
+    }
+    .cat-tab {
+        height: 38px !important;
+        line-height: 36px !important;
+        padding: 0 14px !important;
+        font-size: 0.82rem !important;
+        border-radius: 10px !important;
     }
     .category-tabs-sticky-bar {
         margin-bottom: 16px !important;
-        gap: 8px !important;
-    }
-    .cat-tab {
-        padding: 8px 14px !important;
-        height: 40px !important;
-        font-size: 0.84rem !important;
-        border-radius: 12px !important;
-    }
-    .btn-toggle-sidebar {
-        padding: 8px 12px !important;
-        height: 40px !important;
-        font-size: 0.84rem !important;
-        border-radius: 12px !important;
+        gap: 6px !important;
     }
 }
