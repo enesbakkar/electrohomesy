@@ -1594,8 +1594,10 @@
     "description_ar": "مصباح طاولة LED باللمس بتصميم طول مختلف",
     "base_price": 9.99,
     "discount_price": null,
-    "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [],
+    "main_image": "https://www.lidl.de/assets/gcp62c3dcbc7fd8447c8c42592138220b5d.jpg",
+    "images": [
+      "https://www.lidl.de/assets/gcp62c3dcbc7fd8447c8c42592138220b5d.jpg"
+    ],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
@@ -1762,8 +1764,13 @@
     "description_ar": "مصباح طاولة LED أساسي وإضاءة مريحة للعين",
     "base_price": 9.99,
     "discount_price": null,
-    "main_image": "/Logo/ElectroHomeSY-logo-blue.png",
-    "images": [],
+    "main_image": "https://www.lidl.de/assets/gcpbdca941a35134b9da813d80efaec26de.jpg",
+    "images": [
+      "https://www.lidl.de/assets/gcpbdca941a35134b9da813d80efaec26de.jpg",
+      "https://www.lidl.de/assets/gcp4ab0d3843cff47ccb336faf7a6f524c1.jpg",
+      "https://www.lidl.de/assets/gcp2558c3ffa9804d86bc961b227fcb2cf5.jpg",
+      "https://www.lidl.de/assets/gcp05c552171ad84be697a2a62ee87e3a05.jpg"
+    ],
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
