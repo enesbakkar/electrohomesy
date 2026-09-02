@@ -892,7 +892,7 @@
     "category_id": 2,
     "title_ar": "سويتش أون مكنسة كهربائية يدوية للتنظيف الجاف والرطب",
     "slug": "prod-so-hv-01-28",
-    "description_ar": "مكنسة يدوية لاسلكية لشفط السوائل والغبار",
+    "description_ar": "مكنسة يدوية لاسلكية لشفط السوائل وال��بار",
     "base_price": 25,
     "discount_price": null,
     "main_image": "https://m.media-amazon.com/images/I/613qSukuP2L._AC_SX679_.jpg",
@@ -1551,7 +1551,7 @@
   {
     "id": 46,
     "category_id": 2,
-    "title_ar": "سيفيرين مكنسة كهربائية 2 في 1 يدوية وعصوية",
+    "title_ar": "سي��يرين مكنسة كهربائية 2 في 1 يدوية وعصوية",
     "slug": "prod-sv-vc-01-46",
     "description_ar": "مكنسة كهربائية 2 في 1 تعمل كمكنسة عصوية ويدوية",
     "base_price": 39.99,
