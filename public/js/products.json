@@ -1114,7 +1114,7 @@
     "category_id": 3,
     "title_ar": "بوش تاسيمو ماكينة قهوة صديقة للأناقة",
     "slug": "prod-bs-tas-01-34",
-    "description_ar": "ماكينة تحضير المشروبات والقهوة بالكبسولات ال��لقائية",
+    "description_ar": "ماكينة تحضير المشروبات والقهوة بالكبسولات التلقائية",
     "base_price": 100,
     "discount_price": 69.99,
     "main_image": "https://m.media-amazon.com/images/I/71p5F5y619L._AC_SX679_.jpg",
@@ -1692,8 +1692,8 @@
   },
   {
     "id": 50,
-    "category_id": 5,
-    "title_ar": "سلسلة إضاءة LED من ليفوبو",
+    "category_id": 3,
+    "title_ar": "سلسلة إ��اءة LED من ليفوبو",
     "slug": "prod-lb-sl-01-50",
     "description_ar": "شريط إضاءة LED موفر للطاقة للديكور الداخلي",
     "base_price": 9.99,
@@ -1906,7 +1906,7 @@
   {
     "id": 56,
     "category_id": 4,
-    "title_ar": "ماكينة حلاقة كهربائية دوارة سلسلة 1000 ��ن فيليبس S1141",
+    "title_ar": "ماكينة حلاقة كهربائية دوارة سلسلة 1000 من فيليبس S1141",
     "slug": "prod-s1141-56",
     "description_ar": "ماكينة حلاقة دوارة بحركات مرنة لقص شعر الوجه بسلاسة",
     "base_price": 25,
