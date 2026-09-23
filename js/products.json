@@ -1006,7 +1006,7 @@
     "category_id": 3,
     "title_ar": "سويتش أون غلاية ماء - سوداء مع خشب",
     "slug": "prod-so-kt-03-31",
-    "description_ar": "غلاية ماء كهربائية باللون الأسود ولمسات خشبية",
+    "description_ar": "غلاية ماء كهربائية ب��للون الأسود ولمسات خشبية",
     "base_price": 25,
     "discount_price": null,
     "main_image": "https://lh3.googleusercontent.com/d/1TEaBzDOICj7KAVIxaHSbTmtgsQNp6GhH",
@@ -1222,7 +1222,7 @@
   {
     "id": 37,
     "category_id": 4,
-    "title_ar": "براون ماكينة تشذيب اللحية سلسلة 5",
+    "title_ar": "براون ماكينة ��شذيب اللحية سلسلة 5",
     "slug": "prod-br-bt5-37",
     "description_ar": "ماكينة تشذيب اللحية بدقة عالية مع قرص تعديل الطول",
     "base_price": 40,
@@ -1373,7 +1373,7 @@
   {
     "id": 41,
     "category_id": 1,
-    "title_ar": "فيليدا ممسحة ��خار ستيم بلس",
+    "title_ar": "فيليدا ممسحة بخار ستيم بلس",
     "slug": "prod-vl-sp-01-41",
     "description_ar": "ممسحة بخار لتنظيف وتعقيم الأرضيات بدون كيميائيات",
     "base_price": 50,
