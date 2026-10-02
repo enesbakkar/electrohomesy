@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <!-- Custom Brand Stylesheet -->
-    <link rel="stylesheet" href="/css/style.css?v=34.0.0">
+    <link rel="stylesheet" href="/css/style.css?v=35.0.0">
 
     <style>
         .product-page-container {
@@ -392,7 +392,7 @@
                     </a>
                     <button class="nav-btn" id="btnUserAuth" onclick="openUserAuthModal()">
                         <i class="fa-solid fa-user"></i>
-                        <span id="userAuthBtnText">تسجيل الدخول</span>
+                        <span id="userAuthBtnText">حسابي</span>
                     </button>
                     <button class="nav-btn nav-btn-cart" id="btnOpenCart" onclick="renderCartModal()">
                         <i class="fa-solid fa-basket-shopping"></i>
@@ -465,8 +465,8 @@
 
 
     <!-- App JS -->
-    <script src="/js/db-config.js?v=1.0.0"></script>
-    <script src="/js/app.js?v=35.0.0"></script>
+    <script src="/js/db-config.js?v=2.0.0"></script>
+    <script src="/js/app.js?v=36.0.0"></script>
     <script>
         let detailProduct = null;
         let detailVariant = null;
@@ -528,7 +528,7 @@
             }
 
             document.title = `${detailProduct.title_ar} - إلكتروهومسي`;
-            document.getElementById('breadCat').innerText = detailProduct.category_name || 'أجهزة منزلية';
+            document.getElementById('breadCat').innerText = getCategoryNameById(detailProduct.category_id);
 
             detailVariant = detailProduct.variants && detailProduct.variants.length > 0 ? detailProduct.variants[0] : null;
             renderMasterProductCard();
@@ -551,8 +551,6 @@
             const p = detailProduct;
             const card = document.getElementById('productMasterCard');
             const code = p.variants && p.variants.length > 0 && p.variants[0].sku ? p.variants[0].sku : generateProductCode(p.id);
-            const url = window.location.href;
-
             const sellingPrice = p.discount_price ? Number(p.discount_price) : Number(p.base_price);
             const originalPrice = Number(p.base_price);
             const modifier = detailVariant ? (Number(detailVariant.price_modifier) || 0) : 0;
@@ -567,6 +565,7 @@
             const formattedPhone = `+${p1} ${p2} ${p3} ${p4}`;
             const waLink = getWhatsAppInquiryLink(p.title_ar, p.id);
             const youtubeEmbed = getYouTubeEmbedUrl(p.youtube_url);
+            const outOfStock = isProductOutOfStock(p);
 
             const displayFinalPrice = formatSYP(finalPrice) || ('$' + finalPrice);
             const displayOriginalPrice = formatSYP(originalPrice) || ('$' + originalPrice);
@@ -577,7 +576,7 @@
                     <!-- GALLERY & MEDIA (RIGHT IN RTL) -->
                     <div class="product-gallery-col">
                         <div class="product-image-frame">
-                            <img id="mainProductImage" src="${p.main_image || '/Logo/ElectroHomeSY-logo-blue.png'}" alt="${p.title_ar}">
+                            <img id="mainProductImage" src="${p.main_image || '/Logo/ElectroHomeSY-logo-blue.png'}" alt="${p.title_ar}" onerror="this.onerror=null; this.src='/Logo/ElectroHomeSY-logo-blue.png';">
                         </div>
 
                         ${(p.images && p.images.length > 1) ? `
@@ -610,7 +609,7 @@
                     <div class="product-details-col">
                         <div class="product-meta-header">
                             <div class="meta-tags-group">
-                                <span class="cat-pill"><i class="fa-solid fa-tag"></i> ${p.category_name || 'أجهزة منزلية'}</span>
+                                <span class="cat-pill"><i class="fa-solid fa-tag"></i> ${getCategoryNameById(p.category_id)}</span>
                                 <span class="code-pill"><i class="fa-solid fa-barcode"></i> رمز الجهاز: <strong>${code}</strong></span>
                             </div>
                         </div>
@@ -637,7 +636,7 @@
 
                         <p class="product-description-text">${p.description_ar || ''}</p>
 
-                        ${p.variants && p.variants.length > 0 ? `
+                        ${p.variants && p.variants.length > 1 ? `
                             <div class="variants-section-box">
                                 <div class="variants-section-title">
                                     <i class="fa-solid fa-sliders" style="color:var(--damascus-green);"></i>
@@ -666,12 +665,16 @@
                         ` : ''}
 
                         <div class="action-buttons-group">
+                            ${outOfStock ? `
+                            <div style="flex:1; display:flex; align-items:center; justify-content:center; gap:10px; padding:16px; border-radius:16px; background:#f1f5f9; color:#475569; font-weight:800; font-size:1.05rem;">
+                                <i class="fa-solid fa-box-open"></i> نفدت الكمية حالياً — تواصل معنا عبر الواتساب
+                            </div>` : `
                             <div class="aurora-btn-wrapper">
                                 <div class="aurora-glow"></div>
                                 <button class="btn-buy-now-hero-aurora" onclick="addMasterProductToCart()">
                                     <i class="fa-solid fa-cart-plus" style="font-size:1.3rem;"></i> إضافة إلى السلة وإتمام الشراء
                                 </button>
-                            </div>
+                            </div>`}
                             <a href="${waLink}" target="_blank" class="btn-whatsapp-hero">
                                 <i class="fa-brands fa-whatsapp" style="font-size:1.4rem;"></i> استفسار مباشر عبر الواتساب
                             </a>
@@ -679,7 +682,7 @@
 
                         <div class="share-bar-container">
                             <span style="font-size:0.88rem; color:var(--steel-grey); font-weight:700;"><i class="fa-solid fa-share-nodes" style="margin-left:6px;"></i> رابط الجهاز المباشر:</span>
-                            <button onclick="navigator.clipboard.writeText('${url}').then(()=>alert('تم نسخ رابط الجهاز بنجاح!'))" 
+                            <button onclick="copyProductLink()" 
                                     style="background:white; border:1.5px solid var(--border-color); padding:6px 16px; border-radius:20px; font-family:'Cairo',sans-serif; font-size:0.85rem; font-weight:800; cursor:pointer; color:var(--damascus-green); transition:all 0.2s;">
                                 <i class="fa-solid fa-copy"></i> نسخ الرابط
                             </button>
@@ -701,25 +704,15 @@
             `;
         }
 
-        
-        function switchProductMainImage(el) {
-            if (!el) return;
-            const imgUrl = el.getAttribute('data-img');
-            const mainImg = document.getElementById('mainProductImage');
-            if (mainImg && imgUrl) {
-                mainImg.style.transition = 'opacity 0.2s ease-in-out';
-                mainImg.style.opacity = '0.4';
-                mainImg.src = imgUrl;
-                setTimeout(() => { mainImg.style.opacity = '1'; }, 120);
+
+        function copyProductLink() {
+            const url = window.location.href;
+            const done = () => alert('تم نسخ رابط الجهاز بنجاح!');
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(url).then(done).catch(() => prompt('انسخ الرابط:', url));
+            } else {
+                prompt('انسخ الرابط:', url);
             }
-            document.querySelectorAll('.thumbnail-item').forEach(item => {
-                item.classList.remove('active');
-                item.style.borderColor = 'var(--border-color)';
-                item.style.boxShadow = 'none';
-            });
-            el.classList.add('active');
-            el.style.borderColor = 'var(--damascus-green)';
-            el.style.boxShadow = '0 4px 14px rgba(0, 122, 61, 0.3)';
         }
 
         function selectMasterVariant(variantId) {
@@ -729,7 +722,7 @@
         }
 
         function addMasterProductToCart() {
-            if (!detailProduct) return;
+            if (!detailProduct || isProductOutOfStock(detailProduct)) return;
             const basePrice = detailProduct.discount_price ? Number(detailProduct.discount_price) : Number(detailProduct.base_price || 0);
             const modifier = detailVariant ? (Number(detailVariant.price_modifier) || 0) : 0;
             let unitPrice = basePrice + modifier;

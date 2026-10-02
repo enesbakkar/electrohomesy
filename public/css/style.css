@@ -2040,3 +2040,7 @@ input:checked + .slider:before { transform: translateX(22px); }
         gap: 6px !important;
     }
 }
+
+/* Sold-out products stay visible but read as unavailable */
+.product-card.is-out-of-stock .product-thumb { opacity: 0.45; filter: grayscale(0.6); }
+.product-card.is-out-of-stock .current-price { color: var(--steel-grey); }
