@@ -28,3 +28,24 @@ Supabase panelinde **electrohomesy → SQL Editor** içinde sırayla:
 - Maliyet bilgisi sadece panelde görünür, siteden okunamaz.
 - Supabase ücretsiz planında projeye 7 gün hiç istek gelmezse proje duraklatılır; panelden tek tıkla açılır.
 - Google Sheets artık ürün kaynağı değil; günlük Sheets senkronu kapatıldı.
+
+## Google'da görünme (SEO)
+
+- `scripts/build-seo.js` veritabanındaki ürünlerden şunları üretir: her ürün için `/p/<id>/` sayfası,
+  her kategori için `/c/<kategori>/` sayfası, `sitemap.xml`, `robots.txt` ve ana sayfadaki hazır ürün listesi.
+- Bu iş GitHub Actions'ta **"Build SEO pages"** ile otomatik çalışır: ana dala her gönderimde ve **3 saatte bir**.
+  Panelde yaptığın değişiklik sitede anında görünür; Google'ın gördüğü sayfalar en geç 3 saat içinde güncellenir.
+  Hemen güncellemek için: GitHub → Actions → Build SEO pages → **Run workflow**.
+- Panelden yeni eklenen bir ürünün sayfası henüz üretilmediyse, `/p/<id>/` adresi ziyaretçiyi otomatik olarak ürün sayfasına yönlendirir.
+
+### Google Search Console (bir kere yapılır)
+
+1. https://search.google.com/search-console adresine Google hesabınla gir → **Mülk ekle** → **URL ön eki** →
+   `https://electrohomesy.com/`.
+2. Doğrulama yöntemi olarak **HTML etiketi**'ni seç; verdiği `<meta name="google-site-verification" ...>` satırını
+   `index.html`'in `<head>` bölümüne ekle (veya Claude'a ver).
+3. Doğrulandıktan sonra **Site haritaları** bölümüne `sitemap.xml` yaz → **Gönder**.
+4. İstersen **URL denetimi**'nde bir ürün adresini (ör. `https://electrohomesy.com/p/38/`) yazıp **Dizine eklenmesini iste**.
+
+Yerel aramalar ("ماكينة حلاقة دمشق" gibi) için ayrıca **Google İşletme Profili** (business.google.com) açıp
+web sitesi olarak electrohomesy.com'u girmek çok fayda sağlar.

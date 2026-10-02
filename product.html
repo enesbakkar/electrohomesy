@@ -4,8 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- SEO:HEAD:START -->
     <title>تفاصيل الجهاز - إلكتروهومسي ElectroHomeSY</title>
     <meta name="description" content="المتجر الرسمي لـ إلكتروهومسي في دمشق - أجهزة منزلية وإلكترونية موثوقة وعصرية.">
+    <!-- Generic template (product.html?id=…): the pre-built /p/<id>/ pages are the ones to index -->
+    <meta name="robots" content="noindex, follow">
+    <!-- SEO:HEAD:END -->
 
     <!-- Official Brand Favicon & Touch Icons -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -21,7 +25,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <!-- Custom Brand Stylesheet -->
-    <link rel="stylesheet" href="/css/style.css?v=35.0.0">
+    <link rel="stylesheet" href="/css/style.css?v=36.0.0">
 
     <style>
         .product-page-container {
@@ -360,6 +364,37 @@
             .action-buttons-group { flex-direction: column; }
             .btn-buy-now-hero, .btn-whatsapp-hero { flex: none; width: 100%; }
         }
+
+        /* Phone layout: name and price near the top, buy buttons always reachable */
+        @media (max-width: 768px) {
+            .product-page-container { margin: 10px auto 30px; padding: 0 10px; }
+            .breadcrumb-bar { font-size: 0.8rem; margin-bottom: 10px; flex-wrap: wrap; gap: 6px; }
+            .product-master-card { padding: 14px; border-radius: 18px; }
+            .product-grid-layout { gap: 16px; }
+            .product-gallery-col { gap: 10px; }
+            .product-image-frame { border-radius: 14px; }
+            .product-image-frame img { max-height: 290px; }
+            .thumbnail-item { width: 56px !important; height: 56px !important; border-radius: 10px !important; }
+            .trust-badges-box { display: none; }
+            .product-main-title { font-size: 1.3rem !important; line-height: 1.45; }
+            .product-detail-brand { font-size: 1rem !important; }
+            .price-hero-current { font-size: 1.9rem !important; }
+            .product-price-container { margin: 8px 0 14px !important; gap: 10px !important; }
+            .action-buttons-group {
+                position: sticky; bottom: 72px; z-index: 50;
+                flex-direction: row !important; gap: 8px; align-items: stretch;
+                background: #fff; padding: 10px 0; margin: 0 -4px;
+            }
+            .aurora-btn-wrapper { flex: 1; }
+            .aurora-glow { display: none; }
+            .btn-buy-now-hero-aurora { padding: 13px 12px; font-size: 0.98rem; }
+            .btn-whatsapp-hero { flex: 0 0 auto !important; width: auto !important; padding: 13px 14px; font-size: 0.9rem; }
+            .btn-whatsapp-hero .wa-label { display: none; }
+            .share-bar-container { padding: 10px 14px; margin-top: 14px; }
+            .meta-tags-group { display: flex; flex-wrap: wrap; gap: 6px; }
+            .cat-pill, .code-pill { font-size: 0.75rem !important; padding: 4px 10px !important; white-space: nowrap; }
+            .btn-whatsapp-hero { min-width: 54px; }
+        }
     </style>
 </head>
 
@@ -416,10 +451,12 @@
         </div>
 
         <div class="product-master-card" id="productMasterCard">
+            <!-- SEO:BODY:START -->
             <div style="text-align:center; padding:80px 20px; color:var(--steel-grey);">
                 <i class="fa-solid fa-spinner fa-spin" style="font-size:3rem; color:var(--damascus-green); margin-bottom:16px; display:block;"></i>
                 <p style="font-size:1.1rem; font-weight:700;">جاري تحميل تفاصيل الجهاز...</p>
             </div>
+            <!-- SEO:BODY:END -->
         </div>
     </main>
 
@@ -460,18 +497,41 @@
         </div>
     </footer>
 
+    <!-- Mobile bottom navigation (same as the store home page) -->
+    <nav class="mobile-bottom-nav">
+        <a href="/" class="mobile-nav-item">
+            <i class="fa-solid fa-house"></i>
+            <span>الرئيسية</span>
+        </a>
+        <a href="/#categories-section" class="mobile-nav-item">
+            <i class="fa-solid fa-layer-group"></i>
+            <span>الأصناف</span>
+        </a>
+        <a href="/#cart-section" class="mobile-nav-item" style="position:relative;">
+            <i class="fa-solid fa-basket-shopping"></i>
+            <span>السلة</span>
+        </a>
+        <a href="/#account-section" class="mobile-nav-item">
+            <i class="fa-solid fa-user"></i>
+            <span>حسابي</span>
+        </a>
+    </nav>
+
 
 
 
 
     <!-- App JS -->
     <script src="/js/db-config.js?v=2.0.0"></script>
-    <script src="/js/app.js?v=36.0.0"></script>
+    <script src="/js/app.js?v=37.0.0"></script>
     <script>
         let detailProduct = null;
         let detailVariant = null;
 
+        // Works for /p/38/ (pre-built pages) and /product.html?id=38
         function getProductIdFromUrl() {
+            const pathMatch = window.location.pathname.match(/^\/p\/(\d+)/);
+            if (pathMatch) return parseInt(pathMatch[1], 10);
             const params = new URLSearchParams(window.location.search);
             return parseInt(params.get('id')) || null;
         }
@@ -583,7 +643,7 @@
                             <div class="product-thumbnails-gallery" style="display:flex; gap:10px; overflow-x:auto; padding:6px 2px; margin-top:2px;">
                                 ${p.images.map((img, idx) => `
                                     <div class="thumbnail-item ${idx === 0 ? 'active' : ''}" data-img="${img}" onclick="switchProductMainImage(this)" style="width:72px; height:72px; border-radius:14px; border:2px solid ${idx === 0 ? 'var(--damascus-green)' : 'var(--border-color)'}; overflow:hidden; cursor:pointer; flex-shrink:0; transition:all 0.2s; background:white;">
-                                        <img src="${img}" style="width:100%; height:100%; object-fit:contain;" alt="${p.title_ar} - صورة ${idx+1}">
+                                        <img src="${img}" style="width:100%; height:100%; object-fit:contain;" alt="${p.title_ar} - صورة ${idx+1}" loading="lazy" onerror="this.parentElement.style.display='none'">
                                     </div>
                                 `).join('')}
                             </div>
@@ -676,7 +736,7 @@
                                 </button>
                             </div>`}
                             <a href="${waLink}" target="_blank" class="btn-whatsapp-hero">
-                                <i class="fa-brands fa-whatsapp" style="font-size:1.4rem;"></i> استفسار مباشر عبر الواتساب
+                                <i class="fa-brands fa-whatsapp" style="font-size:1.4rem;"></i> <span class="wa-label">استفسار مباشر عبر الواتساب</span>
                             </a>
                         </div>
 
@@ -753,7 +813,7 @@
             }
 
             saveCart();
-            window.location.href = 'index.html#cart-section';
+            window.location.href = '/#cart-section';
         }
 
         initDetailPage();
