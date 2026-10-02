@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>ElectroHomeSY Yönetim Paneli</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/css/admin.css?v=1.0.0">
+</head>
+
+<body>
+    <!-- Setup needed -->
+    <section id="setupView" class="center-view" hidden>
+        <div class="auth-card">
+            <img src="/Logo/ElectroHomeSY-logo-blue.png" alt="ElectroHomeSY" class="auth-logo">
+            <h1>Kurulum gerekli</h1>
+            <p>Yönetim paneli henüz veritabanına bağlanmadı. <code>js/db-config.js</code> dosyasına Supabase
+                <b>Project URL</b> ve <b>anon key</b> değerlerini girin.</p>
+            <p>Adım adım anlatım: depodaki <code>ADMIN_PANEL_KURULUM.md</code> dosyası.</p>
+        </div>
+    </section>
+
+    <!-- Login -->
+    <section id="loginView" class="center-view" hidden>
+        <form id="loginForm" class="auth-card">
+            <img src="/Logo/ElectroHomeSY-logo-blue.png" alt="ElectroHomeSY" class="auth-logo">
+            <h1>Yönetim Paneli</h1>
+            <label>E-posta
+                <input type="email" id="loginEmail" autocomplete="username" required>
+            </label>
+            <label>Şifre
+                <input type="password" id="loginPassword" autocomplete="current-password" required>
+            </label>
+            <p id="loginError" class="form-error" hidden></p>
+            <button type="submit" class="btn btn-primary btn-block" id="loginBtn">Giriş yap</button>
+            <a href="/" class="back-link"><i class="fa-solid fa-arrow-left"></i> Mağazaya dön</a>
+        </form>
+    </section>
+
+    <!-- App -->
+    <div id="appView" class="app" hidden>
+        <aside class="sidebar">
+            <div class="brand">
+                <img src="/Logo/ElectroHomeSY-logo-blue.png" alt="ElectroHomeSY">
+            </div>
+            <nav class="nav">
+                <button class="nav-item active" data-tab="dashboard"><i class="fa-solid fa-chart-pie"></i><span>Özet</span></button>
+                <button class="nav-item" data-tab="products"><i class="fa-solid fa-box"></i><span>Ürünler</span></button>
+                <button class="nav-item" data-tab="orders"><i class="fa-solid fa-receipt"></i><span>Siparişler</span><b class="badge" id="newOrdersBadge" hidden></b></button>
+                <button class="nav-item" data-tab="requests"><i class="fa-solid fa-hand"></i><span>Talepler</span><b class="badge" id="newRequestsBadge" hidden></b></button>
+                <button class="nav-item" data-tab="settings"><i class="fa-solid fa-gear"></i><span>Ayarlar</span></button>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="/" target="_blank" class="nav-item"><i class="fa-solid fa-store"></i><span>Mağazayı aç</span></a>
+                <button class="nav-item" id="logoutBtn"><i class="fa-solid fa-right-from-bracket"></i><span>Çıkış</span></button>
+            </div>
+        </aside>
+
+        <main class="main">
+            <!-- Dashboard -->
+            <section class="tab" id="tab-dashboard">
+                <header class="tab-header">
+                    <h2>Özet</h2>
+                    <button class="btn" id="refreshBtn"><i class="fa-solid fa-rotate"></i> Yenile</button>
+                </header>
+                <div class="stats" id="statsGrid"></div>
+                <div class="panel">
+                    <div class="panel-title">Son siparişler</div>
+                    <div id="recentOrders"></div>
+                </div>
+                <div class="panel">
+                    <div class="panel-title">Stoğu biten / azalan ürünler</div>
+                    <div id="lowStock"></div>
+                </div>
+            </section>
+
+            <!-- Products -->
+            <section class="tab" id="tab-products" hidden>
+                <header class="tab-header">
+                    <h2>Ürünler <small id="productsCount"></small></h2>
+                    <button class="btn btn-primary" id="addProductBtn"><i class="fa-solid fa-plus"></i> Yeni ürün</button>
+                </header>
+                <div class="toolbar">
+                    <input type="search" id="productSearch" placeholder="Ürün adı, marka veya kod ara...">
+                    <select id="productCategoryFilter"></select>
+                    <select id="productVisibilityFilter">
+                        <option value="all">Tümü</option>
+                        <option value="visible">Sitede görünen</option>
+                        <option value="hidden">Gizli</option>
+                        <option value="out">Stokta yok</option>
+                        <option value="featured">Öne çıkan</option>
+                    </select>
+                </div>
+                <p class="hint"><i class="fa-solid fa-circle-info"></i> Fiyat, maliyet ve stok kutularını doğrudan tabloda değiştirebilirsiniz; kutudan çıkınca otomatik kaydedilir.</p>
+                <div class="table-wrap">
+                    <table class="table" id="productsTable">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Ürün</th>
+                                <th>Kategori</th>
+                                <th>Satış fiyatı ($)</th>
+                                <th>İndirimli ($)</th>
+                                <th>Maliyet ($)</th>
+                                <th>Kâr</th>
+                                <th>Stok</th>
+                                <th>Öne çıkan</th>
+                                <th>Sitede</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Orders -->
+            <section class="tab" id="tab-orders" hidden>
+                <header class="tab-header">
+                    <h2>Siparişler <small id="ordersCount"></small></h2>
+                </header>
+                <div class="toolbar">
+                    <input type="search" id="orderSearch" placeholder="Müşteri adı, telefon veya sipariş no ara...">
+                    <select id="orderStatusFilter"></select>
+                </div>
+                <div id="ordersList" class="orders-list"></div>
+            </section>
+
+            <!-- Requests -->
+            <section class="tab" id="tab-requests" hidden>
+                <header class="tab-header">
+                    <h2>Özel ürün talepleri</h2>
+                </header>
+                <div id="requestsList" class="orders-list"></div>
+            </section>
+
+            <!-- Settings -->
+            <section class="tab" id="tab-settings" hidden>
+                <header class="tab-header">
+                    <h2>Ayarlar</h2>
+                </header>
+                <div class="panel">
+                    <div class="panel-title">Mevcut ürünleri içe aktar</div>
+                    <p>Veritabanında olmayan ürünleri sitenin eski <code>products.json</code> dosyasından ekler. Var olan ürünlere dokunmaz.</p>
+                    <button class="btn" id="importBtn"><i class="fa-solid fa-file-import"></i> products.json'dan içe aktar</button>
+                </div>
+                <div class="panel">
+                    <div class="panel-title">Yedek al</div>
+                    <p>Tüm ürünleri (maliyetlerle birlikte) ve siparişleri bilgisayarınıza indirin. Excel ile açılabilir.</p>
+                    <button class="btn" id="exportProductsBtn"><i class="fa-solid fa-download"></i> Ürünler (CSV)</button>
+                    <button class="btn" id="exportOrdersBtn"><i class="fa-solid fa-download"></i> Siparişler (CSV)</button>
+                </div>
+                <div class="panel">
+                    <div class="panel-title">Hesap</div>
+                    <p>Giriş yapan: <b id="adminEmail"></b></p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Product edit modal -->
+    <dialog id="productDialog" class="dialog">
+        <form id="productForm" method="dialog">
+            <header class="dialog-header">
+                <h3 id="productDialogTitle">Ürün</h3>
+                <button type="button" class="icon-btn" data-close><i class="fa-solid fa-xmark"></i></button>
+            </header>
+            <div class="dialog-body">
+                <div class="grid-2">
+                    <label class="span-2">Ürün adı (Arapça)
+                        <input type="text" name="title_ar" dir="auto" required>
+                    </label>
+                    <label>Marka
+                        <input type="text" name="brand" dir="auto">
+                    </label>
+                    <label>Ürün kodu
+                        <input type="text" name="sku" dir="auto">
+                    </label>
+                    <label>Kategori
+                        <select name="category_id" id="productCategorySelect"></select>
+                    </label>
+                    <label>Stok adedi
+                        <input type="number" name="stock_quantity" min="0" step="1" value="0">
+                    </label>
+                    <label>Satış fiyatı ($)
+                        <input type="number" name="base_price" min="0" step="0.01" required>
+                    </label>
+                    <label>İndirimli fiyat ($) <small>boş = indirim yok</small>
+                        <input type="number" name="discount_price" min="0" step="0.01">
+                    </label>
+                    <label>Maliyet ($) <small>sadece sizde görünür</small>
+                        <input type="number" name="cost_price" min="0" step="0.01">
+                    </label>
+                    <label>Sıralama <small>küçük sayı önce</small>
+                        <input type="number" name="sort_order" step="1" value="0">
+                    </label>
+                    <label class="span-2">Açıklama (Arapça)
+                        <textarea name="description_ar" rows="3" dir="auto"></textarea>
+                    </label>
+                    <label class="span-2">YouTube video linki
+                        <input type="url" name="youtube_url">
+                    </label>
+                    <div class="span-2 checks">
+                        <label class="check"><input type="checkbox" name="is_visible"> Sitede görünsün</label>
+                        <label class="check"><input type="checkbox" name="is_featured"> Öne çıkanlarda göster</label>
+                    </div>
+                </div>
+
+                <div class="images-editor">
+                    <div class="panel-title">Görseller <small>ilk görsel ana görseldir</small></div>
+                    <div id="imagesList" class="images-list"></div>
+                    <div class="image-add">
+                        <input type="url" id="imageUrlInput" placeholder="Görsel linki yapıştırın (Google Drive linki de olur)">
+                        <button type="button" class="btn" id="addImageUrlBtn">Ekle</button>
+                        <label class="btn">
+                            <i class="fa-solid fa-upload"></i> Dosya yükle
+                            <input type="file" id="imageFileInput" accept="image/*" multiple hidden>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <footer class="dialog-footer">
+                <button type="button" class="btn btn-danger-ghost" id="deleteProductBtn">Sil</button>
+                <span class="spacer"></span>
+                <button type="button" class="btn" data-close>Vazgeç</button>
+                <button type="submit" class="btn btn-primary" id="saveProductBtn">Kaydet</button>
+            </footer>
+        </form>
+    </dialog>
+
+    <div id="toast" class="toast" hidden></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/js/db-config.js?v=1.0.0"></script>
+    <script src="/js/admin.js?v=1.0.0"></script>
+</body>
+
+</html>

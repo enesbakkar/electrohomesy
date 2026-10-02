@@ -2653,18 +2653,10 @@ function renderProductsPlaceholder() {
 
 async function fetchProductsInBackground() {
     try {
-        await fetchProductsFromGoogleSheetsClient('all');
-    } catch (sheetErr) {
-        try {
-            const jsonRes = await fetch('./js/products.json?t=' + Date.now());
-            if (jsonRes.ok) {
-                const cached = await jsonRes.json();
-                allProducts = cached;
-                isGoogleSheetsDataLoaded = true;
-            }
-        } catch (jsonErr) {
-            allProducts = FALLBACK_PRODUCTS.filter(p => p.is_visible);
-        }
+        allProducts = await loadAllProducts();
+        isGoogleSheetsDataLoaded = true;
+    } catch (err) {
+        allProducts = FALLBACK_PRODUCTS.filter(p => p.is_visible);
     }
 }
 
@@ -2770,46 +2762,26 @@ function getProductImageClient(imageLink, categoryId) {
     return getFallbackImageClient(categoryId);
 }
 
+const CATEGORY_SLUG_TO_ID = { 'irons': 1, 'vacuums': 2, 'kitchen': 3, 'personal-care': 4, 'home-living': 5, 'coffee-machines': 6 };
+
+function filterProductsByCategory(products, categorySlug) {
+    if (categorySlug === 'all') return products;
+    const catId = CATEGORY_SLUG_TO_ID[categorySlug];
+    return catId ? products.filter(p => p.category_id === catId) : products;
+}
+
 async function fetchProducts(categorySlug = 'all') {
     renderLoadingSkeleton();
-
-    // STEP 1: Load products.json immediately for instant display
     try {
-        const jsonRes = await fetch('./js/products.json?v=26.0.0');
-        if (jsonRes.ok) {
-            const localProducts = await jsonRes.json();
-            if (localProducts && localProducts.length > 0) {
-                allProducts = localProducts;
-                isGoogleSheetsDataLoaded = true;
-                const filtered = categorySlug === 'all' ? localProducts : localProducts.filter(p => {
-                    const catMap = { 'irons': 1, 'vacuums': 2, 'kitchen': 3, 'personal-care': 4, 'home-living': 5, 'coffee-machines': 6 };
-                    return p.category_id === catMap[categorySlug];
-                });
-                renderProducts(filtered.length > 0 ? filtered : localProducts);
-                renderFeaturedCarousel();
-                // STEP 2: Silently try to upgrade from live Google Sheets in background
-                fetchProductsFromGoogleSheetsClient(categorySlug).then(liveProducts => {
-                    if (liveProducts && liveProducts.length > 0) {
-                        renderProducts(liveProducts);
-                        renderFeaturedCarousel();
-                    }
-                }).catch(() => {}); // ignore if fails
-                return filtered.length > 0 ? filtered : localProducts;
-            }
-        }
-    } catch (jsonErr) {
-        console.warn('products.json load failed, trying Google Sheets:', jsonErr);
-    }
-
-    // STEP 3: Try Google Sheets directly
-    try {
-        const products = await fetchProductsFromGoogleSheetsClient(categorySlug);
-        renderProducts(products);
+        const products = await loadAllProducts();
+        allProducts = products;
+        isGoogleSheetsDataLoaded = true;
+        const filtered = filterProductsByCategory(products, categorySlug);
+        renderProducts(filtered.length > 0 ? filtered : products);
         renderFeaturedCarousel();
-        return products;
+        return filtered.length > 0 ? filtered : products;
     } catch (err) {
         console.error('All product sources failed:', err);
-        // STEP 4: Last resort - hardcoded fallback
         const fallback = (typeof FALLBACK_PRODUCTS !== 'undefined') ? FALLBACK_PRODUCTS.filter(p => p.is_visible) : [];
         allProducts = fallback;
         renderProducts(fallback);
@@ -2818,123 +2790,20 @@ async function fetchProducts(categorySlug = 'all') {
     }
 }
 
-async function fetchProductsFromGoogleSheetsClient(categorySlug) {
-    let rawCsvText = '';
-
-    const urls = [
-        'https://docs.google.com/spreadsheets/d/1hioi7V5yDDsOmm5_StTI3b8poxnCsgMQXP30lC75PRI/gviz/tq?tqx=out:csv&gid=0&t=' + Date.now(),
-        'https://docs.google.com/spreadsheets/d/1hioi7V5yDDsOmm5_StTI3b8poxnCsgMQXP30lC75PRI/export?format=csv&gid=0&t=' + Date.now()
-    ];
-
-    for (const url of urls) {
+// Product sources, in order: admin panel database (Supabase) -> static products.json
+async function loadAllProducts() {
+    if (typeof ehsDbConfigured === 'function' && ehsDbConfigured()) {
         try {
-            const res = await fetch(url);
-            if (res.ok) {
-                const text = await res.text();
-                if (text && text.length > 500 && text.includes(',')) {
-                    rawCsvText = text;
-                    break;
-                }
-            }
-        } catch (e) {
-            console.warn('Failed URL:', url, e);
+            return await ehsFetchProductsFromDb();
+        } catch (dbErr) {
+            console.warn('Database products load failed, falling back to products.json:', dbErr);
         }
     }
-
-    if (rawCsvText) {
-        try {
-            const rows = parseCSVClient(rawCsvText);
-            if (rows.length >= 2) {
-                const products = [];
-                for (let i = 1; i < rows.length; i++) {
-                    const row = rows[i];
-                    if (!row || row.length < 3) continue;
-
-                    const name = (row[1] || row[2] || '').trim();
-                    const brand = (row[2] || 'ElectroHome').trim();
-                    const code = (row[3] || `PROD-${i}`).trim();
-
-                    if (!name || name.startsWith('Product') || name.startsWith('اسم') || name === '-') continue;
-
-                    const id = parseInt(row[0], 10) || i;
-                    const quantity = parseFloat(row[4]) || 10;
-                    let cost = parsePriceClient(row[5]);
-                    let sellingPrice = parsePriceClient(row[6]);
-                    let discountPrice = parsePriceClient(row[7]);
-
-                    const favVal = (row[10] || '').trim();
-                    const isFeatured = (favVal === '1' || favVal.toUpperCase() === 'TRUE') ? 1 : 0;
-                    const detailsText = (row[11] || '').trim();
-                    const videoLink = (row[12] || '').trim();
-
-                    const photos = [];
-                    for (let cIdx = 13; cIdx <= 17; cIdx++) {
-                        let imgUrl = getGoogleDriveDirectLinkClient((row[cIdx] || '').trim());
-                        if (imgUrl && imgUrl.startsWith('http') && !photos.includes(imgUrl)) {
-                            photos.push(imgUrl);
-                        }
-                    }
-
-                    const categoryId = getCategoryIdFromSheetClient(name, brand);
-                    const mappedFallback = PRODUCT_IMAGE_FALLBACKS[id] ? PRODUCT_IMAGE_FALLBACKS[id][0] : null;
-                    const mainImage = photos.length > 0 ? photos[0] : (mappedFallback || getFallbackImageClient(categoryId));
-                    const imagesList = photos.length > 0 ? photos : (mappedFallback ? PRODUCT_IMAGE_FALLBACKS[id] : [mainImage]);
-                    const description = (detailsText && !detailsText.startsWith('http')) ? detailsText : `جهاز ${name} عالي الكفاءة من ماركة ${brand}. الموديل: ${code}.`;
-
-                    products.push({
-                        id,
-                        category_id: categoryId,
-                        title_ar: name,
-                        slug: `prod-${code.toLowerCase().replace(/[^a-z0-9]/g, '-')}-${id}`,
-                        description_ar: description,
-                        base_price: sellingPrice || cost || 29.99,
-                        discount_price: discountPrice,
-                        main_image: mainImage,
-                        images: imagesList,
-                        youtube_url: videoLink,
-                        is_visible: 1,
-                        is_featured: isFeatured,
-                        variants: [
-                            { id: id * 100, product_id: id, brand: brand || 'ElectroHome', model_name: code, variant_attributes: { "الماركة": brand, "الموديل": code }, price_modifier: 0, stock_quantity: Math.round(quantity) || 10, sku: code }
-                        ]
-                    });
-                }
-
-                if (products.length > 0) {
-                    allProducts = products;
-                    isGoogleSheetsDataLoaded = true;
-                    if (categorySlug === 'all') return products;
-                    const catMap = { 'irons': 1, 'vacuums': 2, 'kitchen': 3, 'personal-care': 4, 'home-living': 5, 'coffee-machines': 6 };
-                    const catId = catMap[categorySlug];
-                    return catId ? products.filter(p => p.category_id === catId) : products;
-                }
-            }
-        } catch (parseErr) {
-            console.error('Error parsing Google Sheets CSV:', parseErr);
-        }
-    }
-
-    // Fallback 1: Local products.json file
-    try {
-        const jsonRes = await fetch('./js/products.json?v=25.0.0');
-        if (jsonRes.ok) {
-            const products = await jsonRes.json();
-            allProducts = products;
-            isGoogleSheetsDataLoaded = true;
-            if (categorySlug === 'all') return products;
-            const catMap = { 'irons': 1, 'vacuums': 2, 'kitchen': 3, 'personal-care': 4, 'home-living': 5, 'coffee-machines': 6 };
-            const catId = catMap[categorySlug];
-            return catId ? products.filter(p => p.category_id === catId) : products;
-        }
-    } catch (jsonErr) {
-        console.warn('Local products.json fallback failed:', jsonErr);
-    }
-
-    // Fallback 2: Hardcoded FALLBACK_PRODUCTS
-    if (typeof FALLBACK_PRODUCTS !== 'undefined' && FALLBACK_PRODUCTS.length > 0) {
-        allProducts = FALLBACK_PRODUCTS.filter(p => p.is_visible);
-    }
-    return allProducts;
+    const jsonRes = await fetch('./js/products.json?t=' + Date.now());
+    if (!jsonRes.ok) throw new Error(`products.json HTTP ${jsonRes.status}`);
+    const products = await jsonRes.json();
+    if (!products || products.length === 0) throw new Error('products.json is empty');
+    return products;
 }
 
 // Render Products Grid - Cards open product page in new tab
@@ -3010,7 +2879,7 @@ async function openProductDetail(productId) {
         if (!res.ok) throw new Error('Not ok');
         currentSelectedProduct = await res.json();
     } catch (e) {
-        currentSelectedProduct = FALLBACK_PRODUCTS.find(p => p.id === productId) || allProducts.find(p => p.id === productId);
+        currentSelectedProduct = allProducts.find(p => p.id === productId) || FALLBACK_PRODUCTS.find(p => p.id === productId);
     }
     
     if (currentSelectedProduct) {
@@ -3321,8 +3190,10 @@ async function sendOrderEmailNotification(orderData) {
         date: new Date().toLocaleString('ar-SY')
     };
 
+    const webhook = window.EHS_CONFIG ? window.EHS_CONFIG.ORDER_EMAIL_WEBHOOK : window.GOOGLE_SHEETS_ORDERS_WEBHOOK;
+    if (!webhook) return;
     try {
-        await fetch('https://script.google.com/macros/s/AKfycbwrM6-bAv-hYJ494X0bSvWoIRp-6vjJ4An226PMUI0k7X21zYZ_iS6xBeePAxdhRecA/exec', {
+        await fetch(webhook, {
             method: 'POST',
             headers: { 'Content-Type': 'text/plain' },
             body: JSON.stringify(payload)
@@ -3353,8 +3224,10 @@ async function sendProductRequestEmailNotification(reqData) {
         date: new Date().toLocaleString('ar-SY')
     };
 
+    const webhook = window.EHS_CONFIG ? window.EHS_CONFIG.ORDER_EMAIL_WEBHOOK : window.GOOGLE_SHEETS_ORDERS_WEBHOOK;
+    if (!webhook) return;
     try {
-        await fetch('https://script.google.com/macros/s/AKfycbwrM6-bAv-hYJ494X0bSvWoIRp-6vjJ4An226PMUI0k7X21zYZ_iS6xBeePAxdhRecA/exec', {
+        await fetch(webhook, {
             method: 'POST',
             headers: { 'Content-Type': 'text/plain' },
             body: JSON.stringify(payload)
@@ -3414,19 +3287,21 @@ async function handleCheckoutSubmit(e) {
         submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري إرسال الطلب...';
     }
 
-    // AWAIT email & Google Sheets notification
+    // Save the order to the admin panel database, then send the e-mail notification
+    if (typeof ehsDbConfigured === 'function' && ehsDbConfigured()) {
+        try {
+            await ehsSubmitOrderToDb(orderPayload);
+        } catch (err) {
+            console.error('Order save failed:', err);
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = origBtnHtml;
+            }
+            alert('⚠️ تعذر إرسال الطلب حالياً، يرجى المحاولة مرة أخرى أو التواصل معنا عبر الواتساب.');
+            return;
+        }
+    }
     await sendOrderEmailNotification(orderPayload);
-
-    try {
-        await fetch('/api/orders', {
-            method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json',
-                'X-CSRF-Token': getCookie('csrf_token')
-            },
-            body: JSON.stringify(orderPayload)
-        });
-    } catch (err) {}
 
     if (submitBtn) {
         submitBtn.disabled = false;
@@ -3461,18 +3336,14 @@ async function handleRequestSubmit(e) {
         submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري إرسال الطلب...';
     }
 
+    if (typeof ehsDbConfigured === 'function' && ehsDbConfigured()) {
+        try {
+            await ehsSubmitRequestToDb(reqPayload);
+        } catch (err) {
+            console.error('Product request save failed:', err);
+        }
+    }
     await sendProductRequestEmailNotification(reqPayload);
-
-    try {
-        await fetch('/api/requests', {
-            method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json',
-                'X-CSRF-Token': getCookie('csrf_token')
-            },
-            body: JSON.stringify({ customer_name, customer_phone, requested_product, notes })
-        });
-    } catch (e) {}
 
     if (submitBtn) {
         submitBtn.disabled = false;

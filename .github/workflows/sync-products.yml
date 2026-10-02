@@ -1,10 +1,8 @@
-name: Sync Products from Google Sheets (Daily Backup)
+name: Sync Products from Google Sheets (Legacy, manual)
 
 on:
-  # Gece 00:00 UTC'de günlük yedek olarak çalış (ana kaynak: doğrudan Google Sheets)
-  schedule:
-    - cron: '0 0 * * *'
-  # Elle tetiklenebilsin
+  # Ürünler artık admin panelinden (Supabase) yönetiliyor; otomatik günlük senkron kapatıldı.
+  # Gerekirse Actions sekmesinden elle çalıştırılabilir.
   workflow_dispatch:
 
 jobs:

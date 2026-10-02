@@ -465,42 +465,11 @@
 
 
     <!-- App JS -->
-    <script src="/js/app.js?v=34.0.0"></script>
+    <script src="/js/db-config.js?v=1.0.0"></script>
+    <script src="/js/app.js?v=35.0.0"></script>
     <script>
         let detailProduct = null;
         let detailVariant = null;
-
-        // Parse CSV text into rows/columns
-        function parseProductCSV(text) {
-            const lines = text.split(/\r?\n/);
-            const rows = [];
-            for (let i = 0; i < lines.length; i++) {
-                const line = lines[i].trim();
-                if (!line) continue;
-                const row = [];
-                let inQ = false, cur = '';
-                for (let j = 0; j < line.length; j++) {
-                    const ch = line[j];
-                    if (ch === '"') { inQ = !inQ; }
-                    else if (ch === ',' && !inQ) { row.push(cur.trim()); cur = ''; }
-                    else { cur += ch; }
-                }
-                row.push(cur.trim());
-                rows.push(row);
-            }
-            return rows;
-        }
-
-        // Resolve Google Drive share links to direct image URLs
-        function resolveGDrive(url) {
-            if (!url) return '';
-            const m = url.match(/\/d\/([a-zA-Z0-9_-]{20,})|id=([a-zA-Z0-9_-]{20,})/);
-            if (m) {
-                const fid = m[1] || m[2];
-                return `https://drive.google.com/thumbnail?id=${fid}&sz=w800`;
-            }
-            return url;
-        }
 
         function getProductIdFromUrl() {
             const params = new URLSearchParams(window.location.search);
@@ -522,58 +491,18 @@
                 return;
             }
 
-            // 1) Try Google Sheets directly (real-time - reflects any edits immediately)
-            try {
-                const SHEET_ID = '1hioi7V5yDDsOmm5_StTI3b8poxnCsgMQXP30lC75PRI';
-                const sheetUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&t=${Date.now()}`;
-                const sheetRes = await fetch(sheetUrl);
-                if (sheetRes.ok) {
-                    const csvText = await sheetRes.text();
-                    const rows = parseProductCSV(csvText);
-                    for (let i = 1; i < rows.length; i++) {
-                        const row = rows[i];
-                        const rowId = parseInt(row[0], 10);
-                        if (rowId !== id) continue;
+            // 1) Admin panel database (Supabase). If it answers, it is the source of truth
+            // (a product hidden from the admin panel must not come back from the fallbacks).
+            let dbAnswered = false;
+            if (typeof ehsDbConfigured === 'function' && ehsDbConfigured()) {
+                try {
+                    detailProduct = await ehsFetchProductFromDb(id);
+                    dbAnswered = true;
+                } catch (dbErr) { console.warn('Database fetch failed on product page:', dbErr); }
+            }
 
-                        const name = (row[1] || '').trim();
-                        const brand = (row[2] || 'ElectroHome').trim();
-                        const code = (row[3] || `PROD-${id}`).trim();
-                        const qty = parseFloat(row[4]) || 10;
-
-                        // Fiyat - SADECE Sheets'ten al, yerelden değil
-                        const sp = parseFloat((row[6]||'').replace(/[^\d.]/g,'')) || null;
-                        const dp = parseFloat((row[7]||'').replace(/[^\d.]/g,'')) || null;
-
-                        // K=col[10] Fav, L=col[11] details, M=col[12] video, N-R=col[13..17] photos
-                        const isFav = (row[10]||'').trim().toUpperCase() === 'TRUE' ? 1 : 0;
-                        const details = (row[11]||'').trim();
-                        const video = (row[12]||'').trim();
-                        const photos = [];
-                        for (let ci = 13; ci <= 17; ci++) {
-                            const img = resolveGDrive((row[ci]||'').trim());
-                            if (img && img.startsWith('http') && !photos.includes(img)) photos.push(img);
-                        }
-
-                        const mainImg = photos.length > 0 ? photos[0] : '/Logo/ElectroHomeSY-logo-blue.png';
-                        const desc = (details && !details.startsWith('http'))
-                            ? details
-                            : `جهاز ${name} عالي الكفاءة من ماركة ${brand}. الموديل: ${code}.`;
-
-                        detailProduct = {
-                            id: rowId, title_ar: name, brand,
-                            description_ar: desc,
-                            base_price: sp, discount_price: dp,
-                            main_image: mainImg, images: photos.length > 0 ? photos : (mainImg ? [mainImg] : []),
-                            youtube_url: video, is_featured: isFav,
-                            variants: [{ id: rowId*100, product_id: rowId, brand, model_name: code, sku: code, stock_quantity: qty }]
-                        };
-                        break;
-                    }
-                }
-            } catch (sheetErr) { console.warn('Google Sheets fetch failed on product page:', sheetErr); }
-
-            // 2) Fallback: products.json (cached, updated daily)
-            if (!detailProduct) {
+            // 2) Fallback: products.json
+            if (!detailProduct && !dbAnswered) {
                 try {
                     const res = await fetch('/js/products.json?t=' + Date.now());
                     if (res.ok) {
@@ -584,7 +513,7 @@
             }
 
             // 3) Last resort: hardcoded FALLBACK_PRODUCTS
-            if (!detailProduct && typeof FALLBACK_PRODUCTS !== 'undefined') {
+            if (!detailProduct && !dbAnswered && typeof FALLBACK_PRODUCTS !== 'undefined') {
                 detailProduct = FALLBACK_PRODUCTS.find(p => p.id === id) || null;
             }
 
