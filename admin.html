@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>لوحة إدارة إلكتروهومسي</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/css/admin.css?v=2.0.0">
+</head>
+
+<body>
+    <!-- Setup needed -->
+    <section id="setupView" class="center-view" hidden>
+        <div class="auth-card">
+            <img src="/Logo/ElectroHomeSY-logo-blue.png" alt="ElectroHomeSY" class="auth-logo">
+            <h1>لوحة الإدارة غير متصلة</h1>
+            <p>لم يتم ربط لوحة الإدارة بقاعدة البيانات بعد.</p>
+        </div>
+    </section>
+
+    <!-- Login -->
+    <section id="loginView" class="center-view" hidden>
+        <form id="loginForm" class="auth-card">
+            <img src="/Logo/ElectroHomeSY-logo-blue.png" alt="ElectroHomeSY" class="auth-logo">
+            <h1>لوحة الإدارة</h1>
+            <label>كلمة المرور
+                <input type="password" id="loginPassword" autocomplete="current-password" required autofocus>
+            </label>
+            <p id="loginError" class="form-error" hidden></p>
+            <button type="submit" class="btn btn-primary btn-block" id="loginBtn">دخول</button>
+            <a href="/" class="back-link"><i class="fa-solid fa-arrow-right"></i> العودة للمتجر</a>
+        </form>
+    </section>
+
+    <!-- App -->
+    <div id="appView" class="app" hidden>
+        <aside class="sidebar">
+            <div class="brand">
+                <img src="/Logo/ElectroHomeSY-logo-blue.png" alt="ElectroHomeSY">
+            </div>
+            <nav class="nav">
+                <button class="nav-item active" data-tab="dashboard"><i class="fa-solid fa-chart-pie"></i><span>الرئيسية</span></button>
+                <button class="nav-item" data-tab="products"><i class="fa-solid fa-box"></i><span>المنتجات</span></button>
+                <button class="nav-item" data-tab="orders"><i class="fa-solid fa-receipt"></i><span>الطلبات</span><b class="badge" id="newOrdersBadge" hidden></b></button>
+                <button class="nav-item" data-tab="requests"><i class="fa-solid fa-hand"></i><span>الطلبات الخاصة</span><b class="badge" id="newRequestsBadge" hidden></b></button>
+                <button class="nav-item" data-tab="settings"><i class="fa-solid fa-gear"></i><span>الإعدادات</span></button>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="/" target="_blank" class="nav-item"><i class="fa-solid fa-store"></i><span>فتح المتجر</span></a>
+                <button class="nav-item" id="logoutBtn"><i class="fa-solid fa-right-from-bracket"></i><span>خروج</span></button>
+            </div>
+        </aside>
+
+        <main class="main">
+            <!-- Dashboard -->
+            <section class="tab" id="tab-dashboard">
+                <header class="tab-header">
+                    <h2>الرئيسية</h2>
+                    <button class="btn" id="refreshBtn"><i class="fa-solid fa-rotate"></i> تحديث</button>
+                </header>
+                <div class="stats" id="statsGrid"></div>
+                <div class="panel">
+                    <div class="panel-title">آخر الطلبات</div>
+                    <div id="recentOrders"></div>
+                </div>
+                <div class="panel">
+                    <div class="panel-title">منتجات نفدت أو أوشكت على النفاد</div>
+                    <div id="lowStock"></div>
+                </div>
+            </section>
+
+            <!-- Products -->
+            <section class="tab" id="tab-products" hidden>
+                <header class="tab-header">
+                    <h2>المنتجات <small id="productsCount"></small></h2>
+                    <button class="btn btn-primary" id="addProductBtn"><i class="fa-solid fa-plus"></i> منتج جديد</button>
+                </header>
+                <div class="toolbar">
+                    <input type="search" id="productSearch" placeholder="ابحث باسم المنتج أو الماركة أو الكود...">
+                    <select id="productCategoryFilter"></select>
+                    <select id="productVisibilityFilter">
+                        <option value="all">الكل</option>
+                        <option value="visible">ظاهر في المتجر</option>
+                        <option value="hidden">مخفي</option>
+                        <option value="out">نفد من المخزون</option>
+                        <option value="featured">مميز</option>
+                    </select>
+                </div>
+                <p class="hint"><i class="fa-solid fa-circle-info"></i> يمكنك تعديل السعر والتكلفة والكمية مباشرة في الجدول، ويتم الحفظ تلقائياً عند الخروج من الخانة.</p>
+                <div class="table-wrap">
+                    <table class="table" id="productsTable">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>المنتج</th>
+                                <th>الصنف</th>
+                                <th>سعر البيع ($)</th>
+                                <th>السعر المخفض ($)</th>
+                                <th>التكلفة ($)</th>
+                                <th>الربح</th>
+                                <th>الكمية</th>
+                                <th>مميز</th>
+                                <th>ظاهر</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Orders -->
+            <section class="tab" id="tab-orders" hidden>
+                <header class="tab-header">
+                    <h2>الطلبات <small id="ordersCount"></small></h2>
+                </header>
+                <div class="toolbar">
+                    <input type="search" id="orderSearch" placeholder="ابحث باسم الزبون أو رقم الهاتف أو رقم الطلب...">
+                    <select id="orderStatusFilter"></select>
+                </div>
+                <div id="ordersList" class="orders-list"></div>
+            </section>
+
+            <!-- Requests -->
+            <section class="tab" id="tab-requests" hidden>
+                <header class="tab-header">
+                    <h2>طلبات الأجهزة الخاصة</h2>
+                </header>
+                <div id="requestsList" class="orders-list"></div>
+            </section>
+
+            <!-- Settings -->
+            <section class="tab" id="tab-settings" hidden>
+                <header class="tab-header">
+                    <h2>الإعدادات</h2>
+                </header>
+                <div class="panel">
+                    <div class="panel-title">استيراد المنتجات الحالية</div>
+                    <p>يضيف المنتجات غير الموجودة في قاعدة البيانات من ملف المتجر القديم <code>products.json</code>. لا يغيّر المنتجات الموجودة.</p>
+                    <button class="btn" id="importBtn"><i class="fa-solid fa-file-import"></i> استيراد من products.json</button>
+                </div>
+                <div class="panel">
+                    <div class="panel-title">نسخة احتياطية</div>
+                    <p>تنزيل جميع المنتجات (مع التكاليف) والطلبات كملف يفتح ببرنامج Excel.</p>
+                    <button class="btn" id="exportProductsBtn"><i class="fa-solid fa-download"></i> المنتجات (CSV)</button>
+                    <button class="btn" id="exportOrdersBtn"><i class="fa-solid fa-download"></i> الطلبات (CSV)</button>
+                </div>
+                <div class="panel">
+                    <div class="panel-title">تغيير كلمة المرور</div>
+                    <form id="passwordForm" class="inline-form">
+                        <input type="password" id="newPassword" placeholder="كلمة المرور الجديدة" minlength="6" autocomplete="new-password" required>
+                        <button type="submit" class="btn">حفظ</button>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Product edit modal -->
+    <dialog id="productDialog" class="dialog">
+        <form id="productForm" method="dialog">
+            <header class="dialog-header">
+                <h3 id="productDialogTitle">منتج</h3>
+                <button type="button" class="icon-btn" data-close><i class="fa-solid fa-xmark"></i></button>
+            </header>
+            <div class="dialog-body">
+                <div class="grid-2">
+                    <label class="span-2">اسم المنتج
+                        <input type="text" name="title_ar" dir="auto" required>
+                    </label>
+                    <label>الماركة
+                        <input type="text" name="brand" dir="auto">
+                    </label>
+                    <label>كود المنتج
+                        <input type="text" name="sku" dir="auto">
+                    </label>
+                    <label>الصنف
+                        <select name="category_id" id="productCategorySelect"></select>
+                    </label>
+                    <label>الكمية في المخزون
+                        <input type="number" name="stock_quantity" min="0" step="1" value="0">
+                    </label>
+                    <label>سعر البيع ($)
+                        <input type="number" name="base_price" min="0" step="0.01" required>
+                    </label>
+                    <label>السعر المخفض ($) <small>اتركه فارغاً إن لم يوجد خصم</small>
+                        <input type="number" name="discount_price" min="0" step="0.01">
+                    </label>
+                    <label>التكلفة ($) <small>تظهر لك فقط</small>
+                        <input type="number" name="cost_price" min="0" step="0.01">
+                    </label>
+                    <label>الترتيب <small>الرقم الأصغر يظهر أولاً</small>
+                        <input type="number" name="sort_order" step="1" value="0">
+                    </label>
+                    <label class="span-2">التفاصيل
+                        <textarea name="description_ar" rows="3" dir="auto"></textarea>
+                    </label>
+                    <label class="span-2">رابط فيديو يوتيوب
+                        <input type="url" name="youtube_url" dir="ltr">
+                    </label>
+                    <div class="span-2 checks">
+                        <label class="check"><input type="checkbox" name="is_visible"> ظاهر في المتجر</label>
+                        <label class="check"><input type="checkbox" name="is_featured"> عرض ضمن المنتجات المميزة</label>
+                    </div>
+                </div>
+
+                <div class="images-editor">
+                    <div class="panel-title">الصور <small>الصورة الأولى هي الصورة الرئيسية</small></div>
+                    <div id="imagesList" class="images-list"></div>
+                    <div class="image-add">
+                        <input type="url" id="imageUrlInput" dir="ltr" placeholder="الصق رابط الصورة (يقبل روابط Google Drive)">
+                        <button type="button" class="btn" id="addImageUrlBtn">إضافة</button>
+                        <label class="btn">
+                            <i class="fa-solid fa-upload"></i> رفع صورة
+                            <input type="file" id="imageFileInput" accept="image/*" multiple hidden>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <footer class="dialog-footer">
+                <button type="button" class="btn btn-danger-ghost" id="deleteProductBtn">حذف</button>
+                <span class="spacer"></span>
+                <button type="button" class="btn" data-close>إلغاء</button>
+                <button type="submit" class="btn btn-primary" id="saveProductBtn">حفظ</button>
+            </footer>
+        </form>
+    </dialog>
+
+    <div id="toast" class="toast" hidden></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/js/db-config.js?v=2.0.0"></script>
+    <script src="/js/admin.js?v=2.0.0"></script>
+</body>
+
+</html>
