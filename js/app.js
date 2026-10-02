@@ -25,9 +25,7 @@ function renderCategoriesPage() {
     `;
 
     (allCategories || FALLBACK_CATEGORIES).forEach(cat => {
-        const catMap = { 'irons': 1, 'vacuums': 2, 'kitchen': 3, 'personal-care': 4, 'home-living': 5, 'coffee-machines': 6 };
-        const catId = catMap[cat.slug];
-        const count = (allProducts || []).filter(p => p.category_id === catId || (cat.slug === 'coffee-machines' && (p.title_ar || '').includes('قهوة'))).length || 8;
+        const count = filterProductsByCategory(allProducts || [], cat.slug).length;
         const desc = descriptions[cat.slug] || 'تصفح أحدث الأجهزة والموديلات المتوفرة';
 
         html += `
@@ -38,7 +36,7 @@ function renderCategoriesPage() {
                 <div class="cat-card-info">
                     <h3 class="cat-card-title">${cat.name_ar}</h3>
                     <p class="cat-card-desc">${desc}</p>
-                    <span class="cat-card-badge"><i class="fa-solid fa-box-archive"></i> ${count} جهازاً متوفراً</span>
+                    <span class="cat-card-badge"><i class="fa-solid fa-box-archive"></i> ${count > 0 ? `${count} جهازاً متوفراً` : 'قريباً'}</span>
                 </div>
                 <div class="cat-card-arrow">
                     <i class="fa-solid fa-chevron-left"></i>
@@ -57,15 +55,13 @@ function selectCategoryFromPage(slug) {
     filterCategory(slug, matchingBtn);
 }
 
-const PRODUCT_IMAGE_FALLBACKS = {"1": ["https://m.media-amazon.com/images/I/719FfZuLpSL._AC_SL1500_.jpg"], "2": ["https://afosto-cdn-01.afosto.com/k7ems/product/400/7596392450-1.png", "https://afosto-cdn-01.afosto.com/k7ems/product/400/3079170663-2.png"], "3": ["https://src.discounto.de/pics/Angebote/2024/09/15/4433710e82f335c6ae37f8891d0c38a7/LIVARNO-home-LED-Tischleuchte-mit-Touchfunktion_xxl.webp"], "4": ["https://www.orfgen.net/wp-content/uploads/2025/03/Orfgen_Carrera_7.jpg", "https://src.discounto.de/pics/Angebote/2025/01/23/ffe5f644c0971e8d04731ba565031a56/CARRERA-Multigroomer-02473_original.webp"], "5": ["https://m.media-amazon.com/images/I/71UOLOuCmtL._AC_SX679_.jpg", "https://m.media-amazon.com/images/I/61TbcUTksuL._AC_SY879_.jpg"], "7": ["https://electrogriffe.com/wp-content/uploads/2025/01/1-8-690x690.jpg", "https://electrogriffe.com/wp-content/uploads/2025/01/61pC23gnJVL._AC_SL1500_-690x690.jpg"], "8": ["https://assets.mmsrg.com/isr/166325/c1/-/ASSET_MMS_150572321?x=697&y=523&format=webp&quality=60&sp=yes&strip=yes&trim=yes&ex=697&ey=523&align=center&resizesource&unsharp=0.5x0.5"], "9": ["https://src.discounto.de/pics/Angebote/2023/10/16/2324902_LIVARNO-home-Funk-Wanduhr_xxl.jpg"], "10": ["https://media.s-bol.com/OrlE75gW420r/voQw93L/550x451.jpg", "https://media.s-bol.com/RxYMg5lZ9nrq/voQw93L/550x371.jpg"], "11": ["https://src.discounto.de/pics/Angebote/2024/05/13/4230182e185c98d631855b4a6217c4a7/SWITCH-ON-Mini-Mixer_xxl.jpg"], "12": ["https://m.media-amazon.com/images/I/61k1j6RkY-L._AC_SL1500_.jpg"], "13": ["https://m.media-amazon.com/images/I/61FwEa07RSL._AC_SL1500_.jpg"], "14": ["https://src.discounto.de/pics/Angebote/2024/01/15/3956481a5477c7e52a818c396860d5c0/SWITCH-ON-Wasserkocher_xxl.jpg"], "15": ["https://src.discounto.de/pics/Angebote/2024/01/15/3956475b7b15a6b7c0d7c7b74f07a72d/SWITCH-ON-Stabmixer-Set_xxl.jpg"], "16": ["https://m.media-amazon.com/images/I/61-T6M2H57L._AC_SL1500_.jpg"], "17": ["https://media.s-bol.com/RxYMg5lZ9nrq/voQw93L/550x371.jpg"], "18": ["https://src.discounto.de/pics/Angebote/2024/05/13/4230185a7d3c5f949b29e2f5b84c8c3a/SWITCH-ON-Wasserkocher_xxl.jpg"], "19": ["https://m.media-amazon.com/images/I/719FfZuLpSL._AC_SL1500_.jpg"], "20": ["https://src.discounto.de/pics/Angebote/2024/05/13/4230188b776a3f8a42b10a976c7c8b0e/SWITCH-ON-Kontaktgrill_xxl.jpg"], "21": ["https://src.discounto.de/pics/Angebote/2024/01/11/3951290a1877c8e9b867c4e5e41235b2/PARKSIDE-Multifunktions-Ortungsgeraet_xxl.jpg"], "22": ["https://src.discounto.de/pics/Angebote/2024/02/19/4041285b7b15a6b7c0d7c7b74f07a72d/SILVERCREST-Kontaktgrill_xxl.jpg"], "23": ["https://m.media-amazon.com/images/I/718y6K9-y2L._AC_SL1500_.jpg"], "24": ["https://m.media-amazon.com/images/I/61O22N3WlCL._AC_SL1500_.jpg"], "25": ["https://src.discounto.de/pics/Angebote/2024/01/15/3956478a1877c8e9b867c4e5e41235b2/SWITCH-ON-Sandwichmaker_xxl.jpg"], "26": ["https://src.discounto.de/pics/Angebote/2024/01/15/3956480b7b15a6b7c0d7c7b74f07a72d/SWITCH-ON-Kaffeemaschine_xxl.jpg"], "27": ["https://src.discounto.de/pics/Angebote/2024/01/08/3945690b7b15a6b7c0d7c7b74f07a72d/SILVERCREST-Elektrische-Schnitzelwerk_xxl.jpg"], "28": ["https://src.discounto.de/pics/Angebote/2024/01/15/3956482a1877c8e9b867c4e5e41235b2/SWITCH-ON-Akku-Handstaubsauger_xxl.jpg"], "29": ["https://m.media-amazon.com/images/I/71WlA-U0tqL._AC_SL1500_.jpg"], "30": ["https://m.media-amazon.com/images/I/61k1qV7S18L._AC_SL1500_.jpg"], "31": ["https://src.discounto.de/pics/Angebote/2024/05/13/4230185a7d3c5f949b29e2f5b84c8c3a/SWITCH-ON-Wasserkocher_xxl.jpg"], "32": ["https://m.media-amazon.com/images/I/61vH2H547AL._AC_SL1500_.jpg"], "33": ["https://m.media-amazon.com/images/I/61Jc7B6gUuL._AC_SL1500_.jpg"], "34": ["https://m.media-amazon.com/images/I/61gV4C4n6NL._AC_SL1500_.jpg"], "35": ["https://src.discounto.de/pics/Angebote/2023/12/04/3902341_SWITCH-ON-Schokoladenfontaene_xxl.jpg"], "36": ["https://src.discounto.de/pics/Angebote/2024/01/18/3962152b7b15a6b7c0d7c7b74f07a72d/SILVERCREST-Popcornmaker_xxl.jpg"], "37": ["https://m.media-amazon.com/images/I/71uA-4S5H5L._AC_SL1500_.jpg"], "38": ["https://m.media-amazon.com/images/I/71H2b2U2j9L._AC_SL1500_.jpg"], "39": ["https://src.discounto.de/pics/Angebote/2023/12/11/3910245_SILVERCREST-Raclette-Grill_xxl.jpg"], "40": ["https://m.media-amazon.com/images/I/61vXgP-5N-L._AC_SL1500_.jpg"], "41": ["https://m.media-amazon.com/images/I/61hXbL7Z1KL._AC_SL1500_.jpg"], "42": ["https://src.discounto.de/pics/Angebote/2024/02/05/4012185b7b15a6b7c0d7c7b74f07a72d/SILVERCREST-Mikrowelle_xxl.jpg"], "43": ["https://src.discounto.de/pics/Angebote/2024/03/18/4102390b7b15a6b7c0d7c7b74f07a72d/LIVARNO-home-LED-Aussenleuchte_xxl.jpg"], "44": ["https://src.discounto.de/pics/Angebote/2023/11/27/3890215_LIVARNO-home-Echtwachs-LED-Kerze_xxl.jpg"], "45": ["https://m.media-amazon.com/images/I/61-8-J16bNL._AC_SL1500_.jpg"], "46": ["https://m.media-amazon.com/images/I/61Z7Z7p5Z3L._AC_SL1500_.jpg"], "47": ["https://src.discounto.de/pics/Angebote/2024/09/15/4433710e82f335c6ae37f8891d0c38a7/LIVARNO-home-LED-Tischleuchte-mit-Touchfunktion_xxl.webp"], "48": ["https://src.discounto.de/pics/Angebote/2023/11/27/3890210_LIVARNO-home-LED-Lichterkette_xxl.jpg"], "49": ["https://src.discounto.de/pics/Angebote/2024/01/11/3951288b7b15a6b7c0d7c7b74f07a72d/PARKSIDE-LED-Strahler_xxl.jpg"], "50": ["https://src.discounto.de/pics/Angebote/2023/11/27/3890210_LIVARNO-home-LED-Lichterkette_xxl.jpg"], "51": ["https://src.discounto.de/pics/Angebote/2023/11/27/3890212_LIVARNO-home-LED-Lichtervorhang_xxl.jpg"], "52": ["https://src.discounto.de/pics/Angebote/2024/09/15/4433710e82f335c6ae37f8891d0c38a7/LIVARNO-home-LED-Tischleuchte-mit-Touchfunktion_xxl.webp"], "53": ["https://m.media-amazon.com/images/I/71k6-a79y-L._AC_SL1500_.jpg"], "54": ["https://src.discounto.de/pics/Angebote/2024/09/15/4433710e82f335c6ae37f8891d0c38a7/LIVARNO-home-LED-Tischleuchte-mit-Touchfunktion_xxl.webp"], "55": ["https://m.media-amazon.com/images/I/71uA-4S5H5L._AC_SL1500_.jpg"], "56": ["https://m.media-amazon.com/images/I/61N-5585X-L._AC_SL1500_.jpg"]};
-// Google Sheets Orders Webhook Endpoint (Google Apps Script Web App URL)
-window.GOOGLE_SHEETS_ORDERS_WEBHOOK = 'https://script.google.com/macros/s/AKfycbwrM6-bAv-hYJ494X0bSvWoIRp-6vjJ4An226PMUI0k7X21zYZ_iS6xBeePAxdhRecA/exec';
 
 /* ElectroHomeSY - Main Application & Admin Logic */
 
 let featuredCarouselIndex = 0;
 let featuredCarouselTimer = null;
 let featuredCarouselProducts = [];
+let featuredCarouselDotsCount = 0;
 
 // Static Fallbacks for GitHub Pages static hosting
 const FALLBACK_CATEGORIES = [
@@ -77,1842 +73,20 @@ const FALLBACK_CATEGORIES = [
     { id: 6, name_ar: 'ماكينات القهوة والكبسولات', slug: 'coffee-machines', icon: 'fa-mug-hot' }
 ];
 
-const FALLBACK_PRODUCTS = [
-    {
-        "id": 1,
-        "category_id": 4,
-        "title_ar": "فيليبس ماكينة قص الشعر سلسلة 3000",
-        "slug": "prod-ph-hc3000-1",
-        "description_ar": "ماكينة قص شعر لاسلكية مع إعدادات طول متعددة",
-        "base_price": 280000,
-        "discount_price": 245000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "https://www.youtube.com/watch?v=Afk3jznDe6o",
-        "is_featured": 1,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "PH-HC3000",
-        "brand": "Philips",
-        "variants": [
-            {
-                "id": 1,
-                "product_id": 1,
-                "brand": "Philips",
-                "model_name": "PH-HC3000",
-                "variant_attributes": {
-                    "الماركة": "Philips",
-                    "الموديل": "PH-HC3000"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "PH-HC3000"
-            }
-        ]
-    },
-    {
-        "id": 2,
-        "category_id": 4,
-        "title_ar": "براون سلسلة 5 ماكينة حلاقة كهربائية 51-M1000s",
-        "slug": "prod-51-m1000s-2",
-        "description_ar": "ماكينة حلاقة كهربائية للرجال للاستخدام الجاف والرطب",
-        "base_price": 490000,
-        "discount_price": 450000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "51-M1000s",
-        "brand": "Braun",
-        "variants": [
-            {
-                "id": 2,
-                "product_id": 2,
-                "brand": "Braun",
-                "model_name": "51-M1000s",
-                "variant_attributes": {
-                    "الماركة": "Braun",
-                    "الموديل": "51-M1000s"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "51-M1000s"
-            }
-        ]
-    },
-    {
-        "id": 3,
-        "category_id": 5,
-        "title_ar": "ليفارنو هوم مصباح طاولة LED مع خاصية اللمس",
-        "slug": "prod-lv-tl-01-3",
-        "description_ar": "مصباح طاولة يعمل باللمس مع مستويات إضاءة قابلة للضبط",
-        "base_price": 145000,
-        "discount_price": 125000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 1,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "LV-TL-01",
-        "brand": "LIVARNO home",
-        "variants": [
-            {
-                "id": 3,
-                "product_id": 3,
-                "brand": "LIVARNO home",
-                "model_name": "LV-TL-01",
-                "variant_attributes": {
-                    "الماركة": "LIVARNO home",
-                    "الموديل": "LV-TL-01"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "LV-TL-01"
-            }
-        ]
-    },
-    {
-        "id": 4,
-        "category_id": 4,
-        "title_ar": "كاريرا ماكينة تشذيب متعددة الوظائف",
-        "slug": "prod-cr-mg-01-4",
-        "description_ar": "ماكينة تشذيب متعددة الاستخدامات لشعر الوجه والجسم",
-        "base_price": 320000,
-        "discount_price": 290000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "CR-MG-01",
-        "brand": "CARRERA",
-        "variants": [
-            {
-                "id": 4,
-                "product_id": 4,
-                "brand": "CARRERA",
-                "model_name": "CR-MG-01",
-                "variant_attributes": {
-                    "الماركة": "CARRERA",
-                    "الموديل": "CR-MG-01"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "CR-MG-01"
-            }
-        ]
-    },
-    {
-        "id": 5,
-        "category_id": 4,
-        "title_ar": "براون ماكينة حلاقة الجسم سلسلة 5",
-        "slug": "prod-br-bg5-5",
-        "description_ar": "ماكينة حلاقة وتشذيب شعر الجسم للبشرة الحساسة",
-        "base_price": 420000,
-        "discount_price": 380000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "BR-BG5",
-        "brand": "Braun",
-        "variants": [
-            {
-                "id": 5,
-                "product_id": 5,
-                "brand": "Braun",
-                "model_name": "BR-BG5",
-                "variant_attributes": {
-                    "الماركة": "Braun",
-                    "الموديل": "BR-BG5"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "BR-BG5"
-            }
-        ]
-    },
-    {
-        "id": 6,
-        "category_id": 4,
-        "title_ar": "كاريرا ماكينة تشذيب متعددة الوظائف (صندوق آخر)",
-        "slug": "prod-cr-mg-02-6",
-        "description_ar": "ماكينة تشذيب متعددة الاستخدامات للعناية الشخصية",
-        "base_price": 340000,
-        "discount_price": 305000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "CR-MG-02",
-        "brand": "CARRERA",
-        "variants": [
-            {
-                "id": 6,
-                "product_id": 6,
-                "brand": "CARRERA",
-                "model_name": "CR-MG-02",
-                "variant_attributes": {
-                    "الماركة": "CARRERA",
-                    "الموديل": "CR-MG-02"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "CR-MG-02"
-            }
-        ]
-    },
-    {
-        "id": 7,
-        "category_id": 3,
-        "title_ar": "كروبس نستله دولسي غوستو بيكولو XS ماكينة قهوة",
-        "slug": "prod-kp1a08-7",
-        "description_ar": "ماكينة إعداد القهوة بالكبسولات بتصميم مدمج وسريع",
-        "base_price": 540000,
-        "discount_price": 490000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "KP1A08",
-        "brand": "Krups",
-        "variants": [
-            {
-                "id": 7,
-                "product_id": 7,
-                "brand": "Krups",
-                "model_name": "KP1A08",
-                "variant_attributes": {
-                    "الماركة": "Krups",
-                    "الموديل": "KP1A08"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "KP1A08"
-            }
-        ]
-    },
-    {
-        "id": 8,
-        "category_id": 4,
-        "title_ar": "براون ماكينة حلاقة شاملة سلسلة 3 / 8 في 1",
-        "slug": "prod-br-aio3-8",
-        "description_ar": "طقم حلاقة وتصفيف شامل 8 في 1 للحد من اللحية والشعر",
-        "base_price": 380000,
-        "discount_price": 340000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "BR-AIO3",
-        "brand": "Braun",
-        "variants": [
-            {
-                "id": 8,
-                "product_id": 8,
-                "brand": "Braun",
-                "model_name": "BR-AIO3",
-                "variant_attributes": {
-                    "الماركة": "Braun",
-                    "الموديل": "BR-AIO3"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "BR-AIO3"
-            }
-        ]
-    },
-    {
-        "id": 9,
-        "category_id": 5,
-        "title_ar": "ليفارنو هوم ساعة حائط لاسلكية",
-        "slug": "prod-lv-wc-01-9",
-        "description_ar": "ساعة حائط لاسلكية بتعديل تلقائي ودقيق للوقت",
-        "base_price": 135000,
-        "discount_price": 115000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "LV-WC-01",
-        "brand": "LIVARNO home",
-        "variants": [
-            {
-                "id": 9,
-                "product_id": 9,
-                "brand": "LIVARNO home",
-                "model_name": "LV-WC-01",
-                "variant_attributes": {
-                    "الماركة": "LIVARNO home",
-                    "الموديل": "LV-WC-01"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "LV-WC-01"
-            }
-        ]
-    },
-    {
-        "id": 10,
-        "category_id": 3,
-        "title_ar": "سيلفر كريست ماكينة وافل مزدوجة",
-        "slug": "prod-sc-dw-01-10",
-        "description_ar": "جهاز إعداد الوافل المزدوج بطلاء غير لاصق",
-        "base_price": 260000,
-        "discount_price": 230000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "SC-DW-01",
-        "brand": "SilverCrest",
-        "variants": [
-            {
-                "id": 10,
-                "product_id": 10,
-                "brand": "SilverCrest",
-                "model_name": "SC-DW-01",
-                "variant_attributes": {
-                    "الماركة": "SilverCrest",
-                    "الموديل": "SC-DW-01"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "SC-DW-01"
-            }
-        ]
-    },
-    {
-        "id": 11,
-        "category_id": 3,
-        "title_ar": "سويتش أون ماكينة سموثي للتنقل",
-        "slug": "prod-so-sm-01-11",
-        "description_ar": "خلاط سموثي محمول مع كوب مزود بغطاء للتنقل",
-        "base_price": 210000,
-        "discount_price": 185000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 1,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "SO-SM-01",
-        "brand": "Switch On",
-        "variants": [
-            {
-                "id": 11,
-                "product_id": 11,
-                "brand": "Switch On",
-                "model_name": "SO-SM-01",
-                "variant_attributes": {
-                    "الماركة": "Switch On",
-                    "الموديل": "SO-SM-01"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "SO-SM-01"
-            }
-        ]
-    },
-    {
-        "id": 12,
-        "category_id": 3,
-        "title_ar": "تيفال محمصة خبز",
-        "slug": "prod-tf-ts-01-12",
-        "description_ar": "محمصة خبز توستر بفتحتين ومستويات تحمير متعددة",
-        "base_price": 240000,
-        "discount_price": 210000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "TF-TS-01",
-        "brand": "Tefal",
-        "variants": [
-            {
-                "id": 12,
-                "product_id": 12,
-                "brand": "Tefal",
-                "model_name": "TF-TS-01",
-                "variant_attributes": {
-                    "الماركة": "Tefal",
-                    "الموديل": "TF-TS-01"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "TF-TS-01"
-            }
-        ]
-    },
-    {
-        "id": 13,
-        "category_id": 1,
-        "title_ar": "فيليبس بخار ومكواة HI5920",
-        "slug": "prod-hi5920-13",
-        "description_ar": "مكواة بخار قوية مع خزان ماء كبير لكي سريع",
-        "base_price": 780000,
-        "discount_price": 690000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "HI5920",
-        "brand": "Philips",
-        "variants": [
-            {
-                "id": 13,
-                "product_id": 13,
-                "brand": "Philips",
-                "model_name": "HI5920",
-                "variant_attributes": {
-                    "الماركة": "Philips",
-                    "الموديل": "HI5920"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "HI5920"
-            }
-        ]
-    },
-    {
-        "id": 14,
-        "category_id": 3,
-        "title_ar": "سويتش أون غلاية ماء كهربائية - أسود",
-        "slug": "prod-so-kt-01-14",
-        "description_ar": "غلاية ماء كهربائية سريعة التسخين باللون الأسود",
-        "base_price": 165000,
-        "discount_price": 140000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "SO-KT-01",
-        "brand": "Switch On",
-        "variants": [
-            {
-                "id": 14,
-                "product_id": 14,
-                "brand": "Switch On",
-                "model_name": "SO-KT-01",
-                "variant_attributes": {
-                    "الماركة": "Switch On",
-                    "الموديل": "SO-KT-01"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "SO-KT-01"
-            }
-        ]
-    },
-    {
-        "id": 15,
-        "category_id": 3,
-        "title_ar": "سويتش أون طقم خلاط يدوي",
-        "slug": "prod-so-hb-01-15",
-        "description_ar": "طقم خلاط يدوي مع ملحقات للفرم والخفق",
-        "base_price": 230000,
-        "discount_price": 195000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 1,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "SO-HB-01",
-        "brand": "Switch On",
-        "variants": [
-            {
-                "id": 15,
-                "product_id": 15,
-                "brand": "Switch On",
-                "model_name": "SO-HB-01",
-                "variant_attributes": {
-                    "الماركة": "Switch On",
-                    "الموديل": "SO-HB-01"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "SO-HB-01"
-            }
-        ]
-    },
-    {
-        "id": 16,
-        "category_id": 5,
-        "title_ar": "دكتور سنست ميزان حرارة بالأشعة تحت الحمراء 2 في 1",
-        "slug": "prod-ds-th-01-16",
-        "description_ar": "ميزان حرارة إلكتروني بدون تلامس لقياس الحرارة",
-        "base_price": 155000,
-        "discount_price": 130000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "DS-TH-01",
-        "brand": "Dr. Senst",
-        "variants": [
-            {
-                "id": 16,
-                "product_id": 16,
-                "brand": "Dr. Senst",
-                "model_name": "DS-TH-01",
-                "variant_attributes": {
-                    "الماركة": "Dr. Senst",
-                    "الموديل": "DS-TH-01"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "DS-TH-01"
-            }
-        ]
-    },
-    {
-        "id": 17,
-        "category_id": 3,
-        "title_ar": "سيلفر كريست ماكينة وافل مزدوجة (صندوق آخر)",
-        "slug": "prod-sc-dw-02-17",
-        "description_ar": "جهاز صانع وافل مزدوج سريع التحضير",
-        "base_price": 270000,
-        "discount_price": 235000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "SC-DW-02",
-        "brand": "SilverCrest",
-        "variants": [
-            {
-                "id": 17,
-                "product_id": 17,
-                "brand": "SilverCrest",
-                "model_name": "SC-DW-02",
-                "variant_attributes": {
-                    "الماركة": "SilverCrest",
-                    "الموديل": "SC-DW-02"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "SC-DW-02"
-            }
-        ]
-    },
-    {
-        "id": 18,
-        "category_id": 3,
-        "title_ar": "سويتش أون غلاية ماء كهربائية - خشبية/بيج",
-        "slug": "prod-so-kt-02-18",
-        "description_ar": "غلاية ماء كهربائية بتصميم خشبي وبيج أنيق",
-        "base_price": 175000,
-        "discount_price": 150000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "SO-KT-02",
-        "brand": "Switch On",
-        "variants": [
-            {
-                "id": 18,
-                "product_id": 18,
-                "brand": "Switch On",
-                "model_name": "SO-KT-02",
-                "variant_attributes": {
-                    "الماركة": "Switch On",
-                    "الموديل": "SO-KT-02"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "SO-KT-02"
-            }
-        ]
-    },
-    {
-        "id": 19,
-        "category_id": 4,
-        "title_ar": "فيليبس ماكينة قص الشعر (صندوق آخر)",
-        "slug": "prod-ph-hc3001-19",
-        "description_ar": "ماكينة قص الشعر الكهربائية من فيليبس",
-        "base_price": 290000,
-        "discount_price": 250000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "PH-HC3001",
-        "brand": "Philips",
-        "variants": [
-            {
-                "id": 19,
-                "product_id": 19,
-                "brand": "Philips",
-                "model_name": "PH-HC3001",
-                "variant_attributes": {
-                    "الماركة": "Philips",
-                    "الموديل": "PH-HC3001"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "PH-HC3001"
-            }
-        ]
-    },
-    {
-        "id": 20,
-        "category_id": 3,
-        "title_ar": "سويتش أون شواية تلامس صغيرة",
-        "slug": "prod-so-cg-01-20",
-        "description_ar": "شواية تلامس صغيرة مدمجة لتحضير السندويشات",
-        "base_price": 190000,
-        "discount_price": 165000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "SO-CG-01",
-        "brand": "Switch On",
-        "variants": [
-            {
-                "id": 20,
-                "product_id": 20,
-                "brand": "Switch On",
-                "model_name": "SO-CG-01",
-                "variant_attributes": {
-                    "الماركة": "Switch On",
-                    "الموديل": "SO-CG-01"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "SO-CG-01"
-            }
-        ]
-    },
-    {
-        "id": 21,
-        "category_id": 5,
-        "title_ar": "باركسايد كاشف متعدد الأغراض PMFD A3",
-        "slug": "prod-pmfd-a3-21",
-        "description_ar": "جهاز كشف متعدد الاستخدامات للمعادن والكابلات بالجدران",
-        "base_price": 210000,
-        "discount_price": 180000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "PMFD A3",
-        "brand": "Parkside",
-        "variants": [
-            {
-                "id": 21,
-                "product_id": 21,
-                "brand": "Parkside",
-                "model_name": "PMFD A3",
-                "variant_attributes": {
-                    "الماركة": "Parkside",
-                    "الموديل": "PMFD A3"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "PMFD A3"
-            }
-        ]
-    },
-    {
-        "id": 22,
-        "category_id": 3,
-        "title_ar": "سيلفر كريست شواية تلامس كبيرة",
-        "slug": "prod-sc-cg-02-22",
-        "description_ar": "شواية تلامس كهربائية كبيرة مع ألواح غير لاصقة",
-        "base_price": 390000,
-        "discount_price": 345000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "SC-CG-02",
-        "brand": "SilverCrest",
-        "variants": [
-            {
-                "id": 22,
-                "product_id": 22,
-                "brand": "SilverCrest",
-                "model_name": "SC-CG-02",
-                "variant_attributes": {
-                    "الماركة": "SilverCrest",
-                    "الموديل": "SC-CG-02"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "SC-CG-02"
-            }
-        ]
-    },
-    {
-        "id": 23,
-        "category_id": 3,
-        "title_ar": "سيفيرين لوح تسخين طبخ فردي",
-        "slug": "prod-sv-hp-01-23",
-        "description_ar": "موقد كهربائي مفرد للطبخ والتسخين السريع",
-        "base_price": 180000,
-        "discount_price": 155000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "SV-HP-01",
-        "brand": "Severin",
-        "variants": [
-            {
-                "id": 23,
-                "product_id": 23,
-                "brand": "Severin",
-                "model_name": "SV-HP-01",
-                "variant_attributes": {
-                    "الماركة": "Severin",
-                    "الموديل": "SV-HP-01"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "SV-HP-01"
-            }
-        ]
-    },
-    {
-        "id": 24,
-        "category_id": 3,
-        "title_ar": "كروبس ماكينة قهوة فلتر F30908",
-        "slug": "prod-f30908-24",
-        "description_ar": "ماكينة تحضير القهوة المفلترة بتصميم كلاسيكي",
-        "base_price": 290000,
-        "discount_price": 255000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "F30908",
-        "brand": "Krups",
-        "variants": [
-            {
-                "id": 24,
-                "product_id": 24,
-                "brand": "Krups",
-                "model_name": "F30908",
-                "variant_attributes": {
-                    "الماركة": "Krups",
-                    "الموديل": "F30908"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "F30908"
-            }
-        ]
-    },
-    {
-        "id": 25,
-        "category_id": 3,
-        "title_ar": "سويتش أون صانع سندويشات",
-        "slug": "prod-so-sw-01-25",
-        "description_ar": "جهاز تحضير السندويشات والمحمصة بطلاء غير لاصق",
-        "base_price": 170000,
-        "discount_price": 145000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "SO-SW-01",
-        "brand": "Switch On",
-        "variants": [
-            {
-                "id": 25,
-                "product_id": 25,
-                "brand": "Switch On",
-                "model_name": "SO-SW-01",
-                "variant_attributes": {
-                    "الماركة": "Switch On",
-                    "الموديل": "SO-SW-01"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "SO-SW-01"
-            }
-        ]
-    },
-    {
-        "id": 26,
-        "category_id": 3,
-        "title_ar": "سويتش أون ماكينة قهوة فلتر مع ترمس حراري",
-        "slug": "prod-so-cm-01-26",
-        "description_ar": "ماكينة قهوة فلتر مزودة بإبريق حراري حافظ للحرارة",
-        "base_price": 280000,
-        "discount_price": 240000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "SO-CM-01",
-        "brand": "Switch On",
-        "variants": [
-            {
-                "id": 26,
-                "product_id": 26,
-                "brand": "Switch On",
-                "model_name": "SO-CM-01",
-                "variant_attributes": {
-                    "الماركة": "Switch On",
-                    "الموديل": "SO-CM-01"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "SO-CM-01"
-            }
-        ]
-    },
-    {
-        "id": 27,
-        "category_id": 3,
-        "title_ar": "سيلفر كريست مبشرة خضروات كهربائية",
-        "slug": "prod-sc-gr-01-27",
-        "description_ar": "مبشرة وتقطاعة خضروات كهربائية بشفرات متعددة",
-        "base_price": 220000,
-        "discount_price": 190000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "SC-GR-01",
-        "brand": "SilverCrest",
-        "variants": [
-            {
-                "id": 27,
-                "product_id": 27,
-                "brand": "SilverCrest",
-                "model_name": "SC-GR-01",
-                "variant_attributes": {
-                    "الماركة": "SilverCrest",
-                    "الموديل": "SC-GR-01"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "SC-GR-01"
-            }
-        ]
-    },
-    {
-        "id": 28,
-        "category_id": 2,
-        "title_ar": "سويتش أون مكنسة كهربائية يدوية للتنظيف الجاف والرطب",
-        "slug": "prod-so-hv-01-28",
-        "description_ar": "مكنسة يدوية لاسلكية لشفط السوائل والغبار",
-        "base_price": 240000,
-        "discount_price": 210000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "SO-HV-01",
-        "brand": "Switch On",
-        "variants": [
-            {
-                "id": 28,
-                "product_id": 28,
-                "brand": "Switch On",
-                "model_name": "SO-HV-01",
-                "variant_attributes": {
-                    "الماركة": "Switch On",
-                    "الموديل": "SO-HV-01"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "SO-HV-01"
-            }
-        ]
-    },
-    {
-        "id": 29,
-        "category_id": 4,
-        "title_ar": "روفنتا x كارل لاغرفيلد مجفف شعر ستوديو دراي",
-        "slug": "prod-rw-hd-01-29",
-        "description_ar": "مجفف شعر احترافي بتصميم خاص وقوة تجفيف عالية",
-        "base_price": 310000,
-        "discount_price": 275000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "RW-HD-01",
-        "brand": "Rowenta",
-        "variants": [
-            {
-                "id": 29,
-                "product_id": 29,
-                "brand": "Rowenta",
-                "model_name": "RW-HD-01",
-                "variant_attributes": {
-                    "الماركة": "Rowenta",
-                    "الموديل": "RW-HD-01"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "RW-HD-01"
-            }
-        ]
-    },
-    {
-        "id": 30,
-        "category_id": 3,
-        "title_ar": "بوش خلاط يدوي كليفر ميكس 300 واط",
-        "slug": "prod-bs-cm300-30",
-        "description_ar": "خلاط يدوي خفيف الوزن بقوة 300 واط لإعداد الأطعمة",
-        "base_price": 250000,
-        "discount_price": 220000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "BS-CM300",
-        "brand": "Bosch",
-        "variants": [
-            {
-                "id": 30,
-                "product_id": 30,
-                "brand": "Bosch",
-                "model_name": "BS-CM300",
-                "variant_attributes": {
-                    "الماركة": "Bosch",
-                    "الموديل": "BS-CM300"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "BS-CM300"
-            }
-        ]
-    },
-    {
-        "id": 31,
-        "category_id": 3,
-        "title_ar": "سويتش أون غلاية ماء - سوداء مع خشب",
-        "slug": "prod-so-kt-03-31",
-        "description_ar": "غلاية ماء كهربائية باللون الأسود ولمسات خشبية",
-        "base_price": 180000,
-        "discount_price": 155000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "SO-KT-03",
-        "brand": "Switch On",
-        "variants": [
-            {
-                "id": 31,
-                "product_id": 31,
-                "brand": "Switch On",
-                "model_name": "SO-KT-03",
-                "variant_attributes": {
-                    "الماركة": "Switch On",
-                    "الموديل": "SO-KT-03"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "SO-KT-03"
-            }
-        ]
-    },
-    {
-        "id": 32,
-        "category_id": 5,
-        "title_ar": "ون فور أول ريموت كنترول بديل لتلفزيون سامسونج",
-        "slug": "prod-ofa-urc-01-32",
-        "description_ar": "جهاز تحكم عن بعد بديل وشامل لتلفزيونات سامسونج",
-        "base_price": 95000,
-        "discount_price": 80000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "OFA-URC-01",
-        "brand": "One For All",
-        "variants": [
-            {
-                "id": 32,
-                "product_id": 32,
-                "brand": "One For All",
-                "model_name": "OFA-URC-01",
-                "variant_attributes": {
-                    "الماركة": "One For All",
-                    "الموديل": "OFA-URC-01"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "OFA-URC-01"
-            }
-        ]
-    },
-    {
-        "id": 33,
-        "category_id": 1,
-        "title_ar": "فيليبس مولد بخار ومكواة سلسلة 2000",
-        "slug": "prod-ph-sg2000-33",
-        "description_ar": "مولد بخار قوي لكي الملابس وإزالة التجاعيد",
-        "base_price": 850000,
-        "discount_price": 760000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "PH-SG2000",
-        "brand": "Philips",
-        "variants": [
-            {
-                "id": 33,
-                "product_id": 33,
-                "brand": "Philips",
-                "model_name": "PH-SG2000",
-                "variant_attributes": {
-                    "الماركة": "Philips",
-                    "الموديل": "PH-SG2000"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "PH-SG2000"
-            }
-        ]
-    },
-    {
-        "id": 34,
-        "category_id": 3,
-        "title_ar": "بوش تاسيمو ماكينة قهوة صديقة للأناقة",
-        "slug": "prod-bs-tas-01-34",
-        "description_ar": "ماكينة تحضير المشروبات والقهوة بالكبسولات التلقائية",
-        "base_price": 460000,
-        "discount_price": 410000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "BS-TAS-01",
-        "brand": "Bosch",
-        "variants": [
-            {
-                "id": 34,
-                "product_id": 34,
-                "brand": "Bosch",
-                "model_name": "BS-TAS-01",
-                "variant_attributes": {
-                    "الماركة": "Bosch",
-                    "الموديل": "BS-TAS-01"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "BS-TAS-01"
-            }
-        ]
-    },
-    {
-        "id": 35,
-        "category_id": 3,
-        "title_ar": "سويتش أون نافورة شوكولاتة كهربائية",
-        "slug": "prod-so-cf-01-35",
-        "description_ar": "نافورة شوكولاتة كهربائية للحفلات والحلويات",
-        "base_price": 220000,
-        "discount_price": 195000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "SO-CF-01",
-        "brand": "Switch On",
-        "variants": [
-            {
-                "id": 35,
-                "product_id": 35,
-                "brand": "Switch On",
-                "model_name": "SO-CF-01",
-                "variant_attributes": {
-                    "الماركة": "Switch On",
-                    "الموديل": "SO-CF-01"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "SO-CF-01"
-            }
-        ]
-    },
-    {
-        "id": 36,
-        "category_id": 3,
-        "title_ar": "سيلفر كريست صانع فشار ومحمصة لوز",
-        "slug": "prod-sc-pm-01-36",
-        "description_ar": "جهاز إعداد الفشار وتحميص المكسرات بالهواء الساخن",
-        "base_price": 195000,
-        "discount_price": 165000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "SC-PM-01",
-        "brand": "SilverCrest",
-        "variants": [
-            {
-                "id": 36,
-                "product_id": 36,
-                "brand": "SilverCrest",
-                "model_name": "SC-PM-01",
-                "variant_attributes": {
-                    "الماركة": "SilverCrest",
-                    "الموديل": "SC-PM-01"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "SC-PM-01"
-            }
-        ]
-    },
-    {
-        "id": 37,
-        "category_id": 4,
-        "title_ar": "براون ماكينة تشذيب اللحية سلسلة 5",
-        "slug": "prod-br-bt5-37",
-        "description_ar": "ماكينة تشذيب اللحية بدقة عالية مع قرص تعديل الطول",
-        "base_price": 410000,
-        "discount_price": 365000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "BR-BT5",
-        "brand": "Braun",
-        "variants": [
-            {
-                "id": 37,
-                "product_id": 37,
-                "brand": "Braun",
-                "model_name": "BR-BT5",
-                "variant_attributes": {
-                    "الماركة": "Braun",
-                    "الموديل": "BR-BT5"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "BR-BT5"
-            }
-        ]
-    },
-    {
-        "id": 38,
-        "category_id": 3,
-        "title_ar": "فيليبس ماكينة إسبريسو أوتوماتيكية بالكامل سلسلة 800",
-        "slug": "prod-ph-ep800-38",
-        "description_ar": "ماكينة إسبريسو أوتوماتيكية بالكامل لتحضير القهوة",
-        "base_price": 2800000,
-        "discount_price": 2450000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "PH-EP800",
-        "brand": "Philips",
-        "variants": [
-            {
-                "id": 38,
-                "product_id": 38,
-                "brand": "Philips",
-                "model_name": "PH-EP800",
-                "variant_attributes": {
-                    "الماركة": "Philips",
-                    "الموديل": "PH-EP800"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "PH-EP800"
-            }
-        ]
-    },
-    {
-        "id": 39,
-        "category_id": 3,
-        "title_ar": "سيلفر كريست شواية راكليت",
-        "slug": "prod-sc-rg-01-39",
-        "description_ar": "شواية راكليت كهربائية للجبن والمشويات مع مقالي",
-        "base_price": 360000,
-        "discount_price": 315000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "SC-RG-01",
-        "brand": "SilverCrest",
-        "variants": [
-            {
-                "id": 39,
-                "product_id": 39,
-                "brand": "SilverCrest",
-                "model_name": "SC-RG-01",
-                "variant_attributes": {
-                    "الماركة": "SilverCrest",
-                    "الموديل": "SC-RG-01"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "SC-RG-01"
-            }
-        ]
-    },
-    {
-        "id": 40,
-        "category_id": 4,
-        "title_ar": "روفنتا مجفف شعر شاين إكسبرس",
-        "slug": "prod-rw-hd-02-40",
-        "description_ar": "مجفف شعر صغير وسريع بإنبعاث أيوني لمعان الشعر",
-        "base_price": 210000,
-        "discount_price": 180000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "RW-HD-02",
-        "brand": "Rowenta",
-        "variants": [
-            {
-                "id": 40,
-                "product_id": 40,
-                "brand": "Rowenta",
-                "model_name": "RW-HD-02",
-                "variant_attributes": {
-                    "الماركة": "Rowenta",
-                    "الموديل": "RW-HD-02"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "RW-HD-02"
-            }
-        ]
-    },
-    {
-        "id": 41,
-        "category_id": 1,
-        "title_ar": "فيليدا ممسحة بخار ستيم بلس",
-        "slug": "prod-vl-sp-01-41",
-        "description_ar": "ممسحة بخار لتنظيف وتعقيم الأرضيات بدون كيميائيات",
-        "base_price": 440000,
-        "discount_price": 390000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "VL-SP-01",
-        "brand": "Vileda",
-        "variants": [
-            {
-                "id": 41,
-                "product_id": 41,
-                "brand": "Vileda",
-                "model_name": "VL-SP-01",
-                "variant_attributes": {
-                    "الماركة": "Vileda",
-                    "الموديل": "VL-SP-01"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "VL-SP-01"
-            }
-        ]
-    },
-    {
-        "id": 42,
-        "category_id": 3,
-        "title_ar": "سيلفر كريست فرن ميكروويف",
-        "slug": "prod-sc-mw-01-42",
-        "description_ar": "فرن ميكروويف متعدد المستويات للتسخين والطهي",
-        "base_price": 680000,
-        "discount_price": 590000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "SC-MW-01",
-        "brand": "SilverCrest",
-        "variants": [
-            {
-                "id": 42,
-                "product_id": 42,
-                "brand": "SilverCrest",
-                "model_name": "SC-MW-01",
-                "variant_attributes": {
-                    "الماركة": "SilverCrest",
-                    "الموديل": "SC-MW-01"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "SC-MW-01"
-            }
-        ]
-    },
-    {
-        "id": 43,
-        "category_id": 5,
-        "title_ar": "ليفارنو هوم مصباح حائط خارجي LED يعمل بالبطارية",
-        "slug": "prod-lv-wl-01-43",
-        "description_ar": "مصباح جداري خارجي يعمل بالبطارية مع مستشعر حركة",
-        "base_price": 160000,
-        "discount_price": 135000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "LV-WL-01",
-        "brand": "LIVARNO home",
-        "variants": [
-            {
-                "id": 43,
-                "product_id": 43,
-                "brand": "LIVARNO home",
-                "model_name": "LV-WL-01",
-                "variant_attributes": {
-                    "الماركة": "LIVARNO home",
-                    "الموديل": "LV-WL-01"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "LV-WL-01"
-            }
-        ]
-    },
-    {
-        "id": 44,
-        "category_id": 5,
-        "title_ar": "ليفارنو هوم شمعة LED من الشمع الحقيقي في زجاج",
-        "slug": "prod-lv-cl-01-44",
-        "description_ar": "شمعة LED ديكورية مصنوعة من الشمع الحقيقي بوعاء زجاجي",
-        "base_price": 85000,
-        "discount_price": 70000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "LV-CL-01",
-        "brand": "LIVARNO home",
-        "variants": [
-            {
-                "id": 44,
-                "product_id": 44,
-                "brand": "LIVARNO home",
-                "model_name": "LV-CL-01",
-                "variant_attributes": {
-                    "الماركة": "LIVARNO home",
-                    "الموديل": "LV-CL-01"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "LV-CL-01"
-            }
-        ]
-    },
-    {
-        "id": 45,
-        "category_id": 5,
-        "title_ar": "فاينبيرجر جهاز استنشاق ضاغط للعلاج التنفسي",
-        "slug": "prod-wb-in-01-45",
-        "description_ar": "جهاز استنشاق ضاغط لعلاج أمراض الجهاز التنفسي",
-        "base_price": 270000,
-        "discount_price": 235000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "WB-IN-01",
-        "brand": "Weinberger",
-        "variants": [
-            {
-                "id": 45,
-                "product_id": 45,
-                "brand": "Weinberger",
-                "model_name": "WB-IN-01",
-                "variant_attributes": {
-                    "الماركة": "Weinberger",
-                    "الموديل": "WB-IN-01"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "WB-IN-01"
-            }
-        ]
-    },
-    {
-        "id": 46,
-        "category_id": 2,
-        "title_ar": "سيفيرين مكنسة كهربائية 2 في 1 يدوية وعصوية",
-        "slug": "prod-sv-vc-01-46",
-        "description_ar": "مكنسة كهربائية 2 في 1 تعمل كمكنسة عصوية ويدوية",
-        "base_price": 580000,
-        "discount_price": 510000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "SV-VC-01",
-        "brand": "Severin",
-        "variants": [
-            {
-                "id": 46,
-                "product_id": 46,
-                "brand": "Severin",
-                "model_name": "SV-VC-01",
-                "variant_attributes": {
-                    "الماركة": "Severin",
-                    "الموديل": "SV-VC-01"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "SV-VC-01"
-            }
-        ]
-    },
-    {
-        "id": 47,
-        "category_id": 5,
-        "title_ar": "ليفارنو هوم مصباح طاولة LED باللمس (صندوق بطول مختلف)",
-        "slug": "prod-lv-tl-02-47",
-        "description_ar": "مصباح طاولة LED باللمس بتصميم طول مختلف",
-        "base_price": 155000,
-        "discount_price": 130000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "LV-TL-02",
-        "brand": "LIVARNO home",
-        "variants": [
-            {
-                "id": 47,
-                "product_id": 47,
-                "brand": "LIVARNO home",
-                "model_name": "LV-TL-02",
-                "variant_attributes": {
-                    "الماركة": "LIVARNO home",
-                    "الموديل": "LV-TL-02"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "LV-TL-02"
-            }
-        ]
-    },
-    {
-        "id": 48,
-        "category_id": 5,
-        "title_ar": "سلسلة إضاءة LED من ليفارنو هوم",
-        "slug": "prod-lv-sl-01-48",
-        "description_ar": "حبل إضاءة LED ديكوري للمناسبات والديكور",
-        "base_price": 75000,
-        "discount_price": 60000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "LV-SL-01",
-        "brand": "LIVARNO home",
-        "variants": [
-            {
-                "id": 48,
-                "product_id": 48,
-                "brand": "LIVARNO home",
-                "model_name": "LV-SL-01",
-                "variant_attributes": {
-                    "الماركة": "LIVARNO home",
-                    "الموديل": "LV-SL-01"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "LV-SL-01"
-            }
-        ]
-    },
-    {
-        "id": 49,
-        "category_id": 5,
-        "title_ar": "كشاف بناء LED من باركسايد",
-        "slug": "prod-ps-sl-01-49",
-        "description_ar": "كشاف إضاءة LED قوي ومقاوم للصدمات للمواقع والأعمال",
-        "base_price": 280000,
-        "discount_price": 240000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "PS-SL-01",
-        "brand": "Parkside",
-        "variants": [
-            {
-                "id": 49,
-                "product_id": 49,
-                "brand": "Parkside",
-                "model_name": "PS-SL-01",
-                "variant_attributes": {
-                    "الماركة": "Parkside",
-                    "الموديل": "PS-SL-01"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "PS-SL-01"
-            }
-        ]
-    },
-    {
-        "id": 50,
-        "category_id": 5,
-        "title_ar": "سلسلة إضاءة LED من ليفوبو",
-        "slug": "prod-lb-sl-01-50",
-        "description_ar": "شريط إضاءة LED موفر للطاقة للديكور الداخلي",
-        "base_price": 65000,
-        "discount_price": 50000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "LB-SL-01",
-        "brand": "LIVOBO",
-        "variants": [
-            {
-                "id": 50,
-                "product_id": 50,
-                "brand": "LIVOBO",
-                "model_name": "LB-SL-01",
-                "variant_attributes": {
-                    "الماركة": "LIVOBO",
-                    "الموديل": "LB-SL-01"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "LB-SL-01"
-            }
-        ]
-    },
-    {
-        "id": 51,
-        "category_id": 5,
-        "title_ar": "ستارة إضاءة LED من ليفارنو هوم",
-        "slug": "prod-lv-lc-01-51",
-        "description_ar": "ستارة ضوئية LED مع مؤثرات إضاءة متعددة للزينة",
-        "base_price": 110000,
-        "discount_price": 90000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "LV-LC-01",
-        "brand": "LIVARNO home",
-        "variants": [
-            {
-                "id": 51,
-                "product_id": 51,
-                "brand": "LIVARNO home",
-                "model_name": "LV-LC-01",
-                "variant_attributes": {
-                    "الماركة": "LIVARNO home",
-                    "الموديل": "LV-LC-01"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "LV-LC-01"
-            }
-        ]
-    },
-    {
-        "id": 52,
-        "category_id": 5,
-        "title_ar": "مصباح طاولة LED أساسي من ليفارنو هوم",
-        "slug": "prod-lv-tl-03-52",
-        "description_ar": "مصباح طاولة LED أساسي وإضاءة مريحة للعين",
-        "base_price": 95000,
-        "discount_price": 80000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "LV-TL-03",
-        "brand": "LIVARNO home",
-        "variants": [
-            {
-                "id": 52,
-                "product_id": 52,
-                "brand": "LIVARNO home",
-                "model_name": "LV-TL-03",
-                "variant_attributes": {
-                    "الماركة": "LIVARNO home",
-                    "الموديل": "LV-TL-03"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "LV-TL-03"
-            }
-        ]
-    },
-    {
-        "id": 53,
-        "category_id": 4,
-        "title_ar": "ماكينة تشذيب الجسم سلسلة 3 من براون (BG3)",
-        "slug": "prod-br-bg3-53",
-        "description_ar": "ماكينة تشذيب شعر الجسم للرجال مع أمشاط حماية",
-        "base_price": 310000,
-        "discount_price": 270000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "BR-BG3",
-        "brand": "Braun",
-        "variants": [
-            {
-                "id": 53,
-                "product_id": 53,
-                "brand": "Braun",
-                "model_name": "BR-BG3",
-                "variant_attributes": {
-                    "الماركة": "Braun",
-                    "الموديل": "BR-BG3"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "BR-BG3"
-            }
-        ]
-    },
-    {
-        "id": 54,
-        "category_id": 5,
-        "title_ar": "مصباح طاولة LED لاسلكي يعمل بالبطارية من ليفوبو",
-        "slug": "prod-lb-tl-01-54",
-        "description_ar": "مصباح طاولة LED محمول يعمل بالبطارية القابلة للشحن",
-        "base_price": 120000,
-        "discount_price": 100000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "LB-TL-01",
-        "brand": "LIVOBO",
-        "variants": [
-            {
-                "id": 54,
-                "product_id": 54,
-                "brand": "LIVOBO",
-                "model_name": "LB-TL-01",
-                "variant_attributes": {
-                    "الماركة": "LIVOBO",
-                    "الموديل": "LB-TL-01"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "LB-TL-01"
-            }
-        ]
-    },
-    {
-        "id": 55,
-        "category_id": 4,
-        "title_ar": "ماكينة تشذيب شاملة 6 في 1 من فيليبس سلسلة 3000",
-        "slug": "prod-ph-aio3000-55",
-        "description_ar": "طقم حلاقة وتصفيف 6 في 1 للوجه والشعر",
-        "base_price": 330000,
-        "discount_price": 290000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "PH-AIO3000",
-        "brand": "Philips",
-        "variants": [
-            {
-                "id": 55,
-                "product_id": 55,
-                "brand": "Philips",
-                "model_name": "PH-AIO3000",
-                "variant_attributes": {
-                    "الماركة": "Philips",
-                    "الموديل": "PH-AIO3000"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "PH-AIO3000"
-            }
-        ]
-    },
-    {
-        "id": 56,
-        "category_id": 4,
-        "title_ar": "ماكينة حلاقة كهربائية دوارة سلسلة 1000 من فيليبس S1141",
-        "slug": "prod-s1141-56",
-        "description_ar": "ماكينة حلاقة دوارة بحركات مرنة لقص شعر الوجه بسلاسة",
-        "base_price": 410000,
-        "discount_price": 360000,
-        "main_image": "",
-        "images": [],
-        "youtube_url": "",
-        "is_featured": 0,
-        "is_visible": 1,
-        "stock_quantity": 1,
-        "sku": "S1141",
-        "brand": "Philips",
-        "variants": [
-            {
-                "id": 56,
-                "product_id": 56,
-                "brand": "Philips",
-                "model_name": "S1141",
-                "variant_attributes": {
-                    "الماركة": "Philips",
-                    "الموديل": "S1141"
-                },
-                "price_modifier": 0,
-                "stock_quantity": 1,
-                "sku": "S1141"
-            }
-        ]
-    }
-];
+// Last-resort product list if both the database and products.json are unreachable.
+// Intentionally empty: the old hardcoded list had outdated prices in Syrian pounds shown as dollars.
+const FALLBACK_PRODUCTS = [];
 
-const FALLBACK_ORDERS = [
-    {
-        id: 101,
-        customer_name: "أحمد الميداني",
-        customer_phone: "0955123456",
-        delivery_address: "دمشق - الميدان - بالقرب من جامع الشافعي",
-        payment_method: "cod",
-        total_amount: 165000,
-        created_at: new Date().toISOString()
-    },
-    {
-        id: 102,
-        customer_name: "سامر الشامي",
-        customer_phone: "0933987654",
-        delivery_address: "دمشق - المزرعة - شارع الملك عادل",
-        payment_method: "shamcash",
-        total_amount: 390000,
-        created_at: new Date().toISOString()
-    }
-];
-
-const FALLBACK_REQUESTS = [
-    {
-        id: 1,
-        customer_name: "محمد حمصي",
-        customer_phone: "0944112233",
-        requested_product: "غسالة أوتوماتيك LG سعة 9 كيلو إنفرتر",
-        notes: "لون فضي، كفالة رسمية",
-        created_at: new Date().toISOString()
-    }
-];
-
-// Global State — start empty, real data loaded async from Google Sheets
+// Global State — products are loaded async from the database (or products.json)
 let allProducts = [];
-let isGoogleSheetsDataLoaded = false;
 let allCategories = [...FALLBACK_CATEGORIES];
 let cart = JSON.parse(localStorage.getItem('electro_cart') || '[]');
 let currentCustomer = JSON.parse(localStorage.getItem('electro_customer') || 'null');
 let selectedPaymentMethod = 'cod';
 let currentSelectedProduct = null;
 let currentSelectedVariant = null;
+let currentView = 'home';
+let featuredCarouselHasSlides = true;
 
 // Utility: Format currency in Syrian Pounds (ل.س)
 function formatSYP(amount) {
@@ -2146,8 +320,12 @@ function initStorefront() {
     if (searchInput) {
         searchInput.addEventListener('input', (e) => {
             const query = e.target.value.trim().toLowerCase();
-            renderProducts(allProducts.filter(p => 
-                p.title_ar.toLowerCase().includes(query) || 
+            if (currentView !== 'home') window.location.hash = '';
+            document.querySelectorAll('.cat-tab, .drawer-cat-item').forEach(b => b.classList.toggle('active', b.dataset.category === 'all'));
+            renderProducts(allProducts.filter(p =>
+                p.title_ar.toLowerCase().includes(query) ||
+                (p.brand && p.brand.toLowerCase().includes(query)) ||
+                (p.sku && p.sku.toLowerCase().includes(query)) ||
                 (p.description_ar && p.description_ar.toLowerCase().includes(query))
             ));
         });
@@ -2179,6 +357,8 @@ function initStorefront() {
             renderCategoriesPage();
         } else {
             showView('home');
+            const anchor = hash && hash.length > 1 ? document.getElementById(hash.slice(1)) : null;
+            if (anchor) anchor.scrollIntoView({ behavior: 'smooth' });
         }
 
         document.querySelectorAll('.mobile-bottom-nav .mobile-nav-item').forEach(item => {
@@ -2205,7 +385,7 @@ function updateUserAuthUI() {
     const btnText = document.getElementById('userAuthBtnText');
     const btn = document.getElementById('btnUserAuth');
     if (currentCustomer) {
-        if (btnText) btnText.innerText = currentCustomer.full_name.split(' ')[0] || 'حسابي';
+        if (btnText) btnText.innerText = (currentCustomer.full_name || '').split(' ')[0] || 'حسابي';
         if (btn) btn.classList.add('active-user');
         
         const custNameInput = document.getElementById('custName');
@@ -2213,7 +393,7 @@ function updateUserAuthUI() {
         if (custNameInput && !custNameInput.value) custNameInput.value = currentCustomer.full_name;
         if (custPhoneInput && !custPhoneInput.value) custPhoneInput.value = currentCustomer.phone_number;
     } else {
-        if (btnText) btnText.innerText = 'تسجيل الدخول';
+        if (btnText) btnText.innerText = 'حسابي';
         if (btn) btn.classList.remove('active-user');
     }
 }
@@ -2238,8 +418,8 @@ function renderAccountPage() {
         container.innerHTML = `
             <div style="text-align: center; margin-bottom: 20px;">
                 <img src="/Logo/ElectroHomeSY-logo-blue.png" alt="ElectroHomeSY" style="height: 55px; margin-bottom: 8px; object-fit: contain;">
-                <h3 style="font-size: 1.5rem; font-weight: 900; color: var(--onyx); margin-bottom: 5px;">تسجيل الدخول / إنشاء حساب</h3>
-                <p style="color: var(--steel-grey); font-size: 0.9rem; margin-top: 2px;">أدخل بياناتك لإتمام طلبك في دمشق بنجاح.</p>
+                <h3 style="font-size: 1.5rem; font-weight: 900; color: var(--onyx); margin-bottom: 5px;">حفظ بياناتي</h3>
+                <p style="color: var(--steel-grey); font-size: 0.9rem; margin-top: 2px;">احفظ اسمك ورقم هاتفك على هذا الجهاز ليتم تعبئتها تلقائياً عند الطلب.</p>
             </div>
 
             <form id="customerAuthFormInline">
@@ -2253,18 +433,10 @@ function renderAccountPage() {
                 </div>
 
                 <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 13px; font-size: 1rem; margin-bottom: 15px; border-radius: 14px; background: var(--spark-red); box-shadow: 0 4px 15px rgba(239, 68, 68, 0.25);">
-                    <i class="fa-solid fa-right-to-bracket"></i> تسجيل الدخول برقم الهاتف
+                    <i class="fa-solid fa-floppy-disk"></i> حفظ البيانات
                 </button>
             </form>
 
-            <div style="text-align: center; margin: 15px 0; position: relative;">
-                <span style="background: var(--white); padding: 0 10px; color: var(--steel-grey); font-size: 0.8rem; position: relative; z-index: 1;">أو الدخول بواسطة</span>
-                <div style="position: absolute; top: 50%; left:0; right:0; height:1px; background:var(--border-color); z-index:0;"></div>
-            </div>
-
-            <button type="button" onclick="handleGoogleAuthMock()" class="btn-secondary" style="width: 100%; justify-content: center; padding: 12px; font-size: 0.92rem; color: var(--onyx); border: 1.5px solid var(--border-color); background: #fff; border-radius: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); cursor: pointer;">
-                <i class="fa-brands fa-google" style="color: #ea4335; font-size: 1.1rem; margin-left: 6px;"></i> الدخول باستخدام Google
-            </button>
         `;
 
         // Wire inline form submit listener
@@ -2284,13 +456,13 @@ function renderAccountPage() {
                 <div style="background: rgba(0,122,61,0.06); border: 1px solid rgba(0,122,61,0.12); padding: 16px; border-radius: 14px; display: flex; align-items: center; gap: 12px; text-align: right;">
                     <i class="fa-solid fa-shield-halved" style="font-size: 1.4rem; color: var(--damascus-green);"></i>
                     <div>
-                        <strong style="display: block; font-size: 0.95rem; color: var(--onyx); margin-bottom: 2px;">حساب موثق وآمن</strong>
-                        <span style="font-size: 0.82rem; color: var(--steel-grey);">بياناتك مشفرة ومحفوظة لتسهيل الطلب في دمشق</span>
+                        <strong style="display: block; font-size: 0.95rem; color: var(--onyx); margin-bottom: 2px;">بياناتك محفوظة على هذا الجهاز</strong>
+                        <span style="font-size: 0.82rem; color: var(--steel-grey);">سيتم تعبئة الاسم ورقم الهاتف تلقائياً عند إتمام الطلب</span>
                     </div>
                 </div>
                 
                 <button type="button" onclick="handleLogout()" class="btn-secondary" style="width: 100%; justify-content: center; padding: 13px; font-size: 1.02rem; color: var(--spark-red); border: 1.5px solid var(--spark-red); background: #fff; border-radius: 14px; margin-top: 15px; cursor: pointer; transition: all 0.2s;">
-                    <i class="fa-solid fa-arrow-right-from-bracket"></i> تسجيل الخروج من الحساب
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i> حذف البيانات المحفوظة
                 </button>
             </div>
         `;
@@ -2298,7 +470,7 @@ function renderAccountPage() {
 }
 
 function handleLogout() {
-    if (confirm('هل أنت متأكد من رغبتك في تسجيل الخروج؟')) {
+    if (confirm('هل تريد حذف الاسم ورقم الهاتف المحفوظين على هذا الجهاز؟')) {
         currentCustomer = null;
         localStorage.removeItem('electro_customer');
         updateUserAuthUI();
@@ -2312,50 +484,17 @@ async function handleCustomerAuthSubmit(e) {
     const full_name = document.getElementById('authCustName').value.trim();
     const phone_number = document.getElementById('authCustPhone').value.trim();
 
-    try {
-        const res = await fetch('/api/customer/register', {
-            method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json',
-                'X-CSRF-Token': getCookie('csrf_token')
-            },
-            body: JSON.stringify({ full_name, phone_number, auth_provider: 'phone' })
-        });
-        if (res.ok) {
-            const data = await res.json();
-            currentCustomer = data.customer;
-        } else {
-            currentCustomer = { id: Date.now(), full_name, phone_number };
-        }
-    } catch (err) {
-        currentCustomer = { id: Date.now(), full_name, phone_number };
+    if (!full_name) {
+        alert('⚠️ يرجى إدخال اسمك الكريم!');
+        return;
     }
-    
-    localStorage.setItem('electro_customer', JSON.stringify(currentCustomer));
-    updateUserAuthUI();
-    
-    if (cameFromCheckout) {
-        cameFromCheckout = false;
-        window.location.hash = '#cart-section';
-    } else {
-        renderAccountPage();
-    }
-    alert(`أهلاً بك يا ${currentCustomer.full_name}! تم تسجيل حسابك بنجاح.`);
-}
-
-// Google Auth Mock
-function handleGoogleAuthMock() {
-    const name = prompt('أدخل اسمك المسجل في حساب Google:');
-    if (!name) return;
-    
-    const phone = prompt('يرجى إدخال رقم هاتفك السوري (مطلوب دائماً لربط الحساب بالشحن):');
-    if (!phone) {
-        alert('رقم الهاتف السوري إجباري لإتمام تسجيل الحساب!');
+    if (!validateSyrianPhoneNumber(phone_number)) {
+        alert('⚠️ يرجى إدخال رقم هاتف محمول صحيح! (مثال: 0959930005 أو 963959930005+)');
         return;
     }
 
-    currentCustomer = { id: Date.now(), full_name: name, phone_number: phone };
-    localStorage.setItem('electro_customer', JSON.stringify(currentCustomer));
+    currentCustomer = { id: Date.now(), full_name, phone_number };
+        localStorage.setItem('electro_customer', JSON.stringify(currentCustomer));
     updateUserAuthUI();
     
     if (cameFromCheckout) {
@@ -2364,7 +503,7 @@ function handleGoogleAuthMock() {
     } else {
         renderAccountPage();
     }
-    alert(`أهلاً بك يا ${currentCustomer.full_name}! تم ربط حساب Google برقم هاتفك بنجاح.`);
+    alert(`أهلاً بك يا ${currentCustomer.full_name}! تم حفظ بياناتك.`);
 }
 
 function openMobileCategoryDrawer() {
@@ -2433,32 +572,7 @@ function filterCategory(slug, btn) {
     const matchingPillItem = document.querySelector(`.cat-tab[data-category="${slug}"]`);
     if (matchingPillItem) matchingPillItem.classList.add('active');
 
-    if (slug === 'all') {
-        renderProducts(allProducts);
-    } else {
-        const catMap = {
-            'irons': [1],
-            'vacuums': [2],
-            'kitchen': [3],
-            'personal-care': [4],
-            'home-living': [5],
-            'coffee-machines': [6]
-        };
-        const targetCatIds = catMap[slug] || [];
-        const filtered = allProducts.filter(p => {
-            if (targetCatIds.includes(p.category_id)) return true;
-            const pCatName = (p.category_name || '').toLowerCase();
-            const pTitle = (p.title_ar || '').toLowerCase();
-            if (slug === 'coffee-machines' && (pCatName.includes('قهوة') || pTitle.includes('قهوة') || pTitle.includes('إسبريسو') || pTitle.includes('اسبريسو') || pTitle.includes('دولسي') || pTitle.includes('تاسيمو'))) return true;
-            if (slug === 'irons' && (pCatName.includes('مكواة') || pTitle.includes('مكواة') || pTitle.includes('بخار'))) return true;
-            if (slug === 'vacuums' && (pCatName.includes('مكنسة') || pTitle.includes('مكنسة') || pTitle.includes('تنظيف'))) return true;
-            if (slug === 'kitchen' && (pCatName.includes('مطبخ') || pTitle.includes('خلاط') || pTitle.includes('طعام') || pTitle.includes('ميكروويف') || pTitle.includes('غلاية') || pTitle.includes('وافل') || pTitle.includes('شواية'))) return true;
-            if (slug === 'personal-care' && (pCatName.includes('حلاقة') || pTitle.includes('حلاقة') || pTitle.includes('شعر') || pTitle.includes('تشذيب') || pTitle.includes('قص الشعر'))) return true;
-            if (slug === 'home-living' && (pCatName.includes('إضاءة') || pTitle.includes('مصباح') || pTitle.includes('شمعة') || pTitle.includes('ميزان') || pTitle.includes('ريموت'))) return true;
-            return false;
-        });
-        renderProducts(filtered.length > 0 ? filtered : allProducts);
-    }
+    renderProducts(filterProductsByCategory(allProducts, slug));
 
     closeMobileCategoryDrawer();
 
@@ -2639,84 +753,15 @@ function renderLoadingSkeleton() {
     }
 }
 
-function renderProductsPlaceholder() {
-    const grid = document.getElementById('productsGrid');
-    if (!grid) return;
-    grid.innerHTML = `
-        <div style="grid-column: 1/-1; text-align: center; padding: 50px 20px; background: var(--white); border-radius: 24px; border: 2px dashed var(--border-color); color: var(--steel-grey); box-shadow: var(--card-shadow); max-width: 600px; margin: 0 auto;">
-            <i class="fa-solid fa-hand-pointer" style="font-size: 3rem; color: var(--damascus-green); margin-bottom: 15px; display: block;"></i>
-            <h4 style="font-size: 1.2rem; font-weight: 700; color: var(--onyx); margin-bottom: 8px;">اختر أحد أصناف المنتجات في الأعلى</h4>
-            <p style="font-size: 0.95rem; color: var(--steel-grey);">لتصفح الأجهزة والمنتجات المتوفرة لدينا في دمشق</p>
-        </div>
-    `;
+function isProductOutOfStock(product) {
+    if (!product) return true;
+    const stock = product.stock_quantity !== undefined ? product.stock_quantity
+        : (product.variants && product.variants[0] ? product.variants[0].stock_quantity : undefined);
+    return stock !== undefined && stock !== null && Number(stock) <= 0;
 }
 
-async function fetchProductsInBackground() {
-    try {
-        allProducts = await loadAllProducts();
-        isGoogleSheetsDataLoaded = true;
-    } catch (err) {
-        allProducts = FALLBACK_PRODUCTS.filter(p => p.is_visible);
-    }
-}
-
-// Client-side Google Sheets CSV parser fallback for static hosting
-function parseCSVClient(text) {
-    const lines = text.split(/\r?\n/);
-    const rows = [];
-    for (let i = 0; i < lines.length; i++) {
-        const line = lines[i].trim();
-        if (!line) continue;
-        
-        const row = [];
-        let inQuotes = false;
-        let currentCell = '';
-        
-        for (let j = 0; j < line.length; j++) {
-            const char = line[j];
-            if (char === '"') {
-                inQuotes = !inQuotes;
-            } else if (char === ',' && !inQuotes) {
-                row.push(currentCell.trim());
-                currentCell = '';
-            } else {
-                currentCell += char;
-            }
-        }
-        row.push(currentCell.trim());
-        rows.push(row);
-    }
-    return rows;
-}
-
-function parsePriceClient(val) {
-    if (!val || val === '-' || val.trim() === '' || val.trim() === '0') return null;
-    // Support decimals like 29.99, 100.00 and integers
-    const clean = val.replace(/[^\d.]/g, '');
-    const num = parseFloat(clean);
-    return isNaN(num) || num === 0 ? null : num;
-}
-
-function getCategoryIdFromSheetClient(categoryName, productName) {
-    const cleanName = (productName || '').toLowerCase();
-    const cleanCat = (categoryName || '').toLowerCase();
-
-    if (cleanName.includes('قهوة') || cleanName.includes('إسبريسو') || cleanName.includes('اسبريسو') || cleanName.includes('دولسي') || cleanName.includes('تاسيمو') || cleanCat.includes('قهوة')) {
-        return 6; // coffee-machines
-    }
-    if (cleanName.includes('مكواة') || cleanName.includes('بخار') || cleanName.includes('iron') || cleanCat.includes('مكواة')) {
-        return 1; // irons
-    }
-    if (cleanName.includes('مكنسة') || cleanName.includes('تنظيف') || cleanName.includes('vacuum') || cleanCat.includes('مكنسة')) {
-        return 2; // vacuums
-    }
-    if (cleanName.includes('وافل') || cleanName.includes('سموثي') || cleanName.includes('خلاط') || cleanName.includes('محمصة') || cleanName.includes('غلاية') || cleanName.includes('شواية') || cleanName.includes('لوح تسخين') || cleanName.includes('سندويش') || cleanName.includes('مبشرة') || cleanName.includes('ميكروويف') || cleanName.includes('فرن') || cleanName.includes('فشار') || cleanName.includes('شوكولاتة') || cleanCat.includes('مطبخ')) {
-        return 3; // kitchen
-    }
-    if (cleanName.includes('حلاقة') || cleanName.includes('قص الشعر') || cleanName.includes('تشذيب') || cleanName.includes('مجفف شعر') || cleanName.includes('ستوديو دراي') || cleanName.includes('شاين إكسبرس') || cleanCat.includes('حلاقة') || cleanCat.includes('شخصية')) {
-        return 4; // personal-care
-    }
-    return 5; // home-living
+function getProductSellingPrice(product) {
+    return Number(product.discount_price) > 0 ? Number(product.discount_price) : Number(product.base_price || 0);
 }
 
 function getCategoryNameById(categoryId) {
@@ -2729,37 +774,6 @@ function getCategoryNameById(categoryId) {
         6: 'ماكينات القهوة والكبسولات'
     };
     return names[categoryId] || 'عام';
-}
-
-function getGoogleDriveDirectLinkClient(link) {
-    if (!link) return '';
-    if (link.includes('drive.google.com')) {
-        let fileId = '';
-        const idMatch = link.match(/[?&]id=([a-zA-Z0-9_-]+)/);
-        if (idMatch) {
-            fileId = idMatch[1];
-        } else {
-            const fileMatch = link.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
-            if (fileMatch) {
-                fileId = fileMatch[1];
-            }
-        }
-        if (fileId) {
-            return `https://lh3.googleusercontent.com/d/${fileId}`;
-        }
-    }
-    return link;
-}
-
-function getProductImageClient(imageLink, categoryId) {
-    if (!imageLink) {
-        return getFallbackImageClient(categoryId);
-    }
-    const resolvedLink = getGoogleDriveDirectLinkClient(imageLink);
-    if (resolvedLink.startsWith('http://') || resolvedLink.startsWith('https://') || resolvedLink.startsWith('/')) {
-        return resolvedLink;
-    }
-    return getFallbackImageClient(categoryId);
 }
 
 const CATEGORY_SLUG_TO_ID = { 'irons': 1, 'vacuums': 2, 'kitchen': 3, 'personal-care': 4, 'home-living': 5, 'coffee-machines': 6 };
@@ -2775,18 +789,22 @@ async function fetchProducts(categorySlug = 'all') {
     try {
         const products = await loadAllProducts();
         allProducts = products;
-        isGoogleSheetsDataLoaded = true;
         const filtered = filterProductsByCategory(products, categorySlug);
         renderProducts(filtered.length > 0 ? filtered : products);
         renderFeaturedCarousel();
+        if (currentView === 'cart') renderCartPage();
+        if (currentView === 'categories') renderCategoriesPage();
         return filtered.length > 0 ? filtered : products;
     } catch (err) {
         console.error('All product sources failed:', err);
-        const fallback = (typeof FALLBACK_PRODUCTS !== 'undefined') ? FALLBACK_PRODUCTS.filter(p => p.is_visible) : [];
-        allProducts = fallback;
-        renderProducts(fallback);
+        allProducts = [];
         renderFeaturedCarousel();
-        return fallback;
+        const grid = document.getElementById('productsGrid');
+        if (grid) grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 60px; color: var(--steel-grey);">
+            <i class="fa-solid fa-wifi" style="font-size: 3rem; margin-bottom: 15px;"></i>
+            <p style="font-size: 1.1rem;">تعذر تحميل المنتجات، يرجى تحديث الصفحة أو التواصل معنا عبر الواتساب.</p>
+        </div>`;
+        return [];
     }
 }
 
@@ -2820,34 +838,29 @@ function renderProducts(products) {
         return;
     }
 
-    grid.innerHTML = products.map((p, idx) => {
+    grid.innerHTML = products.map(p => {
         const priceToShow = p.discount_price ? p.discount_price : p.base_price;
         const hasDiscount = p.discount_price && p.discount_price < p.base_price;
         const waLink = getWhatsAppInquiryLink(p.title_ar, p.id);
         const productUrl = getProductUrl(p.id);
-        const rating = (4.7 + (idx % 3) * 0.1).toFixed(1);
-        const reviewsCount = 85 + idx * 42;
-        const isBestseller = idx % 2 === 0;
+        const outOfStock = isProductOutOfStock(p);
 
         return `
-            <div class="product-card">
-                ${hasDiscount 
-                    ? `<span class="discount-tag">🔥 عروض خـاصة</span>` 
-                    : (isBestseller ? `<span class="badge-trendyol-bestseller">⚡ الأكثر طلباً</span>` : '')}
+            <div class="product-card${outOfStock ? ' is-out-of-stock' : ''}">
+                ${outOfStock
+                    ? `<span class="badge-trendyol-bestseller" style="background:#64748b;">نفدت الكمية</span>`
+                    : (hasDiscount ? `<span class="discount-tag">🔥 عروض خـاصة</span>` : '')}
                 
                 <a href="${productUrl}" target="_blank" rel="noopener">
-                    <img src="${p.main_image || '/Logo/ElectroHomeSY-logo-blue.png'}" alt="${p.title_ar}" class="product-thumb" style="cursor: pointer;">
+                    <img src="${p.main_image || '/Logo/ElectroHomeSY-logo-blue.png'}" alt="${p.title_ar}" class="product-thumb" style="cursor: pointer;" loading="lazy" onerror="this.onerror=null; this.src='/Logo/ElectroHomeSY-logo-blue.png';">
                 </a>
                 
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
                     <span class="product-category-name">
-                        ${p.category_name || 'أجهزة منزلية'} 
+                        ${getCategoryNameById(p.category_id)}
                         ${p.variants && p.variants.length > 0 && p.variants[0].brand && p.variants[0].brand !== 'ElectroHome' 
                             ? `· ${p.variants[0].brand}` 
                             : ''}
-                    </span>
-                    <span style="font-size:0.75rem; color:#f59e0b; font-weight:800; display:inline-flex; align-items:center; gap:3px;">
-                        <i class="fa-solid fa-star"></i> ${rating} <span style="color:#94a3b8; font-weight:400;">(${reviewsCount})</span>
                     </span>
                 </div>
 
@@ -2874,14 +887,8 @@ function renderProducts(products) {
 }
 
 // Open Product Detail Modal with Static Fallback
-async function openProductDetail(productId) {
-    try {
-        const res = await fetch(`/api/products/${productId}`);
-        if (!res.ok) throw new Error('Not ok');
-        currentSelectedProduct = await res.json();
-    } catch (e) {
-        currentSelectedProduct = allProducts.find(p => p.id === productId) || FALLBACK_PRODUCTS.find(p => p.id === productId);
-    }
+function openProductDetail(productId) {
+    currentSelectedProduct = allProducts.find(p => p.id === productId) || null;
     
     if (currentSelectedProduct) {
         currentSelectedVariant = currentSelectedProduct.variants && currentSelectedProduct.variants.length > 0 ? currentSelectedProduct.variants[0] : null;
@@ -3011,51 +1018,45 @@ function updateCartBadge() {
 }
 
 function showView(viewName) {
-    const hero = document.querySelector('.hero-section');
-    const products = document.getElementById('products-section');
-    const customRequest = document.getElementById('custom-request-section');
-    const cartSec = document.getElementById('cart-section');
-    const accountSec = document.getElementById('account-section');
-    const categoriesSec = document.getElementById('categories-section');
+    const isHome = !['cart', 'account', 'categories'].includes(viewName);
+    const setDisplay = (el, visible) => { if (el) el.style.display = visible ? 'block' : 'none'; };
 
-    if (viewName === 'cart') {
-        if (hero) hero.style.display = 'none';
-        if (products) products.style.display = 'none';
-        if (customRequest) customRequest.style.display = 'none';
-        if (cartSec) cartSec.style.display = 'block';
-        if (accountSec) accountSec.style.display = 'none';
-        if (categoriesSec) categoriesSec.style.display = 'none';
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else if (viewName === 'account') {
-        if (hero) hero.style.display = 'none';
-        if (products) products.style.display = 'none';
-        if (customRequest) customRequest.style.display = 'none';
-        if (cartSec) cartSec.style.display = 'none';
-        if (accountSec) accountSec.style.display = 'block';
-        if (categoriesSec) categoriesSec.style.display = 'none';
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else if (viewName === 'categories') {
-        if (hero) hero.style.display = 'none';
-        if (products) products.style.display = 'none';
-        if (customRequest) customRequest.style.display = 'none';
-        if (cartSec) cartSec.style.display = 'none';
-        if (accountSec) accountSec.style.display = 'none';
-        if (categoriesSec) categoriesSec.style.display = 'block';
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else {
-        if (hero) {
-            if (window.innerWidth <= 768) {
-                hero.style.display = 'none';
-            } else {
-                hero.style.display = 'block';
-            }
+    // The hero carousel is hidden on mobile by design (see style.css); it also stays hidden when there is nothing to show
+    const hero = document.querySelector('.hero-section');
+    setDisplay(hero, isHome && window.innerWidth > 768 && featuredCarouselHasSlides);
+    setDisplay(document.querySelector('.benefits-section'), isHome);
+    setDisplay(document.getElementById('products-section'), isHome);
+    setDisplay(document.getElementById('custom-request-section'), isHome);
+    setDisplay(document.getElementById('cart-section'), viewName === 'cart');
+    setDisplay(document.getElementById('account-section'), viewName === 'account');
+    setDisplay(document.getElementById('categories-section'), viewName === 'categories');
+    currentView = isHome ? 'home' : viewName;
+
+    if (!isHome) window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Brings the saved cart in line with the current catalogue: prices follow the admin panel,
+// and products that were removed, hidden or sold out are dropped. Returns the removed item names.
+function syncCartWithProducts() {
+    if (!Array.isArray(cart) || !allProducts || allProducts.length === 0) return [];
+    const removed = [];
+    cart = cart.filter(item => {
+        const product = allProducts.find(p => p.id === item.product_id);
+        if (!product || isProductOutOfStock(product)) {
+            removed.push(item.product_name);
+            return false;
         }
-        if (products) products.style.display = 'block';
-        if (customRequest) customRequest.style.display = 'block';
-        if (cartSec) cartSec.style.display = 'none';
-        if (accountSec) accountSec.style.display = 'none';
-        if (categoriesSec) categoriesSec.style.display = 'none';
-    }
+        const modifier = product.variants && item.variant_id
+            ? Number((product.variants.find(v => v.id === item.variant_id) || {}).price_modifier) || 0
+            : 0;
+        item.unit_price = getProductSellingPrice(product) + modifier;
+        item.product_name = product.title_ar;
+        item.main_image = product.main_image || item.main_image;
+        return true;
+    });
+    localStorage.setItem('electro_cart', JSON.stringify(cart));
+    updateCartBadge();
+    return removed;
 }
 
 function renderCartPage() {
@@ -3063,33 +1064,27 @@ function renderCartPage() {
     const totalPriceEl = document.getElementById('cartTotalPrice');
     if (!list || !totalPriceEl) return;
 
-    // Auto-repair any 0 price items in cart
-    if (Array.isArray(cart)) {
-        cart.forEach(item => {
-            if (!item.unit_price || Number(item.unit_price) <= 0) {
-                const found = (allProducts || []).find(p => p.id === item.product_id);
-                if (found) {
-                    item.unit_price = Number(found.discount_price || found.base_price || 0);
-                }
-            }
-        });
-    }
+    const removedItems = syncCartWithProducts();
+
+    const removedNotice = removedItems.length
+        ? `<p style="background:#fef3c7; color:#92400e; padding:10px 14px; border-radius:12px; font-size:0.9rem; margin-bottom:12px;">تمت إزالة منتجات لم تعد متوفرة من السلة: ${removedItems.join('، ')}</p>`
+        : '';
 
     if (!cart || cart.length === 0) {
-        list.innerHTML = `<p style="text-align:center; padding:35px; color:var(--steel-grey); font-size:1.05rem; font-family:'Cairo',sans-serif;">السلة فارغة حالياً. أضف بعض المنتجات للتسوق!</p>`;
+        list.innerHTML = removedNotice + `<p style="text-align:center; padding:35px; color:var(--steel-grey); font-size:1.05rem; font-family:'Cairo',sans-serif;">السلة فارغة حالياً. أضف بعض المنتجات للتسوق!</p>`;
         totalPriceEl.innerText = formatSYP(0);
         return;
     }
 
     let total = 0;
-    list.innerHTML = cart.map((item, index) => {
+    list.innerHTML = removedNotice + cart.map((item, index) => {
         const itemPrice = Number(item.unit_price) || 0;
         const itemTotal = itemPrice * item.quantity;
         total += itemTotal;
         return `
             <div class="cart-product-item">
                 <div class="cart-product-image-wrapper" style="width:60px; height:60px; border-radius:12px; border:1px solid var(--border-color); background:#ffffff; display:flex; align-items:center; justify-content:center; overflow:hidden; flex-shrink:0;">
-                    <img src="${item.main_image || '/Logo/ElectroHomeSY-logo-blue.png'}" alt="${item.product_name}" style="max-width:100%; max-height:100%; object-fit:contain; padding:4px;">
+                    <img src="${item.main_image || '/Logo/ElectroHomeSY-logo-blue.png'}" alt="${item.product_name}" style="max-width:100%; max-height:100%; object-fit:contain; padding:4px;" onerror="this.onerror=null; this.src='/Logo/ElectroHomeSY-logo-blue.png';">
                 </div>
                 <div class="cart-product-details">
                     <span class="cart-product-title">${item.product_name}</span>
@@ -3191,7 +1186,7 @@ async function sendOrderEmailNotification(orderData) {
         date: new Date().toLocaleString('ar-SY')
     };
 
-    const webhook = window.EHS_CONFIG ? window.EHS_CONFIG.ORDER_EMAIL_WEBHOOK : window.GOOGLE_SHEETS_ORDERS_WEBHOOK;
+    const webhook = window.EHS_CONFIG ? window.EHS_CONFIG.ORDER_EMAIL_WEBHOOK : '';
     if (!webhook) return;
     try {
         await fetch(webhook, {
@@ -3225,7 +1220,7 @@ async function sendProductRequestEmailNotification(reqData) {
         date: new Date().toLocaleString('ar-SY')
     };
 
-    const webhook = window.EHS_CONFIG ? window.EHS_CONFIG.ORDER_EMAIL_WEBHOOK : window.GOOGLE_SHEETS_ORDERS_WEBHOOK;
+    const webhook = window.EHS_CONFIG ? window.EHS_CONFIG.ORDER_EMAIL_WEBHOOK : '';
     if (!webhook) return;
     try {
         await fetch(webhook, {
@@ -3238,6 +1233,12 @@ async function sendProductRequestEmailNotification(reqData) {
 
 async function handleCheckoutSubmit(e) {
     e.preventDefault();
+    const removedBeforeCheckout = syncCartWithProducts();
+    if (removedBeforeCheckout.length) {
+        renderCartPage();
+        alert('⚠️ تمت إزالة منتجات لم تعد متوفرة من السلة، يرجى مراجعة الطلب قبل الإرسال.');
+        return;
+    }
     if (cart.length === 0) {
         alert('السلة فارغة!');
         return;
@@ -3323,6 +1324,11 @@ async function handleRequestSubmit(e) {
     const requested_product = document.getElementById('reqProduct').value.trim();
     const notes = document.getElementById('reqNotes').value.trim();
 
+    if (!validateSyrianPhoneNumber(customer_phone)) {
+        alert('⚠️ يرجى إدخال رقم هاتف محمول صحيح للتواصل معك! (مثال: 0959930005 أو 963959930005+)');
+        return;
+    }
+
     const reqPayload = { customer_name, customer_phone, requested_product, notes };
 
     const submitBtn = e.target.querySelector('button[type="submit"]');
@@ -3369,14 +1375,10 @@ function renderFeaturedCarousel() {
         featuredCarouselProducts = allProducts.slice(0, 5);
     }
 
-    if (featuredCarouselProducts.length === 0) {
-        const hs = document.querySelector('.hero-section');
-        if (hs) hs.style.display = 'none';
-        return;
-    } else {
-        const hs = document.querySelector('.hero-section');
-        if (hs) hs.style.display = 'block';
-    }
+    featuredCarouselHasSlides = featuredCarouselProducts.length > 0;
+    const hs = document.querySelector('.hero-section');
+    if (hs) hs.style.display = (currentView === 'home' && window.innerWidth > 768 && featuredCarouselHasSlides) ? 'block' : 'none';
+    if (!featuredCarouselHasSlides) return;
 
     track.innerHTML = featuredCarouselProducts.map(p => {
         const finalPrice = p.discount_price ? p.discount_price : p.base_price;
@@ -3390,7 +1392,7 @@ function renderFeaturedCarousel() {
                 <div class="featured-product-card">
                     ${discountTag}
                     <a href="${productUrl}" target="_blank" rel="noopener" class="product-thumb-wrapper" style="cursor:pointer; text-align:center; display:block;">
-                        <img class="product-thumb" src="${p.main_image || '/Logo/ElectroHomeSY-logo-blue.png'}" alt="${p.title_ar}">
+                        <img class="product-thumb" src="${p.main_image || '/Logo/ElectroHomeSY-logo-blue.png'}" alt="${p.title_ar}" onerror="this.onerror=null; this.src='/Logo/ElectroHomeSY-logo-blue.png';">
                     </a>
                     <a href="${productUrl}" target="_blank" rel="noopener" class="product-title" style="text-decoration:none;">${p.title_ar}</a>
                     <div class="product-price-box">
@@ -3423,13 +1425,26 @@ function renderFeaturedCarousel() {
     featuredCarouselIndex = 0;
     track.style.transform = 'translateX(0px)';
 
-    // Start auto slide
+    featuredCarouselDotsCount = dotsCount;
     startFeaturedAutoSlide(dotsCount);
 
-    // Pause on hover
-    container.addEventListener('mouseenter', () => stopFeaturedAutoSlide());
-    container.addEventListener('mouseleave', () => startFeaturedAutoSlide(dotsCount));
+    // Pause on hover (listeners are attached once; the dot count is read at event time)
+    if (!container.dataset.hoverBound) {
+        container.dataset.hoverBound = '1';
+        container.addEventListener('mouseenter', () => stopFeaturedAutoSlide());
+        container.addEventListener('mouseleave', () => startFeaturedAutoSlide(featuredCarouselDotsCount));
+    }
 }
+
+// Re-layout the carousel (and hero visibility) when the screen size crosses a breakpoint
+let featuredResizeTimer = null;
+window.addEventListener('resize', () => {
+    clearTimeout(featuredResizeTimer);
+    featuredResizeTimer = setTimeout(() => {
+        if (!document.getElementById('featuredCarouselTrack') || !allProducts.length) return;
+        renderFeaturedCarousel();
+    }, 250);
+});
 
 function startFeaturedAutoSlide(dotsCount) {
     stopFeaturedAutoSlide();
