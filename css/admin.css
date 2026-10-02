@@ -48,7 +48,7 @@ label small { font-weight: 400; color: var(--muted); }
 .btn {
     display: inline-flex; align-items: center; justify-content: center; gap: 8px;
     padding: 9px 16px; border-radius: 8px; border: 1px solid var(--border);
-    background: var(--surface); cursor: pointer; font-weight: 600; white-space: nowrap;
+    background: var(--surface); cursor: pointer; font-weight: 600; white-space: nowrap; text-decoration: none;
 }
 .btn:hover { background: #f8fafc; }
 .btn:disabled { opacity: 0.6; cursor: wait; }
@@ -75,7 +75,7 @@ label small { font-weight: 400; color: var(--muted); }
 /* Layout */
 .app { display: flex; min-height: 100vh; }
 .sidebar {
-    width: 220px; background: var(--surface); border-right: 1px solid var(--border);
+    width: 220px; background: var(--surface); border-inline-end: 1px solid var(--border);
     display: flex; flex-direction: column; padding: 16px 12px; position: sticky; top: 0; height: 100vh;
 }
 .brand img { height: 36px; margin: 4px 8px 20px; }
@@ -83,14 +83,14 @@ label small { font-weight: 400; color: var(--muted); }
 .sidebar-footer { display: flex; flex-direction: column; gap: 4px; }
 .nav-item {
     display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 8px;
-    border: 0; background: transparent; cursor: pointer; text-align: left; color: var(--muted);
+    border: 0; background: transparent; cursor: pointer; text-align: start; color: var(--muted);
     font-weight: 600; text-decoration: none; position: relative;
 }
 .nav-item i { width: 18px; text-align: center; }
 .nav-item:hover { background: #f1f5f9; color: var(--text); }
 .nav-item.active { background: rgba(7, 48, 102, 0.08); color: var(--primary); }
 .badge {
-    margin-left: auto; background: var(--danger); color: #fff; border-radius: 999px;
+    margin-inline-start: auto; background: var(--danger); color: #fff; border-radius: 999px;
     font-size: 11px; padding: 1px 7px; font-weight: 700;
 }
 
@@ -101,7 +101,7 @@ label small { font-weight: 400; color: var(--muted); }
 
 .panel { background: var(--surface); border-radius: var(--radius); padding: 18px; margin-bottom: 16px; border: 1px solid var(--border); }
 .panel p { color: var(--muted); margin: 0 0 12px; }
-.panel .btn { margin: 0 8px 8px 0; }
+.panel .btn { margin: 0 0 8px 8px; }
 .panel-title { font-weight: 800; margin-bottom: 10px; }
 .panel-title small { font-weight: 400; color: var(--muted); }
 .hint { color: var(--muted); font-size: 13px; margin: 0 0 10px; }
@@ -124,7 +124,7 @@ label small { font-weight: 400; color: var(--muted); }
 /* Table */
 .table-wrap { background: var(--surface); border-radius: var(--radius); border: 1px solid var(--border); overflow-x: auto; }
 .table { width: 100%; border-collapse: collapse; }
-.table th, .table td { padding: 8px 10px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: middle; }
+.table th, .table td { padding: 8px 10px; border-bottom: 1px solid var(--border); text-align: start; vertical-align: middle; }
 .table th { font-size: 12px; color: var(--muted); font-weight: 700; background: #f8fafc; position: sticky; top: 0; white-space: nowrap; }
 .table tr:last-child td { border-bottom: 0; }
 .table tr.is-hidden td { opacity: 0.55; }
@@ -138,18 +138,20 @@ label small { font-weight: 400; color: var(--muted); }
 .profit-neg { color: var(--danger); font-weight: 700; }
 .stock-out { color: var(--danger); font-weight: 700; }
 
-/* Switch */
+/* Switch (knob moves toward the start side in RTL) */
 .switch { position: relative; display: inline-block; width: 38px; height: 22px; }
 .switch input { opacity: 0; width: 0; height: 0; }
 .switch span { position: absolute; inset: 0; background: #cbd5e1; border-radius: 999px; cursor: pointer; transition: 0.15s; }
 .switch span::before { content: ''; position: absolute; width: 16px; height: 16px; left: 3px; top: 3px; background: #fff; border-radius: 50%; transition: 0.15s; }
 .switch input:checked + span { background: var(--success); }
 .switch input:checked + span::before { transform: translateX(16px); }
+[dir="rtl"] .switch span::before { left: auto; right: 3px; }
+[dir="rtl"] .switch input:checked + span::before { transform: translateX(-16px); }
 
 /* Orders */
 .orders-list { display: flex; flex-direction: column; gap: 10px; }
 .order { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
-.order.status-new { border-left: 4px solid var(--danger); }
+.order.status-new { border-inline-start: 4px solid var(--danger); }
 .order-head { display: flex; align-items: center; gap: 14px; padding: 12px 16px; cursor: pointer; flex-wrap: wrap; }
 .order-id { font-weight: 800; }
 .order-customer { flex: 1; min-width: 180px; }
@@ -194,7 +196,7 @@ label small { font-weight: 400; color: var(--muted); }
 .images-list { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 10px; }
 .image-tile { position: relative; width: 104px; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: #f8fafc; }
 .image-tile img { width: 100%; height: 90px; object-fit: contain; display: block; }
-.image-tile .main-tag { position: absolute; top: 4px; left: 4px; background: var(--primary); color: #fff; font-size: 10px; padding: 1px 6px; border-radius: 4px; }
+.image-tile .main-tag { position: absolute; top: 4px; inset-inline-start: 4px; background: var(--primary); color: #fff; font-size: 10px; padding: 1px 6px; border-radius: 4px; }
 .image-tile .tile-actions { display: flex; justify-content: space-between; border-top: 1px solid var(--border); background: #fff; }
 .image-add { display: flex; gap: 8px; flex-wrap: wrap; }
 .image-add input { flex: 1; min-width: 200px; }
@@ -212,7 +214,7 @@ label small { font-weight: 400; color: var(--muted); }
     .app { flex-direction: column; }
     .sidebar {
         width: 100%; height: auto; position: sticky; top: 0; z-index: 10; flex-direction: row;
-        padding: 6px; border-right: 0; border-bottom: 1px solid var(--border); overflow-x: auto;
+        padding: 6px; border-inline-end: 0; border-bottom: 1px solid var(--border); overflow-x: auto;
     }
     .brand { display: none; }
     .nav, .sidebar-footer { flex-direction: row; flex: none; }
@@ -225,5 +227,7 @@ label small { font-weight: 400; color: var(--muted); }
     .toolbar select { flex: 1; }
 }
 
-/* Arabic text inside the (LTR) panel keeps its own direction but lines up with the rest */
-[dir="auto"]:not(input):not(textarea) { text-align: left; }
+/* Mixed Arabic/Latin text keeps its own direction but lines up with the rest of the RTL panel */
+[dir="auto"]:not(input):not(textarea) { text-align: start; }
+.num { direction: ltr; unicode-bidi: isolate; }
+.inline-form { display: flex; gap: 8px; max-width: 420px; }

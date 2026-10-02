@@ -9,8 +9,8 @@
  * Bu alanlar boş kaldığı sürece site eskisi gibi js/products.json dosyasından çalışır.
  */
 window.EHS_CONFIG = {
-    SUPABASE_URL: '',
-    SUPABASE_ANON_KEY: '',
+    SUPABASE_URL: 'https://ynloqxqzmvypgnjqdgri.supabase.co',
+    SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlubG9xeHF6bXZ5cGduanFkZ3JpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA5NzE4NDQsImV4cCI6MjEwNjU0Nzg0NH0.S8ny7RoEQepvZjxWwTS2XGEtM00NWV4fRwstzpjVy1s',
 
     // Sipariş geldiğinde e-posta bildirimi gönderen mevcut Google Apps Script.
     // Bildirim istemiyorsanız '' yapın.

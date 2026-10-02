@@ -1,23 +1,26 @@
 /* ElectroHomeSY - Admin panel (Supabase) */
 
+// Login is password-only: every admin signs in to this one fixed account.
+const ADMIN_LOGIN_EMAIL = 'admin@electrohomesy.com';
+
 const CATEGORIES = [
-    { id: 1, name: 'Ütüler ve buharlı cihazlar' },
-    { id: 2, name: 'Süpürgeler ve temizlik' },
-    { id: 3, name: 'Mutfak aletleri' },
-    { id: 4, name: 'Kişisel bakım ve tıraş' },
-    { id: 5, name: 'Aydınlatma, ev ve medikal' },
-    { id: 6, name: 'Kahve makineleri' }
+    { id: 1, name: 'المكاوي وأجهزة البخار' },
+    { id: 2, name: 'المكانس والتنظيف' },
+    { id: 3, name: 'أجهزة المطبخ والطهي' },
+    { id: 4, name: 'العناية الشخصية والحلاقة' },
+    { id: 5, name: 'الإضاءة والمنزل والأجهزة الطبية' },
+    { id: 6, name: 'ماكينات القهوة والكبسولات' }
 ];
 
 const ORDER_STATUSES = {
-    new: 'Yeni',
-    confirmed: 'Onaylandı',
-    shipped: 'Yolda',
-    delivered: 'Teslim edildi',
-    cancelled: 'İptal'
+    new: 'جديد',
+    confirmed: 'مؤكد',
+    shipped: 'قيد التوصيل',
+    delivered: 'تم التسليم',
+    cancelled: 'ملغي'
 };
 
-const PAYMENT_LABELS = { cash: 'Kapıda ödeme', cod: 'Kapıda ödeme', shamcash: 'Sham Cash' };
+const PAYMENT_LABELS = { cash: 'الدفع عند الاستلام', cod: 'الدفع عند الاستلام', shamcash: 'شام كاش' };
 const LOW_STOCK_LIMIT = 1;
 const REFRESH_INTERVAL_MS = 60 * 1000;
 const IMAGE_BUCKET = 'product-images';
@@ -53,7 +56,7 @@ function numOrNull(value) {
 }
 
 function formatDate(iso) {
-    return new Date(iso).toLocaleString('tr-TR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+    return new Date(iso).toLocaleString('ar-SY-u-nu-latn', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
 }
 
 function categoryName(id) {
@@ -137,12 +140,12 @@ async function handleLogin(e) {
     errEl.hidden = true;
     btn.disabled = true;
     const { data, error } = await sb.auth.signInWithPassword({
-        email: $('#loginEmail').value.trim(),
+        email: ADMIN_LOGIN_EMAIL,
         password: $('#loginPassword').value
     });
     btn.disabled = false;
     if (error) {
-        errEl.textContent = 'E-posta veya şifre hatalı.';
+        errEl.textContent = 'كلمة المرور غير صحيحة.';
         errEl.hidden = false;
         return;
     }
@@ -155,11 +158,10 @@ async function enterApp(session) {
         await sb.auth.signOut();
         showView('loginView');
         const errEl = $('#loginError');
-        errEl.textContent = 'Bu hesabın yönetici yetkisi yok. (Kurulum rehberindeki "admin ekleme" adımına bakın.)';
+        errEl.textContent = 'هذا الحساب لا يملك صلاحية الإدارة.';
         errEl.hidden = false;
         return;
     }
-    $('#adminEmail').textContent = session.user.email;
     showView('appView');
     setupUi();
     await loadAll();
@@ -177,8 +179,8 @@ async function loadProducts() {
         sb.from('products').select('*').order('sort_order', { ascending: true }).order('id', { ascending: true }),
         sb.from('product_costs').select('*')
     ]);
-    if (productsRes.error) return fail(productsRes.error, 'Ürünler yüklenemedi');
-    if (costsRes.error) return fail(costsRes.error, 'Maliyetler yüklenemedi');
+    if (productsRes.error) return fail(productsRes.error, 'تعذر تحميل المنتجات');
+    if (costsRes.error) return fail(costsRes.error, 'تعذر تحميل التكاليف');
     state.products = productsRes.data;
     state.costs = Object.fromEntries(costsRes.data.map(c => [c.product_id, Number(c.cost_price)]));
     renderProducts();
@@ -190,8 +192,8 @@ async function loadOrdersAndRequests() {
         sb.from('orders').select('*').order('created_at', { ascending: false }),
         sb.from('product_requests').select('*').order('created_at', { ascending: false })
     ]);
-    if (ordersRes.error) return fail(ordersRes.error, 'Siparişler yüklenemedi');
-    if (requestsRes.error) return fail(requestsRes.error, 'Talepler yüklenemedi');
+    if (ordersRes.error) return fail(ordersRes.error, 'تعذر تحميل الطلبات');
+    if (requestsRes.error) return fail(requestsRes.error, 'تعذر تحميل الطلبات الخاصة');
     state.orders = ordersRes.data;
     state.requests = requestsRes.data;
     renderOrders();
@@ -217,12 +219,12 @@ async function saveCost(id, cost) {
 
 function setupUi() {
     $$('.nav-item[data-tab]').forEach(btn => btn.addEventListener('click', () => switchTab(btn.dataset.tab)));
-    $('#refreshBtn').addEventListener('click', () => loadAll().then(() => toast('Güncellendi')));
+    $('#refreshBtn').addEventListener('click', () => loadAll().then(() => toast('تم التحديث')));
 
     const catOptions = CATEGORIES.map(c => `<option value="${c.id}">${esc(c.name)}</option>`).join('');
-    $('#productCategoryFilter').innerHTML = `<option value="all">Tüm kategoriler</option>${catOptions}`;
+    $('#productCategoryFilter').innerHTML = `<option value="all">كل الأصناف</option>${catOptions}`;
     $('#productCategorySelect').innerHTML = catOptions;
-    $('#orderStatusFilter').innerHTML = `<option value="all">Tüm durumlar</option>` +
+    $('#orderStatusFilter').innerHTML = `<option value="all">كل الحالات</option>` +
         Object.entries(ORDER_STATUSES).map(([k, v]) => `<option value="${k}">${v}</option>`).join('');
 
     $('#productSearch').addEventListener('input', renderProducts);
@@ -256,6 +258,7 @@ function setupUi() {
         if (row) { switchTab('orders'); expandOrder(Number(row.dataset.gotoOrder)); }
     });
 
+    $('#passwordForm').addEventListener('submit', handlePasswordChange);
     $('#importBtn').addEventListener('click', importFromProductsJson);
     $('#exportProductsBtn').addEventListener('click', exportProducts);
     $('#exportOrdersBtn').addEventListener('click', exportOrders);
@@ -274,7 +277,7 @@ function renderBadges() {
     $('#newOrdersBadge').hidden = newOrders === 0;
     $('#newRequestsBadge').textContent = openRequests;
     $('#newRequestsBadge').hidden = openRequests === 0;
-    document.title = newOrders ? `(${newOrders}) ElectroHomeSY Yönetim` : 'ElectroHomeSY Yönetim Paneli';
+    document.title = newOrders ? `(${newOrders}) لوحة إدارة إلكتروهومسي` : 'لوحة إدارة إلكتروهومسي';
 }
 
 // ---------- dashboard ----------
@@ -295,12 +298,12 @@ function renderDashboard() {
     const stockCost = products.reduce((s, p) => s + (state.costs[p.id] || 0) * Math.max(0, Number(p.stock_quantity) || 0), 0);
 
     const stats = [
-        { label: 'Yeni sipariş', value: newOrders.length, sub: 'onay bekliyor', highlight: newOrders.length > 0 },
-        { label: 'Bu ay ciro', value: money(monthRevenue), sub: `${monthOrders.length} sipariş (iptaller hariç)` },
-        { label: 'Toplam sipariş', value: state.orders.length, sub: `${activeOrders.length} aktif` },
-        { label: 'Ürünler', value: products.length, sub: `${visible.length} sitede görünüyor` },
-        { label: 'Stokta yok', value: outOfStock.length, sub: 'sitede görünen ürünlerden', highlight: outOfStock.length > 0 },
-        { label: 'Stok değeri', value: money(stockValue), sub: stockCost ? `maliyet: ${money(stockCost)}` : 'satış fiyatıyla' }
+        { label: 'طلبات جديدة', value: newOrders.length, sub: 'بانتظار التأكيد', highlight: newOrders.length > 0 },
+        { label: 'مبيعات هذا الشهر', value: money(monthRevenue), sub: `${monthOrders.length} طلب (بدون الملغاة)` },
+        { label: 'إجمالي الطلبات', value: state.orders.length, sub: `${activeOrders.length} فعّال` },
+        { label: 'المنتجات', value: products.length, sub: `${visible.length} ظاهر في المتجر` },
+        { label: 'نفد من المخزون', value: outOfStock.length, sub: 'من المنتجات الظاهرة', highlight: outOfStock.length > 0 },
+        { label: 'قيمة المخزون', value: money(stockValue), sub: stockCost ? `التكلفة: ${money(stockCost)}` : 'بسعر البيع' }
     ];
     $('#statsGrid').innerHTML = stats.map(s => `
         <div class="stat ${s.highlight ? 'highlight' : ''}">
@@ -314,15 +317,15 @@ function renderDashboard() {
         <div class="mini-row" data-goto-order="${o.id}" style="cursor:pointer">
             <span><b>#${o.id}</b> · <span dir="auto">${esc(o.customer_name)}</span> · <span class="meta">${formatDate(o.created_at)}</span></span>
             <span><span class="pill pill-${o.status}">${ORDER_STATUSES[o.status]}</span> <b class="num">${money(o.total_amount)}</b></span>
-        </div>`).join('')}</div>` : '<div class="empty">Henüz sipariş yok.</div>';
+        </div>`).join('')}</div>` : '<div class="empty">لا توجد طلبات بعد.</div>';
 
     const low = products.filter(p => p.is_visible && Number(p.stock_quantity) <= LOW_STOCK_LIMIT)
         .sort((a, b) => a.stock_quantity - b.stock_quantity);
     $('#lowStock').innerHTML = low.length ? `<div class="mini-list">${low.map(p => `
         <div class="mini-row">
             <span dir="auto">${esc(p.title_ar)}</span>
-            <span class="num ${p.stock_quantity <= 0 ? 'stock-out' : ''}">${p.stock_quantity} adet</span>
-        </div>`).join('')}</div>` : '<div class="empty">Tüm ürünlerde yeterli stok var.</div>';
+            <span class="num ${p.stock_quantity <= 0 ? 'stock-out' : ''}">${p.stock_quantity} قطعة</span>
+        </div>`).join('')}</div>` : '<div class="empty">جميع المنتجات متوفرة بكمية كافية.</div>';
 }
 
 // ---------- products ----------
@@ -357,7 +360,7 @@ function renderProducts() {
     $('#productsCount').textContent = `(${list.length} / ${state.products.length})`;
     const tbody = $('#productsTable tbody');
     if (!list.length) {
-        tbody.innerHTML = `<tr><td colspan="11" class="empty">${state.products.length ? 'Aramaya uygun ürün yok.' : 'Henüz ürün yok. "Yeni ürün" ile ekleyin ya da Ayarlar sekmesinden mevcut ürünleri içe aktarın.'}</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="11" class="empty">${state.products.length ? 'لا توجد منتجات مطابقة للبحث.' : 'لا توجد منتجات بعد. أضف منتجاً جديداً أو استورد المنتجات الحالية من الإعدادات.'}</td></tr>`;
         return;
     }
     tbody.innerHTML = list.map(p => {
@@ -378,7 +381,7 @@ function renderProducts() {
             <td><input class="cell ${Number(p.stock_quantity) <= 0 ? 'stock-out' : ''}" type="number" min="0" step="1" data-field="stock_quantity" value="${p.stock_quantity}"></td>
             <td><label class="switch"><input type="checkbox" data-field="is_featured" ${p.is_featured ? 'checked' : ''}><span></span></label></td>
             <td><label class="switch"><input type="checkbox" data-field="is_visible" ${p.is_visible ? 'checked' : ''}><span></span></label></td>
-            <td><button class="btn btn-sm" data-edit="${p.id}"><i class="fa-solid fa-pen"></i> Düzenle</button></td>
+            <td><button class="btn btn-sm" data-edit="${p.id}"><i class="fa-solid fa-pen"></i> تعديل</button></td>
         </tr>`;
     }).join('');
 }
@@ -406,7 +409,7 @@ async function handleProductCellChange(e) {
             const value = numOrNull(input.value);
             if (field === 'base_price' && !(value > 0)) {
                 input.value = product.base_price ?? '';
-                return toast('Satış fiyatı boş veya sıfır olamaz', true);
+                return toast('سعر البيع لا يمكن أن يكون فارغاً أو صفراً', true);
             }
             await updateProduct(id, { [field]: field === 'discount_price' && !(value > 0) ? null : value });
         }
@@ -414,9 +417,9 @@ async function handleProductCellChange(e) {
         input.classList.add('saved');
         setTimeout(() => input.classList.remove('saved'), 1200);
         renderDashboard();
-        toast('Kaydedildi');
+        toast('تم الحفظ');
     } catch (err) {
-        fail(err, 'Kaydedilemedi');
+        fail(err, 'تعذر الحفظ');
     }
 }
 
@@ -425,7 +428,7 @@ function openProductDialog(id) {
     form.reset();
     state.editingId = id;
     const p = id ? state.products.find(x => x.id === id) : null;
-    $('#productDialogTitle').textContent = p ? `Ürünü düzenle (#${p.id})` : 'Yeni ürün';
+    $('#productDialogTitle').textContent = p ? `تعديل المنتج (#${p.id})` : 'منتج جديد';
     $('#deleteProductBtn').hidden = !p;
 
     const values = p || { category_id: 3, stock_quantity: 1, sort_order: 0, is_visible: true, is_featured: false };
@@ -444,14 +447,14 @@ function renderImages() {
     const list = state.editingImages;
     $('#imagesList').innerHTML = list.length ? list.map((url, i) => `
         <div class="image-tile">
-            ${i === 0 ? '<span class="main-tag">Ana</span>' : ''}
+            ${i === 0 ? '<span class="main-tag">رئيسية</span>' : ''}
             <img src="${esc(url)}" alt="" onerror="this.style.opacity=0.3">
             <div class="tile-actions">
-                <button type="button" class="icon-btn" data-img-move="${i}" data-dir="-1" title="Öne al" ${i === 0 ? 'disabled' : ''}><i class="fa-solid fa-arrow-left"></i></button>
-                <button type="button" class="icon-btn" data-img-remove="${i}" title="Kaldır"><i class="fa-solid fa-trash"></i></button>
-                <button type="button" class="icon-btn" data-img-move="${i}" data-dir="1" title="Arkaya al" ${i === list.length - 1 ? 'disabled' : ''}><i class="fa-solid fa-arrow-right"></i></button>
+                <button type="button" class="icon-btn" data-img-move="${i}" data-dir="-1" title="تقديم" ${i === 0 ? 'disabled' : ''}><i class="fa-solid fa-arrow-right"></i></button>
+                <button type="button" class="icon-btn" data-img-remove="${i}" title="إزالة"><i class="fa-solid fa-trash"></i></button>
+                <button type="button" class="icon-btn" data-img-move="${i}" data-dir="1" title="تأخير" ${i === list.length - 1 ? 'disabled' : ''}><i class="fa-solid fa-arrow-left"></i></button>
             </div>
-        </div>`).join('') : '<div class="meta">Görsel yok — sitede logo gösterilir.</div>';
+        </div>`).join('') : '<div class="meta">لا توجد صور — سيظهر الشعار في المتجر.</div>';
 }
 
 function handleImageTileClick(e) {
@@ -473,7 +476,7 @@ function handleImageTileClick(e) {
 function addImageFromInput() {
     const input = $('#imageUrlInput');
     const url = driveToDirect(input.value.trim());
-    if (!/^https?:\/\//.test(url)) return toast('Geçerli bir görsel linki girin', true);
+    if (!/^https?:\/\//.test(url)) return toast('أدخل رابط صورة صحيح', true);
     if (!state.editingImages.includes(url)) state.editingImages.push(url);
     input.value = '';
     renderImages();
@@ -485,14 +488,14 @@ async function handleImageUpload(e) {
     for (const file of files) {
         const ext = (file.name.split('.').pop() || 'jpg').toLowerCase().replace(/[^a-z0-9]/g, '');
         const path = `products/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
-        toast(`Yükleniyor: ${file.name}`);
+        toast(`جاري الرفع: ${file.name}`);
         const { error } = await sb.storage.from(IMAGE_BUCKET).upload(path, file, { contentType: file.type, upsert: false });
-        if (error) { fail(error, 'Görsel yüklenemedi'); continue; }
+        if (error) { fail(error, 'تعذر رفع الصورة'); continue; }
         const { data } = sb.storage.from(IMAGE_BUCKET).getPublicUrl(path);
         state.editingImages.push(data.publicUrl);
         renderImages();
     }
-    if (files.length) toast('Görsel yüklendi');
+    if (files.length) toast('تم رفع الصورة');
 }
 
 async function handleProductSave(e) {
@@ -500,7 +503,7 @@ async function handleProductSave(e) {
     const form = e.target;
     const f = Object.fromEntries(new FormData(form).entries());
     const basePrice = numOrNull(f.base_price);
-    if (!(basePrice > 0)) return toast('Satış fiyatı girin', true);
+    if (!(basePrice > 0)) return toast('أدخل سعر البيع', true);
     const discount = numOrNull(f.discount_price);
 
     const fields = {
@@ -536,9 +539,9 @@ async function handleProductSave(e) {
         $('#productDialog').close();
         renderProducts();
         renderDashboard();
-        toast('Ürün kaydedildi');
+        toast('تم حفظ المنتج');
     } catch (err) {
-        fail(err, 'Ürün kaydedilemedi');
+        fail(err, 'تعذر حفظ المنتج');
     } finally {
         btn.disabled = false;
     }
@@ -547,15 +550,15 @@ async function handleProductSave(e) {
 async function handleProductDelete() {
     const id = state.editingId;
     const p = state.products.find(x => x.id === id);
-    if (!p || !confirm(`"${p.title_ar}" kalıcı olarak silinsin mi?\n\nSadece siteden kaldırmak istiyorsanız silmek yerine "Sitede görünsün" kutusunu kapatın.`)) return;
+    if (!p || !confirm(`هل تريد حذف "${p.title_ar}" نهائياً؟\n\nإذا أردت إخفاءه من المتجر فقط، ألغِ تفعيل "ظاهر في المتجر" بدلاً من الحذف.`)) return;
     const { error } = await sb.from('products').delete().eq('id', id);
-    if (error) return fail(error, 'Silinemedi');
+    if (error) return fail(error, 'تعذر الحذف');
     state.products = state.products.filter(x => x.id !== id);
     delete state.costs[id];
     $('#productDialog').close();
     renderProducts();
     renderDashboard();
-    toast('Ürün silindi');
+    toast('تم حذف المنتج');
 }
 
 // ---------- orders ----------
@@ -578,16 +581,16 @@ function orderItemHtml(item) {
     const lineTotal = (Number(item.unit_price) || 0) * (Number(item.quantity) || 0);
     let warn = '';
     if (!product) {
-        warn = '<div class="price-warn"><i class="fa-solid fa-triangle-exclamation"></i> Ürün artık veritabanında yok</div>';
+        warn = '<div class="price-warn"><i class="fa-solid fa-triangle-exclamation"></i> المنتج لم يعد موجوداً</div>';
     } else if (Math.abs(sellingPrice(product) - Number(item.unit_price)) > 0.009) {
-        warn = `<div class="price-warn"><i class="fa-solid fa-triangle-exclamation"></i> Güncel fiyat ${money(sellingPrice(product))} — siparişteki fiyat farklı</div>`;
+        warn = `<div class="price-warn"><i class="fa-solid fa-triangle-exclamation"></i> السعر الحالي ${money(sellingPrice(product))} — يختلف عن سعر الطلب</div>`;
     }
     return `
         <div class="order-item">
             <img src="${esc(item.main_image || (product && product.images && product.images[0]) || EHS_LOGO_FALLBACK)}" alt="" onerror="this.src='${EHS_LOGO_FALLBACK}'">
             <div class="grow">
                 <div dir="auto"><b>${esc(item.product_name)}</b></div>
-                <div class="meta">${product ? `#${product.id} · ${esc(product.sku)} · stok: ${product.stock_quantity}` : ''}</div>
+                <div class="meta">${product ? `#${product.id} · ${esc(product.sku)} · المخزون: ${product.stock_quantity}` : ''}</div>
                 ${warn}
             </div>
             <div class="num">${esc(item.quantity)} × ${money(item.unit_price)}<br><b>${money(lineTotal)}</b></div>
@@ -607,33 +610,33 @@ function renderOrders() {
             <div class="order-head" data-toggle>
                 <span class="order-id">#${o.id}</span>
                 <span class="order-customer"><b dir="auto">${esc(o.customer_name)}</b><span class="meta">${esc(o.customer_phone)} · ${formatDate(o.created_at)}</span></span>
-                <span class="meta">${itemCount} ürün</span>
+                <span class="meta">${itemCount} قطعة</span>
                 <span class="pill pill-${o.status}">${ORDER_STATUSES[o.status]}</span>
                 <span class="order-total num">${money(o.total_amount)}</span>
                 <i class="fa-solid fa-chevron-${open ? 'up' : 'down'} meta"></i>
             </div>
             <div class="order-body" ${open ? '' : 'hidden'}>
-                <div class="order-items">${items.map(orderItemHtml).join('') || '<div class="meta">Ürün bilgisi yok</div>'}</div>
+                <div class="order-items">${items.map(orderItemHtml).join('') || '<div class="meta">لا توجد معلومات عن المنتجات</div>'}</div>
                 <div class="order-side">
-                    <div><div class="meta">Adres</div><div dir="auto">${esc(o.delivery_address) || '—'}</div></div>
-                    <div><div class="meta">Ödeme</div><div>${esc(PAYMENT_LABELS[o.payment_method] || o.payment_method)}</div></div>
+                    <div><div class="meta">العنوان</div><div dir="auto">${esc(o.delivery_address) || '—'}</div></div>
+                    <div><div class="meta">الدفع</div><div>${esc(PAYMENT_LABELS[o.payment_method] || o.payment_method)}</div></div>
                     <div class="contact-row">
-                        <a class="btn btn-sm" href="${whatsappLink(o.customer_phone)}" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
-                        <a class="btn btn-sm" href="tel:${esc(o.customer_phone)}"><i class="fa-solid fa-phone"></i> Ara</a>
+                        <a class="btn btn-sm" href="${whatsappLink(o.customer_phone)}" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> واتساب</a>
+                        <a class="btn btn-sm" href="tel:${esc(o.customer_phone)}"><i class="fa-solid fa-phone"></i> اتصال</a>
                     </div>
-                    <label>Durum
+                    <label>الحالة
                         <select data-order-status>
                             ${Object.entries(ORDER_STATUSES).map(([k, v]) => `<option value="${k}" ${k === o.status ? 'selected' : ''}>${v}</option>`).join('')}
                         </select>
                     </label>
-                    <label>Not (sadece sizde görünür)
+                    <label>ملاحظة (تظهر لك فقط)
                         <textarea rows="2" data-order-note dir="auto">${esc(o.admin_note)}</textarea>
                     </label>
-                    <button class="btn btn-sm btn-danger-ghost" data-order-delete><i class="fa-solid fa-trash"></i> Siparişi sil</button>
+                    <button class="btn btn-sm btn-danger-ghost" data-order-delete><i class="fa-solid fa-trash"></i> حذف الطلب</button>
                 </div>
             </div>
         </div>`;
-    }).join('') : `<div class="panel empty">${state.orders.length ? 'Filtreye uygun sipariş yok.' : 'Henüz sipariş gelmedi.'}</div>`;
+    }).join('') : `<div class="panel empty">${state.orders.length ? 'لا توجد طلبات مطابقة.' : 'لم تصل أي طلبات بعد.'}</div>`;
 }
 
 function expandOrder(id) {
@@ -669,9 +672,9 @@ async function handleOrderChange(e) {
         const status = e.target.value;
         const wasPending = order.status === 'new';
         const { error } = await sb.from('orders').update({ status }).eq('id', id);
-        if (error) { e.target.value = order.status; return fail(error, 'Durum güncellenemedi'); }
+        if (error) { e.target.value = order.status; return fail(error, 'تعذر تحديث الحالة'); }
         order.status = status;
-        toast(`Sipariş #${id}: ${ORDER_STATUSES[status]}`);
+        toast(`الطلب #${id}: ${ORDER_STATUSES[status]}`);
         if (wasPending && (status === 'confirmed' || status === 'shipped' || status === 'delivered')) {
             await offerStockDeduction(order);
         }
@@ -682,9 +685,9 @@ async function handleOrderChange(e) {
     } else if (e.target.matches('[data-order-note]')) {
         const admin_note = e.target.value;
         const { error } = await sb.from('orders').update({ admin_note }).eq('id', id);
-        if (error) return fail(error, 'Not kaydedilemedi');
+        if (error) return fail(error, 'تعذر حفظ الملاحظة');
         order.admin_note = admin_note;
-        toast('Not kaydedildi');
+        toast('تم حفظ الملاحظة');
     }
 }
 
@@ -694,27 +697,27 @@ async function offerStockDeduction(order) {
         .filter(x => x.product);
     if (!lines.length) return;
     const summary = lines.map(x => `• ${x.product.title_ar}: ${x.product.stock_quantity} → ${Math.max(0, x.product.stock_quantity - (Number(x.item.quantity) || 0))}`).join('\n');
-    if (!confirm(`Bu siparişteki ürünler stoktan düşülsün mü?\n\n${summary}`)) return;
+    if (!confirm(`هل تريد خصم منتجات هذا الطلب من المخزون؟\n\n${summary}`)) return;
     try {
         for (const { item, product } of lines) {
             await updateProduct(product.id, { stock_quantity: Math.max(0, product.stock_quantity - (Number(item.quantity) || 0)) });
         }
         renderProducts();
-        toast('Stok güncellendi');
+        toast('تم تحديث المخزون');
     } catch (err) {
-        fail(err, 'Stok güncellenemedi');
+        fail(err, 'تعذر تحديث المخزون');
     }
 }
 
 async function deleteOrder(id) {
-    if (!confirm(`#${id} numaralı sipariş kalıcı olarak silinsin mi?`)) return;
+    if (!confirm(`هل تريد حذف الطلب رقم #${id} نهائياً؟`)) return;
     const { error } = await sb.from('orders').delete().eq('id', id);
-    if (error) return fail(error, 'Silinemedi');
+    if (error) return fail(error, 'تعذر الحذف');
     state.orders = state.orders.filter(o => o.id !== id);
     renderOrders();
     renderDashboard();
     renderBadges();
-    toast('Sipariş silindi');
+    toast('تم حذف الطلب');
 }
 
 // ---------- product requests ----------
@@ -727,13 +730,13 @@ function renderRequests() {
                 <span class="order-customer">
                     <b dir="auto">${esc(r.requested_product)}</b>
                     <span class="meta" dir="auto">${esc(r.customer_name)} · ${esc(r.customer_phone)} · ${formatDate(r.created_at)}</span>
-                    ${r.notes ? `<span class="meta" dir="auto">Not: ${esc(r.notes)}</span>` : ''}
+                    ${r.notes ? `<span class="meta" dir="auto">ملاحظات: ${esc(r.notes)}</span>` : ''}
                 </span>
                 <a class="btn btn-sm" href="${whatsappLink(r.customer_phone)}" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i></a>
-                <button class="btn btn-sm" data-request-done>${r.is_done ? 'Tekrar aç' : '<i class="fa-solid fa-check"></i> Tamamlandı'}</button>
-                <button class="icon-btn" data-request-delete title="Sil"><i class="fa-solid fa-trash"></i></button>
+                <button class="btn btn-sm" data-request-done>${r.is_done ? 'إعادة فتح' : '<i class="fa-solid fa-check"></i> تم'}</button>
+                <button class="icon-btn" data-request-delete title="حذف"><i class="fa-solid fa-trash"></i></button>
             </div>
-        </div>`).join('') : '<div class="panel empty">Henüz talep yok.</div>';
+        </div>`).join('') : '<div class="panel empty">لا توجد طلبات خاصة بعد.</div>';
 }
 
 async function handleRequestClick(e) {
@@ -743,12 +746,12 @@ async function handleRequestClick(e) {
     const req = state.requests.find(r => r.id === id);
     if (e.target.closest('[data-request-done]')) {
         const { error } = await sb.from('product_requests').update({ is_done: !req.is_done }).eq('id', id);
-        if (error) return fail(error, 'Güncellenemedi');
+        if (error) return fail(error, 'تعذر التحديث');
         req.is_done = !req.is_done;
     } else if (e.target.closest('[data-request-delete]')) {
-        if (!confirm('Bu talep silinsin mi?')) return;
+        if (!confirm('هل تريد حذف هذا الطلب؟')) return;
         const { error } = await sb.from('product_requests').delete().eq('id', id);
-        if (error) return fail(error, 'Silinemedi');
+        if (error) return fail(error, 'تعذر الحذف');
         state.requests = state.requests.filter(r => r.id !== id);
     } else {
         return;
@@ -758,6 +761,15 @@ async function handleRequestClick(e) {
 }
 
 // ---------- settings ----------
+
+async function handlePasswordChange(e) {
+    e.preventDefault();
+    const input = $('#newPassword');
+    const { error } = await sb.auth.updateUser({ password: input.value });
+    if (error) return fail(error, 'تعذر تغيير كلمة المرور');
+    input.value = '';
+    toast('تم تغيير كلمة المرور');
+}
 
 async function importFromProductsJson() {
     const btn = $('#importBtn');
@@ -783,18 +795,18 @@ async function importFromProductsJson() {
             is_visible: p.is_visible !== 0
         }));
         if (!rows.length) {
-            toast('Aktarılacak yeni ürün yok — hepsi zaten veritabanında');
+            toast('لا توجد منتجات جديدة للاستيراد — جميعها موجودة');
             return;
         }
-        if (!confirm(`${rows.length} ürün içe aktarılacak. Devam edilsin mi?`)) return;
+        if (!confirm(`سيتم استيراد ${rows.length} منتج. هل تريد المتابعة؟`)) return;
         const { error } = await sb.from('products').insert(rows);
         if (error) throw error;
         const { error: seqError } = await sb.rpc('sync_products_id_seq');
         if (seqError) throw seqError;
         await loadProducts();
-        toast(`${rows.length} ürün içe aktarıldı`);
+        toast(`تم استيراد ${rows.length} منتج`);
     } catch (err) {
-        fail(err, 'İçe aktarma başarısız');
+        fail(err, 'فشل الاستيراد');
     } finally {
         btn.disabled = false;
     }
@@ -807,7 +819,7 @@ function exportProducts() {
         state.costs[p.id] ?? '', p.stock_quantity, p.is_visible ? 1 : 0, p.is_featured ? 1 : 0,
         (p.images || []).join(' | '), p.youtube_url, p.description_ar
     ]);
-    downloadCsv(`urunler-${new Date().toISOString().slice(0, 10)}.csv`, [header, ...rows]);
+    downloadCsv(`products-${new Date().toISOString().slice(0, 10)}.csv`, [header, ...rows]);
 }
 
 function exportOrders() {
@@ -817,7 +829,7 @@ function exportOrders() {
         o.payment_method, o.total_amount,
         (o.items || []).map(i => `${i.product_name} x${i.quantity} @${i.unit_price}`).join(' | '), o.admin_note
     ]);
-    downloadCsv(`siparisler-${new Date().toISOString().slice(0, 10)}.csv`, [header, ...rows]);
+    downloadCsv(`orders-${new Date().toISOString().slice(0, 10)}.csv`, [header, ...rows]);
 }
 
 init();

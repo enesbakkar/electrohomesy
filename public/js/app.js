@@ -2794,7 +2794,8 @@ async function fetchProducts(categorySlug = 'all') {
 async function loadAllProducts() {
     if (typeof ehsDbConfigured === 'function' && ehsDbConfigured()) {
         try {
-            return await ehsFetchProductsFromDb();
+            const dbProducts = await ehsFetchProductsFromDb();
+            if (dbProducts.length > 0) return dbProducts;
         } catch (dbErr) {
             console.warn('Database products load failed, falling back to products.json:', dbErr);
         }
@@ -3292,13 +3293,8 @@ async function handleCheckoutSubmit(e) {
         try {
             await ehsSubmitOrderToDb(orderPayload);
         } catch (err) {
+            // The e-mail notification below still delivers the order
             console.error('Order save failed:', err);
-            if (submitBtn) {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = origBtnHtml;
-            }
-            alert('⚠️ تعذر إرسال الطلب حالياً، يرجى المحاولة مرة أخرى أو التواصل معنا عبر الواتساب.');
-            return;
         }
     }
     await sendOrderEmailNotification(orderPayload);
