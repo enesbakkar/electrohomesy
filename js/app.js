@@ -1363,7 +1363,7 @@ const FALLBACK_PRODUCTS = [
         "category_id": 1,
         "title_ar": "فيليدا ممسحة بخار ستيم بلس",
         "slug": "prod-vl-sp-01-41",
-        "description_ar": "ممسحة بخار لتنظيف وتعقيم الأرضيا�� بدون كيميائيات",
+        "description_ar": "ممسحة بخار لتنظيف وتعقيم الأرضيات بدون كيميائيات",
         "base_price": 440000,
         "discount_price": 390000,
         "main_image": "",
