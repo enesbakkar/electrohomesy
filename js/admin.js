@@ -163,6 +163,8 @@ async function enterApp(session) {
         return;
     }
     showView('appView');
+    // this browser belongs to the shop owner: keep its visits out of the statistics
+    try { localStorage.setItem('ehs_is_admin', '1'); } catch (e) {}
     setupUi();
     await loadAll();
     setInterval(() => loadOrdersAndRequests().catch(() => {}), REFRESH_INTERVAL_MS);
@@ -260,6 +262,22 @@ function setupUi() {
 
     $('#passwordForm').addEventListener('submit', handlePasswordChange);
     $('#importBtn').addEventListener('click', importFromProductsJson);
+    $('#analyticsRange').addEventListener('click', e => {
+        const btn = e.target.closest('[data-days]');
+        if (!btn) return;
+        $$('#analyticsRange [data-days]').forEach(b => b.classList.toggle('active', b === btn));
+        analyticsDays = Number(btn.dataset.days);
+        loadAnalytics();
+    });
+    $('#shareLinks').addEventListener('click', e => {
+        const btn = e.target.closest('[data-copy]');
+        if (!btn) return;
+        const input = btn.parentElement.querySelector('input');
+        input.select();
+        (navigator.clipboard ? navigator.clipboard.writeText(input.value) : Promise.reject())
+            .then(() => toast('تم نسخ الرابط'))
+            .catch(() => { document.execCommand('copy'); toast('تم نسخ الرابط'); });
+    });
     $('#exportProductsBtn').addEventListener('click', exportProducts);
     $('#exportOrdersBtn').addEventListener('click', exportOrders);
 }
@@ -267,6 +285,7 @@ function setupUi() {
 function switchTab(tab) {
     $$('.nav-item[data-tab]').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
     $$('.tab').forEach(t => { t.hidden = t.id !== `tab-${tab}`; });
+    if (tab === 'analytics') loadAnalytics();
     window.scrollTo(0, 0);
 }
 
@@ -758,6 +777,141 @@ async function handleRequestClick(e) {
     }
     renderRequests();
     renderBadges();
+}
+
+// ---------- visitor statistics ----------
+
+const SOURCE_LABELS = {
+    google: 'بحث Google',
+    google_ads: 'إعلانات Google',
+    facebook: 'فيسبوك',
+    instagram: 'إنستغرام',
+    whatsapp: 'واتساب',
+    telegram: 'تيليغرام',
+    tiktok: 'تيك توك',
+    youtube: 'يوتيوب',
+    twitter: 'X / تويتر',
+    bing: 'بحث Bing',
+    other_search: 'محركات بحث أخرى',
+    other_site: 'مواقع أخرى',
+    direct: 'مباشر أو واتساب'
+};
+const DEVICE_LABELS = { mobile: 'موبايل', tablet: 'تابلت', desktop: 'كمبيوتر' };
+let analyticsDays = 7;
+
+async function loadAnalytics() {
+    $('#analyticsStats').innerHTML = '<div class="empty">جاري التحميل...</div>';
+    const { data, error } = await sb.rpc('analytics_summary', { days: analyticsDays });
+    if (error) return fail(error, 'تعذر تحميل الإحصائيات');
+    renderAnalytics(data);
+}
+
+function hbarList(rows, labelOf, valueKey = 'views') {
+    if (!rows.length) return '<div class="empty">لا توجد بيانات بعد.</div>';
+    const max = Math.max(...rows.map(r => r[valueKey]), 1);
+    return rows.map(r => `
+        <div class="hbar-row" title="${esc(labelOf(r))}: ${r[valueKey]}">
+            <span class="hbar-label">${esc(labelOf(r))}</span>
+            <span class="hbar-track"><span class="hbar-fill" style="width:${(r[valueKey] / max * 100).toFixed(1)}%"></span></span>
+            <span class="hbar-value">${r[valueKey]}</span>
+        </div>`).join('');
+}
+
+function renderDailyChart(days) {
+    const box = $('#analyticsDaily');
+    if (!days.length) { box.innerHTML = ''; return; }
+    const W = 760, H = 220, padL = 34, padB = 26, padT = 10;
+    const max = Math.max(...days.map(d => d.views), 1);
+    const step = Math.ceil(max / 4) || 1;
+    const top = step * 4;
+    const plotW = W - padL, plotH = H - padB - padT;
+    const slot = plotW / days.length;
+    const barW = Math.max(2, Math.min(28, slot - 2));
+    const y = v => padT + plotH - (v / top) * plotH;
+    const labelEvery = Math.ceil(days.length / 10);
+
+    let grid = '';
+    for (let v = 0; v <= top; v += step) {
+        grid += `<line class="grid-line" x1="${padL}" x2="${W}" y1="${y(v)}" y2="${y(v)}"></line>
+                 <text class="axis-label" x="${padL - 6}" y="${y(v) + 4}" text-anchor="end">${v}</text>`;
+    }
+    const bars = days.map((d, i) => {
+        const x = padL + i * slot + (slot - barW) / 2;
+        const h = Math.max(0, y(0) - y(d.views));
+        const r = Math.min(4, barW / 2, h);
+        // bar anchored to the baseline with a rounded data end
+        const path = h > 0
+            ? `M${x},${y(0)} V${y(0) - h + r} Q${x},${y(0) - h} ${x + r},${y(0) - h} H${x + barW - r} Q${x + barW},${y(0) - h} ${x + barW},${y(0) - h + r} V${y(0)} Z`
+            : '';
+        const label = i % labelEvery === 0
+            ? `<text class="axis-label" x="${x + barW / 2}" y="${H - 8}" text-anchor="middle">${d.day.slice(5).replace('-', '/')}</text>` : '';
+        return `<g class="bar-group" data-i="${i}">
+            ${path ? `<path class="bar" d="${path}"></path>` : ''}
+            <rect class="bar-hit" x="${padL + i * slot}" y="${padT}" width="${slot}" height="${plotH}"></rect>
+            ${label}
+        </g>`;
+    }).join('');
+    box.innerHTML = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="الزيارات اليومية">${grid}${bars}</svg>`;
+
+    const tip = $('#chartTooltip');
+    box.querySelectorAll('.bar-group').forEach(g => {
+        const d = days[Number(g.dataset.i)];
+        g.addEventListener('mousemove', e => {
+            tip.innerHTML = `<b>${d.day}</b><br>${d.views} زيارة · ${d.visitors} زائر`;
+            tip.hidden = false;
+            tip.style.left = (e.clientX + 12) + 'px';
+            tip.style.top = (e.clientY - 40) + 'px';
+            g.querySelector('.bar')?.classList.add('is-hover');
+        });
+        g.addEventListener('mouseleave', () => {
+            tip.hidden = true;
+            g.querySelector('.bar')?.classList.remove('is-hover');
+        });
+    });
+}
+
+function renderAnalytics(d) {
+    const conversion = d.visitors ? (d.orders / d.visitors * 100) : 0;
+    const stats = [
+        { label: 'الزوار', value: d.visitors, sub: 'أشخاص مختلفون (تقريباً)' },
+        { label: 'الزيارات', value: d.views, sub: 'عدد مرات فتح الصفحات' },
+        { label: 'مشاهدات المنتجات', value: d.product_views, sub: 'فتح صفحة منتج' },
+        { label: 'أضيف إلى السلة', value: d.add_to_cart, sub: 'مرات الإضافة' },
+        { label: 'الطلبات', value: d.orders, sub: d.visitors ? `${conversion.toFixed(1)}% من الزوار` : 'بدون الملغاة' }
+    ];
+    $('#analyticsStats').innerHTML = stats.map(s => `
+        <div class="stat">
+            <div class="stat-label">${s.label}</div>
+            <div class="stat-value">${s.value}</div>
+            <div class="stat-sub">${esc(s.sub)}</div>
+        </div>`).join('');
+
+    renderDailyChart(d.daily || []);
+    $('#analyticsSources').innerHTML = hbarList(d.sources || [], r => SOURCE_LABELS[r.source] || r.source);
+    $('#analyticsDevices').innerHTML = hbarList(d.devices || [], r => DEVICE_LABELS[r.device] || r.device);
+    $('#analyticsReferrers').innerHTML = hbarList(d.referrers || [], r => r.host);
+    $('#analyticsCampaigns').innerHTML = (d.campaigns || []).length
+        ? hbarList(d.campaigns, r => [r.source, r.campaign].filter(Boolean).join(' / '))
+        : '<div class="empty">لم تصل زيارات من روابط الحملات بعد.</div>';
+
+    const rows = (d.products || []).map(r => {
+        const p = state.products.find(x => x.id === r.product_id);
+        return `<tr>
+            <td><div class="name" dir="auto">${esc(p ? p.title_ar : `#${r.product_id}`)}</div>${p ? '' : '<div class="meta">منتج محذوف</div>'}</td>
+            <td class="num">${r.views}</td>
+            <td class="num">${r.add_to_cart}</td>
+        </tr>`;
+    }).join('');
+    $('#analyticsProducts tbody').innerHTML = rows || '<tr><td colspan="3" class="empty">لا توجد مشاهدات بعد.</td></tr>';
+
+    const base = 'https://electrohomesy.com/';
+    const links = [['فيسبوك', 'facebook'], ['إنستغرام', 'instagram'], ['واتساب', 'whatsapp'], ['تيليغرام', 'telegram']];
+    $('#shareLinks').innerHTML = links.map(([label, src]) => `
+        <div class="share-link-row">
+            <b>${label}</b>
+            <input type="text" readonly value="${base}?utm_source=${src}">
+            <button type="button" class="btn btn-sm" data-copy>نسخ</button>
+        </div>`).join('');
 }
 
 // ---------- settings ----------

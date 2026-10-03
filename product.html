@@ -522,8 +522,8 @@
 
 
     <!-- App JS -->
-    <script src="/js/db-config.js?v=2.0.0"></script>
-    <script src="/js/app.js?v=37.0.0"></script>
+    <script src="/js/db-config.js?v=3.0.0"></script>
+    <script src="/js/app.js?v=38.0.0"></script>
     <script>
         let detailProduct = null;
         let detailVariant = null;
@@ -813,6 +813,7 @@
             }
 
             saveCart();
+            if (typeof ehsTrack === 'function') ehsTrack('add_to_cart', { page_type: 'product', product_id: detailProduct.id });
             window.location.href = '/#cart-section';
         }
 

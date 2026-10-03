@@ -272,6 +272,8 @@ function closeModal(id) {
 
 // Robust Initialization Handling readyState
 function checkAndInit() {
+    if (typeof ehsTrackPageView === 'function') ehsTrackPageView();
+
     const searchInput = document.getElementById('searchInput');
     if (searchInput && window.innerWidth <= 768) searchInput.placeholder = 'ابحث عن جهاز أو ماركة...';
 
@@ -1015,6 +1017,7 @@ function addToCartCurrentProduct() {
     }
 
     saveCart();
+    if (typeof ehsTrack === 'function') ehsTrack('add_to_cart', { page_type: 'product', product_id: cartItem.product_id });
     closeModal('productModal');
     window.location.hash = '#cart-section';
 }
