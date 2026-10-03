@@ -4,6 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>404 - الصفحة غير موجودة | إلكتروهومسي</title>
+    <meta name="robots" content="noindex">
+    <script>
+        // A product added in the admin panel may not have its pre-built /p/<id>/ page yet:
+        // send the visitor to the live product page instead of showing an error.
+        (function () {
+            var m = window.location.pathname.match(/^\/p\/(\d+)\/?$/);
+            if (m) window.location.replace('/product.html?id=' + m[1]);
+        })();
+    </script>
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <!-- Google Fonts Cairo -->

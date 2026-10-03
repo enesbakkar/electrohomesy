@@ -229,7 +229,7 @@ function generateProductCode(id) {
 
 // Utility: Get product page URL
 function getProductUrl(id) {
-    return `/product.html?id=${id}`;
+    return `/p/${id}/`;
 }
 
 // Utility: Convert YouTube link to embed format
@@ -254,7 +254,7 @@ function getWhatsAppInquiryLink(productTitle, productId) {
     const phone = parts.join('');
     let msg = `السلام عليكم\nهل متوفر هذا الصنف؟\n*${productTitle}*`;
     if (productId) {
-        const productUrl = window.location.origin + `/product.html?id=${productId}`;
+        const productUrl = window.location.origin + getProductUrl(productId);
         msg += `\nالرابط: ${productUrl}`;
     }
     return `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
@@ -272,8 +272,17 @@ function closeModal(id) {
 
 // Robust Initialization Handling readyState
 function checkAndInit() {
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput && window.innerWidth <= 768) searchInput.placeholder = 'ابحث عن جهاز أو ماركة...';
+
     if (document.getElementById('productsGrid')) {
         initStorefront();
+    } else if (searchInput) {
+        // Pages without the product grid (product page): send the search to the store
+        searchInput.addEventListener('keydown', e => {
+            const q = searchInput.value.trim();
+            if (e.key === 'Enter' && q) window.location.href = '/?q=' + encodeURIComponent(q);
+        });
     }
 }
 
@@ -401,8 +410,8 @@ function updateUserAuthUI() {
 let cameFromCheckout = false;
 
 function openUserAuthModal() {
-    if (window.location.pathname.includes('product.html')) {
-        window.location.href = 'index.html#account-section';
+    if (!document.getElementById('productsGrid')) {
+        window.location.href = '/#account-section';
     } else {
         window.location.hash = '#account-section';
     }
@@ -794,6 +803,12 @@ async function fetchProducts(categorySlug = 'all') {
         renderFeaturedCarousel();
         if (currentView === 'cart') renderCartPage();
         if (currentView === 'categories') renderCategoriesPage();
+        const initialQuery = new URLSearchParams(window.location.search).get('q');
+        const searchBox = document.getElementById('searchInput');
+        if (initialQuery && searchBox && !searchBox.value) {
+            searchBox.value = initialQuery;
+            searchBox.dispatchEvent(new Event('input'));
+        }
         return filtered.length > 0 ? filtered : products;
     } catch (err) {
         console.error('All product sources failed:', err);
@@ -1120,8 +1135,8 @@ function renderCartPage() {
 }
 
 function renderCartModal() {
-    if (window.location.pathname.includes('product.html')) {
-        window.location.href = 'index.html#cart-section';
+    if (!document.getElementById('productsGrid')) {
+        window.location.href = '/#cart-section';
     } else {
         window.location.hash = '#cart-section';
     }
@@ -1385,7 +1400,7 @@ function renderFeaturedCarousel() {
         const discountTag = p.discount_price && p.discount_price < p.base_price 
             ? `<div class="discount-tag">خصم ${Math.round((1 - p.discount_price/p.base_price)*100)}%</div>` 
             : '';
-        const productUrl = typeof getProductUrl === 'function' ? getProductUrl(p.id) : `product.html?id=${p.id}`;
+        const productUrl = getProductUrl(p.id);
 
         return `
             <div class="carousel-slide">
