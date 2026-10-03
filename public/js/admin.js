@@ -798,6 +798,12 @@ const SOURCE_LABELS = {
 };
 const DEVICE_LABELS = { mobile: 'موبايل', tablet: 'تابلت', desktop: 'كمبيوتر' };
 let analyticsDays = 7;
+let lastDaily = [];
+let chartResizeTimer = null;
+window.addEventListener('resize', () => {
+    clearTimeout(chartResizeTimer);
+    chartResizeTimer = setTimeout(() => { if (lastDaily.length && !$('#tab-analytics').hidden) renderDailyChart(lastDaily); }, 200);
+});
 
 async function loadAnalytics() {
     $('#analyticsStats').innerHTML = '<div class="empty">جاري التحميل...</div>';
@@ -820,7 +826,7 @@ function hbarList(rows, labelOf, valueKey = 'views') {
 function renderDailyChart(days) {
     const box = $('#analyticsDaily');
     if (!days.length) { box.innerHTML = ''; return; }
-    const W = 760, H = 220, padL = 34, padB = 26, padT = 10;
+    const W = Math.max(320, Math.round(box.clientWidth || 760)), H = 220, padL = 34, padB = 26, padT = 10;
     const max = Math.max(...days.map(d => d.views), 1);
     const step = Math.ceil(max / 4) || 1;
     const top = step * 4;
@@ -851,7 +857,7 @@ function renderDailyChart(days) {
             ${label}
         </g>`;
     }).join('');
-    box.innerHTML = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="الزيارات اليومية">${grid}${bars}</svg>`;
+    box.innerHTML = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="الزيارات اليومية">${grid}${bars}</svg>`;
 
     const tip = $('#chartTooltip');
     box.querySelectorAll('.bar-group').forEach(g => {
@@ -886,7 +892,8 @@ function renderAnalytics(d) {
             <div class="stat-sub">${esc(s.sub)}</div>
         </div>`).join('');
 
-    renderDailyChart(d.daily || []);
+    lastDaily = d.daily || [];
+    renderDailyChart(lastDaily);
     $('#analyticsSources').innerHTML = hbarList(d.sources || [], r => SOURCE_LABELS[r.source] || r.source);
     $('#analyticsDevices').innerHTML = hbarList(d.devices || [], r => DEVICE_LABELS[r.device] || r.device);
     $('#analyticsReferrers').innerHTML = hbarList(d.referrers || [], r => r.host);
