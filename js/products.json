@@ -18,12 +18,12 @@
     "youtube_url": "https://www.youtube.com/watch?v=Afk3jznDe6o",
     "is_featured": 1,
     "is_visible": 1,
-    "stock_quantity": 1,
+    "stock_quantity": 3,
     "sku": "PH-HC3000",
     "brand": "Philips",
     "variants": [
       {
-        "id": 1,
+        "id": 100,
         "product_id": 1,
         "brand": "Philips",
         "model_name": "PH-HC3000",
@@ -32,7 +32,7 @@
           "الموديل": "PH-HC3000"
         },
         "price_modifier": 0,
-        "stock_quantity": 1,
+        "stock_quantity": 3,
         "sku": "PH-HC3000"
       }
     ]
@@ -56,12 +56,12 @@
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
-    "stock_quantity": 1,
+    "stock_quantity": 0,
     "sku": "51-M1000s",
     "brand": "Braun",
     "variants": [
       {
-        "id": 2,
+        "id": 200,
         "product_id": 2,
         "brand": "Braun",
         "model_name": "51-M1000s",
@@ -70,7 +70,7 @@
           "الموديل": "51-M1000s"
         },
         "price_modifier": 0,
-        "stock_quantity": 1,
+        "stock_quantity": 0,
         "sku": "51-M1000s"
       }
     ]
@@ -99,7 +99,7 @@
     "brand": "LIVARNO home",
     "variants": [
       {
-        "id": 3,
+        "id": 300,
         "product_id": 3,
         "brand": "LIVARNO home",
         "model_name": "LV-TL-01",
@@ -136,7 +136,7 @@
     "brand": "CARRERA",
     "variants": [
       {
-        "id": 4,
+        "id": 400,
         "product_id": 4,
         "brand": "CARRERA",
         "model_name": "CR-MG-01",
@@ -147,44 +147,6 @@
         "price_modifier": 0,
         "stock_quantity": 2,
         "sku": "CR-MG-01"
-      }
-    ]
-  },
-  {
-    "id": 5,
-    "category_id": 4,
-    "title_ar": "براون ماكينة حلاقة الجسم سلسلة 5",
-    "slug": "prod-br-bg5-5",
-    "description_ar": "ماكينة حلاقة وتشذيب شعر الجسم للبشرة الحساسة",
-    "base_price": 40,
-    "discount_price": 29.99,
-    "main_image": "https://m.media-amazon.com/images/I/71UOLOuCmtL._AC_SX679_.jpg",
-    "images": [
-      "https://m.media-amazon.com/images/I/71UOLOuCmtL._AC_SX679_.jpg",
-      "https://m.media-amazon.com/images/I/61TbcUTksuL._AC_SY879_.jpg",
-      "https://m.media-amazon.com/images/I/716ExiEISVL._AC_SY879_.jpg",
-      "https://www.gosupps.com/media/catalog/product/cache/25/image/1500x/040ec09b1e35df139433887a97daa66f/9/1/91WSittqezL._SL1500_.jpg",
-      "https://www.gosupps.com/media/catalog/product/cache/25/image/1500x/040ec09b1e35df139433887a97daa66f/9/1/91msa9eFHYL._SL1500_.jpg"
-    ],
-    "youtube_url": "",
-    "is_featured": 0,
-    "is_visible": 1,
-    "stock_quantity": 1,
-    "sku": "BR-BG5",
-    "brand": "Braun",
-    "variants": [
-      {
-        "id": 5,
-        "product_id": 5,
-        "brand": "Braun",
-        "model_name": "BR-BG5",
-        "variant_attributes": {
-          "الماركة": "Braun",
-          "الموديل": "BR-BG5"
-        },
-        "price_modifier": 0,
-        "stock_quantity": 1,
-        "sku": "BR-BG5"
       }
     ]
   },
@@ -212,7 +174,7 @@
     "brand": "Krups",
     "variants": [
       {
-        "id": 7,
+        "id": 700,
         "product_id": 7,
         "brand": "Krups",
         "model_name": "KP1A08",
@@ -223,44 +185,6 @@
         "price_modifier": 0,
         "stock_quantity": 1,
         "sku": "KP1A08"
-      }
-    ]
-  },
-  {
-    "id": 8,
-    "category_id": 4,
-    "title_ar": "براون ماكينة حلاقة شاملة سلسلة 3 / 8 في 1",
-    "slug": "prod-br-aio3-8",
-    "description_ar": "طقم حلاقة وتصفيف شامل 8 في 1 للحد من اللحية والشعر",
-    "base_price": 50,
-    "discount_price": 35,
-    "main_image": "https://assets.mmsrg.com/isr/166325/c1/-/ASSET_MMS_150572321?x=697&y=523&format=webp&quality=60&sp=yes&strip=yes&trim=yes&ex=697&ey=523&align=center&resizesource&unsharp=0.5x0.5",
-    "images": [
-      "https://assets.mmsrg.com/isr/166325/c1/-/ASSET_MMS_150572321?x=697&y=523&format=webp&quality=60&sp=yes&strip=yes&trim=yes&ex=697&ey=523&align=center&resizesource&unsharp=0.5x0.5",
-      "https://assets.mmsrg.com/isr/166325/c1/-/ASSET_MMS_150572327?x=697&y=523&format=webp&quality=60&sp=yes&strip=yes&trim=yes&ex=697&ey=523&align=center&resizesource&unsharp=0.5x0.5",
-      "https://assets.mmsrg.com/isr/166325/c1/-/ASSET_MMS_150572326?x=697&y=523&format=webp&quality=60&sp=yes&strip=yes&trim=yes&ex=697&ey=523&align=center&resizesource&unsharp=0.5x0.5",
-      "https://prod.cdn.plein.nl/producten/300x300/1107979_3.jpg",
-      "https://prod.cdn.plein.nl/producten/300x300/1107979_5.jpg"
-    ],
-    "youtube_url": "",
-    "is_featured": 0,
-    "is_visible": 1,
-    "stock_quantity": 1,
-    "sku": "BR-AIO3",
-    "brand": "Braun",
-    "variants": [
-      {
-        "id": 8,
-        "product_id": 8,
-        "brand": "Braun",
-        "model_name": "BR-AIO3",
-        "variant_attributes": {
-          "الماركة": "Braun",
-          "الموديل": "BR-AIO3"
-        },
-        "price_modifier": 0,
-        "stock_quantity": 1,
-        "sku": "BR-AIO3"
       }
     ]
   },
@@ -287,7 +211,7 @@
     "brand": "LIVARNO home",
     "variants": [
       {
-        "id": 9,
+        "id": 900,
         "product_id": 9,
         "brand": "LIVARNO home",
         "model_name": "LV-WC-01",
@@ -325,7 +249,7 @@
     "brand": "SilverCrest",
     "variants": [
       {
-        "id": 10,
+        "id": 1000,
         "product_id": 10,
         "brand": "SilverCrest",
         "model_name": "SC-DW-01",
@@ -359,7 +283,7 @@
     "brand": "Switch On",
     "variants": [
       {
-        "id": 11,
+        "id": 1100,
         "product_id": 11,
         "brand": "Switch On",
         "model_name": "SO-SM-01",
@@ -396,7 +320,7 @@
     "brand": "Tefal",
     "variants": [
       {
-        "id": 12,
+        "id": 1200,
         "product_id": 12,
         "brand": "Tefal",
         "model_name": "TF-TS-01",
@@ -407,44 +331,6 @@
         "price_modifier": 0,
         "stock_quantity": 1,
         "sku": "TF-TS-01"
-      }
-    ]
-  },
-  {
-    "id": 13,
-    "category_id": 1,
-    "title_ar": "فيليبس مكواة  بخار HI5920",
-    "slug": "prod-hi5920-13",
-    "description_ar": "مكواة بخار قوية مع خزان ماء كبير لكي سريع",
-    "base_price": 80,
-    "discount_price": 59.99,
-    "main_image": "https://m.media-amazon.com/images/I/61gCP32-JfL._AC_SX679_.jpg",
-    "images": [
-      "https://m.media-amazon.com/images/I/61gCP32-JfL._AC_SX679_.jpg",
-      "https://m.media-amazon.com/images/I/616xyFD50jL._AC_SX569_.jpg",
-      "https://m.media-amazon.com/images/I/71pIKuwDSFL._AC_SX679_.jpg",
-      "https://m.media-amazon.com/images/I/81k53s5CwuL._AC_SX679_.jpg",
-      "https://m.media-amazon.com/images/I/61zPBsuH3FL._AC_SX679_.jpg"
-    ],
-    "youtube_url": "",
-    "is_featured": 0,
-    "is_visible": 1,
-    "stock_quantity": 1,
-    "sku": "HI5920",
-    "brand": "Philips",
-    "variants": [
-      {
-        "id": 13,
-        "product_id": 13,
-        "brand": "Philips",
-        "model_name": "HI5920",
-        "variant_attributes": {
-          "الماركة": "Philips",
-          "الموديل": "HI5920"
-        },
-        "price_modifier": 0,
-        "stock_quantity": 1,
-        "sku": "HI5920"
       }
     ]
   },
@@ -468,7 +354,7 @@
     "brand": "Switch On",
     "variants": [
       {
-        "id": 14,
+        "id": 1400,
         "product_id": 14,
         "brand": "Switch On",
         "model_name": "SO-KT-01",
@@ -502,7 +388,7 @@
     "brand": "Switch On",
     "variants": [
       {
-        "id": 15,
+        "id": 1500,
         "product_id": 15,
         "brand": "Switch On",
         "model_name": "SO-HB-01",
@@ -539,7 +425,7 @@
     "brand": "Dr. Senst",
     "variants": [
       {
-        "id": 16,
+        "id": 1600,
         "product_id": 16,
         "brand": "Dr. Senst",
         "model_name": "DS-TH-01",
@@ -573,7 +459,7 @@
     "brand": "Switch On",
     "variants": [
       {
-        "id": 18,
+        "id": 1800,
         "product_id": 18,
         "brand": "Switch On",
         "model_name": "SO-KT-02",
@@ -610,7 +496,7 @@
     "brand": "Switch On",
     "variants": [
       {
-        "id": 20,
+        "id": 2000,
         "product_id": 20,
         "brand": "Switch On",
         "model_name": "SO-CG-01",
@@ -621,42 +507,6 @@
         "price_modifier": 0,
         "stock_quantity": 1,
         "sku": "SO-CG-01"
-      }
-    ]
-  },
-  {
-    "id": 21,
-    "category_id": 5,
-    "title_ar": "باركسايد كاشف متعدد الأغراض PMFD A3",
-    "slug": "prod-pmfd-a3-21",
-    "description_ar": "جهاز كشف متعدد الاستخدامات للمعادن والكابلات بالجدران",
-    "base_price": 10,
-    "discount_price": null,
-    "main_image": "https://www.lidl.nl/assets/gcpade97b96dd0448628b63524d3b33ddf0.jpg",
-    "images": [
-      "https://www.lidl.nl/assets/gcpade97b96dd0448628b63524d3b33ddf0.jpg",
-      "https://www.lidl.nl/assets/gcp8b229c5e56bb4831b672bafe057e5609.jpg",
-      "https://www.lidl.nl/assets/gcpb284d0d9a85646d6a79743f7ab1763d1.jpg"
-    ],
-    "youtube_url": "https://www.youtube.com/watch?v=QgdWT9y9tq8",
-    "is_featured": 0,
-    "is_visible": 1,
-    "stock_quantity": 1,
-    "sku": "PMFD A3",
-    "brand": "Parkside",
-    "variants": [
-      {
-        "id": 21,
-        "product_id": 21,
-        "brand": "Parkside",
-        "model_name": "PMFD A3",
-        "variant_attributes": {
-          "الماركة": "Parkside",
-          "الموديل": "PMFD A3"
-        },
-        "price_modifier": 0,
-        "stock_quantity": 1,
-        "sku": "PMFD A3"
       }
     ]
   },
@@ -683,7 +533,7 @@
     "brand": "SilverCrest",
     "variants": [
       {
-        "id": 22,
+        "id": 2200,
         "product_id": 22,
         "brand": "SilverCrest",
         "model_name": "SC-CG-02",
@@ -721,7 +571,7 @@
     "brand": "Severin",
     "variants": [
       {
-        "id": 23,
+        "id": 2300,
         "product_id": 23,
         "brand": "Severin",
         "model_name": "SV-HP-01",
@@ -759,7 +609,7 @@
     "brand": "Krups",
     "variants": [
       {
-        "id": 24,
+        "id": 2400,
         "product_id": 24,
         "brand": "Krups",
         "model_name": "F30908",
@@ -797,7 +647,7 @@
     "brand": "Switch On",
     "variants": [
       {
-        "id": 25,
+        "id": 2500,
         "product_id": 25,
         "brand": "Switch On",
         "model_name": "SO-SW-01",
@@ -835,7 +685,7 @@
     "brand": "Switch On",
     "variants": [
       {
-        "id": 26,
+        "id": 2600,
         "product_id": 26,
         "brand": "Switch On",
         "model_name": "SO-CM-01",
@@ -873,7 +723,7 @@
     "brand": "SilverCrest",
     "variants": [
       {
-        "id": 27,
+        "id": 2700,
         "product_id": 27,
         "brand": "SilverCrest",
         "model_name": "SC-GR-01",
@@ -911,7 +761,7 @@
     "brand": "Switch On",
     "variants": [
       {
-        "id": 28,
+        "id": 2800,
         "product_id": 28,
         "brand": "Switch On",
         "model_name": "SO-HV-01",
@@ -949,7 +799,7 @@
     "brand": "Rowenta",
     "variants": [
       {
-        "id": 29,
+        "id": 2900,
         "product_id": 29,
         "brand": "Rowenta",
         "model_name": "RW-HD-01",
@@ -987,7 +837,7 @@
     "brand": "Bosch",
     "variants": [
       {
-        "id": 30,
+        "id": 3000,
         "product_id": 30,
         "brand": "Bosch",
         "model_name": "BS-CM300",
@@ -1021,7 +871,7 @@
     "brand": "Switch On",
     "variants": [
       {
-        "id": 31,
+        "id": 3100,
         "product_id": 31,
         "brand": "Switch On",
         "model_name": "SO-KT-03",
@@ -1057,7 +907,7 @@
     "brand": "One For All",
     "variants": [
       {
-        "id": 32,
+        "id": 3200,
         "product_id": 32,
         "brand": "One For All",
         "model_name": "OFA-URC-01",
@@ -1068,44 +918,6 @@
         "price_modifier": 0,
         "stock_quantity": 1,
         "sku": "OFA-URC-01"
-      }
-    ]
-  },
-  {
-    "id": 33,
-    "category_id": 1,
-    "title_ar": "فيليبس مكواة  بخار سلسلة 2000",
-    "slug": "prod-ph-sg2000-33",
-    "description_ar": "مولد بخار قوي لكي الملابس وإزالة التجاعيد",
-    "base_price": 75,
-    "discount_price": 59.99,
-    "main_image": "https://media.s-bol.com/4q4M3X6QB647/wGoAq1/550x588.jpg",
-    "images": [
-      "https://media.s-bol.com/4q4M3X6QB647/wGoAq1/550x588.jpg",
-      "https://media.s-bol.com/gG6mEzpnBq7r/wGoAq1/550x401.jpg",
-      "https://media.s-bol.com/8xOQN433jY5j/wGoAq1/404x840.jpg",
-      "https://media.s-bol.com/jkLpKDY0GwAy/wGoAq1/550x519.jpg",
-      "https://media.s-bol.com/1nQJNR6Wy4M0/wGoAq1/550x550.jpg"
-    ],
-    "youtube_url": "",
-    "is_featured": 0,
-    "is_visible": 1,
-    "stock_quantity": 1,
-    "sku": "PH-SG2000",
-    "brand": "Philips",
-    "variants": [
-      {
-        "id": 33,
-        "product_id": 33,
-        "brand": "Philips",
-        "model_name": "PH-SG2000",
-        "variant_attributes": {
-          "الماركة": "Philips",
-          "الموديل": "PH-SG2000"
-        },
-        "price_modifier": 0,
-        "stock_quantity": 1,
-        "sku": "PH-SG2000"
       }
     ]
   },
@@ -1133,7 +945,7 @@
     "brand": "Bosch",
     "variants": [
       {
-        "id": 34,
+        "id": 3400,
         "product_id": 34,
         "brand": "Bosch",
         "model_name": "BS-TAS-01",
@@ -1167,7 +979,7 @@
     "brand": "Switch On",
     "variants": [
       {
-        "id": 35,
+        "id": 3500,
         "product_id": 35,
         "brand": "Switch On",
         "model_name": "SO-CF-01",
@@ -1205,7 +1017,7 @@
     "brand": "SilverCrest",
     "variants": [
       {
-        "id": 36,
+        "id": 3600,
         "product_id": 36,
         "brand": "SilverCrest",
         "model_name": "SC-PM-01",
@@ -1243,7 +1055,7 @@
     "brand": "Braun",
     "variants": [
       {
-        "id": 37,
+        "id": 3700,
         "product_id": 37,
         "brand": "Braun",
         "model_name": "BR-BT5",
@@ -1281,7 +1093,7 @@
     "brand": "Philips",
     "variants": [
       {
-        "id": 38,
+        "id": 3800,
         "product_id": 38,
         "brand": "Philips",
         "model_name": "PH-EP800",
@@ -1318,7 +1130,7 @@
     "brand": "SilverCrest",
     "variants": [
       {
-        "id": 39,
+        "id": 3900,
         "product_id": 39,
         "brand": "SilverCrest",
         "model_name": "SC-RG-01",
@@ -1351,12 +1163,12 @@
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
-    "stock_quantity": 1,
+    "stock_quantity": 2,
     "sku": "RW-HD-02",
     "brand": "Rowenta",
     "variants": [
       {
-        "id": 40,
+        "id": 4000,
         "product_id": 40,
         "brand": "Rowenta",
         "model_name": "RW-HD-02",
@@ -1365,7 +1177,7 @@
           "الموديل": "RW-HD-02"
         },
         "price_modifier": 0,
-        "stock_quantity": 1,
+        "stock_quantity": 2,
         "sku": "RW-HD-02"
       }
     ]
@@ -1389,12 +1201,12 @@
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
-    "stock_quantity": 1,
+    "stock_quantity": 2,
     "sku": "VL-SP-01",
     "brand": "Vileda",
     "variants": [
       {
-        "id": 41,
+        "id": 4100,
         "product_id": 41,
         "brand": "Vileda",
         "model_name": "VL-SP-01",
@@ -1403,7 +1215,7 @@
           "الموديل": "VL-SP-01"
         },
         "price_modifier": 0,
-        "stock_quantity": 1,
+        "stock_quantity": 2,
         "sku": "VL-SP-01"
       }
     ]
@@ -1427,12 +1239,12 @@
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
-    "stock_quantity": 1,
+    "stock_quantity": 2,
     "sku": "SC-MW-01",
     "brand": "SilverCrest",
     "variants": [
       {
-        "id": 42,
+        "id": 4200,
         "product_id": 42,
         "brand": "SilverCrest",
         "model_name": "SC-MW-01",
@@ -1441,7 +1253,7 @@
           "الموديل": "SC-MW-01"
         },
         "price_modifier": 0,
-        "stock_quantity": 1,
+        "stock_quantity": 2,
         "sku": "SC-MW-01"
       }
     ]
@@ -1464,7 +1276,7 @@
     "brand": "LIVARNO home",
     "variants": [
       {
-        "id": 43,
+        "id": 4300,
         "product_id": 43,
         "brand": "LIVARNO home",
         "model_name": "LV-WL-01",
@@ -1498,7 +1310,7 @@
     "brand": "LIVARNO home",
     "variants": [
       {
-        "id": 44,
+        "id": 4400,
         "product_id": 44,
         "brand": "LIVARNO home",
         "model_name": "LV-CL-01",
@@ -1534,7 +1346,7 @@
     "brand": "Weinberger",
     "variants": [
       {
-        "id": 45,
+        "id": 4500,
         "product_id": 45,
         "brand": "Weinberger",
         "model_name": "WB-IN-01",
@@ -1572,7 +1384,7 @@
     "brand": "Severin",
     "variants": [
       {
-        "id": 46,
+        "id": 4600,
         "product_id": 46,
         "brand": "Severin",
         "model_name": "SV-VC-01",
@@ -1606,7 +1418,7 @@
     "brand": "LIVARNO home",
     "variants": [
       {
-        "id": 47,
+        "id": 4700,
         "product_id": 47,
         "brand": "LIVARNO home",
         "model_name": "LV-TL-02",
@@ -1638,7 +1450,7 @@
     "brand": "LIVARNO home",
     "variants": [
       {
-        "id": 48,
+        "id": 4800,
         "product_id": 48,
         "brand": "LIVARNO home",
         "model_name": "LV-SL-01",
@@ -1676,7 +1488,7 @@
     "brand": "Parkside",
     "variants": [
       {
-        "id": 49,
+        "id": 4900,
         "product_id": 49,
         "brand": "Parkside",
         "model_name": "PS-SL-01",
@@ -1710,7 +1522,7 @@
     "brand": "LIVOBO",
     "variants": [
       {
-        "id": 50,
+        "id": 5000,
         "product_id": 50,
         "brand": "LIVOBO",
         "model_name": "LB-SL-01",
@@ -1742,7 +1554,7 @@
     "brand": "LIVARNO home",
     "variants": [
       {
-        "id": 51,
+        "id": 5100,
         "product_id": 51,
         "brand": "LIVARNO home",
         "model_name": "LV-LC-01",
@@ -1779,7 +1591,7 @@
     "brand": "LIVARNO home",
     "variants": [
       {
-        "id": 52,
+        "id": 5200,
         "product_id": 52,
         "brand": "LIVARNO home",
         "model_name": "LV-TL-03",
@@ -1817,7 +1629,7 @@
     "brand": "Braun",
     "variants": [
       {
-        "id": 53,
+        "id": 5300,
         "product_id": 53,
         "brand": "Braun",
         "model_name": "BR-BG3",
@@ -1851,7 +1663,7 @@
     "brand": "LIVOBO",
     "variants": [
       {
-        "id": 54,
+        "id": 5400,
         "product_id": 54,
         "brand": "LIVOBO",
         "model_name": "LB-TL-01",
@@ -1884,12 +1696,12 @@
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
-    "stock_quantity": 1,
+    "stock_quantity": 0,
     "sku": "PH-AIO3000",
     "brand": "Philips",
     "variants": [
       {
-        "id": 55,
+        "id": 5500,
         "product_id": 55,
         "brand": "Philips",
         "model_name": "PH-AIO3000",
@@ -1898,7 +1710,7 @@
           "الموديل": "PH-AIO3000"
         },
         "price_modifier": 0,
-        "stock_quantity": 1,
+        "stock_quantity": 0,
         "sku": "PH-AIO3000"
       }
     ]
@@ -1921,12 +1733,12 @@
     "youtube_url": "",
     "is_featured": 0,
     "is_visible": 1,
-    "stock_quantity": 1,
+    "stock_quantity": 0,
     "sku": "S1141",
     "brand": "Philips",
     "variants": [
       {
-        "id": 56,
+        "id": 5600,
         "product_id": 56,
         "brand": "Philips",
         "model_name": "S1141",
@@ -1935,7 +1747,7 @@
           "الموديل": "S1141"
         },
         "price_modifier": 0,
-        "stock_quantity": 1,
+        "stock_quantity": 0,
         "sku": "S1141"
       }
     ]
