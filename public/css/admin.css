@@ -231,3 +231,34 @@ label small { font-weight: 400; color: var(--muted); }
 [dir="auto"]:not(input):not(textarea) { text-align: start; }
 .num { direction: ltr; unicode-bidi: isolate; }
 .inline-form { display: flex; gap: 8px; max-width: 420px; }
+
+/* Visitor statistics */
+.range-picker { display: flex; gap: 6px; flex-wrap: wrap; }
+.range-picker .btn.active { background: var(--primary); border-color: var(--primary); color: #fff; }
+.analytics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.analytics-grid .panel { margin-bottom: 16px; }
+.daily-chart { position: relative; width: 100%; }
+.daily-chart svg { display: block; width: 100%; height: 220px; overflow: visible; }
+.daily-chart .grid-line { stroke: #e2e8f0; stroke-width: 1; }
+.daily-chart .axis-label { fill: var(--muted); font-size: 11px; font-family: 'Cairo', sans-serif; }
+.daily-chart .bar { fill: var(--primary); }
+.daily-chart .bar-hit { fill: transparent; cursor: default; }
+.daily-chart .bar-hit:hover + .bar, .daily-chart .bar.is-hover { fill: var(--accent); }
+.chart-tooltip {
+    position: fixed; z-index: 1000; pointer-events: none; background: var(--text); color: #fff;
+    padding: 6px 10px; border-radius: 8px; font-size: 12px; line-height: 1.5; white-space: nowrap;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+}
+.hbar-row { display: grid; grid-template-columns: 120px 1fr 64px; align-items: center; gap: 10px; padding: 6px 0; }
+.hbar-label { font-weight: 600; font-size: 13px; }
+.hbar-track { display: block; height: 10px; background: #f1f5f9; border-radius: 6px; overflow: hidden; }
+.hbar-fill { display: block; height: 100%; background: var(--primary); border-radius: 6px; min-width: 2px; }
+.hbar-value { font-variant-numeric: tabular-nums; text-align: end; color: var(--text); font-size: 13px; }
+.share-links { display: flex; flex-direction: column; gap: 8px; }
+.share-link-row { display: flex; gap: 8px; align-items: center; }
+.share-link-row b { min-width: 76px; }
+.share-link-row input { flex: 1; direction: ltr; font-size: 12px; background: #f8fafc; }
+@media (max-width: 860px) {
+    .analytics-grid { grid-template-columns: 1fr; }
+    .hbar-row { grid-template-columns: 92px 1fr 52px; }
+}

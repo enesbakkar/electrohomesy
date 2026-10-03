@@ -119,3 +119,129 @@ function ehsSubmitRequestToDb(req) {
         notes: req.notes || ''
     });
 }
+
+// ---------- Visitor statistics (admin panel → الزيارات) ----------
+// Stores only: page, product, traffic source, device type and a random visitor id kept in this browser.
+
+function ehsSafeStorage(kind) {
+    try { return window[kind]; } catch (e) { return null; }
+}
+
+function ehsClassifySource() {
+    const params = new URLSearchParams(window.location.search);
+    const utm = (params.get('utm_source') || '').toLowerCase();
+    const ua = navigator.userAgent || '';
+    let refHost = '';
+    try { refHost = document.referrer ? new URL(document.referrer).hostname.replace(/^www\./, '') : ''; } catch (e) {}
+    if (refHost === window.location.hostname.replace(/^www\./, '')) refHost = '';
+
+    const byName = name => {
+        if (/^(fb|facebook|meta)/.test(name)) return 'facebook';
+        if (/^(ig|insta)/.test(name)) return 'instagram';
+        if (/^(wa|whatsapp)/.test(name)) return 'whatsapp';
+        if (/^(tg|telegram)/.test(name)) return 'telegram';
+        if (/google/.test(name)) return 'google';
+        if (/tiktok/.test(name)) return 'tiktok';
+        return '';
+    };
+
+    let source = '';
+    if (utm) source = byName(utm) || utm.slice(0, 40);
+    else if (params.has('fbclid') || /FBAN|FBAV|FB_IAB/.test(ua)) source = 'facebook';
+    else if (/Instagram/.test(ua)) source = 'instagram';
+    else if (params.has('gclid')) source = 'google_ads';
+    else if (refHost) {
+        if (/(^|\.)google\./.test(refHost)) source = 'google';
+        else if (/(^|\.)(facebook\.com|fb\.com|fb\.me)$/.test(refHost)) source = 'facebook';
+        else if (/(^|\.)instagram\.com$/.test(refHost)) source = 'instagram';
+        else if (/(^|\.)(whatsapp\.com|wa\.me)$/.test(refHost)) source = 'whatsapp';
+        else if (/(^|\.)(t\.me|telegram\.org)$/.test(refHost)) source = 'telegram';
+        else if (/(^|\.)bing\.com$/.test(refHost)) source = 'bing';
+        else if (/(^|\.)(yandex\.\w+|duckduckgo\.com|yahoo\.com)$/.test(refHost)) source = 'other_search';
+        else if (/(^|\.)(youtube\.com|youtu\.be)$/.test(refHost)) source = 'youtube';
+        else if (/(^|\.)tiktok\.com$/.test(refHost)) source = 'tiktok';
+        else if (/(^|\.)(t\.co|twitter\.com|x\.com)$/.test(refHost)) source = 'twitter';
+        else source = 'other_site';
+    } else source = 'direct';
+
+    return {
+        source,
+        referrer_host: refHost.slice(0, 120),
+        utm_source: utm.slice(0, 80),
+        utm_campaign: (params.get('utm_campaign') || '').slice(0, 120)
+    };
+}
+
+function ehsTrackingDisabled() {
+    const ua = navigator.userAgent || '';
+    if (navigator.webdriver || /bot|crawl|spider|slurp|lighthouse|headless|preview|facebookexternalhit/i.test(ua)) return true;
+    const local = ehsSafeStorage('localStorage');
+    try { if (local && local.getItem('ehs_is_admin') === '1') return true; } catch (e) {}
+    return !ehsDbConfigured();
+}
+
+// The first page of a visit decides where the visit came from; later pages reuse it.
+function ehsSessionSource() {
+    const session = ehsSafeStorage('sessionStorage');
+    try {
+        const saved = session && session.getItem('ehs_source');
+        if (saved) return JSON.parse(saved);
+    } catch (e) {}
+    const info = ehsClassifySource();
+    try { if (session) session.setItem('ehs_source', JSON.stringify(info)); } catch (e) {}
+    return info;
+}
+
+function ehsVisitorId() {
+    const local = ehsSafeStorage('localStorage');
+    try {
+        let id = local && local.getItem('ehs_vid');
+        if (!id) {
+            id = (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(36).slice(2));
+            if (local) local.setItem('ehs_vid', id);
+        }
+        return id.slice(0, 64);
+    } catch (e) {
+        return '';
+    }
+}
+
+function ehsTrack(eventType, details) {
+    try {
+        if (ehsTrackingDisabled()) return;
+        const ua = navigator.userAgent || '';
+        const device = /iPad|Tablet/i.test(ua) ? 'tablet' : (/Mobi|Android|iPhone/i.test(ua) ? 'mobile' : 'desktop');
+        const row = Object.assign({
+            event_type: eventType,
+            page_type: 'other',
+            path: (window.location.pathname + window.location.search).slice(0, 300),
+            product_id: null,
+            device,
+            visitor_id: ehsVisitorId()
+        }, ehsSessionSource(), details || {});
+        const { SUPABASE_URL } = window.EHS_CONFIG;
+        fetch(`${SUPABASE_URL}/rest/v1/page_events`, {
+            method: 'POST',
+            keepalive: true,
+            headers: ehsDbHeaders({ 'Content-Type': 'application/json', Prefer: 'return=minimal' }),
+            body: JSON.stringify(row)
+        }).catch(() => {});
+    } catch (e) {
+        // statistics must never break the shop
+    }
+}
+
+function ehsTrackPageView() {
+    const path = window.location.pathname;
+    const productMatch = path.match(/^\/p\/(\d+)/);
+    const queryId = parseInt(new URLSearchParams(window.location.search).get('id'), 10);
+    if (productMatch || (/product\.html$/.test(path) && queryId)) {
+        ehsTrack('view', { page_type: 'product', product_id: productMatch ? Number(productMatch[1]) : queryId });
+    } else if (/^\/c\//.test(path)) {
+        ehsTrack('view', { page_type: 'category' });
+    } else if (path === '/' || path === '/index.html') {
+        ehsTrack('view', { page_type: 'home' });
+    } else {
+        ehsTrack('view', { page_type: 'other' });
+    }
+}
